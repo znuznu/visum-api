@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  visum-backend:
+    image: ${REGISTRY_URL}:${BACKEND_TAG}
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+
+  visum-db:
+    restart: unless-stopped

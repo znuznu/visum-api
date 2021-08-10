@@ -1,0 +1,9 @@
+.idea/
+.env
+visum.iml
+target/
+src/test/test.iml
+proxy/
+
+release.properties
+pom.xml.*

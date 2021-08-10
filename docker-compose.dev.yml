@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  visum-db:
+    ports:
+      - '5432:5432'
+
+  adminer:
+    ports:
+      - '9000:8080'
+
+  visum-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: visum-backend
+    ports:
+      - '8080:8080'

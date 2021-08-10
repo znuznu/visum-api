@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS "visum-db";
+CREATE DATABASE "visum-db";

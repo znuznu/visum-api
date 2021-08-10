@@ -1,0 +1,14 @@
+spring:
+  jackson:
+    mapper:
+      default-view-inclusion: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+visum:
+  allowed-origins: ${ALLOWED_ORIGIN}
+  tmdb-api-key: ${TMDB_API_KEY}
+  tmdb-api-base-url: ${TMDB_API_BASE_URL}
+  registration-key: ${REGISTRATION_KEY}
+  jwt-secret-key: ${JWT_SECRET_KEY}

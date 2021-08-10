@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${PG_DB_URL:jdbc:postgresql://localhost:5432/visum-db}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+                BasicBinder: TRACE

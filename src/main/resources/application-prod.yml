@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: ${PG_DB_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
