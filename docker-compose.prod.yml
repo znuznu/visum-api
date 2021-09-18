@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  visum-backend:
+  visum-api:
     image: ${REGISTRY_URL}:${BACKEND_TAG}
     restart: unless-stopped
     ports:

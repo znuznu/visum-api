@@ -1,0 +1,53 @@
+package znu.visum.components.external.tmdb.infrastructure.adapters;
+
+import org.springframework.stereotype.Repository;
+import znu.visum.components.external.domain.models.ExternalMovie;
+import znu.visum.components.external.domain.models.ExternalMovieCredits;
+import znu.visum.components.external.domain.models.ExternalMovieFromSearch;
+import znu.visum.components.external.tmdb.domain.ports.TmdbConnector;
+import znu.visum.components.external.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
+import znu.visum.components.external.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
+import znu.visum.core.pagination.domain.VisumPage;
+
+import java.util.Optional;
+
+/** Adapter used in Route integration tests in order to avoid calling external APIs. */
+@Repository
+public class TmdbInMemoryConnector implements TmdbConnector {
+  private TmdbInMemoryResponses responses;
+  private TmdbInMemoryExceptions errors;
+
+  public TmdbInMemoryConnector() {}
+
+  public void setResponses(TmdbInMemoryResponses responses) {
+    this.responses = responses;
+  }
+
+  public void setExceptions(TmdbInMemoryExceptions errors) {
+    this.errors = errors;
+  }
+
+  @Override
+  public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
+    if (this.errors != null && this.errors.getSearchMoviesException() != null) {
+      throw this.errors.getSearchMoviesException();
+    }
+
+    if (this.responses != null && this.responses.getSearchMoviesResponse() != null) {
+      return this.responses.getSearchMoviesResponse();
+    }
+
+    throw new UnsupportedOperationException(
+        "No Responses or Errors set for TmdbInMemoryConnector. Method: searchMovies.");
+  }
+
+  @Override
+  public Optional<ExternalMovie> getMovieById(long movieId) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
+    throw new UnsupportedOperationException();
+  }
+}

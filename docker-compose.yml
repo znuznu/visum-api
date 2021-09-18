@@ -12,12 +12,6 @@ services:
     networks:
       - visum-network
 
-  adminer:
-    container_name: visum-db-manage
-    image: adminer:4.7.7-standalone
-    networks:
-      - visum-network
-
   flyway:
     container_name: visum-db-flyway
     image: flyway/flyway:6.5.3-alpine
@@ -31,8 +25,8 @@ services:
     networks:
       - visum-network
 
-  visum-backend:
-    container_name: visum-backend
+  visum-api:
+    container_name: visum-api
     networks:
       - visum-network
     depends_on:
