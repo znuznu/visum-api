@@ -4,14 +4,10 @@ services:
     ports:
       - '5432:5432'
 
-  adminer:
-    ports:
-      - '9000:8080'
-
-  visum-backend:
+  visum-api:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    image: visum-backend
+    image: visum-api
     ports:
       - '8080:8080'

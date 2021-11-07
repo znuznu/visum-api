@@ -1,9 +1,14 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
-    username: doo
-    password: doo
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+visum:
+  allowed-origins: localhost:3000
+  tmdb-api-key: 'test-api-key'
+  tmdb-api-base-url: 'http://localhost'
+  registration-key: 'test-registration-key'
+  jwt-secret-key: 'test-jwt-secret-key'
