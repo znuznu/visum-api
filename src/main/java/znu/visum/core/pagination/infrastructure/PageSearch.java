@@ -72,6 +72,12 @@ public class PageSearch<T> implements Pageable {
   }
 
   @Override
+  public Pageable withPage(int pageNumber) {
+    // TODO
+    return new Builder<>().build();
+  }
+
+  @Override
   public boolean hasPrevious() {
     return offset < limit;
   }
