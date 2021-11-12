@@ -3,16 +3,16 @@
 ## Refactor
 
 [~] hexagonal architecture (without going too deep)  
-[x] handle errors/exceptions
+[x] handle errors/exceptions  
 [x] set up an OpenAPI spec  
-[ ] refactor the pagination:
+[ ] refactor the pagination:  
     * Specification part  
-    * GetPage IT tests
-[ ] refactor the signin usecase  
-[ ] fix the tmdb route IT
-[ ] handle `org.springframework.web.HttpRequestMethodNotSupportedException`
-[ ] refactor entities' builders
-[ ] do something useful of the TMDb InMemory connector
+    * GetPage IT tests  
+[ ] refactor the signin usecase    
+[ ] fix the tmdb route IT  
+[ ] handle `org.springframework.web.HttpRequestMethodNotSupportedException`  
+[ ] refactor entities' builders  
+[ ] do something useful of the TMDb InMemory connector  
 
 ## CI
 
@@ -20,6 +20,7 @@
 
 ## Features
 
-[ ] posters in S3
-[ ] statistics (gql ?)
-[ ] random movie 2 times per week, send by email
+[ ] statistics (gql ?)  
+[ ] posters (S3 ? tmdb url ?)
+[ ] random movie 2 times per week, send by email  
+[ ] worldmap to display movies by country   
