@@ -12,9 +12,9 @@ Faker.seed(8080)
 
 FILE_PATH = "src/main/resources/db/migration"
 FILE_NAME = "V1000_0__insert_fake_data.sql"
-TOTAL_MOVIES = 300
-TOTAL_ACTORS = 100
-TOTAL_DIRECTORS = 100
+TOTAL_MOVIES = 3000
+TOTAL_ACTORS = 9000
+TOTAL_DIRECTORS = 2500
 GENRES = [
     "Action",
     "Adventure",
@@ -39,12 +39,13 @@ GENRES = [
 
 
 def get_rnd_movie(id):
-    rnd_date = fake.date_between(date(1920, 1, 1))
+    release_date = fake.date_between(date(1920, 1, 1))
     is_favorite = "TRUE" if fake.boolean(chance_of_getting_true=25) else "FALSE"
     is_to_watch = "TRUE" if fake.boolean(chance_of_getting_true=25) else "FALSE"
+    creation_date = fake.date_between(date(2014, 1, 1))
 
     return "INSERT INTO movie\nvalues (" + str(id) + ", 'Fake movie #" + str(id) + "', '" + str(
-        rnd_date) + "', " + is_favorite + ", " + is_to_watch + ");\n"
+            release_date) + "', " + is_favorite + ", " + is_to_watch + ", '" + str(creation_date) + "');\n"
 
 
 def get_rnd_movie_metadata(movie_id):
@@ -86,15 +87,10 @@ def get_rnd_movie_viewing_history(starting_history_id, movie_id, nb_dates=1):
 
 
 with open(FILE_PATH + "/" + FILE_NAME, "w") as f:
-    for i in range(1, TOTAL_MOVIES + 1):
-        f.write(get_rnd_movie(i))
-
-    f.write("\n")
-
     # Write a set of actors
     for i in range(1, TOTAL_ACTORS + 1):
         actor_query = "INSERT INTO actor\nvalues (" + str(
-            i) + ", '" + fake.first_name() + "', '" + fake.last_name() + "');\n"
+            i) + ", '" + fake.first_name() + " " + str(i)  + "', '" + fake.last_name() + "');\n"
         f.write(actor_query)
 
     f.write("\n")
@@ -102,7 +98,7 @@ with open(FILE_PATH + "/" + FILE_NAME, "w") as f:
     # Write a set of directors
     for i in range(1, TOTAL_DIRECTORS + 1):
         director_query = "INSERT INTO director\nvalues (" + str(
-            i) + ", '" + fake.first_name() + "', '" + fake.last_name() + "');\n"
+            i) + ", '" + fake.first_name() + " " + str(i)  +  "', '" + fake.last_name() + "');\n"
         f.write(director_query)
 
     f.write("\n")
@@ -117,6 +113,8 @@ with open(FILE_PATH + "/" + FILE_NAME, "w") as f:
     current_movie_viewing_history_id = 1
 
     for m_id in range(1, TOTAL_MOVIES + 1):
+        f.write(get_rnd_movie(m_id))
+
         # Links directors and actors to movie
         for a_id in sample(range(1, TOTAL_ACTORS + 1), 5):
             f.write("INSERT INTO movie_actor\nvalues (" + str(m_id) + ", " + str(a_id) + ");\n")

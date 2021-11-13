@@ -3,6 +3,7 @@
 visum.iml
 target/
 src/test/test.iml
+src/main/resources/db/migration/V1000_0__insert_fake_data.sql
 proxy/
 
 release.properties

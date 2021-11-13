@@ -7,10 +7,14 @@ import org.springframework.stereotype.Repository;
 import znu.visum.components.reviews.infrastructure.models.MovieReviewEntity;
 import znu.visum.core.pagination.infrastructure.PageSearch;
 
+import java.time.LocalDateTime;
+
 @Repository
 public interface DataJpaMovieReviewRepository
     extends JpaRepository<MovieReviewEntity, Long>, JpaSpecificationExecutor<MovieReviewEntity> {
   default Page<MovieReviewEntity> findPage(PageSearch<MovieReviewEntity> page) {
     return findAll(page.getSearch(), page);
   }
+
+  long countAllByUpdateDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

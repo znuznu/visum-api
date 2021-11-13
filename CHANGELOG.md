@@ -1,7 +1,11 @@
 # Changelog
 
-## 2.1.1
+## 2.2.0
+* Add statistics:
+  - _get all-time_ and _get per year_ usecases
+  - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
+## 2.1.1
 * Replace deprecated method `isEqualToComparingFieldByField()` with `usingRecursiveComparison()`
 * Remove `hashCode`and `equals` on related models
 

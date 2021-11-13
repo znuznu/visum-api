@@ -10,6 +10,10 @@ import znu.visum.core.pagination.infrastructure.PageSearch;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Year;
 import java.util.Optional;
 
 @Repository
@@ -41,5 +45,19 @@ public class PostgresReviewRepository implements ReviewRepository {
   @Override
   public Review save(Review review) {
     return this.dataJpaMovieReviewRepository.save(MovieReviewEntity.from(review)).toDomain();
+  }
+
+  @Override
+  public long count() {
+    return this.dataJpaMovieReviewRepository.count();
+  }
+
+  @Override
+  public long countAllByUpdateDateYear(Year year) {
+    LocalDateTime startDate =
+        LocalDateTime.of(LocalDate.ofYearDay(year.getValue(), 1), LocalTime.MIN);
+    LocalDateTime endDate = LocalDateTime.of(LocalDate.of(year.getValue(), 12, 31), LocalTime.MIN);
+
+    return this.dataJpaMovieReviewRepository.countAllByUpdateDateBetween(startDate, endDate);
   }
 }
