@@ -33,7 +33,8 @@ public class GetByIdTmdbGenreControllerUnitTest {
     Mockito.when(service.findById(1L)).thenReturn(new Genre(1L, "Something"));
 
     assertThat(controller.getGenreById(1))
-        .isEqualToComparingFieldByField(new GetByIdGenreResponse(1L, "Something"));
+        .usingRecursiveComparison()
+        .isEqualTo(new GetByIdGenreResponse(1L, "Something"));
   }
 
   @Test

@@ -25,5 +25,6 @@ values (3, 1);
 INSERT INTO movie_genre (movie_id, genre_id)
 values (3, 3);
 
-INSERT INTO movie_metadata (movie_id, tmdb_id, imdb_id, original_language, tagline, overview, budget, revenue, poster_url, runtime)
+INSERT INTO movie_metadata (movie_id, tmdb_id, imdb_id, original_language, tagline, overview, budget, revenue,
+                            poster_url, runtime)
 values (3, 1234, 'tt1111', 'en', 'A tagline!', 'An overview!', 9000, 14000, 'An URL', 123);

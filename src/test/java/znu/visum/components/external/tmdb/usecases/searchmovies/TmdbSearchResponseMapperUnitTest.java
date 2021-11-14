@@ -36,6 +36,7 @@ public class TmdbSearchResponseMapperUnitTest {
       assertThat(expectedPage.isFirst()).isTrue();
       assertThat(expectedPage.isLast()).isFalse();
       assertThat(expectedPage.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
           .contains(
               new ExternalMovieFromSearch.Builder()
                   .id(1)
@@ -72,6 +73,7 @@ public class TmdbSearchResponseMapperUnitTest {
       assertThat(expectedPage.isFirst()).isFalse();
       assertThat(expectedPage.isLast()).isFalse();
       assertThat(expectedPage.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
           .contains(
               new ExternalMovieFromSearch.Builder()
                   .id(1)
@@ -108,6 +110,7 @@ public class TmdbSearchResponseMapperUnitTest {
       assertThat(expectedPage.isFirst()).isFalse();
       assertThat(expectedPage.isLast()).isTrue();
       assertThat(expectedPage.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
           .contains(
               new ExternalMovieFromSearch.Builder()
                   .id(1)

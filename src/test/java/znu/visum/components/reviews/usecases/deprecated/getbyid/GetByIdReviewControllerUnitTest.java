@@ -46,7 +46,9 @@ public class GetByIdReviewControllerUnitTest {
             LocalDateTime.of(2021, 12, 12, 5, 10),
             LocalDateTime.of(2021, 12, 12, 7, 10));
 
-    assertThat(controller.getMovieReviewById(1)).isEqualToComparingFieldByField(expectedResponse);
+    assertThat(controller.getMovieReviewById(1))
+        .usingRecursiveComparison()
+        .isEqualTo(expectedResponse);
   }
 
   @Test

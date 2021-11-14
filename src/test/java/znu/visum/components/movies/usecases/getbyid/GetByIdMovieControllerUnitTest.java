@@ -139,7 +139,7 @@ public class GetByIdMovieControllerUnitTest {
             new ArrayList<>(),
             metadata);
 
-    assertThat(controller.getMovieById(1)).isEqualToComparingFieldByField(expectedResponse);
+    assertThat(controller.getMovieById(1)).usingRecursiveComparison().isEqualTo(expectedResponse);
   }
 
   @Test

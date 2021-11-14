@@ -6,7 +6,6 @@ import znu.visum.components.reviews.domain.models.Review;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class GetByIdMovieReviewResponse {
   private final long id;
@@ -101,21 +100,6 @@ public class GetByIdMovieReviewResponse {
 
     public LocalDate getReleaseDate() {
       return releaseDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseMovie that = (ResponseMovie) o;
-      return getId() == that.getId()
-          && getTitle().equals(that.getTitle())
-          && getReleaseDate().equals(that.getReleaseDate());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getTitle(), getReleaseDate());
     }
   }
 }
