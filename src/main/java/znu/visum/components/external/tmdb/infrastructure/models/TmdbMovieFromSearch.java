@@ -8,7 +8,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import znu.visum.components.external.domain.models.ExternalMovieFromSearch;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 /** A TMDB movie inside a search response (see the TmdbSearchResponse.java class) */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -47,20 +46,5 @@ public class TmdbMovieFromSearch {
         .title(this.title)
         .releaseDate(this.releaseDate)
         .build();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    TmdbMovieFromSearch that = (TmdbMovieFromSearch) o;
-    return id == that.id
-        && title.equals(that.title)
-        && getReleaseDate().equals(that.getReleaseDate());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, title, getReleaseDate());
   }
 }

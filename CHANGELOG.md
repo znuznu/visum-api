@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.1
+
+* Replace deprecated method `isEqualToComparingFieldByField()` with `usingRecursiveComparison()`
+* Remove `hashCode`and `equals` on related models
+
 ## 2.1.0
 * Bump Spring Boot from 2.3.4 to 2.5.6
 * Add a TODO `withPage()` to PageSearch

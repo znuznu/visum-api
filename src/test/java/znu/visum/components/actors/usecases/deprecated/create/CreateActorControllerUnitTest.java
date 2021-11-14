@@ -40,7 +40,7 @@ public class CreateActorControllerUnitTest {
     CreateActorRequest request = new CreateActorRequest("Maclachlan", "Kyle", new ArrayList<>());
 
     assertThat(controller.create(request))
-        .isEqualToComparingFieldByField(
-            new CreateActorResponse(1L, "Maclachlan", "Kyle", new ArrayList<>()));
+        .usingRecursiveComparison()
+        .isEqualTo(new CreateActorResponse(1L, "Maclachlan", "Kyle", new ArrayList<>()));
   }
 }

@@ -8,7 +8,6 @@ import znu.visum.components.people.directors.domain.models.MovieFromDirector;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ApiModel("Represents a director.")
@@ -109,23 +108,6 @@ public class GetByIdDirectorResponse {
 
     public boolean isShouldWatch() {
       return shouldWatch;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseMovie that = (ResponseMovie) o;
-      return isFavorite() == that.isFavorite()
-          && isShouldWatch() == that.isShouldWatch()
-          && Objects.equals(getId(), that.getId())
-          && Objects.equals(getTitle(), that.getTitle())
-          && Objects.equals(getReleaseDate(), that.getReleaseDate());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getTitle(), getReleaseDate(), isFavorite(), isShouldWatch());
     }
   }
 }

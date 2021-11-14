@@ -71,7 +71,8 @@ public class CreateMovieViewingHistoryServiceUnitTest {
                     .viewingDate(LocalDate.of(2020, 1, 1))
                     .movieId(1)
                     .build()))
-        .isEqualToComparingFieldByField(
+        .usingRecursiveComparison()
+        .isEqualTo(
             new MovieViewingHistory.Builder()
                 .viewingDate(LocalDate.of(2020, 1, 1))
                 .id(1L)

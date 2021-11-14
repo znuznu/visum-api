@@ -21,7 +21,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName("Jacques Dupont");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(new ExternalActor(1, "Jacques", "Dupont"));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", "Dupont"));
     }
 
     @Test
@@ -32,7 +33,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName("Jacques");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(new ExternalActor(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", ""));
     }
 
     @Test
@@ -43,7 +45,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName("");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(new ExternalActor(1, "", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "", ""));
     }
 
     @Test
@@ -54,8 +57,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName("Jacques Dupont Baguette Camembert");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(
-              new ExternalActor(1, "Jacques", "Dupont Baguette Camembert"));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", "Dupont Baguette Camembert"));
     }
 
     @Test
@@ -66,7 +69,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName("Jacques ");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(new ExternalActor(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", ""));
     }
 
     @Test
@@ -77,7 +81,8 @@ public class TmdbCastPeopleUnitTest {
       castPeople.setName(" Jacques");
 
       assertThat(castPeople.toDomain())
-          .isEqualToComparingFieldByField(new ExternalActor(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", ""));
     }
   }
 }

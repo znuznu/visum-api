@@ -1,7 +1,5 @@
 package znu.visum.components.external.domain.models;
 
-import java.util.Objects;
-
 public class ExternalPeople {
   private long id;
 
@@ -37,20 +35,5 @@ public class ExternalPeople {
 
   public void setForename(String forename) {
     this.forename = forename;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ExternalPeople)) return false;
-    ExternalPeople that = (ExternalPeople) o;
-    return getId() == that.getId()
-        && getName().equals(that.getName())
-        && getForename().equals(that.getForename());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getId(), getName(), getForename());
   }
 }

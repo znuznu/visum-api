@@ -54,8 +54,8 @@ public class GetByIdDirectorControllerUnitTest {
                 3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false));
 
     assertThat(controller.getDirectorById(1L))
-        .isEqualToComparingFieldByField(
-            new GetByIdDirectorResponse(1L, "Lynch", "David", expectedResponseMovies));
+        .usingRecursiveComparison()
+        .isEqualTo(new GetByIdDirectorResponse(1L, "Lynch", "David", expectedResponseMovies));
   }
 
   @Test

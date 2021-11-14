@@ -95,6 +95,7 @@ public class TmdbInMemoryConnectorUnitTest {
       assertThat(response.isLast()).isEqualTo(true);
       assertThat(response.isFirst()).isEqualTo(false);
       assertThat(response.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
           .contains(
               new ExternalMovieFromSearch(
                   541715,

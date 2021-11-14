@@ -117,6 +117,7 @@ public class TmdbHttpConnectorUnitTest {
       assertThat(response.isFirst()).isEqualTo(false);
       assertThat(response.getSize()).isEqualTo(3);
       assertThat(response.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
           .contains(
               new ExternalMovieFromSearch(
                   541715,
@@ -424,12 +425,14 @@ public class TmdbHttpConnectorUnitTest {
       ExternalMovieCredits credits = connector.getCreditsByMovieId(597).get();
 
       assertThat(credits.getActors())
+          .usingRecursiveFieldByFieldElementComparator()
           .containsOnly(
               new ExternalActor(6193, "Leonardo", "DiCaprio"),
               new ExternalActor(204, "Kate", "Winslet"),
               new ExternalActor(1954, "Billy", "Zane Zune Zone"));
 
       assertThat(credits.getDirectors())
+          .usingRecursiveFieldByFieldElementComparator()
           .containsOnly(
               new ExternalDirector(2710, "James", "Cameron"),
               new ExternalDirector(7890, "James", "Cameron Number Two"),

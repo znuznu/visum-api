@@ -35,7 +35,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(new ExternalDirector(1, "Jacques", "Dupont"));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "Jacques", "Dupont"));
     }
 
     @Test
@@ -47,7 +48,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(new ExternalDirector(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "Jacques", ""));
     }
 
     @Test
@@ -59,7 +61,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(new ExternalDirector(1, "", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "", ""));
     }
 
     @Test
@@ -71,8 +74,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(
-              new ExternalDirector(1, "Jacques", "Dupont Baguette Camembert"));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "Jacques", "Dupont Baguette Camembert"));
     }
 
     @Test
@@ -84,7 +87,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(new ExternalDirector(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "Jacques", ""));
     }
 
     @Test
@@ -96,7 +100,8 @@ public class TmdbCreditsPeopleUnitTest {
       crewPeople.setJob("Director");
 
       assertThat(crewPeople.toDomainExternalDirector())
-          .isEqualToComparingFieldByField(new ExternalDirector(1, "Jacques", ""));
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalDirector(1, "Jacques", ""));
     }
   }
 }

@@ -1,7 +1,6 @@
 package znu.visum.components.external.domain.models;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Represent a movie that don't (necessarily) belong to the Visum database. Comes from the search
@@ -44,21 +43,6 @@ public class ExternalMovieFromSearch {
 
   public void setReleaseDate(LocalDate releaseDate) {
     this.releaseDate = releaseDate;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ExternalMovieFromSearch that = (ExternalMovieFromSearch) o;
-    return getId() == that.getId()
-        && getTitle().equals(that.getTitle())
-        && getReleaseDate().equals(that.getReleaseDate());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getId(), getTitle(), getReleaseDate());
   }
 
   public static final class Builder {

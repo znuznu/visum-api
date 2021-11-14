@@ -11,7 +11,6 @@ import znu.visum.components.movies.domain.models.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ApiModel("Represents a movie.")
@@ -209,23 +208,6 @@ public class GetByIdMovieResponse {
     public long getMovieId() {
       return movieId;
     }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseReview that = (ResponseReview) o;
-      return getGrade() == that.getGrade()
-          && getId().equals(that.getId())
-          && getContent().equals(that.getContent())
-          && getUpdateDate().equals(that.getUpdateDate())
-          && getCreationDate().equals(that.getCreationDate());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getContent(), getUpdateDate(), getCreationDate(), getGrade());
-    }
   }
 
   public static class ResponseGenre {
@@ -247,19 +229,6 @@ public class GetByIdMovieResponse {
 
     public String getType() {
       return type;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseGenre that = (ResponseGenre) o;
-      return getId() == that.getId() && getType().equals(that.getType());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getType());
     }
   }
 
@@ -290,21 +259,6 @@ public class GetByIdMovieResponse {
     public String getForename() {
       return forename;
     }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseActor that = (ResponseActor) o;
-      return getId() == that.getId()
-          && getName().equals(that.getName())
-          && getForename().equals(that.getForename());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getName(), getForename());
-    }
   }
 
   public static class ResponseDirector {
@@ -333,21 +287,6 @@ public class GetByIdMovieResponse {
 
     public String getForename() {
       return forename;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ResponseDirector that = (ResponseDirector) o;
-      return getId() == that.getId()
-          && getName().equals(that.getName())
-          && getForename().equals(that.getForename());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(getId(), getName(), getForename());
     }
   }
 
@@ -459,36 +398,6 @@ public class GetByIdMovieResponse {
 
     public int getRuntime() {
       return runtime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof ResponseMovieMetadata)) return false;
-      ResponseMovieMetadata that = (ResponseMovieMetadata) o;
-      return getBudget() == that.getBudget()
-          && getRevenue() == that.getRevenue()
-          && getRuntime() == that.getRuntime()
-          && Objects.equals(getTmdbId(), that.getTmdbId())
-          && Objects.equals(getImdbId(), that.getImdbId())
-          && Objects.equals(getOriginalLanguage(), that.getOriginalLanguage())
-          && Objects.equals(getTagline(), that.getTagline())
-          && Objects.equals(getOverview(), that.getOverview())
-          && Objects.equals(posterUrl, that.posterUrl);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(
-          getTmdbId(),
-          getImdbId(),
-          getOriginalLanguage(),
-          getTagline(),
-          getOverview(),
-          getBudget(),
-          getRevenue(),
-          getRuntime(),
-          posterUrl);
     }
 
     public static class Builder {
