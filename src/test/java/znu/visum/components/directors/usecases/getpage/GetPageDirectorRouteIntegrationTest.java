@@ -43,24 +43,20 @@ public class GetPageDirectorRouteIntegrationTest {
     mvc.perform(
             get(
                     "/api/directors?sort=type&search=type={type}&limit={limit}&offset={offset}",
-                    "%25%25",
+                    "%%",
                     20,
                     0)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
-  // TODO test more cases when the refactor is done on pagination
-
   @Test
   @WithMockUser
-  @Sql("/sql/insert_multiple_directors.sql")
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_directors.sql"})
   @DisplayName(
-      "When only an empty search is provided, it should use default value: limit 20, offset 0, ascending sort on type")
+      "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on forename and name)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
-    mvc.perform(
-            get("/api/directors?search=type={type}", "%25%25")
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(get("/api/directors").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
             MockMvcResultMatchers.content()
@@ -73,6 +69,56 @@ public class GetPageDirectorRouteIntegrationTest {
                         + "{'id':2,'name': 'Lyne', 'forename':'Adrian'},"
                         + "{'id':3,'name': 'González Iñárritu', 'forename':'Alejandro'},"
                         + "{'id':4,'name': 'Winding Refn', 'forename':'Nicolas'}],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_directors.sql"})
+  @DisplayName(
+      "when a forename and name is provided, it should return the directors with the forename or name")
+  public void givenAForenameAndName_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/directors?search=forename={forename},name={name}", "Nicolas", "Winding Refn")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':1,"
+                        + "'content':["
+                        + "{'id':4,'name': 'Winding Refn', 'forename':'Nicolas'}"
+                        + "],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_directors.sql"})
+  @DisplayName(
+      "when a like forename or like name is provided (comma), it should return the directors containing like forename or like name")
+  public void givenALikeForenameOrLikeName_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/directors?search=forename={forename},name={name}", "%an%", "%an%")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':3,"
+                        + "'content':["
+                        + "{'id':1,'name': 'Gans', 'forename':'Christopher'},"
+                        + "{'id':2,'name': 'Lyne', 'forename':'Adrian'},"
+                        + "{'id':3,'name': 'González Iñárritu', 'forename':'Alejandro'}"
+                        + "],"
                         + "'totalPages':1,"
                         + "'first':true,"
                         + "'last':true}"));

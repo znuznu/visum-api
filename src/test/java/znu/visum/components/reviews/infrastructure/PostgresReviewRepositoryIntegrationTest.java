@@ -47,7 +47,7 @@ public class PostgresReviewRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldReturnCountOfAllReviewsUpdatedIn2021() {

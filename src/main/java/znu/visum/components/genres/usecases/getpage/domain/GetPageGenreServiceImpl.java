@@ -1,11 +1,11 @@
 package znu.visum.components.genres.usecases.getpage.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.genres.domain.ports.GenreRepository;
 import znu.visum.core.pagination.domain.VisumPage;
-import znu.visum.core.pagination.infrastructure.PageSearch;
 
 @Service
 public class GetPageGenreServiceImpl implements GetPageGenreService {
@@ -17,7 +17,7 @@ public class GetPageGenreServiceImpl implements GetPageGenreService {
   }
 
   @Override
-  public VisumPage<Genre> findPage(PageSearch<Genre> pageSearch) {
-    return genreRepository.findPage(pageSearch);
+  public VisumPage<Genre> findPage(int limit, int offset, Sort sort, String search) {
+    return genreRepository.findPage(limit, offset, sort, search);
   }
 }

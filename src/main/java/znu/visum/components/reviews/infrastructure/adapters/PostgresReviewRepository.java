@@ -1,12 +1,15 @@
 package znu.visum.components.reviews.infrastructure.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.reviews.domain.models.Review;
 import znu.visum.components.reviews.domain.ports.ReviewRepository;
 import znu.visum.components.reviews.infrastructure.models.MovieReviewEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
+import znu.visum.core.pagination.infrastructure.SearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
@@ -27,9 +30,19 @@ public class PostgresReviewRepository implements ReviewRepository {
   }
 
   @Override
-  public VisumPage<Review> findPage(PageSearch<Review> page) {
+  public VisumPage<Review> findPage(int limit, int offset, Sort sort, String search) {
+    Specification<MovieReviewEntity> searchSpecification = SearchSpecification.parse(search);
+
+    PageSearch<MovieReviewEntity> pageSearch =
+        new PageSearch.Builder<MovieReviewEntity>()
+            .search(searchSpecification)
+            .offset(offset)
+            .limit(limit)
+            .sorting(sort)
+            .build();
+
     return SpringPageMapper.toVisumPage(
-        dataJpaMovieReviewRepository.findPage(new PageSearch<>(page)), MovieReviewEntity::toDomain);
+        dataJpaMovieReviewRepository.findPage(pageSearch), MovieReviewEntity::toDomain);
   }
 
   @Override

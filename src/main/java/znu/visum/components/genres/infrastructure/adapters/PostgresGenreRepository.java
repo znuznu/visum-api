@@ -1,12 +1,15 @@
 package znu.visum.components.genres.infrastructure.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.genres.domain.ports.GenreRepository;
 import znu.visum.components.genres.infrastructure.models.GenreEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
+import znu.visum.core.pagination.infrastructure.SearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import java.util.Optional;
@@ -21,9 +24,19 @@ public class PostgresGenreRepository implements GenreRepository {
   }
 
   @Override
-  public VisumPage<Genre> findPage(PageSearch<Genre> page) {
+  public VisumPage<Genre> findPage(int limit, int offset, Sort sort, String search) {
+    Specification<GenreEntity> searchSpecification = SearchSpecification.parse(search);
+
+    PageSearch<GenreEntity> pageSearch =
+        new PageSearch.Builder<GenreEntity>()
+            .search(searchSpecification)
+            .offset(offset)
+            .limit(limit)
+            .sorting(sort)
+            .build();
+
     return SpringPageMapper.toVisumPage(
-        dataJpaGenreRepository.findPage(new PageSearch<>(page)), GenreEntity::toDomain);
+        dataJpaGenreRepository.findPage(pageSearch), GenreEntity::toDomain);
   }
 
   @Override

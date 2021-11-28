@@ -1,12 +1,15 @@
 package znu.visum.components.people.directors.infrastructure.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.people.directors.domain.models.Director;
 import znu.visum.components.people.directors.domain.ports.DirectorRepository;
 import znu.visum.components.people.directors.infrastructure.models.DirectorEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
+import znu.visum.core.pagination.infrastructure.SearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
@@ -23,9 +26,19 @@ public class PostgresDirectorRepository implements DirectorRepository {
   }
 
   @Override
-  public VisumPage<Director> findPage(PageSearch<Director> page) {
+  public VisumPage<Director> findPage(int limit, int offset, Sort sort, String search) {
+    Specification<DirectorEntity> searchSpecification = SearchSpecification.parse(search);
+
+    PageSearch<DirectorEntity> pageSearch =
+        new PageSearch.Builder<DirectorEntity>()
+            .search(searchSpecification)
+            .offset(offset)
+            .limit(limit)
+            .sorting(sort)
+            .build();
+
     return SpringPageMapper.toVisumPage(
-        dataJpaDirectorRepository.findPage(new PageSearch<>(page)), DirectorEntity::toDomain);
+        dataJpaDirectorRepository.findPage(pageSearch), DirectorEntity::toDomain);
   }
 
   @Override

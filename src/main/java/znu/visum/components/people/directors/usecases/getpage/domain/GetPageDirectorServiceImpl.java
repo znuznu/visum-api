@@ -1,11 +1,11 @@
 package znu.visum.components.people.directors.usecases.getpage.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import znu.visum.components.people.directors.domain.models.Director;
 import znu.visum.components.people.directors.domain.ports.DirectorRepository;
 import znu.visum.core.pagination.domain.VisumPage;
-import znu.visum.core.pagination.infrastructure.PageSearch;
 
 @Service
 public class GetPageDirectorServiceImpl implements GetPageDirectorService {
@@ -17,7 +17,7 @@ public class GetPageDirectorServiceImpl implements GetPageDirectorService {
   }
 
   @Override
-  public VisumPage<Director> findPage(PageSearch<Director> pageSearch) {
-    return directorRepository.findPage(pageSearch);
+  public VisumPage<Director> findPage(int limit, int offset, Sort sort, String search) {
+    return directorRepository.findPage(limit, offset, sort, search);
   }
 }

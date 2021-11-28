@@ -43,24 +43,20 @@ public class GetPageTmdbGenreRouteIntegrationTest {
     mvc.perform(
             get(
                     "/api/genres?sort=type&search=type={type}&limit={limit}&offset={offset}",
-                    "%25%25",
+                    "%%",
                     20,
                     0)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
-  // TODO test more cases when the refactor is done on pagination
-
   @Test
   @WithMockUser
-  @Sql("/sql/insert_multiple_genres.sql")
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
   @DisplayName(
-      "When only an empty search is provided, it should use default value: limit 20, offset 0, ascending sort on type")
+      "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on type)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
-    mvc.perform(
-            get("/api/genres?search=type={type}", "%25%25")
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(get("/api/genres").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
             MockMvcResultMatchers.content()
@@ -92,5 +88,53 @@ public class GetPageTmdbGenreRouteIntegrationTest {
                         + "'totalPages':2,"
                         + "'first':true,"
                         + "'last':false}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
+  @DisplayName("when a type is provided, it should return the movie with the type")
+  public void givenAType_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/genres?search=type={type}", "Horror")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':1,"
+                        + "'content':["
+                        + "{'id':15,'type':'Horror'}"
+                        + "],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
+  @DisplayName("when a like type is provided, it should return genres containing the type")
+  public void givenALikeType_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/genres?search=type={type}", "%ta%")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':3,"
+                        + "'content':["
+                        + "{'id':8,'type':'Documentary'},"
+                        + "{'id':11,'type':'Fantasy'},"
+                        + "{'id':25,'type':'Talk-Show'}"
+                        + "],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
   }
 }

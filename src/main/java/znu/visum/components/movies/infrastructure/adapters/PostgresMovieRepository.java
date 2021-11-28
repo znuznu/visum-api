@@ -1,6 +1,8 @@
 package znu.visum.components.movies.infrastructure.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.ports.MovieRepository;
@@ -9,6 +11,7 @@ import znu.visum.components.movies.infrastructure.models.MovieMetadataEntity;
 import znu.visum.core.models.domain.Pair;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
+import znu.visum.core.pagination.infrastructure.SearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.persistence.Tuple;
@@ -33,9 +36,19 @@ public class PostgresMovieRepository implements MovieRepository {
   }
 
   @Override
-  public VisumPage<Movie> findPage(PageSearch<Movie> page) {
+  public VisumPage<Movie> findPage(int limit, int offset, Sort sort, String search) {
+    Specification<MovieEntity> searchSpecification = SearchSpecification.parse(search);
+
+    PageSearch<MovieEntity> pageSearch =
+        new PageSearch.Builder<MovieEntity>()
+            .search(searchSpecification)
+            .offset(offset)
+            .limit(limit)
+            .sorting(sort)
+            .build();
+
     return SpringPageMapper.toVisumPage(
-        dataJpaMovieRepository.findPage(new PageSearch<>(page)), MovieEntity::toDomain);
+        dataJpaMovieRepository.findPage(pageSearch), MovieEntity::toDomain);
   }
 
   @Override

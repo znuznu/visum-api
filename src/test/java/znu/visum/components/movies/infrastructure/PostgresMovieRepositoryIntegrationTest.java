@@ -57,7 +57,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void whenMoreMoviesThanTheLimitExists_itShouldReturnAListWithTheLengthOfTheLimit() {
@@ -163,7 +163,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void whenLessMoviesThanTheLimitExists_itShouldReturnMoviesFound() {
@@ -269,7 +269,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void itShouldReturnTheTotalRunningHours() {
@@ -284,7 +284,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void whenThereIsNoMovies_itShouldReturnZero() {
     int totalRunningHours =
@@ -298,7 +298,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void itShouldReturnTheMoviesCountPerOriginalLanguageOrderedByDescCount() {
@@ -315,7 +315,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void whenThereIsNoMovies_itShouldReturnAnEmptyPerOriginalLanguageList() {
     List<Pair<String, Integer>> pairs =
@@ -329,7 +329,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void itShouldReturnTheMoviesCountPerYearOrderedByDescCount() {
@@ -344,7 +344,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void whenThereIsNoMovies_itShouldReturnAnEmptyPerYearList() {
     List<Pair<Integer, Integer>> pairs =
@@ -358,7 +358,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })
@@ -376,7 +376,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldReturnTheAverageRatedMoviesOrderedByDescYear() {
@@ -392,7 +392,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldAvoidTheMovieWithoutReviewAndReturnTheAverageRatedMoviesOrderedByDescYear() {
@@ -407,7 +407,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldReturnAnEmptyList() {
@@ -422,7 +422,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void whenThereIsNoMovies_itShouldReturnAnEmptyAveragePerYearList() {
     List<Pair<Integer, Float>> pairs =
@@ -436,7 +436,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void whenThereIsNoMovies_itShouldReturnAnEmptyHighestRatedDuringYearsOlderMoviesList() {
     List<Movie> movies = this.movieRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
@@ -448,7 +448,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldReturnHighestRatedDuringYearOlderMovies() {
@@ -553,7 +553,7 @@ public class PostgresMovieRepositoryIntegrationTest {
   @Test
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   public void itShouldReturnCountOfAllMoviesFrom2014() {
