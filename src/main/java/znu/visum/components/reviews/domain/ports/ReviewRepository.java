@@ -4,6 +4,7 @@ import znu.visum.components.reviews.domain.models.Review;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
 
+import java.time.Year;
 import java.util.Optional;
 
 public interface ReviewRepository {
@@ -14,4 +15,8 @@ public interface ReviewRepository {
   void deleteById(long id);
 
   Review save(Review review);
+
+  long count();
+
+  long countAllByUpdateDateYear(Year year);
 }
