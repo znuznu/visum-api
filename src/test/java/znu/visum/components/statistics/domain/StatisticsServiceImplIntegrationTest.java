@@ -41,7 +41,7 @@ class StatisticsServiceImplIntegrationTest {
       "getMovieCountOfTheYear() - it should return the count of all movies released in 2014")
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void itShouldReturnTheCountOfAllMovieReleasedIn2014() {
@@ -55,7 +55,7 @@ class StatisticsServiceImplIntegrationTest {
       "getReviewCountOfTheYear() - it should return the count of all reviews last updated in 2015")
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   public void itShouldReturnTheCountOfAllReviewsLastUpdatedIn2015() {
@@ -69,7 +69,7 @@ class StatisticsServiceImplIntegrationTest {
       "getNumberOfMoviesOfTheYearPerGenre() - it should return a list containing all genre and count of 2001")
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })

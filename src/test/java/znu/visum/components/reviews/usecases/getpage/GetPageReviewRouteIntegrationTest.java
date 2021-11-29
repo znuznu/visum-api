@@ -43,24 +43,20 @@ public class GetPageReviewRouteIntegrationTest {
     mvc.perform(
             get(
                     "/api/reviews/movies?sort=type&search=type={type}&limit={limit}&offset={offset}",
-                    "%25%25",
+                    "%%",
                     20,
                     0)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
-  // TODO test more cases when the refactor is done on pagination
-
   @Test
   @WithMockUser
-  @Sql("/sql/insert_multiple_movies_with_reviews.sql")
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
   @DisplayName(
-      "When only an empty search is provided, it should use default value: limit 20, offset 0, ascending sort on type")
+      "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on content)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
-    mvc.perform(
-            get("/api/reviews/movies?search=type={type}", "%25%25")
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(get("/api/reviews/movies").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
             MockMvcResultMatchers.content()
@@ -92,6 +88,109 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/27/2021 15:54:33'"
+                        + "   },"
+                        + "   {"
+                        + "     'id':3,"
+                        + "     'grade':5,"
+                        + "     'content':'Some text for movie 33.',"
+                        + "     'movie':{"
+                        + "         'id':33,"
+                        + "         'title':'Fake movie with review 33',"
+                        + "         'releaseDate':'10/12/2001'"
+                        + "     },"
+                        + "     'creationDate':'10/26/2021 15:54:33',"
+                        + "     'updateDate':'10/28/2021 15:54:33'"
+                        + "   },"
+                        + "   {"
+                        + "   'id':4,"
+                        + "   'grade':10,"
+                        + "   'content':'Some text for movie 10.',"
+                        + "   'movie':{"
+                        + "       'id':10,"
+                        + "       'title':'Fake movie with review 10',"
+                        + "       'releaseDate':'10/12/2001'"
+                        + "   },"
+                        + "   'creationDate':'10/26/2021 15:54:33',"
+                        + "   'updateDate':'10/29/2021 15:54:33'"
+                        + "  }"
+                        + "],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
+  @DisplayName("when a content is provided, it should return the movie with the content")
+  public void givenAContent_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/reviews/movies?search=content=Some text for movie 30.")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':1,"
+                        + "'content':["
+                        + "   {"
+                        + "     'id':1,"
+                        + "     'grade':3,"
+                        + "     'content':'Some text for movie 30.',"
+                        + "     'movie':{"
+                        + "         'id':30,"
+                        + "         'title':'Fake movie with review 30',"
+                        + "         'releaseDate':'10/12/2001'"
+                        + "     },"
+                        + "     'creationDate':'10/26/2021 15:54:33',"
+                        + "     'updateDate':'10/26/2021 15:54:33'"
+                        + "   }"
+                        + "],"
+                        + "'totalPages':1,"
+                        + "'first':true,"
+                        + "'last':true}"));
+  }
+
+  @Test
+  @WithMockUser
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
+  @DisplayName("given ASC grade, it should return all the reviews order by ascending grade")
+  public void ascGrade_itShouldReturnA200Response() throws Exception {
+    mvc.perform(
+            get("/api/reviews/movies?sort=grade,ASC").contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content()
+                .json(
+                    "{'current':0,"
+                        + "'size':20,"
+                        + "'totalElements':4,"
+                        + "'content':["
+                        + "   {"
+                        + "     'id':2,"
+                        + "     'grade':2,"
+                        + "     'content':'Some text for movie 20.',"
+                        + "     'movie':{"
+                        + "         'id':20,"
+                        + "         'title':'Fake movie with review 20',"
+                        + "         'releaseDate':'10/12/2001'"
+                        + "     },"
+                        + "     'creationDate':'10/26/2021 15:54:33',"
+                        + "     'updateDate':'10/27/2021 15:54:33'"
+                        + "   },"
+                        + "   {"
+                        + "     'id':1,"
+                        + "     'grade':3,"
+                        + "     'content':'Some text for movie 30.',"
+                        + "     'movie':{"
+                        + "         'id':30,"
+                        + "         'title':'Fake movie with review 30',"
+                        + "         'releaseDate':'10/12/2001'"
+                        + "     },"
+                        + "     'creationDate':'10/26/2021 15:54:33',"
+                        + "     'updateDate':'10/26/2021 15:54:33'"
                         + "   },"
                         + "   {"
                         + "     'id':3,"

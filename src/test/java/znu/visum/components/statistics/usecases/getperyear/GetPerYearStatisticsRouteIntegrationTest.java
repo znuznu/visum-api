@@ -69,7 +69,7 @@ public class GetPerYearStatisticsRouteIntegrationTest {
   @WithMockUser
   @Sql(
       scripts = {
-        "/sql/truncate_movie_table.sql",
+        "/sql/truncate_all_tables.sql",
       })
   public void itShouldReturnEmptyPerYearStatistics() throws Exception {
     mvc.perform(get("/api/statistics/years/2015").contentType(MediaType.APPLICATION_JSON_VALUE))

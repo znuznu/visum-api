@@ -1,12 +1,15 @@
 package znu.visum.components.people.actors.infrastructure.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.people.actors.domain.models.Actor;
 import znu.visum.components.people.actors.domain.ports.ActorRepository;
 import znu.visum.components.people.actors.infrastructure.models.ActorEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
+import znu.visum.core.pagination.infrastructure.SearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
@@ -23,9 +26,19 @@ public class PostgresActorRepository implements ActorRepository {
   }
 
   @Override
-  public VisumPage<Actor> findPage(PageSearch<Actor> page) {
+  public VisumPage<Actor> findPage(int limit, int offset, Sort sort, String search) {
+    Specification<ActorEntity> searchSpecification = SearchSpecification.parse(search);
+
+    PageSearch<ActorEntity> pageSearch =
+        new PageSearch.Builder<ActorEntity>()
+            .search(searchSpecification)
+            .offset(offset)
+            .limit(limit)
+            .sorting(sort)
+            .build();
+
     return SpringPageMapper.toVisumPage(
-        dataJpaActorRepository.findPage(new PageSearch<>(page)), ActorEntity::toDomain);
+        dataJpaActorRepository.findPage(pageSearch), ActorEntity::toDomain);
   }
 
   @Override

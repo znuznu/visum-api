@@ -1,14 +1,14 @@
 package znu.visum.components.reviews.domain.ports;
 
+import org.springframework.data.domain.Sort;
 import znu.visum.components.reviews.domain.models.Review;
 import znu.visum.core.pagination.domain.VisumPage;
-import znu.visum.core.pagination.infrastructure.PageSearch;
 
 import java.time.Year;
 import java.util.Optional;
 
 public interface ReviewRepository {
-  VisumPage<Review> findPage(PageSearch<Review> page);
+  VisumPage<Review> findPage(int limit, int offset, Sort sort, String search);
 
   Optional<Review> findById(long id);
 
