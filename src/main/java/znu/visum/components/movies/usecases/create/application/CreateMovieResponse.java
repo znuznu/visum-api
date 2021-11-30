@@ -387,6 +387,10 @@ public class CreateMovieResponse {
       return runtime;
     }
 
+    public String getPosterUrl() {
+      return posterUrl;
+    }
+
     public static class Builder {
       private final ResponseMovieMetadata metadata;
 

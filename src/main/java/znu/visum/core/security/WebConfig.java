@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-// @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
   @Value("${visum.allowed-origins}")
   private String allowedOrigins;

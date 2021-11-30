@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import znu.visum.components.accounts.domain.errors.InvalidRegistrationKeyException;
 import znu.visum.components.accounts.domain.errors.MaximumAccountReachedException;
-import znu.visum.components.external.domain.errors.NoSuchExternalMovieIdException;
+import znu.visum.components.externals.domain.errors.NoSuchExternalMovieIdException;
 import znu.visum.components.genres.domain.errors.GenreAlreadyExistsException;
 import znu.visum.components.genres.domain.errors.NoSuchGenreIdException;
 import znu.visum.components.history.domain.errors.NoSuchViewingHistoryException;
