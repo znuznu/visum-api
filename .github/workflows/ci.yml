@@ -28,10 +28,10 @@ jobs:
         working-directory: .
         run: mvn -B compile
 
-  build:
+  test:
     runs-on: ubuntu-20.04
     needs: compile
-    name: Build
+    name: Test
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -46,6 +46,6 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
           java-package: jdk
-      - name: Build and test
+      - name: Verify
         working-directory: .
         run: mvn -B verify
