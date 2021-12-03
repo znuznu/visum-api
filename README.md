@@ -1,6 +1,6 @@
 # Visum backend
 
-This folder is the API folder of _Visum_, based on __Spring Boot 2.5__ and __PostgreSQL 12.4__
+This repo contains the API of _Visum_, based on __Spring Boot 2.5__ and __PostgreSQL 12.4__
 
 ## Requirements
 * [Docker](https://www.docker.com/)
