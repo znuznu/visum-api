@@ -1,6 +1,6 @@
 package znu.visum.core.errors.domain;
 
-import znu.visum.components.external.domain.models.ExternalApi;
+import znu.visum.components.externals.domain.models.ExternalApi;
 
 public class ExternalApiUnexpectedResponseBodyException extends VisumException {
   private final ExternalApi externalApi;

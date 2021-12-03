@@ -194,7 +194,10 @@ public class CreateMovieRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.revenue").value(6000))
         .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.overview").value("An overview."))
         .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.runtime").value(134))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.originalLanguage").value("jp"));
+        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.originalLanguage").value("jp"))
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.metadata.posterUrl")
+                .value("http://someUrl/KjuIhYyyG78"));
   }
 
   @Nested
