@@ -52,7 +52,7 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on content)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
@@ -121,7 +121,7 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
   @DisplayName("when a content is provided, it should return the movie with the content")
   public void givenAContent_itShouldReturnA200Response() throws Exception {
     mvc.perform(
@@ -155,7 +155,7 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews.sql"})
+  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
   @DisplayName("given ASC grade, it should return all the reviews order by ascending grade")
   public void ascGrade_itShouldReturnA200Response() throws Exception {
     mvc.perform(

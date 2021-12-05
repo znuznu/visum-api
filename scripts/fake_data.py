@@ -56,7 +56,7 @@ def get_rnd_movie_metadata(movie_id):
     overview = fake.text(max_nb_chars=800)
     budget = randrange(100000, 200000000)
     revenue = randrange(budget - 50000, 2000000000)
-    poster_url = "https://some-url.com/" + fake.pystr()
+    poster_url = 'https://image.tmdb.org/t/p/w780/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg'
     runtime = randrange(30, 200)
 
     return "INSERT INTO movie_metadata\nvalues(" + str(movie_id) + ", " + str(
