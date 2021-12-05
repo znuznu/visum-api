@@ -52,7 +52,11 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on content)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
@@ -72,7 +76,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':30,"
                         + "         'title':'Fake movie with review 30',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 30'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/26/2021 15:54:33'"
@@ -84,7 +91,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':20,"
                         + "         'title':'Fake movie with review 20',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 20'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/27/2021 15:54:33'"
@@ -96,7 +106,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':33,"
                         + "         'title':'Fake movie with review 33',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 33'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/28/2021 15:54:33'"
@@ -108,7 +121,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "   'movie':{"
                         + "       'id':10,"
                         + "       'title':'Fake movie with review 10',"
-                        + "       'releaseDate':'10/12/2001'"
+                        + "       'releaseDate':'10/12/2001',"
+                        + "       'metadata': {"
+                        + "         'posterUrl': 'An URL 10'"
+                        + "       }"
                         + "   },"
                         + "   'creationDate':'10/26/2021 15:54:33',"
                         + "   'updateDate':'10/29/2021 15:54:33'"
@@ -121,7 +137,11 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName("when a content is provided, it should return the movie with the content")
   public void givenAContent_itShouldReturnA200Response() throws Exception {
     mvc.perform(
@@ -142,7 +162,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':30,"
                         + "         'title':'Fake movie with review 30',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "     'metadata': {"
+                        + "       'posterUrl': 'An URL 30'"
+                        + "     }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/26/2021 15:54:33'"
@@ -155,7 +178,11 @@ public class GetPageReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName("given ASC grade, it should return all the reviews order by ascending grade")
   public void ascGrade_itShouldReturnA200Response() throws Exception {
     mvc.perform(
@@ -175,7 +202,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':20,"
                         + "         'title':'Fake movie with review 20',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 20'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/27/2021 15:54:33'"
@@ -187,7 +217,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':30,"
                         + "         'title':'Fake movie with review 30',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 30'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/26/2021 15:54:33'"
@@ -199,7 +232,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "     'movie':{"
                         + "         'id':33,"
                         + "         'title':'Fake movie with review 33',"
-                        + "         'releaseDate':'10/12/2001'"
+                        + "         'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 33'"
+                        + "         }"
                         + "     },"
                         + "     'creationDate':'10/26/2021 15:54:33',"
                         + "     'updateDate':'10/28/2021 15:54:33'"
@@ -211,7 +247,10 @@ public class GetPageReviewRouteIntegrationTest {
                         + "   'movie':{"
                         + "       'id':10,"
                         + "       'title':'Fake movie with review 10',"
-                        + "       'releaseDate':'10/12/2001'"
+                        + "       'releaseDate':'10/12/2001',"
+                        + "         'metadata': {"
+                        + "           'posterUrl': 'An URL 10'"
+                        + "         }"
                         + "   },"
                         + "   'creationDate':'10/26/2021 15:54:33',"
                         + "   'updateDate':'10/29/2021 15:54:33'"
