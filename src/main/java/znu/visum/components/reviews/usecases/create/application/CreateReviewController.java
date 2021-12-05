@@ -36,6 +36,6 @@ public class CreateReviewController {
                 null,
                 null,
                 createReviewRequest.getGrade(),
-                new MovieFromReview(createReviewRequest.getMovieId(), null, null))));
+                new MovieFromReview(createReviewRequest.getMovieId(), null, null, null))));
   }
 }

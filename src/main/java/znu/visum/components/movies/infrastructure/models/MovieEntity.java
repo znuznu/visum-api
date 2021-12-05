@@ -164,7 +164,11 @@ public class MovieEntity {
   }
 
   public MovieFromReview toMovieFromReview() {
-    return new MovieFromReview(this.id, this.title, this.releaseDate);
+    return new MovieFromReview(
+        this.id,
+        this.title,
+        this.releaseDate,
+        this.movieMetadataEntity == null ? null : new MovieFromReview.MovieFromReviewMetadata(this.movieMetadataEntity.getPosterUrl()));
   }
 
   public MovieFromActor toMovieFromActor() {

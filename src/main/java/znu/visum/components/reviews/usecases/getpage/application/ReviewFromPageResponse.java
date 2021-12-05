@@ -88,15 +88,22 @@ public class ReviewFromPageResponse {
     @JsonFormat(pattern = "MM/dd/yyyy")
     private final LocalDate releaseDate;
 
-    public ResponseMovie(long id, String title, LocalDate releaseDate) {
+    private final ResponseMovieMetadata metadata;
+
+    public ResponseMovie(
+        long id, String title, LocalDate releaseDate, ResponseMovieMetadata metadata) {
       this.id = id;
       this.title = title;
       this.releaseDate = releaseDate;
+      this.metadata = metadata;
     }
 
     public static ResponseMovie from(MovieFromReview movieFromReview) {
       return new ResponseMovie(
-          movieFromReview.getId(), movieFromReview.getTitle(), movieFromReview.getReleaseDate());
+          movieFromReview.getId(),
+          movieFromReview.getTitle(),
+          movieFromReview.getReleaseDate(),
+          ResponseMovieMetadata.from(movieFromReview.getMetadata()));
     }
 
     public long getId() {
@@ -109,6 +116,43 @@ public class ReviewFromPageResponse {
 
     public LocalDate getReleaseDate() {
       return releaseDate;
+    }
+
+    public ResponseMovieMetadata getMetadata() {
+      return metadata;
+    }
+
+    public static class ResponseMovieMetadata {
+      @ApiModelProperty("The movie's poster URL.")
+      private String posterUrl;
+
+      public ResponseMovieMetadata() {}
+
+      public static ResponseMovieMetadata from(
+          MovieFromReview.MovieFromReviewMetadata movieMetadata) {
+        return new Builder().posterUrl(movieMetadata.getPosterUrl()).build();
+      }
+
+      public String getPosterUrl() {
+        return posterUrl;
+      }
+
+      public static class Builder {
+        private final ResponseMovieMetadata metadata;
+
+        public Builder() {
+          this.metadata = new ResponseMovieMetadata();
+        }
+
+        public Builder posterUrl(String posterUrl) {
+          this.metadata.posterUrl = posterUrl;
+          return this;
+        }
+
+        public ResponseMovieMetadata build() {
+          return this.metadata;
+        }
+      }
     }
   }
 }
