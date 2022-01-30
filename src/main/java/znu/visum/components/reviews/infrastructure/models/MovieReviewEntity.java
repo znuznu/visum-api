@@ -32,7 +32,7 @@ public class MovieReviewEntity {
 
   public static MovieReviewEntity from(ReviewFromMovie reviewFromMovie) {
     return new MovieReviewEntity.Builder()
-        .movieEntity(null)
+        .movieEntity(new MovieEntity.Builder().id(reviewFromMovie.getId()).build())
         .id(reviewFromMovie.getId())
         .creationDate(reviewFromMovie.getCreationDate())
         .updateDate(reviewFromMovie.getUpdateDate())

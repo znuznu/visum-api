@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.5.0
+
+- Add PUT `/movies/:id/favorite` endpoint
+- Add DELETE `/movies/:id/favorite` endpoint
+- Add PUT `/movies/:id/watchlist` endpoint
+- Add DELETE `/movies/:id/watchlist` endpoint
+
 ## 2.4.0
 
 - Add poster's URL to Movies and Reviews pages
