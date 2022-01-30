@@ -8,6 +8,7 @@ import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.ports.MovieRepository;
 import znu.visum.components.movies.infrastructure.models.MovieEntity;
 import znu.visum.components.movies.infrastructure.models.MovieMetadataEntity;
+import znu.visum.components.reviews.infrastructure.models.MovieReviewEntity;
 import znu.visum.core.models.domain.Pair;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;

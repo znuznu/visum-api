@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- Add PUT `/movies/:id/favorite` endpoint
+
 ## 2.4.0
 
 - Add poster's URL to Movies and Reviews pages
