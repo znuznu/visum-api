@@ -4,6 +4,7 @@
 
 - Add PUT `/movies/:id/favorite` endpoint
 - Add DELETE `/movies/:id/favorite` endpoint
+- Add PUT `/movies/:id/watchlist` endpoint
 
 ## 2.4.0
 
