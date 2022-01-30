@@ -3,6 +3,7 @@
 ## 2.5.0
 
 - Add PUT `/movies/:id/favorite` endpoint
+- Add DELETE `/movies/:id/favorite` endpoint
 
 ## 2.4.0
 
