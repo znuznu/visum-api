@@ -18,7 +18,7 @@ public class DeleteByIdMovieReviewController {
     this.deleteByIdMovieReviewService = deleteByIdMovieReviewService;
   }
 
-  @ApiOperation("Delete a review bis his identifier.")
+  @ApiOperation("Delete a review by his identifier.")
   @DeleteMapping("/{id}/movies")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

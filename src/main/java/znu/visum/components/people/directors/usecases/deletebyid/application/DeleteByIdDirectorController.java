@@ -17,7 +17,7 @@ public class DeleteByIdDirectorController {
     this.deleteByIdDirectorService = deleteByIdDirectorService;
   }
 
-  @ApiOperation("Delete a director bis his identifier.")
+  @ApiOperation("Delete a director by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

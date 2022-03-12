@@ -19,7 +19,7 @@ public class GetByIdGenreController {
     this.getByIdGenreService = getByIdGenreService;
   }
 
-  @ApiOperation("Get a genre bis his identifier.")
+  @ApiOperation("Get a genre by his identifier.")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public GetByIdGenreResponse getGenreById(@PathVariable long id) {

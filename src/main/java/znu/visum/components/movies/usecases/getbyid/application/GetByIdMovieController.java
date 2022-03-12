@@ -21,7 +21,7 @@ public class GetByIdMovieController {
     this.getByIdMovieService = getByIdMovieService;
   }
 
-  @ApiOperation("Get a movie bis his identifier.")
+  @ApiOperation("Get a movie by his identifier.")
   @GetMapping("/{id}")
   public GetByIdMovieResponse getMovieById(@PathVariable long id) {
     return GetByIdMovieResponse.from(getByIdMovieService.findById(id));

@@ -17,7 +17,7 @@ public class DeleteByIdGenreController {
     this.deleteByIdGenreService = deleteByIdGenreService;
   }
 
-  @ApiOperation("Delete a genre bis his identifier.")
+  @ApiOperation("Delete a genre by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

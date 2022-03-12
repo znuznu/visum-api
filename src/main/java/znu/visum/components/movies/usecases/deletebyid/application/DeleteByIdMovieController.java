@@ -17,7 +17,7 @@ public class DeleteByIdMovieController {
     this.deleteByIdMovieService = deleteByIdMovieService;
   }
 
-  @ApiOperation("Delete a Movie bis his identifier.")
+  @ApiOperation("Delete a Movie by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

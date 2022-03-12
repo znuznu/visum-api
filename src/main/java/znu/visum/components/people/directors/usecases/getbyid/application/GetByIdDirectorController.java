@@ -22,7 +22,7 @@ public class GetByIdDirectorController {
     this.getByIdDirectorService = getByIdDirectorService;
   }
 
-  @ApiOperation("Get a director bis his identifier.")
+  @ApiOperation("Get a director by his identifier.")
   @GetMapping("/{id}")
   public GetByIdDirectorResponse getDirectorById(@PathVariable long id) {
     return GetByIdDirectorResponse.from(getByIdDirectorService.findById(id));

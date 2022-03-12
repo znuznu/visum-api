@@ -1,4 +1,4 @@
-package znu.visum.components.movies.usecases.deletebyid;
+package znu.visum.components.reviews.usecases.deletebyid;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
