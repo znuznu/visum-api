@@ -7,7 +7,7 @@ import znu.visum.components.movies.domain.ports.MovieRepository;
 import znu.visum.components.reviews.domain.ports.ReviewRepository;
 import znu.visum.components.statistics.domain.errors.InvalidDecadeException;
 import znu.visum.components.statistics.domain.errors.StatisticsDateRangeException;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
 import java.time.Year;

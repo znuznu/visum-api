@@ -9,7 +9,7 @@ import znu.visum.components.genres.domain.ports.GenreRepository;
 import znu.visum.components.genres.infrastructure.models.GenreEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
-import znu.visum.core.pagination.infrastructure.SearchSpecification;
+import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class PostgresGenreRepository implements GenreRepository {
 
   @Override
   public VisumPage<Genre> findPage(int limit, int offset, Sort sort, String search) {
-    Specification<GenreEntity> searchSpecification = SearchSpecification.parse(search);
+    Specification<GenreEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<GenreEntity> pageSearch =
         new PageSearch.Builder<GenreEntity>()

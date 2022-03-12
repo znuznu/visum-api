@@ -40,14 +40,16 @@ public class RemoveToWatchMovieRouteIntegrationTest {
 
   @Test
   public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
-    mvc.perform(delete("/api/movies/{id}/watchlist", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            delete("/api/movies/{id}/watchlist", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
   public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
-    mvc.perform(delete("/api/movies/{id}/watchlist", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            delete("/api/movies/{id}/watchlist", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
         .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
@@ -59,7 +61,8 @@ public class RemoveToWatchMovieRouteIntegrationTest {
   public void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response()
       throws Exception {
     mvc.perform(
-            delete("/api/movies/{id}/watchlist", "1000").contentType(MediaType.APPLICATION_JSON_VALUE))
+            delete("/api/movies/{id}/watchlist", "1000")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(
             MockMvcResultMatchers.jsonPath("$.message").value("No MOVIE with id 1000 found."))
@@ -74,7 +77,8 @@ public class RemoveToWatchMovieRouteIntegrationTest {
   public void givenANumericalId_whenAMovieWithTheIdExists_itShouldReturnA204Response()
       throws Exception {
     mvc.perform(
-            delete("/api/movies/{id}/watchlist", "91").contentType(MediaType.APPLICATION_JSON_VALUE))
+            delete("/api/movies/{id}/watchlist", "91")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent())
         .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist());
   }

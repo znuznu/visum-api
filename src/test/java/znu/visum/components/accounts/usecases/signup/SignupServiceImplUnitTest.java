@@ -18,7 +18,7 @@ import znu.visum.components.accounts.usecases.signup.domain.SignupServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("AccountEntityServiceImplUnitTest")
+@DisplayName("SignupServiceImplUnitTest")
 @ExtendWith(MockitoExtension.class)
 public class SignupServiceImplUnitTest {
   @Mock private AccountRepository accountRepository;

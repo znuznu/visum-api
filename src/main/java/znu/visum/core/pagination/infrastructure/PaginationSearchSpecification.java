@@ -7,12 +7,13 @@ import javax.persistence.criteria.*;
 import java.util.*;
 import java.util.regex.Matcher;
 
-public class SearchSpecification<T> implements Specification<T> {
+/** Should only convert an expression to a SearchSpecification */
+public class PaginationSearchSpecification<T> implements Specification<T> {
   private final String attribute;
   private final VisumOperator operator;
   private final Object value;
 
-  public SearchSpecification(String field, VisumOperator operator, Object value) {
+  public PaginationSearchSpecification(String field, VisumOperator operator, Object value) {
     this.attribute = field;
     this.operator = operator;
     this.value = value;
@@ -67,7 +68,7 @@ public class SearchSpecification<T> implements Specification<T> {
               if (matcher.matches()) {
                 String attributeName = matcher.group(1);
                 String value = matcher.group(2);
-                return new SearchSpecification<T>(attributeName, o, value);
+                return new PaginationSearchSpecification<T>(attributeName, o, value);
               }
 
               return null;

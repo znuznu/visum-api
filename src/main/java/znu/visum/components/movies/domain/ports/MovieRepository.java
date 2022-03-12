@@ -2,7 +2,7 @@ package znu.visum.components.movies.domain.ports;
 
 import org.springframework.data.domain.Sort;
 import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface MovieRepository {
   // TODO Spring Sort is not supposed to be here!
+  // TODO Create a VisumSpecification inside the domain layer ?
   VisumPage<Movie> findPage(int limit, int offset, Sort sort, String search);
 
   Optional<Movie> findById(long id);
@@ -40,4 +41,6 @@ public interface MovieRepository {
   List<Pair<Integer, Float>> getRatedMoviesAveragePerYearBetween(LocalDate start, LocalDate end);
 
   List<Movie> findHighestRatedDuringYearOlderMovies(Year year);
+
+  List<Movie> findByDiaryFilters(Year year, Integer grade, Long genreId);
 }

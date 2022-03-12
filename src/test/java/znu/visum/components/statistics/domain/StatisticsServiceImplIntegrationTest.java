@@ -12,7 +12,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.statistics.domain.services.StatisticsServiceImpl;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.Year;
 import java.util.List;

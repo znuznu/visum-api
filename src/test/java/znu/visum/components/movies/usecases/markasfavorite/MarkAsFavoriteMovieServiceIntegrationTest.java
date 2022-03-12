@@ -45,9 +45,11 @@ public class MarkAsFavoriteMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is not already a favorite one, it should mark it favorite and return true")
+  @DisplayName(
+      "when the movie exists and is not already a favorite one, it should mark it favorite and return true")
   @Sql("/sql/insert_movie_with_metadata.sql")
-  public void givenAMovieThatExists_whenTheMovieIsNotAlreadyMarked_itShouldMarkTheMovieAsFavorite() {
+  public void
+      givenAMovieThatExists_whenTheMovieIsNotAlreadyMarked_itShouldMarkTheMovieAsFavorite() {
     boolean hasChanged = service.markAsFavorite(90L);
 
     assertThat(hasChanged).isTrue();
@@ -62,7 +64,8 @@ public class MarkAsFavoriteMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is already a favorite one, it should not affect it and return false")
+  @DisplayName(
+      "when the movie exists and is already a favorite one, it should not affect it and return false")
   @Sql("/sql/insert_movie_with_metadata_with_favorite_with_should_watch.sql")
   public void givenAMovieThatExists_whenTheMovieIsAlreadyMarked_itShouldNotAffectTheMovie() {
     boolean hasChanged = service.markAsFavorite(91L);

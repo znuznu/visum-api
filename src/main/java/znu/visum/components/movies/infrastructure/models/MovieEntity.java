@@ -117,7 +117,7 @@ public class MovieEntity {
             movie.getViewingHistory().stream()
                 .map(MovieViewingHistoryEntity::from)
                 .collect(Collectors.toList()))
-        .metadata(null) // We wan't to override this property anyway
+        .metadata(null) // We want to override this property anyway
         .build();
   }
 
@@ -168,7 +168,9 @@ public class MovieEntity {
         this.id,
         this.title,
         this.releaseDate,
-        this.movieMetadataEntity == null ? null : new MovieFromReview.MovieFromReviewMetadata(this.movieMetadataEntity.getPosterUrl()));
+        this.movieMetadataEntity == null
+            ? null
+            : new MovieFromReview.MovieFromReviewMetadata(this.movieMetadataEntity.getPosterUrl()));
   }
 
   public MovieFromActor toMovieFromActor() {

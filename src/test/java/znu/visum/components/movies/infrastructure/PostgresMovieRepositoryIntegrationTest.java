@@ -1,5 +1,6 @@
 package znu.visum.components.movies.infrastructure;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 import znu.visum.components.movies.domain.models.ReviewFromMovie;
 import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -560,5 +561,61 @@ public class PostgresMovieRepositoryIntegrationTest {
     long count = this.movieRepository.countAllByReleaseDateYear(Year.of(2014));
 
     assertThat(count).isEqualTo(4);
+  }
+
+  @DisplayName("findByDiaryFilters() - no movies for the specified year")
+  @Test
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_movie_with_viewing_history.sql",
+      })
+  public void whenThereIsNoMovies_itShouldReturnNone() {
+    List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2014), null, null);
+
+    assertThat(movies).isEmpty();
+  }
+
+  @DisplayName("findByDiaryFilters() - movies for the specified year, no filters")
+  @Test
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_movies_viewing_year.sql",
+      })
+  public void givenYear_whenThereIsMovies_itShouldReturnMoviesSeenDuringYear() {
+    List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), null, null);
+
+    assertThat(movies).hasSize(3);
+  }
+
+  @DisplayName("findByDiaryFilters() - movies for the specified year, grade")
+  @Test
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_movies_viewing_year.sql",
+      })
+  public void givenYearGrade_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearAndGrade() {
+    List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), 9, null);
+
+    assertThat(movies).hasSize(2);
+    assertThat(movies.get(0).getId()).isEqualTo(1L);
+    assertThat(movies.get(1).getId()).isEqualTo(15L);
+  }
+
+  @DisplayName("findByDiaryFilters() - movies for the specified year, grade, genreId")
+  @Test
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_movies_viewing_year.sql",
+      })
+  public void
+      givenYearGradeGenreId_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearGradeGenreId() {
+    List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), 9, 3L);
+
+    assertThat(movies).hasSize(1);
+    assertThat(movies.get(0).getId()).isEqualTo(1L);
   }
 }

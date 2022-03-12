@@ -6,7 +6,7 @@ import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.statistics.domain.models.AllTimeStatistics;
 import znu.visum.components.statistics.domain.models.MovieCount;
 import znu.visum.components.statistics.domain.services.StatisticsService;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,7 +44,7 @@ public class GetAllTimeStatisticsServiceImpl implements GetAllTimeStatisticsServ
         new MovieCount(movieCountPerYear, movieCountPerGenre, movieCountPerOriginalLanguage);
 
     List<Pair<Integer, List<Movie>>> highestRatedMoviesPerDecade =
-        IntStream.range(1900, 2020)
+        IntStream.range(1900, 2050)
             .filter(year -> year % 10 == 0)
             .mapToObj(decade -> this.statisticsService.getHighestRatedMoviesForDecade(decade, 5))
             .filter(pair -> !pair.getValue().isEmpty())

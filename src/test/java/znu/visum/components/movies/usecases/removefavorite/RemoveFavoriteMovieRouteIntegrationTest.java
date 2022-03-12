@@ -40,14 +40,16 @@ public class RemoveFavoriteMovieRouteIntegrationTest {
 
   @Test
   public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
-    mvc.perform(delete("/api/movies/{id}/favorite", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            delete("/api/movies/{id}/favorite", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
   public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
-    mvc.perform(delete("/api/movies/{id}/favorite", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            delete("/api/movies/{id}/favorite", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
         .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
@@ -59,7 +61,8 @@ public class RemoveFavoriteMovieRouteIntegrationTest {
   public void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response()
       throws Exception {
     mvc.perform(
-            delete("/api/movies/{id}/favorite", "1000").contentType(MediaType.APPLICATION_JSON_VALUE))
+            delete("/api/movies/{id}/favorite", "1000")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(
             MockMvcResultMatchers.jsonPath("$.message").value("No MOVIE with id 1000 found."))

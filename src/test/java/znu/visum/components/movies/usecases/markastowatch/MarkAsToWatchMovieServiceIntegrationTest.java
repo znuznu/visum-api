@@ -46,7 +46,8 @@ public class MarkAsToWatchMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is not already a one to watch, it should mark it to watch and return true")
+  @DisplayName(
+      "when the movie exists and is not already a one to watch, it should mark it to watch and return true")
   @Sql("/sql/insert_movie_with_metadata.sql")
   public void givenAMovieThatExists_whenTheMovieIsNotAlreadyMarked_itShouldMarkTheMovieAsToWatch() {
     boolean hasChanged = service.markAsToWatch(90L);
@@ -63,7 +64,8 @@ public class MarkAsToWatchMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is already a one to watch, it should not affect it and return false")
+  @DisplayName(
+      "when the movie exists and is already a one to watch, it should not affect it and return false")
   @Sql("/sql/insert_movie_with_metadata_with_favorite_with_should_watch.sql")
   public void givenAMovieThatExists_whenTheMovieIsAlreadyMarked_itShouldNotAffectTheMovie() {
     boolean hasChanged = service.markAsToWatch(91L);

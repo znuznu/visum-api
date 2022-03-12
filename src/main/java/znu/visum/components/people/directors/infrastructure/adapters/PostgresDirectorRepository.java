@@ -9,7 +9,7 @@ import znu.visum.components.people.directors.domain.ports.DirectorRepository;
 import znu.visum.components.people.directors.infrastructure.models.DirectorEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
-import znu.visum.core.pagination.infrastructure.SearchSpecification;
+import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
@@ -27,7 +27,7 @@ public class PostgresDirectorRepository implements DirectorRepository {
 
   @Override
   public VisumPage<Director> findPage(int limit, int offset, Sort sort, String search) {
-    Specification<DirectorEntity> searchSpecification = SearchSpecification.parse(search);
+    Specification<DirectorEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<DirectorEntity> pageSearch =
         new PageSearch.Builder<DirectorEntity>()

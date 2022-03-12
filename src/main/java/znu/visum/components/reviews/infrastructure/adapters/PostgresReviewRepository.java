@@ -9,7 +9,7 @@ import znu.visum.components.reviews.domain.ports.ReviewRepository;
 import znu.visum.components.reviews.infrastructure.models.MovieReviewEntity;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
-import znu.visum.core.pagination.infrastructure.SearchSpecification;
+import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
 import znu.visum.core.pagination.infrastructure.SpringPageMapper;
 
 import javax.transaction.Transactional;
@@ -31,7 +31,8 @@ public class PostgresReviewRepository implements ReviewRepository {
 
   @Override
   public VisumPage<Review> findPage(int limit, int offset, Sort sort, String search) {
-    Specification<MovieReviewEntity> searchSpecification = SearchSpecification.parse(search);
+    Specification<MovieReviewEntity> searchSpecification =
+        PaginationSearchSpecification.parse(search);
 
     PageSearch<MovieReviewEntity> pageSearch =
         new PageSearch.Builder<MovieReviewEntity>()
