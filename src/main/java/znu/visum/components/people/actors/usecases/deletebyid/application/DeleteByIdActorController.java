@@ -17,7 +17,7 @@ public class DeleteByIdActorController {
     this.deleteByIdActorService = deleteByIdActorService;
   }
 
-  @ApiOperation("Delete an actor bis his identifier.")
+  @ApiOperation("Delete an actor by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

@@ -2,13 +2,12 @@
 
 ## Features
 
-- [ ] Random movie by email (eg: 1 time per week)
 - [ ] Add production country in order to display movies by country on a world map
 
 ## Refactor
 
 - [ ] Refactor the pagination Specification part
-- [ ] Refactor the Sign In usecase
+- [ ] Refactor the Sign In usecase and the auth
 - [ ] Fix the TMDb route IT (use InMemory connector)
 - [ ] Refactor entities' builders
 - [ ] JPQL instead of native query where it's more convenient

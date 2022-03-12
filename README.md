@@ -1,4 +1,4 @@
-# Visum backend
+# Visum API
 
 This repo contains the API of _Visum_, based on __Spring Boot 2.5__ and __PostgreSQL 12.4__
 

@@ -18,7 +18,7 @@ public class DeleteByIdMovieViewingHistoryController {
     this.deleteByIdMovieViewingHistoryService = deleteByIdMovieViewingHistoryService;
   }
 
-  @ApiOperation("Delete a movie bis his identifier.")
+  @ApiOperation("Delete a movie by his identifier.")
   @DeleteMapping("/{id}/movies")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

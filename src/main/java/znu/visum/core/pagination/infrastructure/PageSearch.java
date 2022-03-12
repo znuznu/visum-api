@@ -20,13 +20,6 @@ public class PageSearch<T> implements Pageable {
     this.sorting = pageSearch.sorting;
   }
 
-  private PageSearch(long limit, long offset, Specification<T> search, Sort sort) {
-    this.limit = limit;
-    this.offset = offset;
-    this.search = search;
-    this.sorting = sort;
-  }
-
   public PageSearch(Pageable pageable) {
     this(pageable.getPageSize(), pageable.getOffset());
   }

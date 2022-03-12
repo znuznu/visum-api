@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.1
+
+- Fix typos
+- Add `launch.json` file to `.vscode/`
+
 ## 2.5.0
 
 - Add PUT `/movies/:id/favorite` endpoint
