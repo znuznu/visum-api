@@ -7,10 +7,8 @@ import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.ports.MovieRepository;
 
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -33,7 +31,8 @@ public class GetDiaryByYearServiceImpl implements GetDiaryByYearService {
 
     for (Movie movie : moviesSeenDuringTheYear) {
       for (MovieViewingHistory movieViewingHistory : movie.getViewingHistory()) {
-        if (movieViewingHistory.getViewingDate().getYear() != yearValue) {
+        if (movieViewingHistory.getViewingDate() == null
+            || movieViewingHistory.getViewingDate().getYear() != yearValue) {
           continue;
         }
 

@@ -49,7 +49,10 @@ public class DiaryMovie {
 
     boolean isRewatch =
         movie.getViewingHistory().stream()
-            .anyMatch(history -> history.getViewingDate().isBefore(viewingDate));
+            .anyMatch(
+                history ->
+                    history.getViewingDate() != null
+                        && history.getViewingDate().isBefore(viewingDate));
 
     return new DiaryMovie.Builder()
         .id(movie.getId())
