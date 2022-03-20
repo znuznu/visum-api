@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.statistics.domain.models.PerYearStatistics;
 import znu.visum.components.statistics.domain.services.StatisticsService;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.Year;
 import java.util.List;

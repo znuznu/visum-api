@@ -1,0 +1,54 @@
+type Query {
+    diary(filters: DiaryFiltersInput!): DiaryYear
+}
+
+input DiaryFiltersInput {
+    year: Int!
+    genreId: Int
+    grade: Int
+}
+
+type DiaryYear {
+    months: [DiaryMonth]!
+    year: Int!
+}
+
+enum Month {
+    JANUARY,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER
+}
+
+type DiaryMonth {
+    month: Month!
+    days: [DiaryDay]!
+}
+
+type DiaryDay {
+    day: Int
+    movie: DiaryMovie!
+}
+
+type DiaryMovie {
+    id: Int!
+    title: String!
+    posterUrl: String
+    releaseDate: String!
+    grade: Int
+    isFavorite: Boolean!
+    isRewatch: Boolean!
+    reviewId: Int
+}
+
+schema {
+    query: Query
+}

@@ -52,7 +52,11 @@ public class GetPageMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on title)")
   public void defaultCase_itShouldReturnA200Response() throws Exception {
@@ -74,7 +78,11 @@ public class GetPageMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName("when a title is provided, it should return the movie with the title")
   public void givenATitle_itShouldReturnA200Response() throws Exception {
     mvc.perform(
@@ -95,7 +103,11 @@ public class GetPageMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_movies_with_reviews_metadata.sql"})
+  @Sql(
+      scripts = {
+        "/sql/truncate_all_tables.sql",
+        "/sql/insert_multiple_movies_with_reviews_metadata.sql"
+      })
   @DisplayName("when a like title is provided, it should return movies containing the title")
   public void givenALikeTitle_itShouldReturnA200Response() throws Exception {
     mvc.perform(

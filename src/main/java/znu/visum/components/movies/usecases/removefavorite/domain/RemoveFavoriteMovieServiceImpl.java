@@ -18,9 +18,9 @@ public class RemoveFavoriteMovieServiceImpl implements RemoveFavoriteMovieServic
   @Override
   public boolean removeFavorite(long movieId) {
     Movie movie =
-            movieRepository
-                    .findById(movieId)
-                    .orElseThrow(() -> new NoSuchMovieIdException(Long.toString(movieId)));
+        movieRepository
+            .findById(movieId)
+            .orElseThrow(() -> new NoSuchMovieIdException(Long.toString(movieId)));
 
     if (movie.isFavorite()) {
       movie.setFavorite(false);

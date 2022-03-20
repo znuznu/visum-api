@@ -1,11 +1,7 @@
-package znu.visum.core.models.domain;
+package znu.visum.core.models.common;
 
 import java.util.Objects;
 
-/**
- * Represents a pair of values. Should be a domain model only but can be found in application too,
- * because it's more convenient.
- */
 public class Pair<K, V> {
   private K key;
   private V value;

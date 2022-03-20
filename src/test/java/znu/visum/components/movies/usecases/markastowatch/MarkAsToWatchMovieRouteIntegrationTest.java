@@ -40,14 +40,16 @@ public class MarkAsToWatchMovieRouteIntegrationTest {
 
   @Test
   public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
-    mvc.perform(put("/api/movies/{id}/watchlist", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            put("/api/movies/{id}/watchlist", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
   public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
-    mvc.perform(put("/api/movies/{id}/watchlist", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(
+            put("/api/movies/{id}/watchlist", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
         .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))

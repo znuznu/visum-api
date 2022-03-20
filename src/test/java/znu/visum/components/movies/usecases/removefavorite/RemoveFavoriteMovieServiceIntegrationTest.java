@@ -45,7 +45,8 @@ public class RemoveFavoriteMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is already not a favorite one, it should not affect it and return false")
+  @DisplayName(
+      "when the movie exists and is already not a favorite one, it should not affect it and return false")
   @Sql("/sql/insert_movie_with_metadata.sql")
   public void givenAMovieThatExists_whenTheMovieIsAlreadyNotMarked_itShouldNotAffectTheMovie() {
     boolean hasChanged = service.removeFavorite(90L);
@@ -62,7 +63,8 @@ public class RemoveFavoriteMovieServiceIntegrationTest {
   }
 
   @Test
-  @DisplayName("when the movie exists and is a favorite one, it should mark it as not favorite and return true")
+  @DisplayName(
+      "when the movie exists and is a favorite one, it should mark it as not favorite and return true")
   @Sql("/sql/insert_movie_with_metadata_with_favorite_with_should_watch.sql")
   public void givenAMovieThatExists_whenTheMovieIsMarked_itShouldRemoveTheFavorite() {
     boolean hasChanged = service.removeFavorite(91L);

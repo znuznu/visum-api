@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.statistics.domain.models.PerYearStatistics;
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
 import java.util.List;

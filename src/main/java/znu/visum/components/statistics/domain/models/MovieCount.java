@@ -1,6 +1,6 @@
 package znu.visum.components.statistics.domain.models;
 
-import znu.visum.core.models.domain.Pair;
+import znu.visum.core.models.common.Pair;
 
 import java.util.List;
 

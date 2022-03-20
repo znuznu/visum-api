@@ -16,7 +16,11 @@ public enum ReviewFactory {
         LocalDateTime.of(2021, 12, 12, 7, 10),
         LocalDateTime.of(2021, 12, 12, 5, 10),
         7,
-            new MovieFromReview(movieId, "Fake movie", LocalDate.of(2021, 6, 12), new MovieFromReview.MovieFromReviewMetadata("https://images.com/1234")));
+        new MovieFromReview(
+            movieId,
+            "Fake movie",
+            LocalDate.of(2021, 6, 12),
+            new MovieFromReview.MovieFromReviewMetadata("https://images.com/1234")));
   }
 
   private Review createReviewToSave(long movieId) {

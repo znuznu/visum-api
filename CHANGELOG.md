@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.0
+
+- Add GraphQL dependencies
+- Add GraphQL `diary` query
+
 ## 2.5.1
 
 - Fix typos
