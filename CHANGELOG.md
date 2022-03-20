@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1
+
+- Fix NPE in case of null viewing date
+
 ## 2.6.0
 
 - Add GraphQL dependencies
