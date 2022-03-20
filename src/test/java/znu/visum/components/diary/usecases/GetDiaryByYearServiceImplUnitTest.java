@@ -64,7 +64,8 @@ public class GetDiaryByYearServiceImplUnitTest {
                   List.of(
                       new MovieViewingHistory(1L, LocalDate.of(2019, 1, 1), 1L),
                       new MovieViewingHistory(2L, LocalDate.of(2019, 1, 5), 1L),
-                      new MovieViewingHistory(3L, LocalDate.of(2016, 12, 19), 1L)))
+                      new MovieViewingHistory(3L, LocalDate.of(2016, 12, 19), 1L),
+                      new MovieViewingHistory(3L, null, 1L)))
               .review(null)
               .build();
 
