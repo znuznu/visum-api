@@ -1,6 +1,6 @@
 package znu.visum.components.movies.usecases.removetowatch.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class RemoveToWatchMovieController {
     this.removeToWatchMovieService = removeToWatchMovieService;
   }
 
-  @ApiOperation("Mark the movie as a one to watch.")
+  @Operation(summary = "Mark the movie as a one to watch.")
   @DeleteMapping("/{id}/watchlist")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void removeToWatch(@PathVariable long id) {

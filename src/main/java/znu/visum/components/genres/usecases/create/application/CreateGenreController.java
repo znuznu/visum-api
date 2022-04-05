@@ -1,6 +1,6 @@
 package znu.visum.components.genres.usecases.create.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class CreateGenreController {
     this.createGenreService = createGenreService;
   }
 
-  @ApiOperation("Create a genre.")
+  @Operation(summary = "Create a genre.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public CreateGenreResponse create(@Valid @RequestBody CreateGenreRequest createGenreRequest) {

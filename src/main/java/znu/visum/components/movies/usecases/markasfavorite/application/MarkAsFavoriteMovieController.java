@@ -1,6 +1,6 @@
 package znu.visum.components.movies.usecases.markasfavorite.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class MarkAsFavoriteMovieController {
     this.markAsFavoriteMovieService = markAsFavoriteMovieService;
   }
 
-  @ApiOperation("Mark the movie as a favorite one.")
+  @Operation(summary = "Mark the movie as a favorite one.")
   @PutMapping("/{id}/favorite")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void markAsFavorite(@PathVariable long id) {

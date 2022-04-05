@@ -2,23 +2,22 @@ package znu.visum.components.accounts.usecases.signup.application;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.accounts.domain.models.AccountToRegister;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("Represents an account to create.")
+@Schema(description = "Represents an account to create.")
 public class SignupRequest {
-  @ApiModelProperty("The account's username.")
+  @Schema(description = "The account's username.")
   @NotBlank
   private final String username;
 
-  @ApiModelProperty("The account's password.")
+  @Schema(description = "The account's password.")
   @NotBlank
   private final String password;
 
-  @ApiModelProperty("The account's registrationKey.")
+  @Schema(description = "The account's registrationKey.")
   @NotBlank
   private final String registrationKey;
 

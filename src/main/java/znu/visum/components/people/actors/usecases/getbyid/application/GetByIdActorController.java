@@ -1,6 +1,6 @@
 package znu.visum.components.people.actors.usecases.getbyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class GetByIdActorController {
     this.getByIdActorService = getByIdActorService;
   }
 
-  @ApiOperation("Get an actor by his identifier.")
+  @Operation(summary = "Get an actor by his identifier.")
   @GetMapping("/{id}")
   public GetByIdActorResponse getActorById(@PathVariable long id) {
     return GetByIdActorResponse.from(getByIdActorService.findById(id));

@@ -1,6 +1,6 @@
 package znu.visum.components.statistics.usecases.getperyear.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class GetPerYearStatisticsController {
     this.GetPerYearStatisticsService = getPerYearStatisticsService;
   }
 
-  @ApiOperation("Get per year statistics.")
+  @Operation(summary = "Get per year statistics.")
   @GetMapping("/{year}")
   @ResponseStatus(HttpStatus.OK)
   public GetPerYearStatisticsResponse getAllTimeStatistics(@PathVariable @Min(1900) int year) {

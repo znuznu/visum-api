@@ -1,19 +1,18 @@
 package znu.visum.components.genres.usecases.create.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-@ApiModel(description = "Represent a genre created.")
+@Schema(description = "Represent a genre created.")
 public class CreateGenreResponse {
-  @ApiModelProperty(value = "The identifier of the Genre created.", example = "1", required = true)
+  @Schema(description = "The identifier of the Genre created.", example = "1", required = true)
   @Min(1)
   private final Long id;
 
-  @ApiModelProperty(value = "The type of the Genre created.", example = "Horror", required = true)
+  @Schema(description = "The type of the Genre created.", example = "Horror", required = true)
   @NotEmpty(message = "Type cannot be empty.")
   private final String type;
 

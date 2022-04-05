@@ -1,21 +1,20 @@
 package znu.visum.components.reviews.usecases.create.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.reviews.domain.models.Review;
 
-@ApiModel("Represents the review created.")
+@Schema(description = "Represents the review created.")
 public class CreateReviewResponse {
-  @ApiModelProperty("The identifier of the review created.")
+  @Schema(description = "The identifier of the review created.")
   private final long id;
 
-  @ApiModelProperty("The grade of the review created.")
+  @Schema(description = "The grade of the review created.")
   private final int grade;
 
-  @ApiModelProperty("The text of the review created.")
+  @Schema(description = "The text of the review created.")
   private final String content;
 
-  @ApiModelProperty("The identifier of the movie for which the review has been created.")
+  @Schema(description = "The identifier of the movie for which the review has been created.")
   private final long movieId;
 
   public CreateReviewResponse(long id, int grade, String content, long movieId) {

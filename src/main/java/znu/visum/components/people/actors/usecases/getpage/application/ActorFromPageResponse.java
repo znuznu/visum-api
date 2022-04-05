@@ -1,18 +1,17 @@
 package znu.visum.components.people.actors.usecases.getpage.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.people.actors.domain.models.Actor;
 
-@ApiModel("Represents a page of actors.")
+@Schema(description = "Represents a page of actors.")
 public class ActorFromPageResponse {
-  @ApiModelProperty("The actor identifier.")
+  @Schema(description = "The actor identifier.")
   private final long id;
 
-  @ApiModelProperty("The actor name.")
+  @Schema(description = "The actor name.")
   private final String name;
 
-  @ApiModelProperty("The actor forename.")
+  @Schema(description = "The actor forename.")
   private final String forename;
 
   public ActorFromPageResponse(long id, String name, String forename) {

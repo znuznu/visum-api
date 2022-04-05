@@ -1,6 +1,6 @@
 package znu.visum.components.reviews.usecases.getpage.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -24,7 +24,7 @@ public class GetPageMovieReviewController {
     this.getPageMovieReviewService = getPageMovieReviewService;
   }
 
-  @ApiOperation("Get a page of reviews.")
+  @Operation(summary = "Get a page of reviews.")
   @GetMapping
   public GetPageResponse<ReviewFromPageResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,

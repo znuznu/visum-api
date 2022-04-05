@@ -1,6 +1,6 @@
 package znu.visum.components.statistics.usecases.getalltime.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class GetAllTimeStatisticsController {
     this.getAllTimeStatisticsService = getAllTimeStatisticsService;
   }
 
-  @ApiOperation("Get all-time statistics.")
+  @Operation(summary = "Get all-time statistics.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public GetAllTimeStatisticsResponse getAllTimeStatistics() {

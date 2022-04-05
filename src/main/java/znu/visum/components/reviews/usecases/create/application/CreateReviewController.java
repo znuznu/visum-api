@@ -1,6 +1,6 @@
 package znu.visum.components.reviews.usecases.create.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class CreateReviewController {
     this.createReviewService = createReviewService;
   }
 
-  @ApiOperation("Create a review for a given movie identifier.")
+  @Operation(summary = "Create a review for a given movie identifier.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public CreateReviewResponse create(

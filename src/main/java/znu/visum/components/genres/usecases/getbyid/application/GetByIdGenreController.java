@@ -1,6 +1,6 @@
 package znu.visum.components.genres.usecases.getbyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class GetByIdGenreController {
     this.getByIdGenreService = getByIdGenreService;
   }
 
-  @ApiOperation("Get a genre by his identifier.")
+  @Operation(summary = "Get a genre by his identifier.")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public GetByIdGenreResponse getGenreById(@PathVariable long id) {

@@ -1,6 +1,6 @@
 package znu.visum.components.externals.tmdb.usecases.getmoviebyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class GetTmdbMovieByIdController {
     this.getTmdbMovieByIdService = getTmdbMovieByIdService;
   }
 
-  @ApiOperation("Get a TMDB movie by his identifier.")
+  @Operation(summary = "Get a TMDB movie by his identifier.")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public GetTmdbMovieByIdResponse getTmdbMovieById(@PathVariable @Min(0) long id) {

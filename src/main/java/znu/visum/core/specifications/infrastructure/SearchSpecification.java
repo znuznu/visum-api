@@ -6,8 +6,6 @@ import znu.visum.core.models.common.JoinCriteria;
 import znu.visum.core.specifications.CriteriaFilters;
 
 import javax.persistence.criteria.*;
-import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 

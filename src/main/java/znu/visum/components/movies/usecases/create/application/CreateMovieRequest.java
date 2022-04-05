@@ -3,8 +3,7 @@ package znu.visum.components.movies.usecases.create.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.movies.domain.models.ActorFromMovie;
 import znu.visum.components.movies.domain.models.DirectorFromMovie;
@@ -17,37 +16,37 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a movie to create.")
+@Schema(description = "Represents a movie to create.")
 public class CreateMovieRequest {
-  @ApiModelProperty("The movie title.")
+  @Schema(description = "The movie title.")
   @NotBlank
   private final String title;
 
-  @ApiModelProperty("The release date of the movie.")
+  @Schema(description = "The release date of the movie.")
   @NotNull
   private final LocalDate releaseDate;
 
-  @ApiModelProperty("True if the movie is a favorite one.")
+  @Schema(description = "True if the movie is a favorite one.")
   @NotNull
   private final boolean isFavorite;
 
-  @ApiModelProperty("True if the movie is to watch in the future.")
+  @Schema(description = "True if the movie is to watch in the future.")
   @NotNull
   private final boolean isToWatch;
 
-  @ApiModelProperty("The genres of the movie.")
+  @Schema(description = "The genres of the movie.")
   @NotNull
   private final List<RequestGenre> genres;
 
-  @ApiModelProperty("The actors of the movie.")
+  @Schema(description = "The actors of the movie.")
   @NotNull
   private final List<RequestActor> actors;
 
-  @ApiModelProperty("The directors of the movie.")
+  @Schema(description = "The directors of the movie.")
   @NotNull
   private final List<RequestDirector> directors;
 
-  @ApiModelProperty("The movie's metadata.")
+  @Schema(description = "The movie's metadata.")
   @NotNull
   private final RequestMovieMetadata metadata;
 
@@ -186,33 +185,33 @@ public class CreateMovieRequest {
     }
   }
 
-  @ApiModel("Represents metadata related to the movie.")
+  @Schema(description = "Represents metadata related to the movie.")
   public static class RequestMovieMetadata {
-    @ApiModelProperty("The movie's TMDB identifier.")
+    @Schema(description = "The movie's TMDB identifier.")
     private Long tmdbId;
 
-    @ApiModelProperty("The movie's IMDB identifier.")
+    @Schema(description = "The movie's IMDB identifier.")
     private String imdbId;
 
-    @ApiModelProperty("The movie's original language.")
+    @Schema(description = "The movie's original language.")
     private String originalLanguage;
 
-    @ApiModelProperty("The movie's tagline.")
+    @Schema(description = "The movie's tagline.")
     private String tagline;
 
-    @ApiModelProperty("The movie's overview.")
+    @Schema(description = "The movie's overview.")
     private String overview;
 
-    @ApiModelProperty("The movie's budget.")
+    @Schema(description = "The movie's budget.")
     private long budget;
 
-    @ApiModelProperty("The movie's revenue.")
+    @Schema(description = "The movie's revenue.")
     private long revenue;
 
-    @ApiModelProperty("The movie's runtime.")
+    @Schema(description = "The movie's runtime.")
     private int runtime;
 
-    @ApiModelProperty("The movie's poster URL from an external source.")
+    @Schema(description = "The movie's poster URL from an external source.")
     private String posterUrl;
 
     public RequestMovieMetadata() {}

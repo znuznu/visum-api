@@ -1,6 +1,6 @@
 package znu.visum.components.reviews.usecases.deletebyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +18,7 @@ public class DeleteByIdMovieReviewController {
     this.deleteByIdMovieReviewService = deleteByIdMovieReviewService;
   }
 
-  @ApiOperation("Delete a review by his identifier.")
+  @Operation(summary = "Delete a review by his identifier.")
   @DeleteMapping("/{id}/movies")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

@@ -3,20 +3,19 @@ package znu.visum.components.history.usecases.create.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@ApiModel(description = "Represent a movie viewing history created.")
+@Schema(description = "Represent a movie viewing history created.")
 public class CreateMovieViewingHistoryRequest {
-  @ApiModelProperty("A viewing date of the movie.")
+  @Schema(description = "A viewing date of the movie.")
   @NotNull
   private final LocalDate viewingDate;
 
-  @ApiModelProperty("The movie identifier to which add a viewing date.")
+  @Schema(description = "The movie identifier to which add a viewing date.")
   @NotNull
   private final long movieId;
 

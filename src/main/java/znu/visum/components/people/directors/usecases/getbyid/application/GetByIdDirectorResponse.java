@@ -1,8 +1,7 @@
 package znu.visum.components.people.directors.usecases.getbyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.people.directors.domain.models.Director;
 import znu.visum.components.people.directors.domain.models.MovieFromDirector;
 
@@ -10,18 +9,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a director.")
+@Schema(description = "Represents a director.")
 public class GetByIdDirectorResponse {
-  @ApiModelProperty("The director identifier.")
+  @Schema(description = "The director identifier.")
   private final long id;
 
-  @ApiModelProperty("The director forename.")
+  @Schema(description = "The director forename.")
   private final String forename;
 
-  @ApiModelProperty("The director name.")
+  @Schema(description = "The director name.")
   private final String name;
 
-  @ApiModelProperty("The director movies.")
+  @Schema(description = "The director movies.")
   private List<ResponseMovie> movies;
 
   public GetByIdDirectorResponse(

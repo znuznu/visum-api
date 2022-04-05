@@ -1,6 +1,6 @@
 package znu.visum.components.movies.usecases.create.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class CreateMovieController {
     this.createMovieService = createMovieService;
   }
 
-  @ApiOperation("Create a movie with cast, genres, TMDB identifier and a viewing history.")
+  @Operation(summary = "Create a movie with cast, genres, TMDB identifier and a viewing history.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public CreateMovieResponse createWithNames(

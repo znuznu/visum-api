@@ -1,6 +1,6 @@
 package znu.visum.components.externals.tmdb.usecases.searchmovies.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class SearchTmdbMoviesController {
     this.searchTmdbMoviesService = searchTmdbMoviesService;
   }
 
-  @ApiOperation("Search movies on TMDB.")
+  @Operation(summary = "Search movies on TMDB.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public GetPageResponse<SearchTmdbMoviesResponse> searchTmdbMovies(
