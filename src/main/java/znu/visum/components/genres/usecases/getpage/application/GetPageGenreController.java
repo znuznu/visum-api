@@ -1,6 +1,6 @@
 package znu.visum.components.genres.usecases.getpage.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -22,7 +22,7 @@ public class GetPageGenreController {
     this.getPageGenreService = getPageGenreService;
   }
 
-  @ApiOperation("Get a page of genres.")
+  @Operation(summary = "Get a page of genres.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public GetPageResponse<GenreFromPageResponse> getPage(

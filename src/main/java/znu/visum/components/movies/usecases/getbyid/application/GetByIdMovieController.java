@@ -1,6 +1,6 @@
 package znu.visum.components.movies.usecases.getbyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class GetByIdMovieController {
     this.getByIdMovieService = getByIdMovieService;
   }
 
-  @ApiOperation("Get a movie by his identifier.")
+  @Operation(summary = "Get a movie by his identifier.")
   @GetMapping("/{id}")
   public GetByIdMovieResponse getMovieById(@PathVariable long id) {
     return GetByIdMovieResponse.from(getByIdMovieService.findById(id));

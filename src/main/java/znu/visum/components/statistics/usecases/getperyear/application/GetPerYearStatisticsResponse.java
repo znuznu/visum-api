@@ -1,8 +1,7 @@
 package znu.visum.components.statistics.usecases.getperyear.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.statistics.domain.models.PerYearStatistics;
 import znu.visum.core.models.common.Pair;
@@ -11,20 +10,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a bunch of statistics for a specific year.")
+@Schema(description = "Represents a bunch of statistics for a specific year.")
 public class GetPerYearStatisticsResponse {
-  @ApiModelProperty("The number of movies released during the year.")
+  @Schema(description = "The number of movies released during the year.")
   private long movieCount;
 
-  @ApiModelProperty("The number of reviews updated during year.")
+  @Schema(description = "The number of reviews updated during year.")
   private long reviewCount;
 
-  @ApiModelProperty("The sum of all movies runtime in hours (released during the year).")
+  @Schema(description = "The sum of all movies runtime in hours (released during the year).")
   private int totalRuntimeInHours;
 
   private ResponseHighestRatedMovies highestRatedMovies;
 
-  @ApiModelProperty("The number of movies per genre.")
+  @Schema(description = "The number of movies per genre.")
   private List<Pair<String, Integer>> movieCountPerGenre;
 
   public GetPerYearStatisticsResponse() {}
@@ -86,7 +85,7 @@ public class GetPerYearStatisticsResponse {
     this.movieCountPerGenre = movieCountPerGenre;
   }
 
-  @ApiModel("Represents the highest rated movies released and reviewed (older) during the year.")
+  @Schema(description = "Represents the highest rated movies released and reviewed (older) during the year.")
   public static class ResponseHighestRatedMovies {
     private final List<ResponseMovie> released;
     private final List<ResponseMovie> older;

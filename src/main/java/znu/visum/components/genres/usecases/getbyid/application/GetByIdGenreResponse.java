@@ -1,18 +1,17 @@
 package znu.visum.components.genres.usecases.getbyid.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 
 import javax.validation.constraints.Min;
 
-@ApiModel(description = "Represent a Genre.")
+@Schema(description = "Represent a Genre.")
 public class GetByIdGenreResponse {
-  @ApiModelProperty("The identifier of the Genre.")
+  @Schema(description = "The identifier of the Genre.")
   @Min(1)
   private final Long id;
 
-  @ApiModelProperty("The type of the Genre.")
+  @Schema(description = "The type of the Genre.")
   private final String type;
 
   public GetByIdGenreResponse(Long id, String type) {

@@ -2,33 +2,32 @@ package znu.visum.components.movies.usecases.getpage.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@ApiModel("Represents a movie in a page.")
+@Schema(description = "Represents a movie in a page.")
 public class MovieFromPageResponse {
-  @ApiModelProperty("The movie identifier.")
+  @Schema(description = "The movie identifier.")
   private final Long id;
 
-  @ApiModelProperty("The movie title.")
+  @Schema(description = "The movie title.")
   private final String title;
 
-  @ApiModelProperty("The release date of the movie.")
+  @Schema(description = "The release date of the movie.")
   @JsonFormat(pattern = "MM/dd/yyyy")
   private final LocalDate releaseDate;
 
-  @ApiModelProperty("True if the movie is a favorite one.")
+  @Schema(description = "True if the movie is a favorite one.")
   private final boolean isFavorite;
 
-  @ApiModelProperty("True if the movie is to watch in the future.")
+  @Schema(description = "True if the movie is to watch in the future.")
   private final boolean isToWatch;
 
-  @ApiModelProperty("The creation date of the movie.")
+  @Schema(description = "The creation date of the movie.")
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime creationDate;
 
@@ -93,7 +92,7 @@ public class MovieFromPageResponse {
   }
 
   public static class ResponseMovieMetadata {
-    @ApiModelProperty("The movie's poster URL.")
+    @Schema(description = "The movie's poster URL.")
     private String posterUrl;
 
     public ResponseMovieMetadata() {}

@@ -1,6 +1,6 @@
 package znu.visum.components.people.directors.usecases.deletebyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class DeleteByIdDirectorController {
     this.deleteByIdDirectorService = deleteByIdDirectorService;
   }
 
-  @ApiOperation("Delete a director by his identifier.")
+  @Operation(summary = "Delete a director by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

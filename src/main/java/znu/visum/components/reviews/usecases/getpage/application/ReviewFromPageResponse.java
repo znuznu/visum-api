@@ -1,33 +1,32 @@
 package znu.visum.components.reviews.usecases.getpage.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.reviews.domain.models.MovieFromReview;
 import znu.visum.components.reviews.domain.models.Review;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@ApiModel("Represents a review from a page.")
+@Schema(description = "Represents a review from a page.")
 public class ReviewFromPageResponse {
-  @ApiModelProperty("The identifier of the review.")
+  @Schema(description = "The identifier of the review.")
   private final long id;
 
-  @ApiModelProperty("The grade of the review.")
+  @Schema(description = "The grade of the review.")
   private final int grade;
 
-  @ApiModelProperty("The text of the review.")
+  @Schema(description = "The text of the review.")
   private final String content;
 
-  @ApiModelProperty("The movie for which the review was written.")
+  @Schema(description = "The movie for which the review was written.")
   private final ResponseMovie movie;
 
-  @ApiModelProperty("The creation date of the review.")
+  @Schema(description = "The creation date of the review.")
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime creationDate;
 
-  @ApiModelProperty("The last update date of the review.")
+  @Schema(description = "The last update date of the review.")
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime updateDate;
 
@@ -123,7 +122,7 @@ public class ReviewFromPageResponse {
     }
 
     public static class ResponseMovieMetadata {
-      @ApiModelProperty("The movie's poster URL.")
+      @Schema(description = "The movie's poster URL.")
       private String posterUrl;
 
       public ResponseMovieMetadata() {}

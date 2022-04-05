@@ -1,7 +1,6 @@
 package znu.visum.core.pagination.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import javax.validation.constraints.Min;
@@ -9,29 +8,29 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a Page.")
+@Schema(description = "Represents a Page.")
 public class GetPageResponse<T> {
-  @ApiModelProperty("The current page number")
+  @Schema(description = "The current page number")
   @Min(0)
   private int current;
 
-  @ApiModelProperty("The number of elements in the current page")
+  @Schema(description = "The number of elements in the current page")
   private int size;
 
-  @ApiModelProperty("The number of elements in all the pages")
+  @Schema(description = "The number of elements in all the pages")
   @Min(0)
   private long totalElements;
 
-  @ApiModelProperty("The actual content of type T in the page")
+  @Schema(description = "The actual content of type T in the page")
   private List<T> content;
 
-  @ApiModelProperty("True if the current page is the first one")
+  @Schema(description = "True if the current page is the first one")
   private boolean isFirst;
 
-  @ApiModelProperty("True if the current page is the last one")
+  @Schema(description = "True if the current page is the last one")
   private boolean isLast;
 
-  @ApiModelProperty("The number of total pages")
+  @Schema(description = "The number of total pages")
   @Min(0)
   private int totalPages;
 

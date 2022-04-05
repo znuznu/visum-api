@@ -1,6 +1,6 @@
 package znu.visum.components.history.usecases.create.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class CreateMovieViewingHistoryController {
     this.createMovieViewingHistoryService = createMovieViewingHistoryService;
   }
 
-  @ApiOperation("Create a movie viewing history.")
+  @Operation(summary = "Create a movie viewing history.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public CreateMovieViewingHistoryResponse create(

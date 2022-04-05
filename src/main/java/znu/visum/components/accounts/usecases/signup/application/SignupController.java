@@ -1,6 +1,6 @@
 package znu.visum.components.accounts.usecases.signup.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +19,7 @@ public class SignupController {
     this.signupService = signupService;
   }
 
-  @ApiOperation("Create an account.")
+  @Operation(summary = "Create an account.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public void signUp(@Valid @RequestBody final SignupRequest signupRequest) {

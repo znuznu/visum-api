@@ -1,27 +1,26 @@
 package znu.visum.components.reviews.usecases.update.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.reviews.domain.models.Review;
 
 import java.time.LocalDateTime;
 
-@ApiModel("Represents a review updated.")
+@Schema(description = "Represents a review updated.")
 public class UpdateMovieReviewResponse {
-  @ApiModelProperty("The identifier of the review updated.")
+  @Schema(description = "The identifier of the review updated.")
   private final long id;
 
-  @ApiModelProperty("The grade of the review updated.")
+  @Schema(description = "The grade of the review updated.")
   private final int grade;
 
-  @ApiModelProperty("The text of the review updated.")
+  @Schema(description = "The text of the review updated.")
   private final String content;
 
-  @ApiModelProperty("The identifier of the movie for which was updated the review.")
+  @Schema(description = "The identifier of the movie for which was updated the review.")
   private final long movieId;
 
-  @ApiModelProperty("The creation date of the review updated.")
+  @Schema(description = "The creation date of the review updated.")
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime creationDate;
 

@@ -1,8 +1,7 @@
 package znu.visum.components.statistics.usecases.getalltime.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.statistics.domain.models.AllTimeStatistics;
 import znu.visum.components.statistics.domain.models.MovieCount;
@@ -12,20 +11,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a bunch of all-time statistics.")
+@Schema(description = "Represents a bunch of all-time statistics.")
 public class GetAllTimeStatisticsResponse {
-  @ApiModelProperty("The sum of all movies runtime in hours.")
+  @Schema(description = "The sum of all movies runtime in hours.")
   private int totalRuntimeInHours;
 
-  @ApiModelProperty("The average grade given for all movies per year.")
+  @Schema(description = "The average grade given for all movies per year.")
   private List<Pair<Integer, Float>> averageRatePerYear;
 
-  @ApiModelProperty("The number of reviews.")
+  @Schema(description = "The number of reviews.")
   private long reviewCount;
 
   private ResponseMovieCount movieCount;
 
-  @ApiModelProperty(
+  @Schema(description =
       "A list of pair containing a decade and all the highest rated movies released during the decade, order by reviews grade.")
   private List<Pair<Integer, List<ResponseMovie>>> highestRatedMoviesPerDecade;
 

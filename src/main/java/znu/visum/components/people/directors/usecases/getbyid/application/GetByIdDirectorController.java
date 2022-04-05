@@ -1,6 +1,6 @@
 package znu.visum.components.people.directors.usecases.getbyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ public class GetByIdDirectorController {
     this.getByIdDirectorService = getByIdDirectorService;
   }
 
-  @ApiOperation("Get a director by his identifier.")
+  @Operation(summary = "Get a director by his identifier.")
   @GetMapping("/{id}")
   public GetByIdDirectorResponse getDirectorById(@PathVariable long id) {
     return GetByIdDirectorResponse.from(getByIdDirectorService.findById(id));

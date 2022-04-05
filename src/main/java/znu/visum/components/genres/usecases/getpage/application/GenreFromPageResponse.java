@@ -1,18 +1,17 @@
 package znu.visum.components.genres.usecases.getpage.application;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 
 import javax.validation.constraints.Min;
 
-@ApiModel("Represents a Page of Genres.")
+@Schema(description = "Represents a Page of Genres.")
 public class GenreFromPageResponse {
-  @ApiModelProperty("The identifier of the Genre.")
+  @Schema(description = "The identifier of the Genre.")
   @Min(1)
   private final long id;
 
-  @ApiModelProperty("The type of the Genre.")
+  @Schema(description = "The type of the Genre.")
   private final String type;
 
   public GenreFromPageResponse(long id, String type) {

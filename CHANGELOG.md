@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.2
+
+- Bump Spring Boot to 2.6.6
+- Remove Springfox
+- Add Springdoc 1.6.6
+
 ## 2.6.1
 
 - Fix NPE in case of null viewing date

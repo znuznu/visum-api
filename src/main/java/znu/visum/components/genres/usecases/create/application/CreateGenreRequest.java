@@ -2,17 +2,16 @@ package znu.visum.components.genres.usecases.create.application;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@ApiModel(description = "Request body used to create a genre.")
+@Schema(description = "Request body used to create a genre.")
 public class CreateGenreRequest {
-  @ApiModelProperty(
-      value = "A type of genre, must not already exist.",
+  @Schema(
+      description = "A type of genre, must not already exist.",
       example = "Horror",
       required = true)
   @NotNull

@@ -1,6 +1,6 @@
 package znu.visum.components.reviews.usecases.update.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class UpdateMovieReviewController {
     this.updateMovieReviewService = updateMovieReviewService;
   }
 
-  @ApiOperation("Update a movie review.")
+  @Operation(summary = "Update a movie review.")
   @PutMapping("/{id}/movies")
   @ResponseStatus(HttpStatus.OK)
   public UpdateMovieReviewResponse update(

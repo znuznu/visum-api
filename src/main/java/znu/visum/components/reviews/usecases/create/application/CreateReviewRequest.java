@@ -2,28 +2,27 @@ package znu.visum.components.reviews.usecases.create.application;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-@ApiModel("Represents a review to create.")
+@Schema(description = "Represents a review to create.")
 public class CreateReviewRequest {
-  @ApiModelProperty("The grade of the review to create.")
+  @Schema(description = "The grade of the review to create.")
   @NotNull
   @Positive
   @Max(10)
   private final int grade;
 
-  @ApiModelProperty("The text of the review to create.")
+  @Schema(description = "The text of the review to create.")
   @NotNull
   @NotEmpty
   private final String content;
 
-  @ApiModelProperty("The identifier of the movie for which to create the review.")
+  @Schema(description = "The identifier of the movie for which to create the review.")
   @NotNull
   private final long movieId;
 

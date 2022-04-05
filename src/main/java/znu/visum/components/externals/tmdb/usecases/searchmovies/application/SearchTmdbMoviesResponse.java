@@ -1,25 +1,24 @@
 package znu.visum.components.externals.tmdb.usecases.searchmovies.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 
 import java.time.LocalDate;
 
-@ApiModel("Represents a page of TMDB movies found on the TMDB research endpoint.")
+@Schema(description = "Represents a page of TMDB movies found on the TMDB research endpoint.")
 public class SearchTmdbMoviesResponse {
-  @ApiModelProperty("The TMDB identifier of the movie.")
+  @Schema(description = "The TMDB identifier of the movie.")
   private final int tmdbId;
 
-  @ApiModelProperty("The title of the movie.")
+  @Schema(description = "The title of the movie.")
   private final String title;
 
-  @ApiModelProperty("The release date of the movie.")
+  @Schema(description = "The release date of the movie.")
   @JsonFormat(pattern = "MM/dd/yyyy")
   private final LocalDate releaseDate;
 
-  @ApiModelProperty("The TMDb poster's URL of the movie.")
+  @Schema(description = "The TMDb poster's URL of the movie.")
   private final String posterUrl;
 
   public SearchTmdbMoviesResponse(

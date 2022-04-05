@@ -2,8 +2,7 @@ package znu.visum.components.movies.usecases.getbyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.movies.domain.models.*;
@@ -13,34 +12,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a movie.")
+@Schema(description = "Represents a movie.")
 public class GetByIdMovieResponse {
-  @ApiModelProperty("The movie identifier.")
+  @Schema(description = "The movie identifier.")
   private final long id;
 
-  @ApiModelProperty("The movie title.")
+  @Schema(description = "The movie title.")
   private final String title;
 
-  @ApiModelProperty("The release date of the movie.")
+  @Schema(description = "The release date of the movie.")
   @JsonFormat(pattern = "MM/dd/yyyy")
   private final LocalDate releaseDate;
 
-  @ApiModelProperty("The actors of the movie.")
+  @Schema(description = "The actors of the movie.")
   private final List<ResponseActor> actors;
 
-  @ApiModelProperty("The directors of the movie.")
+  @Schema(description = "The directors of the movie.")
   private final List<ResponseDirector> directors;
 
-  @ApiModelProperty("The genres of the movie.")
+  @Schema(description = "The genres of the movie.")
   private final List<ResponseGenre> genres;
 
-  @ApiModelProperty("The review of the movie.")
+  @Schema(description = "The review of the movie.")
   private final ResponseReview review;
 
-  @ApiModelProperty("True if the movie is a favorite one.")
+  @Schema(description = "True if the movie is a favorite one.")
   private final boolean isFavorite;
 
-  @ApiModelProperty("True if the movie is to watch in the future.")
+  @Schema(description = "True if the movie is to watch in the future.")
   private final boolean isToWatch;
 
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
@@ -325,31 +324,31 @@ public class GetByIdMovieResponse {
   }
 
   public static class ResponseMovieMetadata {
-    @ApiModelProperty("The movie's TMDB identifier.")
+    @Schema(description = "The movie's TMDB identifier.")
     private Long tmdbId;
 
-    @ApiModelProperty("The movie's IMDB identifier.")
+    @Schema(description = "The movie's IMDB identifier.")
     private String imdbId;
 
-    @ApiModelProperty("The movie's original language.")
+    @Schema(description = "The movie's original language.")
     private String originalLanguage;
 
-    @ApiModelProperty("The movie's tagline.")
+    @Schema(description = "The movie's tagline.")
     private String tagline;
 
-    @ApiModelProperty("The movie's overview.")
+    @Schema(description = "The movie's overview.")
     private String overview;
 
-    @ApiModelProperty("The movie's budget.")
+    @Schema(description = "The movie's budget.")
     private long budget;
 
-    @ApiModelProperty("The movie's revenue.")
+    @Schema(description = "The movie's revenue.")
     private long revenue;
 
-    @ApiModelProperty("The movie's runtime.")
+    @Schema(description = "The movie's runtime.")
     private int runtime;
 
-    @ApiModelProperty("The movie's poster URL.")
+    @Schema(description = "The movie's poster URL.")
     private String posterUrl;
 
     public ResponseMovieMetadata() {}

@@ -1,6 +1,6 @@
 package znu.visum.components.people.directors.usecases.getpage.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -24,7 +24,7 @@ public class GetPageDirectorController {
     this.getPageDirectorService = getPageDirectorService;
   }
 
-  @ApiOperation("Get a page of directors.")
+  @Operation(summary = "Get a page of directors.")
   @GetMapping
   public GetPageResponse<DirectorFromPageResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,

@@ -1,6 +1,6 @@
 package znu.visum.components.people.actors.usecases.deletebyid.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class DeleteByIdActorController {
     this.deleteByIdActorService = deleteByIdActorService;
   }
 
-  @ApiOperation("Delete an actor by his identifier.")
+  @Operation(summary = "Delete an actor by his identifier.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteById(@PathVariable int id) {

@@ -1,6 +1,6 @@
 package znu.visum.components.people.actors.usecases.getpage.application;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -24,7 +24,7 @@ public class GetPageActorController {
     this.getPageActorService = getPageActorService;
   }
 
-  @ApiOperation("Get a page of actors.")
+  @Operation(summary = "Get a page of actors.")
   @GetMapping
   public GetPageResponse<ActorFromPageResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,

@@ -1,8 +1,7 @@
 package znu.visum.components.externals.tmdb.usecases.getmoviebyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import znu.visum.components.externals.domain.models.ExternalActor;
 import znu.visum.components.externals.domain.models.ExternalDirector;
 import znu.visum.components.externals.domain.models.ExternalMovie;
@@ -12,28 +11,28 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ApiModel("Represents a TMDB movie.")
+@Schema(description = "Represents a TMDB movie.")
 public class GetTmdbMovieByIdResponse {
-  @ApiModelProperty("The movie's identifier.")
+  @Schema(description = "The movie's identifier.")
   private String id;
 
-  @ApiModelProperty("The movie's title.")
+  @Schema(description = "The movie's title.")
   private String title;
 
-  @ApiModelProperty("The movie's release date.")
+  @Schema(description = "The movie's release date.")
   @JsonFormat(pattern = "MM/dd/yyyy")
   private LocalDate releaseDate;
 
-  @ApiModelProperty("The movie's genres.")
+  @Schema(description = "The movie's genres.")
   private List<String> genres;
 
-  @ApiModelProperty("The movie's metadata, containing various informations about it.")
+  @Schema(description = "The movie's metadata, containing various informations about it.")
   private ResponseMovieMetadata metadata;
 
-  @ApiModelProperty("The movie's actors.")
+  @Schema(description = "The movie's actors.")
   private List<ResponseActor> actors;
 
-  @ApiModelProperty("The movie's directors.")
+  @Schema(description = "The movie's directors.")
   private List<ResponseDirector> directors;
 
   public GetTmdbMovieByIdResponse() {}
@@ -84,15 +83,15 @@ public class GetTmdbMovieByIdResponse {
     return metadata;
   }
 
-  @ApiModel("Represents an actor from a TMDB movie.")
+  @Schema(description = "Represents an actor from a TMDB movie.")
   public static class ResponseActor {
-    @ApiModelProperty("The actor's identifier.")
+    @Schema(description = "The actor's identifier.")
     private final long id;
 
-    @ApiModelProperty("The actor's name.")
+    @Schema(description = "The actor's name.")
     private final String name;
 
-    @ApiModelProperty("The actor's forename.")
+    @Schema(description = "The actor's forename.")
     private final String forename;
 
     public ResponseActor(long id, String name, String forename) {
@@ -119,15 +118,15 @@ public class GetTmdbMovieByIdResponse {
     }
   }
 
-  @ApiModel("Represents a director from a TMDB movie.")
+  @Schema(description = "Represents a director from a TMDB movie.")
   public static class ResponseDirector {
-    @ApiModelProperty("The director's identifier.")
+    @Schema(description = "The director's identifier.")
     private final long id;
 
-    @ApiModelProperty("The director's name.")
+    @Schema(description = "The director's name.")
     private final String name;
 
-    @ApiModelProperty("The director's forename.")
+    @Schema(description = "The director's forename.")
     private final String forename;
 
     public ResponseDirector(long id, String name, String forename) {
@@ -154,33 +153,33 @@ public class GetTmdbMovieByIdResponse {
     }
   }
 
-  @ApiModel("Represents (some) of the metadata related to the TMDB movie.")
+  @Schema(description = "Represents (some) of the metadata related to the TMDB movie.")
   public static class ResponseMovieMetadata {
-    @ApiModelProperty("The movie's TMDB identifier.")
+    @Schema(description = "The movie's TMDB identifier.")
     private Long tmdbId;
 
-    @ApiModelProperty("The movie's IMDB identifier.")
+    @Schema(description = "The movie's IMDB identifier.")
     private String imdbId;
 
-    @ApiModelProperty("The movie's original language.")
+    @Schema(description = "The movie's original language.")
     private String originalLanguage;
 
-    @ApiModelProperty("The movie's tagline.")
+    @Schema(description = "The movie's tagline.")
     private String tagline;
 
-    @ApiModelProperty("The movie's overview.")
+    @Schema(description = "The movie's overview.")
     private String overview;
 
-    @ApiModelProperty("The movie's budget.")
+    @Schema(description = "The movie's budget.")
     private long budget;
 
-    @ApiModelProperty("The movie's revenue.")
+    @Schema(description = "The movie's revenue.")
     private long revenue;
 
-    @ApiModelProperty("The movie's runtime.")
+    @Schema(description = "The movie's runtime.")
     private int runtime;
 
-    @ApiModelProperty("The movie's poster URL.")
+    @Schema(description = "The movie's poster URL.")
     private String posterUrl;
 
     public ResponseMovieMetadata() {}
