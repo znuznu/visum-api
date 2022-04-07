@@ -85,7 +85,9 @@ public class GetPerYearStatisticsResponse {
     this.movieCountPerGenre = movieCountPerGenre;
   }
 
-  @Schema(description = "Represents the highest rated movies released and reviewed (older) during the year.")
+  @Schema(
+      description =
+          "Represents the highest rated movies released and reviewed (older) during the year.")
   public static class ResponseHighestRatedMovies {
     private final List<ResponseMovie> released;
     private final List<ResponseMovie> older;

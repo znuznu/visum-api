@@ -366,6 +366,20 @@ public class TmdbHttpConnectorUnitTest {
                       + "    {"
                       + "      \"adult\": false,"
                       + "      \"gender\": 2,"
+                      + "      \"id\": 6193,"
+                      + "      \"known_for_department\": \"Acting\","
+                      + "      \"name\": \"Leonardo DiCaprio\","
+                      + "      \"original_name\": \"Leonardo DiCaprio\","
+                      + "      \"popularity\": 28.19,"
+                      + "      \"profile_path\": \"/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg\","
+                      + "      \"cast_id\": 21,"
+                      + "      \"character\": \"Jack Dawson\","
+                      + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
+                      + "      \"order\": 50"
+                      + "    },"
+                      + "    {"
+                      + "      \"adult\": false,"
+                      + "      \"gender\": 2,"
                       + "      \"id\": 1954,"
                       + "      \"known_for_department\": \"Acting\","
                       + "      \"name\": \"Billy Zane Zune Zone\","
@@ -420,6 +434,19 @@ public class TmdbHttpConnectorUnitTest {
                       + "    {"
                       + "      \"adult\": false,"
                       + "      \"gender\": 2,"
+                      + "      \"id\": 2710,"
+                      + "      \"known_for_department\": \"Directing\","
+                      + "      \"name\": \"James Cameron\","
+                      + "      \"original_name\": \"James Cameron\","
+                      + "      \"popularity\": 4.238,"
+                      + "      \"profile_path\": \"/9NAZnTjBQ9WcXAQEzZpKy4vdQto.jpg\","
+                      + "      \"credit_id\": \"52fe425ac3a36847f8017961\","
+                      + "      \"department\": \"Writing\","
+                      + "      \"job\": \"Director\""
+                      + "    },"
+                      + "    {"
+                      + "      \"adult\": false,"
+                      + "      \"gender\": 2,"
                       + "      \"id\": 1000,"
                       + "      \"known_for_department\": \"Directing\","
                       + "      \"name\": \"   James   \","
@@ -437,14 +464,14 @@ public class TmdbHttpConnectorUnitTest {
 
       assertThat(credits.getActors())
           .usingRecursiveFieldByFieldElementComparator()
-          .containsOnly(
+          .containsOnlyOnce(
               new ExternalActor(6193, "Leonardo", "DiCaprio"),
               new ExternalActor(204, "Kate", "Winslet"),
               new ExternalActor(1954, "Billy", "Zane Zune Zone"));
 
       assertThat(credits.getDirectors())
           .usingRecursiveFieldByFieldElementComparator()
-          .containsOnly(
+          .containsOnlyOnce(
               new ExternalDirector(2710, "James", "Cameron"),
               new ExternalDirector(7890, "James", "Cameron Number Two"),
               new ExternalDirector(1000, "James", ""));

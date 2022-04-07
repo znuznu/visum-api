@@ -40,10 +40,15 @@ public class TmdbGetCreditsByMovieIdResponse {
 
   public ExternalMovieCredits toDomain() {
     return new ExternalMovieCredits.Builder()
-        .actors(this.cast.stream().map(TmdbCastPeople::toDomain).collect(Collectors.toList()))
+        .actors(
+            this.cast.stream()
+                .distinct()
+                .map(TmdbCastPeople::toDomain)
+                .collect(Collectors.toList()))
         .directors(
             this.crew.stream()
                 .filter(TmdbCrewPeople::isDirector)
+                .distinct()
                 .map(TmdbCrewPeople::toDomainExternalDirector)
                 .collect(Collectors.toList()))
         .build();

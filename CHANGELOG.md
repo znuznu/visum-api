@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.3
+
+- Remove TMDb cast duplicates before passing it to the domain layer
+
 ## 2.6.2
 
 - Bump Spring Boot to 2.6.6
