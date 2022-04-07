@@ -24,8 +24,9 @@ public class GetAllTimeStatisticsResponse {
 
   private ResponseMovieCount movieCount;
 
-  @Schema(description =
-      "A list of pair containing a decade and all the highest rated movies released during the decade, order by reviews grade.")
+  @Schema(
+      description =
+          "A list of pair containing a decade and all the highest rated movies released during the decade, order by reviews grade.")
   private List<Pair<Integer, List<ResponseMovie>>> highestRatedMoviesPerDecade;
 
   public GetAllTimeStatisticsResponse(

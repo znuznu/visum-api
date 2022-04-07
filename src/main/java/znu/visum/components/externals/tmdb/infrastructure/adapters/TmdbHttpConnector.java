@@ -25,7 +25,6 @@ import java.util.Optional;
 
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
-  // TODO replace by our own adapter
   private final WebClient webClient;
   private final Logger logger = LoggerFactory.getLogger(TmdbHttpConnector.class);
 

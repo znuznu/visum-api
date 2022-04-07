@@ -3,6 +3,8 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class TmdbCreditsPeople {
   @JsonProperty("id")
@@ -49,5 +51,25 @@ public abstract class TmdbCreditsPeople {
 
   public void setOrder(int order) {
     this.order = order;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof TmdbCreditsPeople)) {
+      return false;
+    }
+
+    TmdbCreditsPeople that = (TmdbCreditsPeople) o;
+
+    return getId() == that.getId();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId());
   }
 }
