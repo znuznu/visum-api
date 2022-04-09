@@ -1,20 +1,20 @@
-package znu.visum.components.externals.tmdb.usecases.searchmovies;
+package znu.visum.components.externals.tmdb;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 import znu.visum.components.externals.tmdb.infrastructure.models.TmdbMovieFromSearch;
-import znu.visum.components.externals.tmdb.infrastructure.models.TmdbSearchResponse;
-import znu.visum.components.externals.tmdb.infrastructure.models.TmdbSearchResponseMapper;
+import znu.visum.components.externals.tmdb.infrastructure.models.TmdbPageResponse;
+import znu.visum.components.externals.tmdb.infrastructure.models.TmdbPageResponseMapper;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("TmdbSearchResponseMapperUnitTest")
-public class TmdbSearchResponseMapperUnitTest {
+@DisplayName("TmdbPageResponseMapperUnitTest")
+public class TmdbPageResponseMapperUnitTest {
 
   @Nested
   class SearchMovie {
@@ -26,8 +26,8 @@ public class TmdbSearchResponseMapperUnitTest {
       movies[2] = new TmdbMovieFromSearch(3, "Movie 3", LocalDate.of(1992, 12, 18), "/something");
 
       VisumPage<ExternalMovieFromSearch> expectedPage =
-          TmdbSearchResponseMapper.toVisumPage(
-              new TmdbSearchResponse<>(1, 3, 9, movies), TmdbMovieFromSearch::toDomain);
+          TmdbPageResponseMapper.toVisumPage(
+              new TmdbPageResponse<>(1, 3, 9, movies), TmdbMovieFromSearch::toDomain);
 
       assertThat(expectedPage.getCurrent()).isEqualTo(1);
       assertThat(expectedPage.getSize()).isEqualTo(3);
@@ -69,8 +69,8 @@ public class TmdbSearchResponseMapperUnitTest {
       movies[2] = new TmdbMovieFromSearch(3, "Movie 3", LocalDate.of(1992, 12, 18), "/something");
 
       VisumPage<ExternalMovieFromSearch> expectedPage =
-          TmdbSearchResponseMapper.toVisumPage(
-              new TmdbSearchResponse<>(2, 3, 9, movies), TmdbMovieFromSearch::toDomain);
+          TmdbPageResponseMapper.toVisumPage(
+              new TmdbPageResponse<>(2, 3, 9, movies), TmdbMovieFromSearch::toDomain);
 
       assertThat(expectedPage.getCurrent()).isEqualTo(2);
       assertThat(expectedPage.getSize()).isEqualTo(3);
@@ -112,8 +112,8 @@ public class TmdbSearchResponseMapperUnitTest {
       movies[2] = new TmdbMovieFromSearch(3, "Movie 3", LocalDate.of(1992, 12, 18), "/something");
 
       VisumPage<ExternalMovieFromSearch> expectedPage =
-          TmdbSearchResponseMapper.toVisumPage(
-              new TmdbSearchResponse<>(3, 3, 9, movies), TmdbMovieFromSearch::toDomain);
+          TmdbPageResponseMapper.toVisumPage(
+              new TmdbPageResponse<>(3, 3, 9, movies), TmdbMovieFromSearch::toDomain);
 
       assertThat(expectedPage.getCurrent()).isEqualTo(3);
       assertThat(expectedPage.getSize()).isEqualTo(3);
@@ -152,8 +152,8 @@ public class TmdbSearchResponseMapperUnitTest {
       TmdbMovieFromSearch[] movies = new TmdbMovieFromSearch[0];
 
       VisumPage<ExternalMovieFromSearch> expectedPage =
-          TmdbSearchResponseMapper.toVisumPage(
-              new TmdbSearchResponse<>(1, 1, 0, movies), TmdbMovieFromSearch::toDomain);
+          TmdbPageResponseMapper.toVisumPage(
+              new TmdbPageResponse<>(1, 1, 0, movies), TmdbMovieFromSearch::toDomain);
 
       assertThat(expectedPage.getCurrent()).isEqualTo(1);
       assertThat(expectedPage.getSize()).isEqualTo(0);

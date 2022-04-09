@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @param <T> A TMDB resource (company, movie, collection...)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TmdbSearchResponse<T> {
+public class TmdbPageResponse<T> {
   @JsonProperty("page")
   private int page;
 
@@ -20,9 +20,9 @@ public class TmdbSearchResponse<T> {
   @JsonProperty("results")
   private T[] results;
 
-  public TmdbSearchResponse() {}
+  public TmdbPageResponse() {}
 
-  public TmdbSearchResponse(int page, int totalPages, int totalResults, T[] results) {
+  public TmdbPageResponse(int page, int totalPages, int totalResults, T[] results) {
     this.page = page;
     this.totalPages = totalPages;
     this.totalResults = totalResults;

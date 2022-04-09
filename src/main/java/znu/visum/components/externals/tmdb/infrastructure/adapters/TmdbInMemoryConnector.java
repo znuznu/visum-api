@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import znu.visum.components.externals.domain.models.ExternalMovie;
 import znu.visum.components.externals.domain.models.ExternalMovieCredits;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
@@ -39,6 +40,11 @@ public class TmdbInMemoryConnector implements TmdbConnector {
 
     throw new UnsupportedOperationException(
         "No Responses or Errors set for TmdbInMemoryConnector. Method: searchMovies.");
+  }
+
+  @Override
+  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
