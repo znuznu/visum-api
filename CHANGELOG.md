@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+
+- Add GET `/tmdb/movies/upcoming` endpoint
+
 ## 2.6.3
 
 - Remove TMDb cast duplicates before passing it to the domain layer

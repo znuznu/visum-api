@@ -1,6 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.models;
 
-public class TmdbSearchMoviesResponse extends TmdbSearchResponse<TmdbMovieFromSearch> {
+public class TmdbSearchMoviesResponse extends TmdbPageResponse<TmdbMovieFromSearch> {
   public TmdbSearchMoviesResponse() {}
 
   public TmdbSearchMoviesResponse(

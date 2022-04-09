@@ -14,10 +14,12 @@ import reactor.core.publisher.Mono;
 import znu.visum.components.externals.domain.models.ExternalMovie;
 import znu.visum.components.externals.domain.models.ExternalMovieCredits;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
 import znu.visum.components.externals.tmdb.infrastructure.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetConfigurationResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetMovieByIdResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetUpcomingMoviesResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbSearchMoviesResponseBodyValidationHandler;
 import znu.visum.core.pagination.domain.VisumPage;
 
@@ -26,6 +28,7 @@ import java.util.Optional;
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
   private final WebClient webClient;
+
   private final Logger logger = LoggerFactory.getLogger(TmdbHttpConnector.class);
 
   private final String tmdbApiKey;
@@ -47,7 +50,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
-    logger.info(String.format("Call to TMDB /search/movie?query=%s&page=%s", search, pageNumber));
+    logger.info(String.format("Call to TMDb /search/movie?query=%s&page=%s", search, pageNumber));
 
     try {
       TmdbSearchMoviesResponse response =
@@ -74,7 +77,42 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       assert response != null;
 
-      return TmdbSearchResponseMapper.toVisumPage(response, TmdbMovieFromSearch::toDomain);
+      return TmdbPageResponseMapper.toVisumPage(response, TmdbMovieFromSearch::toDomain);
+    } catch (WebClientResponseException clientResponseException) {
+      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+    }
+  }
+
+  @Override
+  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber) {
+    logger.info("Call to TMDb /movie/upcoming");
+
+    try {
+      TmdbGetUpcomingMoviesResponse response =
+          this.webClient
+              .get()
+              .uri(
+                  tmdbApiBaseUrl,
+                  uriBuilder ->
+                      uriBuilder
+                          .path("/movie/upcoming")
+                          .queryParam("api_key", tmdbApiKey)
+                          .queryParam("language", "en-US")
+                          .queryParam("include_adult", "false")
+                          .queryParam("page", pageNumber)
+                          .build())
+              .header("Accept", "application/json; charset=utf-8")
+              .retrieve()
+              .bodyToMono(TmdbGetUpcomingMoviesResponse.class)
+              .flatMap(
+                  body ->
+                      new TmdbGetUpcomingMoviesResponseBodyValidationHandler()
+                          .validate(Mono.just(body)))
+              .block();
+
+      assert response != null;
+
+      return TmdbPageResponseMapper.toVisumPage(response, TmdbUpcomingMovie::toDomain);
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
     }
@@ -82,7 +120,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovie> getMovieById(long movieId) {
-    logger.info(String.format("Call to TMDB /movie/%d", movieId));
+    logger.info(String.format("Call to TMDb /movie/%d", movieId));
 
     try {
       Optional<TmdbGetMovieByIdResponse> response =
@@ -118,7 +156,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
-    logger.info(String.format("Call to TMDB /movie/%d/credits", movieId));
+    logger.info(String.format("Call to TMDb /movie/%d/credits", movieId));
 
     try {
       Optional<TmdbGetCreditsByMovieIdResponse> response =
@@ -150,7 +188,7 @@ public class TmdbHttpConnector implements TmdbConnector {
   @Override
   @Cacheable("tmdbBasePosterUrl")
   public String getConfigurationBasePosterUrl() {
-    logger.info("Call to TMDB /configuration");
+    logger.info("Call to TMDb /configuration");
 
     try {
       TmdbGetConfigurationResponse response =

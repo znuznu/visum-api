@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 
 import java.time.LocalDate;
 
-/** A TMDB movie inside a search response (see the TmdbPageResponse.java class) */
+/** A TMDB movie inside an "upcoming" response (see the TmdbPageResponse.java class) */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TmdbMovieFromSearch {
+public class TmdbUpcomingMovie {
   @JsonProperty("id")
   private int id;
 
@@ -22,9 +22,9 @@ public class TmdbMovieFromSearch {
 
   private String posterPath;
 
-  public TmdbMovieFromSearch() {}
+  public TmdbUpcomingMovie() {}
 
-  public TmdbMovieFromSearch(int id, String title, LocalDate releaseDate, String posterPath) {
+  public TmdbUpcomingMovie(int id, String title, LocalDate releaseDate, String posterPath) {
     this.id = id;
     this.title = title;
     this.releaseDate = releaseDate;
@@ -53,8 +53,8 @@ public class TmdbMovieFromSearch {
     this.posterPath = posterPath;
   }
 
-  public ExternalMovieFromSearch toDomain() {
-    return new ExternalMovieFromSearch.Builder()
+  public ExternalUpcomingMovie toDomain() {
+    return new ExternalUpcomingMovie.Builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)

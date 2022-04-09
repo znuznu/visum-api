@@ -2,11 +2,7 @@ package znu.visum.components.externals.domain.models;
 
 import java.time.LocalDate;
 
-/**
- * Represents a movie that don't (necessarily) belong to the Visum database. Comes from the search
- * engine of an API like the TMDb one.
- */
-public class ExternalMovieFromSearch {
+public class ExternalUpcomingMovie {
   private int id;
 
   private String title;
@@ -19,9 +15,9 @@ public class ExternalMovieFromSearch {
   // Left part of a URL (eg: https://image.tmdb.org/t/p/w780 for TMDb)
   private String basePosterUrl;
 
-  public ExternalMovieFromSearch() {}
+  public ExternalUpcomingMovie() {}
 
-  public ExternalMovieFromSearch(
+  public ExternalUpcomingMovie(
       int id, String title, LocalDate releaseDate, String posterPath, String basePosterUrl) {
     this.id = id;
     this.title = title;
@@ -75,39 +71,39 @@ public class ExternalMovieFromSearch {
   }
 
   public static final class Builder {
-    private final ExternalMovieFromSearch externalMovieFromSearch;
+    private final ExternalUpcomingMovie upcomingMovie;
 
     public Builder() {
-      externalMovieFromSearch = new ExternalMovieFromSearch();
+      upcomingMovie = new ExternalUpcomingMovie();
     }
 
     public Builder id(int id) {
-      externalMovieFromSearch.setId(id);
+      upcomingMovie.setId(id);
       return this;
     }
 
     public Builder title(String title) {
-      externalMovieFromSearch.setTitle(title);
+      upcomingMovie.setTitle(title);
       return this;
     }
 
     public Builder releaseDate(LocalDate releaseDate) {
-      externalMovieFromSearch.setReleaseDate(releaseDate);
+      upcomingMovie.setReleaseDate(releaseDate);
       return this;
     }
 
     public Builder posterPath(String posterPath) {
-      externalMovieFromSearch.setPosterPath(posterPath);
+      upcomingMovie.setPosterPath(posterPath);
       return this;
     }
 
     public Builder basePosterUrl(String basePosterUrl) {
-      externalMovieFromSearch.setBasePosterUrl(basePosterUrl);
+      upcomingMovie.setBasePosterUrl(basePosterUrl);
       return this;
     }
 
-    public ExternalMovieFromSearch build() {
-      return externalMovieFromSearch;
+    public ExternalUpcomingMovie build() {
+      return upcomingMovie;
     }
   }
 }

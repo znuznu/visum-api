@@ -5,10 +5,15 @@ import java.util.List;
 
 public class ExternalMovie {
   private ExternalMovieCredits credits;
+
   private String id;
+
   private String title;
+
   private LocalDate releaseDate;
+
   private List<String> genres;
+
   private ExternalMovieMetadata metadata;
 
   public ExternalMovie() {}

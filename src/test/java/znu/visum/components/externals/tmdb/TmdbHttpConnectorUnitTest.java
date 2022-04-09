@@ -141,6 +141,185 @@ public class TmdbHttpConnectorUnitTest {
   }
 
   @Nested
+  class GetUpcomingMovies {
+
+    @Test
+    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+      tmdbApiMockServer.enqueue(
+          new MockResponse()
+              .setResponseCode(200)
+              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+              .setBody(
+                  "{\n"
+                      + " \"dates\": {\n"
+                      + "  \"maximum\": \"2022-05-02\",\n"
+                      + "  \"minimum\": \"2022-04-15\"\n"
+                      + " },\n"
+                      + " \"page\": 1,\n"
+                      + " \"results\": [\n"
+                      + "  {\n"
+                      + "   \"adult\": false,\n"
+                      + "   \"backdrop_path\": \"/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg\",\n"
+                      + "   \"genre_ids\": [\n"
+                      + "    28,\n"
+                      + "    878,\n"
+                      + "    35,\n"
+                      + "    10751\n"
+                      + "   ],\n"
+                      + "   \"id\": 675353,\n"
+                      + "   \"original_language\": \"en\",\n"
+                      + "   \"original_title\": \"Sonic the Hedgehog 2\",\n"
+                      + "   \"overview\": \"After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.\",\n"
+                      + "   \"popularity\": 6587.056,\n"
+                      + "   \"poster_path\": \"/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg\",\n"
+                      + "   \"release_date\": \"2022-03-30\",\n"
+                      + "   \"title\": \"Sonic the Hedgehog 2\",\n"
+                      + "   \"video\": false,\n"
+                      + "   \"vote_average\": 7.7,\n"
+                      + "   \"vote_count\": 197\n"
+                      + "  },\n"
+                      + "  {\n"
+                      + "   \"adult\": false,\n"
+                      + "   \"backdrop_path\": \"/yzH5zvuEzzsHLZnn0jwYoPf0CMT.jpg\",\n"
+                      + "   \"genre_ids\": [\n"
+                      + "    53,\n"
+                      + "    28\n"
+                      + "   ],\n"
+                      + "   \"id\": 760926,\n"
+                      + "   \"original_language\": \"en\",\n"
+                      + "   \"original_title\": \"Gold\",\n"
+                      + "   \"overview\": \"In the not-too-distant future, two drifters traveling through the desert stumble across the biggest gold nugget ever found and the dream of immense wealth and greed takes hold. They hatch a plan to excavate their bounty, with one man leaving to secure the necessary tools while the other remains with the gold. The man who remains must endure harsh desert elements, ravenous wild dogs, and mysterious intruders, while battling the sinking suspicion that he has been abandoned to his fate.\",\n"
+                      + "   \"popularity\": 1228.945,\n"
+                      + "   \"poster_path\": \"/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg\",\n"
+                      + "   \"release_date\": \"2022-01-13\",\n"
+                      + "   \"title\": \"Gold\",\n"
+                      + "   \"video\": false,\n"
+                      + "   \"vote_average\": 6.6,\n"
+                      + "   \"vote_count\": 168\n"
+                      + "  }"
+                      + "],\n"
+                      + " \"total_pages\": 17,\n"
+                      + " \"total_results\": 321\n"
+                      + "}"));
+
+      connector.getUpcomingMovies(1);
+
+      RecordedRequest request = tmdbApiMockServer.takeRequest();
+      assertThat(request.getPath())
+          .isEqualTo(
+              "/movie/upcoming?api_key=tmdb-api-key&language=en-US&include_adult=false&page=1");
+      assertThat(request.getMethod()).isEqualTo("GET");
+    }
+
+    @Test
+    public void whenTmdbReturnAnError_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
+
+      assertThrows(TmdbApiException.class, () -> connector.getUpcomingMovies(6));
+    }
+
+    @Test
+    public void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+      tmdbApiMockServer.enqueue(
+          new MockResponse()
+              .setResponseCode(200)
+              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+              .setBody("{\"something\": \"unexpected\"}"));
+
+      assertThatThrownBy(() -> connector.getUpcomingMovies(6))
+          .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class)
+          .hasMessageStartingWith("Invalid response from TMDB API:");
+    }
+
+    @Test
+    public void whenTmdbReturnMovies_itShouldReturnMovies() {
+      tmdbApiMockServer.enqueue(
+          new MockResponse()
+              .setResponseCode(200)
+              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+              .setBody(
+                  "{\n"
+                      + " \"dates\": {\n"
+                      + "  \"maximum\": \"2022-05-02\",\n"
+                      + "  \"minimum\": \"2022-04-15\"\n"
+                      + " },\n"
+                      + " \"page\": 1,\n"
+                      + " \"results\": [\n"
+                      + "  {\n"
+                      + "   \"adult\": false,\n"
+                      + "   \"backdrop_path\": \"/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg\",\n"
+                      + "   \"genre_ids\": [\n"
+                      + "    28,\n"
+                      + "    878,\n"
+                      + "    35,\n"
+                      + "    10751\n"
+                      + "   ],\n"
+                      + "   \"id\": 675353,\n"
+                      + "   \"original_language\": \"en\",\n"
+                      + "   \"original_title\": \"Sonic the Hedgehog 2\",\n"
+                      + "   \"overview\": \"After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.\",\n"
+                      + "   \"popularity\": 6587.056,\n"
+                      + "   \"poster_path\": \"/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg\",\n"
+                      + "   \"release_date\": \"2022-03-30\",\n"
+                      + "   \"title\": \"Sonic the Hedgehog 2\",\n"
+                      + "   \"video\": false,\n"
+                      + "   \"vote_average\": 7.7,\n"
+                      + "   \"vote_count\": 197\n"
+                      + "  },\n"
+                      + "  {\n"
+                      + "   \"adult\": false,\n"
+                      + "   \"backdrop_path\": \"/yzH5zvuEzzsHLZnn0jwYoPf0CMT.jpg\",\n"
+                      + "   \"genre_ids\": [\n"
+                      + "    53,\n"
+                      + "    28\n"
+                      + "   ],\n"
+                      + "   \"id\": 760926,\n"
+                      + "   \"original_language\": \"en\",\n"
+                      + "   \"original_title\": \"Gold\",\n"
+                      + "   \"overview\": \"In the not-too-distant future, two drifters traveling through the desert stumble across the biggest gold nugget ever found and the dream of immense wealth and greed takes hold. They hatch a plan to excavate their bounty, with one man leaving to secure the necessary tools while the other remains with the gold. The man who remains must endure harsh desert elements, ravenous wild dogs, and mysterious intruders, while battling the sinking suspicion that he has been abandoned to his fate.\",\n"
+                      + "   \"popularity\": 1228.945,\n"
+                      + "   \"poster_path\": \"/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg\",\n"
+                      + "   \"release_date\": \"2022-01-13\",\n"
+                      + "   \"title\": \"Gold\",\n"
+                      + "   \"video\": false,\n"
+                      + "   \"vote_average\": 6.6,\n"
+                      + "   \"vote_count\": 168\n"
+                      + "  }"
+                      + "],\n"
+                      + " \"total_pages\": 17,\n"
+                      + " \"total_results\": 321\n"
+                      + "}"));
+
+      VisumPage<ExternalUpcomingMovie> response = connector.getUpcomingMovies(1);
+
+      assertThat(response.getCurrent()).isEqualTo(1);
+      assertThat(response.getTotalPages()).isEqualTo(17);
+      assertThat(response.getTotalElements()).isEqualTo(321);
+      assertThat(response.isLast()).isEqualTo(false);
+      assertThat(response.isFirst()).isEqualTo(true);
+      assertThat(response.getSize()).isEqualTo(2);
+      assertThat(response.getContent())
+          .usingRecursiveFieldByFieldElementComparator()
+          .contains(
+              new ExternalUpcomingMovie(
+                  675353,
+                  "Sonic the Hedgehog 2",
+                  LocalDate.of(2022, 03, 30),
+                  "/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg",
+                  null),
+              new ExternalUpcomingMovie(
+                  760926,
+                  "Gold",
+                  LocalDate.of(2022, 1, 13),
+                  "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg",
+                  null));
+    }
+  }
+
+  @Nested
   class GetMovieById {
 
     @Test

@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.usecases.searchmovies;
+package znu.visum.components.externals.tmdb.usecases.getupcoming;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,11 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
-import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesService;
-import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesServiceImpl;
+import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMoviesService;
+import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMoviesServiceImpl;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
@@ -21,25 +21,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("SearchTmdbMoviesServiceImplUnitTest")
-public class SearchTmdbMoviesServiceImplUnitTest {
+@DisplayName("GetUpcomingTmdbMoviesServiceImplUnitTest")
+public class GetUpcomingTmdbMoviesServiceImplUnitTest {
 
-  private SearchTmdbMoviesService service;
+  private GetUpcomingTmdbMoviesService service;
 
   @Mock private TmdbConnector connector;
 
   @BeforeEach
   void setup() {
-    this.service = new SearchTmdbMoviesServiceImpl(connector);
+    this.service = new GetUpcomingTmdbMoviesServiceImpl(connector);
   }
 
   @Test
   @DisplayName("when the connector throws on the search method, it should bubble up and throw")
   public void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
-    Mockito.when(connector.searchMovies("Title", 1))
+    Mockito.when(connector.getUpcomingMovies(1))
         .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
 
-    assertThatThrownBy(() -> service.searchMovies("Title", 1))
+    assertThatThrownBy(() -> service.getUpcomingMovies(1))
         .isInstanceOf(TmdbApiException.class)
         .hasMessage("Some message.");
   }
@@ -49,9 +49,9 @@ public class SearchTmdbMoviesServiceImplUnitTest {
       "when the connector throws on the get poster URL method, it should return the page with unaltered base poster URL")
   public void
       whenTheConnectorThrowsOnGetConfigurationBasePosterUrl_itShouldReturnThePageUnaltered() {
-    Mockito.when(connector.searchMovies("Title", 1))
+    Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
-            new VisumPage.Builder<ExternalMovieFromSearch>()
+            new VisumPage.Builder<ExternalUpcomingMovie>()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -60,7 +60,7 @@ public class SearchTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
@@ -72,10 +72,10 @@ public class SearchTmdbMoviesServiceImplUnitTest {
     Mockito.when(connector.getConfigurationBasePosterUrl())
         .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
 
-    assertThat(service.searchMovies("Title", 1))
+    assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()
         .isEqualTo(
-            new VisumPage.Builder<ExternalMovieFromSearch>()
+            new VisumPage.Builder<ExternalUpcomingMovie>()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -84,7 +84,7 @@ public class SearchTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
@@ -98,9 +98,9 @@ public class SearchTmdbMoviesServiceImplUnitTest {
   @DisplayName(
       "when the connector return movies and base poster url, it should return the page with a complete URL")
   public void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
-    Mockito.when(connector.searchMovies("Title", 1))
+    Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
-            new VisumPage.Builder<ExternalMovieFromSearch>()
+            new VisumPage.Builder<ExternalUpcomingMovie>()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -109,14 +109,14 @@ public class SearchTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
                             .posterPath("/poster1")
                             .basePosterUrl(null)
                             .build(),
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))
@@ -128,10 +128,10 @@ public class SearchTmdbMoviesServiceImplUnitTest {
     Mockito.when(connector.getConfigurationBasePosterUrl())
         .thenReturn("https://image.tmdb.org/t/p/w500");
 
-    assertThat(service.searchMovies("Title", 1))
+    assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()
         .isEqualTo(
-            new VisumPage.Builder<ExternalMovieFromSearch>()
+            new VisumPage.Builder<ExternalUpcomingMovie>()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -140,14 +140,14 @@ public class SearchTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
                             .posterPath("/poster1")
                             .basePosterUrl("https://image.tmdb.org/t/p/w500")
                             .build(),
-                        new ExternalMovieFromSearch.Builder()
+                        new ExternalUpcomingMovie.Builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))
@@ -160,7 +160,7 @@ public class SearchTmdbMoviesServiceImplUnitTest {
   @Test
   @DisplayName("given an invalid page number (< 0), it should bubble up and throw")
   public void whenTheConnectorThrowsOnSearchMovie_itShouldBubbleUpAndThrow() {
-    assertThatThrownBy(() -> service.searchMovies("Title", 0))
+    assertThatThrownBy(() -> service.getUpcomingMovies(0))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("TMDb page number should be >= 1.");
   }

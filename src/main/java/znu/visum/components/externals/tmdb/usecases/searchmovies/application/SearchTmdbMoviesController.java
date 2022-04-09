@@ -27,7 +27,7 @@ public class SearchTmdbMoviesController {
     this.searchTmdbMoviesService = searchTmdbMoviesService;
   }
 
-  @Operation(summary = "Search movies on TMDB.")
+  @Operation(summary = "Search movies on TMDb.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public GetPageResponse<SearchTmdbMoviesResponse> searchTmdbMovies(
