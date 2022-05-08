@@ -58,7 +58,6 @@ public class GetUpcomingTmdbMoviesServiceImpl implements GetUpcomingTmdbMoviesSe
             .build();
       } catch (TmdbApiException e) {
         logger.warn("An error occurred while calling TMDb configuration endpoint.");
-        e.printStackTrace();
       }
     }
 

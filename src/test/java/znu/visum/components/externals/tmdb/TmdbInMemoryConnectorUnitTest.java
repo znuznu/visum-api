@@ -36,11 +36,7 @@ public class TmdbInMemoryConnectorUnitTest {
     public void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
           new TmdbInMemoryExceptions.Builder()
-              .searchMovies(
-                  new TmdbApiException.Builder()
-                      .status("Unprocessable Entity")
-                      .statusCode(422)
-                      .build())
+              .searchMovies(new TmdbApiException("Unprocessable Entity", 422))
               .build());
 
       assertThrows(TmdbApiException.class, () -> connector.searchMovies("Something", 6));

@@ -79,7 +79,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return TmdbPageResponseMapper.toVisumPage(response, TmdbMovieFromSearch::toDomain);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+      throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 
@@ -114,7 +114,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return TmdbPageResponseMapper.toVisumPage(response, TmdbUpcomingMovie::toDomain);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+      throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 
@@ -150,7 +150,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return response.map(TmdbGetMovieByIdResponse::toDomain);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+      throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 
@@ -181,7 +181,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return response.map(TmdbGetCreditsByMovieIdResponse::toDomain);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+      throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 
@@ -218,7 +218,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return String.format("%s%s", secureBaseUrl, secondToLastPosterSize);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.buildTmdbException(clientResponseException);
+      throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 }
