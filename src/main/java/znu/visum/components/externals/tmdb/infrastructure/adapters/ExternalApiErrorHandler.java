@@ -6,12 +6,12 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 
 public class ExternalApiErrorHandler {
+
   private static final Logger logger = LoggerFactory.getLogger(ExternalApiErrorHandler.class);
 
-  public static RuntimeException buildTmdbException(WebClientResponseException exception) {
+  public static TmdbApiException from(WebClientResponseException exception) {
     logger.error(String.format("TMDB error occured: %s", exception.getMessage()));
 
-    throw new TmdbApiException(
-        exception.getRawStatusCode(), exception.getStatusText(), exception.getMessage());
+    throw new TmdbApiException(exception.getMessage(), exception.getRawStatusCode());
   }
 }

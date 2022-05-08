@@ -1,5 +1,7 @@
 package znu.visum.core.errors.application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,54 +11,64 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import znu.visum.components.accounts.domain.errors.InvalidRegistrationKeyException;
-import znu.visum.components.accounts.domain.errors.MaximumAccountReachedException;
-import znu.visum.components.externals.domain.errors.NoSuchExternalMovieIdException;
-import znu.visum.components.genres.domain.errors.GenreAlreadyExistsException;
-import znu.visum.components.genres.domain.errors.NoSuchGenreIdException;
-import znu.visum.components.history.domain.errors.NoSuchViewingHistoryException;
-import znu.visum.components.movies.domain.errors.MovieAlreadyExistsException;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.people.actors.domain.errors.NoSuchActorIdException;
-import znu.visum.components.people.directors.domain.errors.NoSuchDirectorIdException;
-import znu.visum.components.reviews.domain.errors.MaximumMovieReviewsReachedException;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
+import znu.visum.core.errors.domain.VisumException;
+import znu.visum.core.errors.domain.VisumExceptionStatus;
 
 import javax.validation.ConstraintViolationException;
-import java.util.NoSuchElementException;
 
 import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-  @ExceptionHandler({ControllerException.class})
-  public ResponseEntity<ExceptionResponse> handleControllerException(ControllerException e) {
-    e.printStackTrace();
+  private static final String INTERNAL_ERROR_MESSAGE = "Something went wrong";
 
-    return e.getExceptionEntity().toResponseEntity();
-  }
+  Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
   @ExceptionHandler({Exception.class})
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ExceptionResponse handleInternalError(Exception e, WebRequest request) {
-    e.printStackTrace();
+  public HttpExceptionResponse handleNoneVisumException(Exception exception, WebRequest request) {
+    logger.error("Unexpected error", exception);
 
-    return new ExceptionResponse.Builder()
+    return HttpExceptionResponse.builder()
         .code("500")
-        .error("Internal Server Error")
-        .message("Oops. Something went wrong!")
+        .error(VisumExceptionStatus.INTERNAL_SERVER_ERROR.getRepresentation())
+        .message(INTERNAL_ERROR_MESSAGE)
         .path(request.getDescription(false).substring(4))
-        .status(resolveAnnotatedResponseStatus(e))
+        .status(resolveAnnotatedResponseStatus(exception))
         .build();
+  }
+
+  @ExceptionHandler({VisumException.class})
+  public ResponseEntity<HttpExceptionResponse> handleVisumException(
+      VisumException exception, WebRequest request) {
+    logger.error(exception.getMessage());
+
+    // Hide message before sending it to the client
+    String message =
+        exception.getStatus() == VisumExceptionStatus.INTERNAL_SERVER_ERROR
+            ? INTERNAL_ERROR_MESSAGE
+            : exception.getMessage();
+
+    return new ResponseEntity<>(
+        HttpExceptionResponse.builder()
+            .status(getHttpStatus(exception))
+            .code(exception.getCode())
+            .message(message)
+            .error(exception.getStatus().getRepresentation())
+            .path(request.getDescription(false).substring(4))
+            .build(),
+        getHttpStatus(exception));
   }
 
   @ExceptionHandler({HttpMessageNotReadableException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleHttpMessageNotReadableException(Exception e, WebRequest request) {
-    e.printStackTrace();
+  public HttpExceptionResponse handleHttpMessageNotReadableException(
+      Exception exception, WebRequest request) {
 
-    return new ExceptionResponse.Builder()
+    logger.error(exception.getMessage());
+
+    return HttpExceptionResponse.builder()
         .code("INVALID_BODY")
         .message("Invalid body.")
         .error("Bad Request")
@@ -67,11 +79,12 @@ public class ControllerExceptionHandler {
 
   @ExceptionHandler({MethodArgumentTypeMismatchException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleMethodArgumentTypeMismatchException(
-      Exception e, WebRequest request) {
-    e.printStackTrace();
+  public HttpExceptionResponse handleMethodArgumentTypeMismatchException(
+      Exception exception, WebRequest request) {
 
-    return new ExceptionResponse.Builder()
+    logger.error(exception.getMessage());
+
+    return HttpExceptionResponse.builder()
         .code("INVALID_ARGUMENT")
         .message("Invalid argument.")
         .error("Bad Request")
@@ -82,10 +95,12 @@ public class ControllerExceptionHandler {
 
   @ExceptionHandler({ConstraintViolationException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleConstraintViolationException(Exception e, WebRequest request) {
-    e.printStackTrace();
+  public HttpExceptionResponse handleConstraintViolationException(
+      Exception exception, WebRequest request) {
 
-    return new ExceptionResponse.Builder()
+    logger.error(exception.getMessage());
+
+    return HttpExceptionResponse.builder()
         .code("INVALID_ARGUMENT")
         .message("Invalid argument.")
         .error("Bad Request")
@@ -96,10 +111,10 @@ public class ControllerExceptionHandler {
 
   @ExceptionHandler({MethodArgumentNotValidException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleBadRequest(Exception e, WebRequest request) {
-    e.printStackTrace();
+  public HttpExceptionResponse handleBadRequest(Exception exception, WebRequest request) {
+    logger.error(exception.getMessage());
 
-    return new ExceptionResponse.Builder()
+    return HttpExceptionResponse.builder()
         .code("INVALID_BODY")
         .message("Invalid body.")
         .error("Bad Request")
@@ -108,88 +123,29 @@ public class ControllerExceptionHandler {
         .build();
   }
 
-  @ExceptionHandler({
-    NoSuchElementException.class,
-    NoSuchFieldException.class,
-    NoSuchActorIdException.class,
-    NoSuchDirectorIdException.class,
-    NoSuchGenreIdException.class,
-    NoSuchReviewIdException.class,
-    NoSuchMovieIdException.class,
-    NoSuchViewingHistoryException.class,
-    NoSuchExternalMovieIdException.class
-  })
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ExceptionResponse handleCommonNotFound(Exception e, WebRequest request) {
-    e.printStackTrace();
-
-    return new ExceptionResponse.Builder()
-        .code("RESOURCE_NOT_FOUND")
-        .message(e.getMessage())
-        .error("Not Found")
-        .path(request.getDescription(false).substring(4))
-        .status(HttpStatus.NOT_FOUND)
-        .build();
-  }
-
-  @ExceptionHandler({GenreAlreadyExistsException.class, MovieAlreadyExistsException.class})
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleResourceAlreadyExistsException(Exception e, WebRequest request) {
-    e.printStackTrace();
-
-    return new ExceptionResponse.Builder()
-        .status(HttpStatus.BAD_REQUEST)
-        .code("DATA_ALREADY_EXISTS")
-        .error("Bad Request")
-        .message(e.getMessage())
-        .path(request.getDescription(false).substring(4))
-        .build();
-  }
-
-  @ExceptionHandler(MaximumMovieReviewsReachedException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponse handleMovieAlreadyHaveAReviewException(Exception e, WebRequest request) {
-    e.printStackTrace();
-
-    return new ExceptionResponse.Builder()
-        .status(HttpStatus.BAD_REQUEST)
-        .code("MAXIMUM_NUMBER_OF_REVIEWS_REACHED")
-        .error("Bad Request")
-        .message(e.getMessage())
-        .path(request.getDescription(false).substring(4))
-        .build();
-  }
-
-  @ExceptionHandler(InvalidRegistrationKeyException.class)
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ExceptionResponse handleInvalidRegistrationKeyException(Exception e, WebRequest request) {
-    e.printStackTrace();
-
-    return new ExceptionResponse.Builder()
-        .status(HttpStatus.UNAUTHORIZED)
-        .code("INVALID_REGISTRATION_KEY")
-        .error("Unauthorized")
-        .message(e.getMessage())
-        .path(request.getDescription(false).substring(4))
-        .build();
-  }
-
-  @ExceptionHandler(MaximumAccountReachedException.class)
-  @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ExceptionResponse handleMaximumAccountReachedException(Exception e, WebRequest request) {
-    e.printStackTrace();
-
-    return new ExceptionResponse.Builder()
-        .status(HttpStatus.FORBIDDEN)
-        .code("MAXIMUM_NUMBER_OF_ACCOUNT_REACHED")
-        .path(request.getDescription(false).substring(4))
-        .message(e.getMessage())
-        .error("Forbidden")
-        .build();
-  }
-
   private HttpStatus resolveAnnotatedResponseStatus(Throwable t) {
     ResponseStatus status = findMergedAnnotation(t.getClass(), ResponseStatus.class);
     return status != null ? status.value() : null;
+  }
+
+  private HttpStatus getHttpStatus(VisumException exception) {
+    VisumExceptionStatus status = exception.getStatus();
+    if (status == null) {
+      return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+    switch (status) {
+      case BAD_REQUEST:
+        return HttpStatus.BAD_REQUEST;
+      case UNAUTHORIZED:
+        return HttpStatus.UNAUTHORIZED;
+      case FORBIDDEN:
+        return HttpStatus.FORBIDDEN;
+      case NOT_FOUND:
+        return HttpStatus.NOT_FOUND;
+      case INTERNAL_SERVER_ERROR:
+      default:
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
   }
 }

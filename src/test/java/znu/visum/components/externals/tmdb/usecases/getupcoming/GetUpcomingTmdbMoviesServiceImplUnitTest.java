@@ -37,7 +37,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
   @DisplayName("when the connector throws on the search method, it should bubble up and throw")
   public void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getUpcomingMovies(1))
-        .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
+        .thenThrow(new TmdbApiException("Some message.", 500));
 
     assertThatThrownBy(() -> service.getUpcomingMovies(1))
         .isInstanceOf(TmdbApiException.class)
@@ -70,7 +70,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .build());
 
     Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
+        .thenThrow(new TmdbApiException("Some message.", 500));
 
     assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()

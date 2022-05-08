@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class TmdbPageResponseMapper {
   public static <T, V> VisumPage<V> toVisumPage(
-          TmdbPageResponse<T> searchResponse, Function<T, V> mapper) {
+      TmdbPageResponse<T> searchResponse, Function<T, V> mapper) {
     return new VisumPage.Builder<V>()
         .current(searchResponse.getPage())
         .content(

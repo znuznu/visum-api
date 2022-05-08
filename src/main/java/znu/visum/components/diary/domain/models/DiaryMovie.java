@@ -4,6 +4,7 @@ import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.ReviewFromMovie;
 import znu.visum.core.errors.domain.VisumException;
+import znu.visum.core.errors.domain.VisumExceptionStatus;
 
 import java.time.LocalDate;
 
@@ -45,7 +46,10 @@ public class DiaryMovie {
             .findFirst()
             .orElseThrow(
                 () ->
-                    new VisumException("Viewing history ID not found in the movie viewing dates."));
+                    new VisumException(
+                        "Viewing history ID not found in the movie viewing dates.",
+                        VisumExceptionStatus.INTERNAL_SERVER_ERROR,
+                        "VIEWING_HISTORY_ID_NOT_FOUND"));
 
     boolean isRewatch =
         movie.getViewingHistory().stream()

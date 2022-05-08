@@ -38,7 +38,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName("When the connector throws on the get poster base URL method, it should throw")
   public void whenTheConnectorThrowOnPoster_itShouldReturnTheMovieMapped() {
     Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
+        .thenThrow(new TmdbApiException("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
@@ -61,8 +61,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
       "When the connector throws on the method called to get the movie, it should bubble up and throw")
   public void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
-    Mockito.when(connector.getMovieById(42))
-        .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
+    Mockito.when(connector.getMovieById(42)).thenThrow(new TmdbApiException("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
@@ -97,7 +96,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
                     .build()));
 
     Mockito.when(connector.getCreditsByMovieId(42))
-        .thenThrow(new TmdbApiException(500, "Internal Server Error", "Some message."));
+        .thenThrow(new TmdbApiException("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
