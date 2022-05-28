@@ -31,7 +31,7 @@ public class GetPerYearStatisticsServiceImpl implements GetPerYearStatisticsServ
     List<Pair<String, Integer>> movieCountPerGenre =
         this.statisticsService.getNumberOfMoviesOfTheYearPerGenre(year);
 
-    return new PerYearStatistics.Builder()
+    return PerYearStatistics.builder()
         .reviewCount(reviewCount)
         .movieCount(movieCount)
         .highestRatedMoviesReleased(highestRatedMoviesOfTheYear)

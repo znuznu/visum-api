@@ -75,7 +75,7 @@ public class CreateActorResponse {
           movieFromActor.getTitle(),
           movieFromActor.getReleaseDate(),
           movieFromActor.isFavorite(),
-          movieFromActor.isShouldWatch());
+          movieFromActor.isToWatch());
     }
 
     public Long getId() {

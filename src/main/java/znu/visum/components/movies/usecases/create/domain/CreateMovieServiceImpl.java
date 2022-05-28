@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @Service
 public class CreateMovieServiceImpl implements CreateMovieService {
+
   private final MovieRepository movieRepository;
   private final ActorRepository actorRepository;
   private final DirectorRepository directorRepository;
@@ -59,7 +60,10 @@ public class CreateMovieServiceImpl implements CreateMovieService {
         .forEach(
             actor -> {
               ActorFromMovie actorToSave =
-                  new ActorFromMovie(null, actor.getName(), actor.getForename());
+                  ActorFromMovie.builder()
+                      .name(actor.getName())
+                      .forename(actor.getForename())
+                      .build();
 
               Optional<Actor> actorSaved =
                   actorRepository.findByNameAndForename(actor.getName(), actor.getForename());
@@ -78,7 +82,10 @@ public class CreateMovieServiceImpl implements CreateMovieService {
         .forEach(
             director -> {
               DirectorFromMovie directorToSave =
-                  new DirectorFromMovie(null, director.getName(), director.getForename());
+                  DirectorFromMovie.builder()
+                      .name(director.getName())
+                      .forename(director.getForename())
+                      .build();
 
               Optional<Director> directorSaved =
                   directorRepository.findByNameAndForename(
@@ -111,13 +118,13 @@ public class CreateMovieServiceImpl implements CreateMovieService {
             });
 
     return movieRepository.save(
-        new Movie.Builder()
+        Movie.builder()
             .title(movie.getTitle())
             .actors(actors)
             .directors(directors)
             .genres(genres)
-            .favorite(movie.isFavorite())
-            .toWatch(movie.isToWatch())
+            .isFavorite(movie.isFavorite())
+            .isToWatch(movie.isToWatch())
             .releaseDate(movie.getReleaseDate())
             .review(movie.getReview())
             .metadata(movie.getMetadata())

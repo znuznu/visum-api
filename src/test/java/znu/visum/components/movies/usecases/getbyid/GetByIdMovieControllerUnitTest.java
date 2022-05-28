@@ -38,7 +38,7 @@ public class GetByIdMovieControllerUnitTest {
   @Test
   public void givenAMovieId_whenTheMovieWithTheIdExists_thenItShouldReturnTheMovie() {
     ReviewFromMovie review =
-        new ReviewFromMovie.Builder()
+        ReviewFromMovie.builder()
             .id(22L)
             .content("Bla bla bla.")
             .creationDate(LocalDateTime.of(2021, 12, 12, 5, 10))
@@ -51,14 +51,14 @@ public class GetByIdMovieControllerUnitTest {
 
     List<ActorFromMovie> actors =
         Arrays.asList(
-            new ActorFromMovie.Builder().id(1L).forename("Naomi").name("Watts").build(),
-            new ActorFromMovie.Builder().id(2L).forename("Laura").name("Harring").build());
+            ActorFromMovie.builder().id(1L).forename("Naomi").name("Watts").build(),
+            ActorFromMovie.builder().id(2L).forename("Laura").name("Harring").build());
 
     List<DirectorFromMovie> directors =
-        List.of(new DirectorFromMovie.Builder().id(1L).forename("David").name("Lynch").build());
+        List.of(DirectorFromMovie.builder().id(1L).forename("David").name("Lynch").build());
 
     MovieMetadata movieMetadata =
-        new MovieMetadata.Builder()
+        MovieMetadata.builder()
             .movieId(1L)
             .tmdbId(1234L)
             .imdbId("tt1234")
@@ -72,14 +72,14 @@ public class GetByIdMovieControllerUnitTest {
             .build();
 
     Movie movie =
-        new Movie.Builder()
+        Movie.builder()
             .id(1L)
             .title("Mulholland Drive")
-            .favorite(true)
-            .toWatch(false)
+            .isFavorite(true)
+            .isToWatch(false)
             .releaseDate(LocalDate.of(2001, 10, 12))
             .creationDate(LocalDateTime.of(2001, 10, 10, 19, 0))
-            .viewingDates(new ArrayList<>())
+            .viewingHistory(new ArrayList<>())
             .review(review)
             .genres(genres)
             .actors(actors)
@@ -112,7 +112,7 @@ public class GetByIdMovieControllerUnitTest {
             new GetByIdMovieResponse.ResponseGenre(2L, "Comedy"));
 
     GetByIdMovieResponse.ResponseMovieMetadata metadata =
-        new GetByIdMovieResponse.ResponseMovieMetadata.Builder()
+        GetByIdMovieResponse.ResponseMovieMetadata.builder()
             .tmdbId(1234L)
             .imdbId("tt1234")
             .originalLanguage("en")
@@ -131,8 +131,8 @@ public class GetByIdMovieControllerUnitTest {
             LocalDate.of(2001, 10, 12),
             responseActors,
             responseDirectors,
-            responseReview,
             responseGenres,
+            responseReview,
             true,
             false,
             LocalDateTime.of(2001, 10, 10, 19, 0),

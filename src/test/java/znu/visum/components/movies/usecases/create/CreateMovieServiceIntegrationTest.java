@@ -61,7 +61,7 @@ public class CreateMovieServiceIntegrationTest {
         MovieAlreadyExistsException.class,
         () ->
             service.saveWithNameFromPeople(
-                new Movie.Builder()
+                Movie.builder()
                     .title("Fake movie")
                     .releaseDate(LocalDate.of(2001, 10, 12))
                     .build()));
@@ -73,20 +73,16 @@ public class CreateMovieServiceIntegrationTest {
     Movie movie = MovieFactory.INSTANCE.getWithKindAndId(MovieKind.WITHOUT_REVIEW, null);
     movie.setDirectors(
         List.of(
-            new DirectorFromMovie.Builder().id(null).forename("David").name("Lynch").build(),
-            new DirectorFromMovie.Builder()
-                .id(null)
-                .forename("Christopher")
-                .name("Nolan")
-                .build()));
+            DirectorFromMovie.builder().forename("David").name("Lynch").build(),
+            DirectorFromMovie.builder().forename("Christopher").name("Nolan").build()));
     movie.setActors(
         List.of(
-            new ActorFromMovie.Builder().id(null).name("Dicaprio").forename("Leonardo").build(),
-            new ActorFromMovie.Builder().id(null).name("MacLachlan").forename("Kyle").build(),
-            new ActorFromMovie.Builder().id(null).name("Depp").forename("Johnny").build()));
+            ActorFromMovie.builder().name("Dicaprio").forename("Leonardo").build(),
+            ActorFromMovie.builder().name("MacLachlan").forename("Kyle").build(),
+            ActorFromMovie.builder().name("Depp").forename("Johnny").build()));
     movie.setGenres(List.of(new Genre(null, "Drama"), new Genre(null, "Adventure")));
     movie.setMetadata(
-        new MovieMetadata.Builder()
+        MovieMetadata.builder()
             .tmdbId(60L)
             .imdbId("tt12345")
             .budget(1000)

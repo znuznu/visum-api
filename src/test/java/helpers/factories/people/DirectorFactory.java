@@ -11,7 +11,7 @@ import java.util.List;
 public class DirectorFactory extends PeopleFactory {
   protected Director createPeople(PeopleKind peopleKind) {
     if (peopleKind == PeopleKind.WITHOUT_MOVIES) {
-      return new Director.Builder()
+      return Director.builder()
           .id(1L)
           .name("Lynch")
           .forename("David")
@@ -20,15 +20,33 @@ public class DirectorFactory extends PeopleFactory {
     }
 
     if (peopleKind == PeopleKind.WITH_MOVIES) {
-      return new Director.Builder()
+      return Director.builder()
           .id(1L)
           .name("Lynch")
           .forename("David")
           .movies(
               Arrays.asList(
-                  new MovieFromDirector(1L, "Movie 1", LocalDate.of(2021, 10, 10), false, true),
-                  new MovieFromDirector(2L, "Movie 2", LocalDate.of(2021, 11, 11), true, true),
-                  new MovieFromDirector(3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false)))
+                  MovieFromDirector.builder()
+                      .id(1L)
+                      .title("Movie 1")
+                      .releaseDate(LocalDate.of(2021, 10, 10))
+                      .isFavorite(false)
+                      .isToWatch(true)
+                      .build(),
+                  MovieFromDirector.builder()
+                      .id(2L)
+                      .title("Movie 2")
+                      .releaseDate(LocalDate.of(2021, 11, 11))
+                      .isFavorite(true)
+                      .isToWatch(true)
+                      .build(),
+                  MovieFromDirector.builder()
+                      .id(3L)
+                      .title("Movie 3")
+                      .releaseDate(LocalDate.of(2021, 12, 12))
+                      .isFavorite(false)
+                      .isToWatch(false)
+                      .build()))
           .build();
     }
 
@@ -44,7 +62,7 @@ public class DirectorFactory extends PeopleFactory {
 
     for (long i = 0; i < count; i++) {
       Director director =
-          new Director.Builder()
+          Director.builder()
               .id(i)
               .name(String.format("Name%s", i))
               .forename(String.format("Forename%s", i))

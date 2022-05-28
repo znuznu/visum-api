@@ -73,11 +73,11 @@ public class CreateMovieRequest {
   }
 
   public Movie toDomain() {
-    return new Movie.Builder()
+    return Movie.builder()
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .favorite(this.isFavorite)
-        .toWatch(this.isToWatch)
+        .isFavorite(this.isFavorite)
+        .isToWatch(this.isToWatch)
         .genres(this.genres.stream().map(RequestGenre::toDomain).collect(Collectors.toList()))
         .actors(this.actors.stream().map(RequestActor::toDomain).collect(Collectors.toList()))
         .directors(
@@ -140,7 +140,7 @@ public class CreateMovieRequest {
     }
 
     public ActorFromMovie toDomain() {
-      return new ActorFromMovie.Builder().name(this.name).forename(this.forename).build();
+      return ActorFromMovie.builder().name(this.name).forename(this.forename).build();
     }
   }
 
@@ -164,7 +164,7 @@ public class CreateMovieRequest {
     }
 
     public DirectorFromMovie toDomain() {
-      return new DirectorFromMovie.Builder().name(this.name).forename(this.forename).build();
+      return DirectorFromMovie.builder().name(this.name).forename(this.forename).build();
     }
   }
 
@@ -217,7 +217,7 @@ public class CreateMovieRequest {
     public RequestMovieMetadata() {}
 
     public MovieMetadata toDomain() {
-      return new MovieMetadata.Builder()
+      return MovieMetadata.builder()
           .tmdbId(this.getTmdbId())
           .imdbId(this.getImdbId())
           .tagline(this.getTagline())

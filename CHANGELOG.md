@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+- Use Lombok
+
 ## 2.7.0
 
 - Add GET `/tmdb/movies/upcoming` endpoint

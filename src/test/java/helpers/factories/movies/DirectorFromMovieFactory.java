@@ -6,7 +6,7 @@ public enum DirectorFromMovieFactory {
   INSTANCE;
 
   private DirectorFromMovie createWithId(Long id) {
-    return new DirectorFromMovie.Builder()
+    return DirectorFromMovie.builder()
         .id(id)
         .name(String.format("Name %s", id == null ? "1" : id))
         .forename(String.format("Forename %s", id == null ? "1" : id))

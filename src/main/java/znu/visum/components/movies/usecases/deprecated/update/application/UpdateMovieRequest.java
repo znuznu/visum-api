@@ -3,6 +3,7 @@ package znu.visum.components.movies.usecases.deprecated.update.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Setter;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.movies.domain.models.ActorFromMovie;
@@ -22,7 +23,7 @@ public class UpdateMovieRequest {
   private final List<Long> genreIds;
   private final List<Long> actorIds;
   private final List<Long> directorIds;
-  private Long id;
+  @Setter private Long id;
 
   @JsonCreator
   public UpdateMovieRequest(
@@ -49,28 +50,24 @@ public class UpdateMovieRequest {
   }
 
   public Movie toDomain() {
-    return new Movie.Builder()
+    return Movie.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .favorite(this.isFavorite)
-        .toWatch(this.shouldWatch)
-        .viewingDates(this.viewingHistory)
+        .isFavorite(this.isFavorite)
+        .isToWatch(this.shouldWatch)
+        .viewingHistory(this.viewingHistory)
         .genres(
             this.genreIds.stream().map(genre -> new Genre(id, null)).collect(Collectors.toList()))
         .actors(
             this.actorIds.stream()
-                .map(id -> new ActorFromMovie(id, null, null))
+                .map(id -> ActorFromMovie.builder().id(id).build())
                 .collect(Collectors.toList()))
         .directors(
             this.directorIds.stream()
-                .map(director -> new DirectorFromMovie(id, null, null))
+                .map(director -> DirectorFromMovie.builder().id(id).build())
                 .collect(Collectors.toList()))
         .review(null)
         .build();
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 }

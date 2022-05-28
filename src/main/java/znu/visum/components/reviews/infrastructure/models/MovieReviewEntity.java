@@ -1,5 +1,8 @@
 package znu.visum.components.reviews.infrastructure.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import znu.visum.components.movies.domain.models.ReviewFromMovie;
@@ -11,6 +14,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_review")
+@AllArgsConstructor
+@Builder
+@Getter
 public class MovieReviewEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_review_id_seq")
@@ -31,8 +37,8 @@ public class MovieReviewEntity {
   public MovieReviewEntity() {}
 
   public static MovieReviewEntity from(ReviewFromMovie reviewFromMovie) {
-    return new MovieReviewEntity.Builder()
-        .movieEntity(new MovieEntity.Builder().id(reviewFromMovie.getId()).build())
+    return MovieReviewEntity.builder()
+        .movieEntity(MovieEntity.builder().id(reviewFromMovie.getId()).build())
         .id(reviewFromMovie.getId())
         .creationDate(reviewFromMovie.getCreationDate())
         .updateDate(reviewFromMovie.getUpdateDate())
@@ -42,7 +48,7 @@ public class MovieReviewEntity {
   }
 
   public static MovieReviewEntity from(Review review) {
-    return new MovieReviewEntity.Builder()
+    return MovieReviewEntity.builder()
         .id(review.getId())
         .grade(review.getGrade())
         .content(review.getContent())
@@ -52,109 +58,41 @@ public class MovieReviewEntity {
         .build();
   }
 
-  public MovieReviewEntity movie(MovieEntity movieEntity) {
-    this.movieEntity = movieEntity;
-
-    return this;
-  }
-
   public Review toDomain() {
-    return new Review(
-        this.id,
-        this.content,
-        this.updateDate,
-        this.creationDate,
-        this.grade,
-        this.movieEntity == null ? null : this.movieEntity.toMovieFromReview());
+    return Review.builder()
+        .id(this.id)
+        .content(this.content)
+        .updateDate(this.updateDate)
+        .creationDate(this.creationDate)
+        .grade(this.grade)
+        .movie(this.movieEntity == null ? null : this.movieEntity.toMovieFromReview())
+        .build();
   }
 
-  public Long getId() {
-    return id;
+  @Override
+  public int hashCode() {
+    return 42;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public MovieEntity getMovieEntity() {
-    return movieEntity;
-  }
-
-  public void setMovieEntity(MovieEntity movieEntity) {
-    this.movieEntity = movieEntity;
-  }
-
-  public int getGrade() {
-    return grade;
-  }
-
-  public void setGrade(int grade) {
-    this.grade = grade;
-  }
-
-  public LocalDateTime getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(LocalDateTime creationDate) {
-    this.creationDate = creationDate;
-  }
-
-  public LocalDateTime getUpdateDate() {
-    return updateDate;
-  }
-
-  public void setUpdateDate(LocalDateTime updateDate) {
-    this.updateDate = updateDate;
-  }
-
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public static final class Builder {
-    private final MovieReviewEntity movieReviewEntity;
-
-    private Builder() {
-      movieReviewEntity = new MovieReviewEntity();
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    public Builder id(Long id) {
-      movieReviewEntity.setId(id);
-      return this;
+    if (obj == null) {
+      return false;
     }
 
-    public Builder grade(int grade) {
-      movieReviewEntity.setGrade(grade);
-      return this;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
 
-    public Builder creationDate(LocalDateTime creationDate) {
-      movieReviewEntity.setCreationDate(creationDate);
-      return this;
-    }
-
-    public Builder updateDate(LocalDateTime updateDate) {
-      movieReviewEntity.setUpdateDate(updateDate);
-      return this;
-    }
-
-    public Builder content(String content) {
-      movieReviewEntity.setContent(content);
-      return this;
-    }
-
-    public Builder movieEntity(MovieEntity movie) {
-      movieReviewEntity.setMovieEntity(movie);
-      return this;
-    }
-
-    public MovieReviewEntity build() {
-      return movieReviewEntity;
+    MovieReviewEntity other = (MovieReviewEntity) obj;
+    if (id == null) {
+      return false;
+    } else {
+      return id.equals(other.id);
     }
   }
 }

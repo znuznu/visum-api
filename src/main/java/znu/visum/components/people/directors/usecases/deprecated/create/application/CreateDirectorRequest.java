@@ -25,6 +25,6 @@ public class CreateDirectorRequest {
   }
 
   public Director toDomain() {
-    return new Director(null, this.name, this.forename, this.movies);
+    return Director.builder().name(this.name).forename(this.forename).movies(this.movies).build();
   }
 }

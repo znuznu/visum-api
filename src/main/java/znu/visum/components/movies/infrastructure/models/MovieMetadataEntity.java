@@ -1,5 +1,8 @@
 package znu.visum.components.movies.infrastructure.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import javax.persistence.*;
@@ -8,6 +11,9 @@ import javax.persistence.*;
 @Table(
     name = "movie_metadata",
     uniqueConstraints = @UniqueConstraint(columnNames = {"tmdbId", "imdbId"}))
+@AllArgsConstructor
+@Builder
+@Getter
 public class MovieMetadataEntity {
   @Id
   @Column(name = "movie_id")
@@ -39,7 +45,7 @@ public class MovieMetadataEntity {
   public MovieMetadataEntity() {}
 
   public static MovieMetadataEntity from(MovieMetadata movieMetadata, MovieEntity movieEntity) {
-    return new MovieMetadataEntity.Builder()
+    return MovieMetadataEntity.builder()
         .movieId(movieMetadata.getMovieId())
         .movie(movieEntity)
         .tmdbId(movieMetadata.getTmdbId())
@@ -55,7 +61,7 @@ public class MovieMetadataEntity {
   }
 
   public MovieMetadata toDomain() {
-    return new MovieMetadata.Builder()
+    return MovieMetadata.builder()
         .movieId(this.getMovieId())
         .tmdbId(this.tmdbId)
         .imdbId(this.imdbId)
@@ -69,114 +75,30 @@ public class MovieMetadataEntity {
         .build();
   }
 
-  public Long getTmdbId() {
-    return tmdbId;
+  @Override
+  public int hashCode() {
+    return 42;
   }
 
-  public String getImdbId() {
-    return imdbId;
-  }
-
-  public String getOriginalLanguage() {
-    return originalLanguage;
-  }
-
-  public String getTagline() {
-    return tagline;
-  }
-
-  public String getOverview() {
-    return overview;
-  }
-
-  public long getBudget() {
-    return budget;
-  }
-
-  public long getRevenue() {
-    return revenue;
-  }
-
-  public String getPosterUrl() {
-    return posterUrl;
-  }
-
-  public int getRuntime() {
-    return runtime;
-  }
-
-  public Long getMovieId() {
-    return movieId;
-  }
-
-  public MovieEntity getMovie() {
-    return movie;
-  }
-
-  public static final class Builder {
-    private final MovieMetadataEntity entity;
-
-    public Builder() {
-      this.entity = new MovieMetadataEntity();
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    public Builder movieId(Long movieId) {
-      this.entity.movieId = movieId;
-      return this;
+    if (obj == null) {
+      return false;
     }
 
-    public Builder movie(MovieEntity movie) {
-      this.entity.movie = movie;
-      return this;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
 
-    public Builder tmdbId(Long tmdbId) {
-      this.entity.tmdbId = tmdbId;
-      return this;
-    }
-
-    public Builder imdbId(String imdbId) {
-      this.entity.imdbId = imdbId;
-      return this;
-    }
-
-    public Builder originalLanguage(String originalLanguage) {
-      this.entity.originalLanguage = originalLanguage;
-      return this;
-    }
-
-    public Builder tagline(String tagline) {
-      this.entity.tagline = tagline;
-      return this;
-    }
-
-    public Builder overview(String overview) {
-      this.entity.overview = overview;
-      return this;
-    }
-
-    public Builder budget(long budget) {
-      this.entity.budget = budget;
-      return this;
-    }
-
-    public Builder revenue(long revenue) {
-      this.entity.revenue = revenue;
-      return this;
-    }
-
-    public Builder posterUrl(String posterUrl) {
-      this.entity.posterUrl = posterUrl;
-      return this;
-    }
-
-    public Builder runtime(int runtime) {
-      this.entity.runtime = runtime;
-      return this;
-    }
-
-    public MovieMetadataEntity build() {
-      return this.entity;
+    MovieMetadataEntity other = (MovieMetadataEntity) obj;
+    if (other.getMovieId() == null) {
+      return false;
+    } else {
+      return movieId.equals(other.getMovieId());
     }
   }
 }

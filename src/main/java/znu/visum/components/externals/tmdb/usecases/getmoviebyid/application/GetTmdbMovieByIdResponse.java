@@ -2,6 +2,9 @@ package znu.visum.components.externals.tmdb.usecases.getmoviebyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import znu.visum.components.externals.domain.models.ExternalActor;
 import znu.visum.components.externals.domain.models.ExternalDirector;
 import znu.visum.components.externals.domain.models.ExternalMovie;
@@ -11,6 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+@Builder
+@Getter
 @Schema(description = "Represents a TMDB movie.")
 public class GetTmdbMovieByIdResponse {
   @Schema(description = "The movie's identifier.")
@@ -35,10 +41,8 @@ public class GetTmdbMovieByIdResponse {
   @Schema(description = "The movie's directors.")
   private List<ResponseDirector> directors;
 
-  public GetTmdbMovieByIdResponse() {}
-
   public static GetTmdbMovieByIdResponse from(ExternalMovie externalMovie) {
-    return new GetTmdbMovieByIdResponse.Builder()
+    return GetTmdbMovieByIdResponse.builder()
         .actors(
             externalMovie.getCredits().getActors().stream()
                 .map(ResponseActor::from)
@@ -55,34 +59,8 @@ public class GetTmdbMovieByIdResponse {
         .build();
   }
 
-  public List<ResponseActor> getActors() {
-    return actors;
-  }
-
-  public List<ResponseDirector> getDirectors() {
-    return directors;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public LocalDate getReleaseDate() {
-    return releaseDate;
-  }
-
-  public List<String> getGenres() {
-    return genres;
-  }
-
-  public ResponseMovieMetadata getMetadata() {
-    return metadata;
-  }
-
+  @AllArgsConstructor
+  @Getter
   @Schema(description = "Represents an actor from a TMDB movie.")
   public static class ResponseActor {
     @Schema(description = "The actor's identifier.")
@@ -94,30 +72,15 @@ public class GetTmdbMovieByIdResponse {
     @Schema(description = "The actor's forename.")
     private final String forename;
 
-    public ResponseActor(long id, String name, String forename) {
-      this.id = id;
-      this.name = name;
-      this.forename = forename;
-    }
-
     public static ResponseActor from(ExternalActor externalActor) {
       return new ResponseActor(
           externalActor.getId(), externalActor.getName(), externalActor.getForename());
     }
-
-    public long getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getForename() {
-      return forename;
-    }
   }
 
+  @AllArgsConstructor
+  @Builder
+  @Getter
   @Schema(description = "Represents a director from a TMDB movie.")
   public static class ResponseDirector {
     @Schema(description = "The director's identifier.")
@@ -129,30 +92,15 @@ public class GetTmdbMovieByIdResponse {
     @Schema(description = "The director's forename.")
     private final String forename;
 
-    public ResponseDirector(long id, String name, String forename) {
-      this.id = id;
-      this.name = name;
-      this.forename = forename;
-    }
-
     public static ResponseDirector from(ExternalDirector externalDirector) {
       return new ResponseDirector(
           externalDirector.getId(), externalDirector.getName(), externalDirector.getForename());
     }
-
-    public long getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getForename() {
-      return forename;
-    }
   }
 
+  @AllArgsConstructor
+  @Builder
+  @Getter
   @Schema(description = "Represents (some) of the metadata related to the TMDB movie.")
   public static class ResponseMovieMetadata {
     @Schema(description = "The movie's TMDB identifier.")
@@ -182,10 +130,8 @@ public class GetTmdbMovieByIdResponse {
     @Schema(description = "The movie's poster URL.")
     private String posterUrl;
 
-    public ResponseMovieMetadata() {}
-
     public static ResponseMovieMetadata from(ExternalMovieMetadata externalMetadata) {
-      return new ResponseMovieMetadata.Builder()
+      return ResponseMovieMetadata.builder()
           .tmdbId(externalMetadata.getTmdbId())
           .imdbId(externalMetadata.getImdbId())
           .tagline(externalMetadata.getTagline())
@@ -196,146 +142,6 @@ public class GetTmdbMovieByIdResponse {
           .originalLanguage(externalMetadata.getOriginalLanguage())
           .posterUrl(externalMetadata.getCompletePosterUrl().orElse(null))
           .build();
-    }
-
-    public Long getTmdbId() {
-      return tmdbId;
-    }
-
-    public String getImdbId() {
-      return imdbId;
-    }
-
-    public String getOriginalLanguage() {
-      return originalLanguage;
-    }
-
-    public String getTagline() {
-      return tagline;
-    }
-
-    public String getOverview() {
-      return overview;
-    }
-
-    public long getBudget() {
-      return budget;
-    }
-
-    public long getRevenue() {
-      return revenue;
-    }
-
-    public int getRuntime() {
-      return runtime;
-    }
-
-    public String getPosterUrl() {
-      return posterUrl;
-    }
-
-    public static class Builder {
-      private final ResponseMovieMetadata metadata;
-
-      public Builder() {
-        this.metadata = new ResponseMovieMetadata();
-      }
-
-      public Builder imdbId(String imdbId) {
-        this.metadata.imdbId = imdbId;
-        return this;
-      }
-
-      public Builder tmdbId(Long tmdbId) {
-        this.metadata.tmdbId = tmdbId;
-        return this;
-      }
-
-      public Builder originalLanguage(String originalLanguage) {
-        this.metadata.originalLanguage = originalLanguage;
-        return this;
-      }
-
-      public Builder tagline(String tagline) {
-        this.metadata.tagline = tagline;
-        return this;
-      }
-
-      public Builder overview(String overview) {
-        this.metadata.overview = overview;
-        return this;
-      }
-
-      public Builder budget(long budget) {
-        this.metadata.budget = budget;
-        return this;
-      }
-
-      public Builder revenue(long revenue) {
-        this.metadata.revenue = revenue;
-        return this;
-      }
-
-      public Builder runtime(int runtime) {
-        this.metadata.runtime = runtime;
-        return this;
-      }
-
-      public Builder posterUrl(String posterUrl) {
-        this.metadata.posterUrl = posterUrl;
-        return this;
-      }
-
-      public ResponseMovieMetadata build() {
-        return this.metadata;
-      }
-    }
-  }
-
-  public static final class Builder {
-    private final GetTmdbMovieByIdResponse response;
-
-    public Builder() {
-      this.response = new GetTmdbMovieByIdResponse();
-    }
-
-    public Builder actors(List<ResponseActor> actors) {
-      this.response.actors = actors;
-      return this;
-    }
-
-    public Builder directors(List<ResponseDirector> directors) {
-      this.response.directors = directors;
-      return this;
-    }
-
-    public Builder id(String id) {
-      this.response.id = id;
-      return this;
-    }
-
-    public Builder title(String title) {
-      this.response.title = title;
-      return this;
-    }
-
-    public Builder releaseDate(LocalDate releaseDate) {
-      this.response.releaseDate = releaseDate;
-      return this;
-    }
-
-    public Builder genres(List<String> genres) {
-      this.response.genres = genres;
-      return this;
-    }
-
-    public Builder metadata(ResponseMovieMetadata metadata) {
-      this.response.metadata = metadata;
-      return this;
-    }
-
-    public GetTmdbMovieByIdResponse build() {
-      return this.response;
     }
   }
 }

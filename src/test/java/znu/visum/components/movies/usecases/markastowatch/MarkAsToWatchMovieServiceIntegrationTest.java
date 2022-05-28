@@ -15,7 +15,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.movies.usecases.markasfavorite.domain.MarkAsFavoriteMovieService;
 import znu.visum.components.movies.usecases.markastowatch.domain.MarkAsToWatchMovieService;
 
 import static org.assertj.core.api.Assertions.assertThat;

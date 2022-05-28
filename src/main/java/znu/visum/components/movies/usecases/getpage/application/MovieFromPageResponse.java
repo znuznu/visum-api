@@ -3,12 +3,17 @@ package znu.visum.components.movies.usecases.getpage.application;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@Getter
 @Schema(description = "Represents a movie in a page.")
 public class MovieFromPageResponse {
   @Schema(description = "The movie identifier.")
@@ -33,23 +38,6 @@ public class MovieFromPageResponse {
 
   private final ResponseMovieMetadata metadata;
 
-  public MovieFromPageResponse(
-      Long id,
-      String title,
-      LocalDate releaseDate,
-      boolean isFavorite,
-      boolean isToWatch,
-      LocalDateTime creationDate,
-      ResponseMovieMetadata metadata) {
-    this.id = id;
-    this.title = title;
-    this.releaseDate = releaseDate;
-    this.isFavorite = isFavorite;
-    this.isToWatch = isToWatch;
-    this.creationDate = creationDate;
-    this.metadata = metadata;
-  }
-
   public static MovieFromPageResponse from(Movie movie) {
     return new MovieFromPageResponse(
         movie.getId(),
@@ -59,18 +47,6 @@ public class MovieFromPageResponse {
         movie.isToWatch(),
         movie.getCreationDate(),
         ResponseMovieMetadata.from(movie.getMetadata()));
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public LocalDate getReleaseDate() {
-    return releaseDate;
   }
 
   @JsonProperty(value = "isFavorite")
@@ -83,43 +59,15 @@ public class MovieFromPageResponse {
     return isToWatch;
   }
 
-  public LocalDateTime getCreationDate() {
-    return creationDate;
-  }
-
-  public ResponseMovieMetadata getMetadata() {
-    return metadata;
-  }
-
+  @AllArgsConstructor
+  @Builder
+  @Getter
   public static class ResponseMovieMetadata {
     @Schema(description = "The movie's poster URL.")
     private String posterUrl;
 
-    public ResponseMovieMetadata() {}
-
     public static ResponseMovieMetadata from(MovieMetadata movieMetadata) {
-      return new ResponseMovieMetadata.Builder().posterUrl(movieMetadata.getPosterUrl()).build();
-    }
-
-    public String getPosterUrl() {
-      return posterUrl;
-    }
-
-    public static class Builder {
-      private final ResponseMovieMetadata metadata;
-
-      public Builder() {
-        this.metadata = new ResponseMovieMetadata();
-      }
-
-      public ResponseMovieMetadata.Builder posterUrl(String posterUrl) {
-        this.metadata.posterUrl = posterUrl;
-        return this;
-      }
-
-      public ResponseMovieMetadata build() {
-        return this.metadata;
-      }
+      return ResponseMovieMetadata.builder().posterUrl(movieMetadata.getPosterUrl()).build();
     }
   }
 }

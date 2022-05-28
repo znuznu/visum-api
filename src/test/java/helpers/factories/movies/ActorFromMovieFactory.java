@@ -10,7 +10,7 @@ public enum ActorFromMovieFactory {
   INSTANCE;
 
   private ActorFromMovie createWithId(Long id) {
-    return new ActorFromMovie.Builder()
+    return ActorFromMovie.builder()
         .id(id)
         .name(String.format("Name %s", id))
         .forename(String.format("Forename %s", id))
@@ -21,8 +21,7 @@ public enum ActorFromMovieFactory {
     return IntStream.range(0, n)
         .mapToObj(
             i ->
-                new ActorFromMovie.Builder()
-                    .id(null)
+                ActorFromMovie.builder()
                     .name(String.format("Name %s", i))
                     .forename(String.format("Forename %s", i))
                     .build())

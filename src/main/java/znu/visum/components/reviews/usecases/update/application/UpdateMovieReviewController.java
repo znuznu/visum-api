@@ -30,12 +30,10 @@ public class UpdateMovieReviewController {
       @Valid @RequestBody UpdateMovieReviewRequest updateMovieReviewRequest) {
     return UpdateMovieReviewResponse.from(
         updateMovieReviewService.update(
-            new Review(
-                id,
-                updateMovieReviewRequest.getContent(),
-                null,
-                null,
-                updateMovieReviewRequest.getGrade(),
-                null)));
+            Review.builder()
+                .id(id)
+                .content(updateMovieReviewRequest.getContent())
+                .grade(updateMovieReviewRequest.getGrade())
+                .build()));
   }
 }

@@ -30,12 +30,10 @@ public class CreateReviewController {
       @Valid @RequestBody final CreateReviewRequest createReviewRequest) {
     return CreateReviewResponse.from(
         createReviewService.save(
-            new Review(
-                null,
-                createReviewRequest.getContent(),
-                null,
-                null,
-                createReviewRequest.getGrade(),
-                new MovieFromReview(createReviewRequest.getMovieId(), null, null, null))));
+            Review.builder()
+                .content(createReviewRequest.getContent())
+                .grade(createReviewRequest.getGrade())
+                .movie(MovieFromReview.builder().id(createReviewRequest.getMovieId()).build())
+                .build()));
   }
 }

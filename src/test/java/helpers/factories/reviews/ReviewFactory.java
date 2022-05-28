@@ -10,27 +10,28 @@ public enum ReviewFactory {
   INSTANCE;
 
   private Review createReview(long id, long movieId) {
-    return new Review(
-        id,
-        "Bla bla bla. \n Blo blo blo. \n Wow !",
-        LocalDateTime.of(2021, 12, 12, 7, 10),
-        LocalDateTime.of(2021, 12, 12, 5, 10),
-        7,
-        new MovieFromReview(
-            movieId,
-            "Fake movie",
-            LocalDate.of(2021, 6, 12),
-            new MovieFromReview.MovieFromReviewMetadata("https://images.com/1234")));
+    return Review.builder()
+        .id(id)
+        .content("Bla bla bla. \n Blo blo blo. \n Wow !")
+        .grade(7)
+        .movie(
+            MovieFromReview.builder()
+                .id(movieId)
+                .title("Fake movie")
+                .releaseDate(LocalDate.of(2021, 6, 12))
+                .metadata(new MovieFromReview.MovieFromReviewMetadata("https://images.com/1234"))
+                .build())
+        .creationDate(LocalDateTime.of(2021, 12, 12, 5, 10))
+        .updateDate(LocalDateTime.of(2021, 12, 12, 7, 10))
+        .build();
   }
 
   private Review createReviewToSave(long movieId) {
-    return new Review(
-        null,
-        "Bla bla bla. \n Blo blo blo. \n Wow !",
-        null,
-        null,
-        7,
-        new MovieFromReview(movieId, null, null, null));
+    return Review.builder()
+        .content("Bla bla bla. \n Blo blo blo. \n Wow !")
+        .grade(7)
+        .movie(MovieFromReview.builder().id(movieId).build())
+        .build();
   }
 
   public Review getOneWithIdAndMovieId(long id, long movieId) {
