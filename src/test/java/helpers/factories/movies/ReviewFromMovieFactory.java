@@ -8,7 +8,7 @@ public enum ReviewFromMovieFactory {
   INSTANCE;
 
   private ReviewFromMovie createReviewFromMovie(Long id) {
-    return new ReviewFromMovie.Builder()
+    return ReviewFromMovie.builder()
         .id(id)
         .grade(10)
         .content("Some text.")

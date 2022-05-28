@@ -50,10 +50,10 @@ public class GetAllTimeStatisticsServiceImpl implements GetAllTimeStatisticsServ
             .filter(pair -> !pair.getValue().isEmpty())
             .collect(Collectors.toList());
 
-    return new AllTimeStatistics.Builder()
+    return AllTimeStatistics.builder()
         .reviewCount(reviewCount)
         .averageRatePerYear(averageRatePerYear)
-        .highestRateMoviesPerDecade(highestRatedMoviesPerDecade)
+        .highestRatedMoviesPerDecade(highestRatedMoviesPerDecade)
         .movieCount(movieCount)
         .totalRuntimeInHours(totalRuntimeInHours)
         .build();

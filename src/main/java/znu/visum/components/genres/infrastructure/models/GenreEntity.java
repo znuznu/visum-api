@@ -1,5 +1,9 @@
 package znu.visum.components.genres.infrastructure.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.movies.infrastructure.models.MovieEntity;
 
@@ -8,6 +12,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "genre")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class GenreEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_id_seq")
@@ -22,42 +30,12 @@ public class GenreEntity {
       inverseJoinColumns = @JoinColumn(name = "movie_id"))
   private Set<MovieEntity> movieEntities;
 
-  public GenreEntity() {}
-
   public static GenreEntity from(Genre genre) {
-    return new GenreEntity().id(genre.getId()).type(genre.getType());
+    return new GenreEntity(genre.getId(), genre.getType(), null);
   }
 
   public Genre toDomain() {
     return new Genre(this.id, this.type);
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public GenreEntity id(Long id) {
-    this.id = id;
-
-    return this;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public GenreEntity type(String type) {
-    this.type = type;
-
-    return this;
   }
 
   public Set<MovieEntity> getMovies() {
@@ -66,5 +44,32 @@ public class GenreEntity {
 
   public void setMovies(Set<MovieEntity> movieEntities) {
     this.movieEntities = movieEntities;
+  }
+
+  @Override
+  public int hashCode() {
+    return 42;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+
+    if (obj == null) {
+      return false;
+    }
+
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+
+    GenreEntity other = (GenreEntity) obj;
+    if (id == null) {
+      return false;
+    } else {
+      return id.equals(other.id);
+    }
   }
 }

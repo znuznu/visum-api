@@ -1,6 +1,5 @@
 package znu.visum.components.movies.infrastructure;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,18 +67,18 @@ public class PostgresMovieRepositoryIntegrationTest {
     assertThat(movies)
         .usingRecursiveFieldByFieldElementComparator()
         .containsOnly(
-            new Movie.Builder()
+            Movie.builder()
                 .id(1L)
                 .title("Fake movie 1")
                 .releaseDate(LocalDate.of(2001, 10, 12))
-                .favorite(true)
-                .toWatch(false)
+                .isFavorite(true)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(1L)
                         .grade(9)
                         .content("Some text 1")
@@ -88,7 +87,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt1111")
                         .tmdbId(1111L)
                         .movieId(1L)
@@ -100,31 +99,31 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(111)
                         .originalLanguage("en")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(1L)
                             .movieId(1L)
                             .viewingDate(LocalDate.of(2020, 1, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(2L)
                             .movieId(1L)
                             .viewingDate(LocalDate.of(2020, 1, 2))
                             .build()))
                 .build(),
-            new Movie.Builder()
+            Movie.builder()
                 .id(3L)
                 .title("Fake movie 3")
                 .releaseDate(LocalDate.of(2003, 10, 12))
-                .favorite(false)
-                .toWatch(false)
+                .isFavorite(false)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(3L)
                         .grade(10)
                         .content("Some text 3")
@@ -133,7 +132,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt3333")
                         .tmdbId(3333L)
                         .movieId(3L)
@@ -145,14 +144,14 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(333)
                         .originalLanguage("en")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(5L)
                             .movieId(3L)
                             .viewingDate(LocalDate.of(2020, 4, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(6L)
                             .movieId(3L)
                             .viewingDate(LocalDate.of(2020, 5, 2))
@@ -174,18 +173,18 @@ public class PostgresMovieRepositoryIntegrationTest {
     assertThat(movies)
         .usingRecursiveFieldByFieldElementComparator()
         .containsOnly(
-            new Movie.Builder()
+            Movie.builder()
                 .id(1L)
                 .title("Fake movie 1")
                 .releaseDate(LocalDate.of(2001, 10, 12))
-                .favorite(true)
-                .toWatch(false)
+                .isFavorite(true)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(1L)
                         .grade(9)
                         .content("Some text 1")
@@ -194,7 +193,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt1111")
                         .tmdbId(1111L)
                         .movieId(1L)
@@ -206,31 +205,31 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(111)
                         .originalLanguage("en")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(1L)
                             .movieId(1L)
                             .viewingDate(LocalDate.of(2020, 1, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(2L)
                             .movieId(1L)
                             .viewingDate(LocalDate.of(2020, 1, 2))
                             .build()))
                 .build(),
-            new Movie.Builder()
+            Movie.builder()
                 .id(2L)
                 .title("Fake movie 2")
                 .releaseDate(LocalDate.of(2002, 10, 12))
-                .favorite(true)
-                .toWatch(false)
+                .isFavorite(true)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(2L)
                         .grade(1)
                         .content("Some text 2")
@@ -239,7 +238,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt2222")
                         .tmdbId(2222L)
                         .movieId(2L)
@@ -251,14 +250,14 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(222)
                         .originalLanguage("en")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(3L)
                             .movieId(2L)
                             .viewingDate(LocalDate.of(2020, 2, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(4L)
                             .movieId(2L)
                             .viewingDate(LocalDate.of(2020, 2, 2))
@@ -458,18 +457,18 @@ public class PostgresMovieRepositoryIntegrationTest {
     assertThat(movies)
         .usingRecursiveFieldByFieldElementComparator()
         .containsOnly(
-            new Movie.Builder()
+            Movie.builder()
                 .id(8L)
                 .title("Fake movie 8")
                 .releaseDate(LocalDate.of(2007, 10, 12))
-                .favorite(true)
-                .toWatch(false)
+                .isFavorite(true)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2015, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(8L)
                         .grade(6)
                         .content("Some text 8")
@@ -478,7 +477,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2015, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt8888")
                         .tmdbId(8888L)
                         .movieId(8L)
@@ -490,31 +489,31 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(888)
                         .originalLanguage("de")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(100L)
                             .movieId(8L)
                             .viewingDate(LocalDate.of(2020, 5, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(101L)
                             .movieId(8L)
                             .viewingDate(LocalDate.of(2020, 6, 2))
                             .build()))
                 .build(),
-            new Movie.Builder()
+            Movie.builder()
                 .id(14L)
                 .title("Fake movie 14")
                 .releaseDate(LocalDate.of(2014, 10, 12))
-                .favorite(false)
-                .toWatch(false)
+                .isFavorite(false)
+                .isToWatch(false)
                 .creationDate(LocalDateTime.of(2015, 10, 20, 15, 54, 33))
                 .actors(new ArrayList<>())
                 .directors(new ArrayList<>())
                 .genres(new ArrayList<>())
                 .review(
-                    new ReviewFromMovie.Builder()
+                    ReviewFromMovie.builder()
                         .id(14L)
                         .grade(1)
                         .content("Some text 14")
@@ -523,7 +522,7 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .updateDate(LocalDateTime.of(2015, 10, 27, 15, 54, 33))
                         .build())
                 .metadata(
-                    new MovieMetadata.Builder()
+                    MovieMetadata.builder()
                         .imdbId("tt1414")
                         .tmdbId(1414L)
                         .movieId(14L)
@@ -535,14 +534,14 @@ public class PostgresMovieRepositoryIntegrationTest {
                         .runtime(141)
                         .originalLanguage("jp")
                         .build())
-                .viewingDates(
+                .viewingHistory(
                     List.of(
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(9L)
                             .movieId(14L)
                             .viewingDate(LocalDate.of(2020, 7, 1))
                             .build(),
-                        new MovieViewingHistory.Builder()
+                        MovieViewingHistory.builder()
                             .id(10L)
                             .movieId(14L)
                             .viewingDate(LocalDate.of(2020, 8, 2))

@@ -23,7 +23,12 @@ public class UpdateDirectorRequest {
   }
 
   public Director toDomain() {
-    return new Director(this.id, this.name, this.forename, this.movies);
+    return Director.builder()
+        .id(this.id)
+        .name(this.name)
+        .forename(this.forename)
+        .movies(this.movies)
+        .build();
   }
 
   public Long getId() {

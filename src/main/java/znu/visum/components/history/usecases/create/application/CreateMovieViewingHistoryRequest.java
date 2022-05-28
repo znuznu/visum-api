@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@Getter
 @Schema(description = "Represent a movie viewing history created.")
 public class CreateMovieViewingHistoryRequest {
   @Schema(description = "A viewing date of the movie.")
@@ -30,14 +32,9 @@ public class CreateMovieViewingHistoryRequest {
   }
 
   public MovieViewingHistory toDomain() {
-    return new MovieViewingHistory(null, this.getViewingDate(), this.getMovieId());
-  }
-
-  public LocalDate getViewingDate() {
-    return viewingDate;
-  }
-
-  public long getMovieId() {
-    return movieId;
+    return MovieViewingHistory.builder()
+        .viewingDate(this.getViewingDate())
+        .movieId(this.getMovieId())
+        .build();
   }
 }

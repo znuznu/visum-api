@@ -35,7 +35,13 @@ public class CreateActorControllerUnitTest {
   @Test
   public void givenAnActorWithoutMovies_whenTheActorIsSaved_thenTheActorWithoutMoviesIsReturned() {
     Mockito.when(service.save(any(Actor.class)))
-        .thenReturn(new Actor(1L, "Maclachlan", "Kyle", new ArrayList<>()));
+        .thenReturn(
+            Actor.builder()
+                .id(1L)
+                .name("Maclachlan")
+                .forename("Kyle")
+                .movies(new ArrayList<>())
+                .build());
 
     CreateActorRequest request = new CreateActorRequest("Maclachlan", "Kyle", new ArrayList<>());
 

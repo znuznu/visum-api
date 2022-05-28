@@ -11,35 +11,35 @@ public enum MovieFactory {
 
   private Movie createMovie(MovieKind movieKind, Long id) {
     if (movieKind == MovieKind.WITH_REVIEW) {
-      return new Movie.Builder()
+      return Movie.builder()
           .id(id)
           .title("Mulholland Drive")
-          .toWatch(true)
-          .favorite(true)
+          .isToWatch(true)
+          .isFavorite(true)
           .actors(new ArrayList<>())
           .directors(new ArrayList<>())
           .genres(new ArrayList<>())
           .releaseDate(LocalDate.of(2001, 10, 12))
           .creationDate(LocalDateTime.of(2001, 10, 10, 19, 0))
           // TODO viewing dates
-          .viewingDates(new ArrayList<>())
+          .viewingHistory(new ArrayList<>())
           .review(ReviewFromMovieFactory.INSTANCE.getWithId(1L))
           .build();
     }
 
     if (movieKind == MovieKind.WITHOUT_REVIEW) {
-      return new Movie.Builder()
+      return Movie.builder()
           .id(id)
           .title("Mulholland Drive")
-          .toWatch(true)
-          .favorite(true)
+          .isToWatch(true)
+          .isFavorite(true)
           .actors(new ArrayList<>())
           .directors(new ArrayList<>())
           .genres(new ArrayList<>())
           .releaseDate(LocalDate.of(2001, 10, 12))
           .creationDate(null)
           // TODO viewing dates
-          .viewingDates(new ArrayList<>())
+          .viewingHistory(new ArrayList<>())
           .review(null)
           .build();
     }

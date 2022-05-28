@@ -25,6 +25,6 @@ public class CreateActorRequest {
   }
 
   public Actor toDomain() {
-    return new Actor(null, this.name, this.forename, this.movies);
+    return Actor.builder().name(this.name).forename(this.forename).movies(this.movies).build();
   }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class ActorFactory extends PeopleFactory {
   protected Actor createPeople(PeopleKind peopleKind) {
     if (peopleKind == PeopleKind.WITHOUT_MOVIES) {
-      return new Actor.Builder()
+      return Actor.builder()
           .id(1L)
           .name("Pattinson")
           .forename("Robert")
@@ -20,15 +20,33 @@ public class ActorFactory extends PeopleFactory {
     }
 
     if (peopleKind == PeopleKind.WITH_MOVIES) {
-      return new Actor.Builder()
+      return Actor.builder()
           .id(1L)
           .name("Pattinson")
           .forename("Robert")
           .movies(
               Arrays.asList(
-                  new MovieFromActor(1L, "Movie 1", LocalDate.of(2021, 10, 10), false, true),
-                  new MovieFromActor(2L, "Movie 2", LocalDate.of(2021, 11, 11), true, true),
-                  new MovieFromActor(3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false)))
+                  MovieFromActor.builder()
+                      .id(1L)
+                      .title("Movie 1")
+                      .releaseDate(LocalDate.of(2021, 10, 10))
+                      .isFavorite(false)
+                      .isToWatch(true)
+                      .build(),
+                  MovieFromActor.builder()
+                      .id(2L)
+                      .title("Movie 2")
+                      .releaseDate(LocalDate.of(2021, 11, 11))
+                      .isFavorite(true)
+                      .isToWatch(true)
+                      .build(),
+                  MovieFromActor.builder()
+                      .id(3L)
+                      .title("Movie 3")
+                      .releaseDate(LocalDate.of(2021, 12, 12))
+                      .isFavorite(false)
+                      .isToWatch(false)
+                      .build()))
           .build();
     }
 
@@ -44,7 +62,7 @@ public class ActorFactory extends PeopleFactory {
 
     for (long i = 0; i < count; i++) {
       Actor actor =
-          new Actor.Builder()
+          Actor.builder()
               .id(i)
               .name(String.format("Name%s", i))
               .forename(String.format("Forename%s", i))

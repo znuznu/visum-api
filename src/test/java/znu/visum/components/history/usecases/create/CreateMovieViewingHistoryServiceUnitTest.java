@@ -45,7 +45,7 @@ public class CreateMovieViewingHistoryServiceUnitTest {
         NoSuchMovieIdException.class,
         () ->
             service.save(
-                new MovieViewingHistory.Builder()
+                MovieViewingHistory.builder()
                     .viewingDate(LocalDate.of(2020, 1, 1))
                     .movieId(1)
                     .build()));
@@ -59,7 +59,7 @@ public class CreateMovieViewingHistoryServiceUnitTest {
 
     Mockito.when(historyRepository.save(any(MovieViewingHistory.class)))
         .thenReturn(
-            new MovieViewingHistory.Builder()
+            MovieViewingHistory.builder()
                 .viewingDate(LocalDate.of(2020, 1, 1))
                 .movieId(1)
                 .id(1L)
@@ -67,13 +67,13 @@ public class CreateMovieViewingHistoryServiceUnitTest {
 
     assertThat(
             service.save(
-                new MovieViewingHistory.Builder()
+                MovieViewingHistory.builder()
                     .viewingDate(LocalDate.of(2020, 1, 1))
                     .movieId(1)
                     .build()))
         .usingRecursiveComparison()
         .isEqualTo(
-            new MovieViewingHistory.Builder()
+            MovieViewingHistory.builder()
                 .viewingDate(LocalDate.of(2020, 1, 1))
                 .id(1L)
                 .movieId(1)

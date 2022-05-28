@@ -1,25 +1,19 @@
 package znu.visum.components.history.infrastructure.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
 @MappedSuperclass
+@AllArgsConstructor
+@SuperBuilder
+@Getter
 public abstract class ViewingHistoryEntity {
-  protected LocalDate viewingDate;
+
+  private LocalDate viewingDate;
 
   public ViewingHistoryEntity() {}
-
-  public LocalDate getViewingDate() {
-    return viewingDate;
-  }
-
-  public void setViewingDate(LocalDate viewingDate) {
-    this.viewingDate = viewingDate;
-  }
-
-  public ViewingHistoryEntity viewingDate(LocalDate viewingDate) {
-    this.viewingDate = viewingDate;
-
-    return this;
-  }
 }
