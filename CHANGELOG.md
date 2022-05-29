@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.2
+
+- Sort by grade the highest rated movies (older) in per year statistics
+
 ## 2.7.1
 
 - Use Lombok

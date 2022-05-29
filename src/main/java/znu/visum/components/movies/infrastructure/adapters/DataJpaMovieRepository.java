@@ -88,7 +88,7 @@ public interface DataJpaMovieRepository
       @Param("start") LocalDate start, @Param("end") LocalDate end);
 
   @Query(
-      "select m from MovieEntity m where m.review.updateDate >= :start and m.review.updateDate < :end and m.releaseDate < :start")
+      "select m from MovieEntity m where m.review.updateDate >= :start and m.review.updateDate < :end and m.releaseDate < :start order by m.review.grade desc")
   List<MovieEntity> findHighestRatedDuringYearsOlderMovies(
       @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
