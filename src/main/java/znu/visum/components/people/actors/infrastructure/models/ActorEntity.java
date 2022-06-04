@@ -2,6 +2,7 @@ package znu.visum.components.people.actors.infrastructure.models;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import znu.visum.components.movies.domain.models.ActorFromMovie;
 import znu.visum.components.movies.infrastructure.models.MovieEntity;
 import znu.visum.components.people.actors.domain.models.Actor;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "actor", uniqueConstraints = @UniqueConstraint(columnNames = {"forename", "name"}))
 @Getter
+@NoArgsConstructor
 public class ActorEntity extends PeopleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_id_seq")
@@ -26,8 +28,6 @@ public class ActorEntity extends PeopleEntity {
       joinColumns = @JoinColumn(name = "actor_id"),
       inverseJoinColumns = @JoinColumn(name = "movie_id"))
   private Set<MovieEntity> movieEntities;
-
-  public ActorEntity() {}
 
   @Builder
   public ActorEntity(Long id, Set<MovieEntity> movieEntities, String name, String forename) {

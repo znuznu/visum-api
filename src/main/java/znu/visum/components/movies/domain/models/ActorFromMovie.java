@@ -13,6 +13,4 @@ public class ActorFromMovie {
   @Setter private Long id;
   private String name;
   private String forename;
-
-  public ActorFromMovie() {}
 }

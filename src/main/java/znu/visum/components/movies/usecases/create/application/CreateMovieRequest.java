@@ -220,8 +220,6 @@ public class CreateMovieRequest {
     @Schema(description = "The movie's poster URL from an external source.")
     private String posterUrl;
 
-    public RequestMovieMetadata() {}
-
     public MovieMetadata toDomain() {
       return MovieMetadata.builder()
           .tmdbId(this.getTmdbId())

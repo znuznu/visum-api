@@ -3,16 +3,16 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
 import znu.visum.components.genres.domain.models.Genre;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class TmdbGenre {
   private int id;
 
   @JsonProperty("name")
   private String name;
-
-  public TmdbGenre() {}
 
   public Genre toDomain() {
     return new Genre(null, name);

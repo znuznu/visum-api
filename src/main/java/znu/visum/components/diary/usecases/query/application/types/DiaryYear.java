@@ -25,10 +25,8 @@ public class DiaryYear {
           Month.MARCH,
           Month.FEBRUARY,
           Month.JANUARY);
-  private int year;
-  private List<DiaryMonth> months;
-
-  public DiaryYear() {}
+  private final int year;
+  private final List<DiaryMonth> months;
 
   public DiaryYear(int year, List<DiaryMonth> months) {
     this.months = months;

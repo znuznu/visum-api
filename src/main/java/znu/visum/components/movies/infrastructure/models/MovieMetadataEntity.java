@@ -3,6 +3,7 @@ package znu.visum.components.movies.infrastructure.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
     name = "movie_metadata",
     uniqueConstraints = @UniqueConstraint(columnNames = {"tmdbId", "imdbId"}))
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Getter
 public class MovieMetadataEntity {
@@ -41,8 +43,6 @@ public class MovieMetadataEntity {
   private String posterUrl;
 
   private int runtime;
-
-  public MovieMetadataEntity() {}
 
   public static MovieMetadataEntity from(MovieMetadata movieMetadata, MovieEntity movieEntity) {
     return MovieMetadataEntity.builder()

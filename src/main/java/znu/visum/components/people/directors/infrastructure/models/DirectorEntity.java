@@ -2,6 +2,7 @@ package znu.visum.components.people.directors.infrastructure.models;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import znu.visum.components.movies.domain.models.DirectorFromMovie;
 import znu.visum.components.movies.infrastructure.models.MovieEntity;
 import znu.visum.components.people.directors.domain.models.Director;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "director", uniqueConstraints = @UniqueConstraint(columnNames = {"forename", "name"}))
+@NoArgsConstructor
 @Getter
 public class DirectorEntity extends PeopleEntity {
   @Id
@@ -26,8 +28,6 @@ public class DirectorEntity extends PeopleEntity {
       joinColumns = @JoinColumn(name = "director_id"),
       inverseJoinColumns = @JoinColumn(name = "movie_id"))
   private Set<MovieEntity> movieEntities;
-
-  public DirectorEntity() {}
 
   @Builder
   public DirectorEntity(Long id, Set<MovieEntity> movieEntities, String name, String forename) {
