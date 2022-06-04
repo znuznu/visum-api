@@ -30,7 +30,7 @@ public class PostgresActorRepository implements ActorRepository {
     Specification<ActorEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<ActorEntity> pageSearch =
-        new PageSearch.Builder<ActorEntity>()
+        PageSearch.<ActorEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

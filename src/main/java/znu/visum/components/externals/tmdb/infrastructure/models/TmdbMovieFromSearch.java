@@ -54,7 +54,7 @@ public class TmdbMovieFromSearch {
   }
 
   public ExternalMovieFromSearch toDomain() {
-    return new ExternalMovieFromSearch.Builder()
+    return ExternalMovieFromSearch.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)

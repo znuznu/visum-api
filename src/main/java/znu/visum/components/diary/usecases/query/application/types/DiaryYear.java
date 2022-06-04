@@ -1,5 +1,6 @@
 package znu.visum.components.diary.usecases.query.application.types;
 
+import lombok.Getter;
 import znu.visum.components.diary.domain.models.DiaryMovie;
 import znu.visum.core.models.common.Month;
 
@@ -7,7 +8,9 @@ import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Getter
 public class DiaryYear {
+
   private static final List<Month> MONTH_VALUES =
       List.of(
           Month.DECEMBER,
@@ -22,8 +25,8 @@ public class DiaryYear {
           Month.MARCH,
           Month.FEBRUARY,
           Month.JANUARY);
-  private List<DiaryMonth> months;
   private int year;
+  private List<DiaryMonth> months;
 
   public DiaryYear() {}
 
@@ -46,7 +49,7 @@ public class DiaryYear {
         List<DiaryDay> monthMovies = byMonth.get(month);
         monthMovies.add(dayResponse);
       } else {
-        byMonth.put(month, new ArrayList<DiaryDay>(Arrays.asList(dayResponse)));
+        byMonth.put(month, new ArrayList<>(Arrays.asList(dayResponse)));
       }
     }
 
@@ -67,22 +70,6 @@ public class DiaryYear {
             .collect(Collectors.toList()));
   }
 
-  public List<DiaryMonth> getMonths() {
-    return months;
-  }
-
-  public void setMonths(List<DiaryMonth> months) {
-    this.months = months;
-  }
-
-  public int getYear() {
-    return year;
-  }
-
-  public void setYear(int year) {
-    this.year = year;
-  }
-
   @Override
   public String toString() {
     return "DiaryYear{" + "months='" + months + "'," + "year='" + year + "'" + "}";
@@ -99,28 +86,5 @@ public class DiaryYear {
   @Override
   public int hashCode() {
     return java.util.Objects.hash(months, year);
-  }
-
-  public static class Builder {
-    private List<DiaryMonth> months;
-
-    private int year;
-
-    public DiaryYear build() {
-      DiaryYear result = new DiaryYear();
-      result.months = this.months;
-      result.year = this.year;
-      return result;
-    }
-
-    public DiaryYear.Builder months(List<DiaryMonth> months) {
-      this.months = months;
-      return this;
-    }
-
-    public DiaryYear.Builder year(int year) {
-      this.year = year;
-      return this;
-    }
   }
 }

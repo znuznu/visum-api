@@ -35,7 +35,7 @@ public class PostgresReviewRepository implements ReviewRepository {
         PaginationSearchSpecification.parse(search);
 
     PageSearch<MovieReviewEntity> pageSearch =
-        new PageSearch.Builder<MovieReviewEntity>()
+        PageSearch.<MovieReviewEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

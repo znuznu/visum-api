@@ -28,7 +28,7 @@ public class PostgresGenreRepository implements GenreRepository {
     Specification<GenreEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<GenreEntity> pageSearch =
-        new PageSearch.Builder<GenreEntity>()
+        PageSearch.<GenreEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

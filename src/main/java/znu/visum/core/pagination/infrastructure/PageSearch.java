@@ -1,17 +1,19 @@
 package znu.visum.core.pagination.infrastructure;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+@AllArgsConstructor
+@Builder
 public class PageSearch<T> implements Pageable {
   private long offset;
   private long limit;
   @JsonIgnore private Specification<T> search;
   private Sort sorting = Sort.unsorted();
-
-  private PageSearch() {}
 
   protected PageSearch(PageSearch<T> pageSearch) {
     this.offset = pageSearch.offset;
@@ -51,23 +53,23 @@ public class PageSearch<T> implements Pageable {
 
   @Override
   public Pageable next() {
-    return new Builder<>().offset(offset + limit).build();
+    return builder().offset(offset + limit).build();
   }
 
   @Override
   public Pageable previousOrFirst() {
-    return new Builder<>().offset(Math.max(offset - limit, 0)).build();
+    return builder().offset(Math.max(offset - limit, 0)).build();
   }
 
   @Override
   public Pageable first() {
-    return new Builder<>().offset(0).build();
+    return builder().offset(0).build();
   }
 
   @Override
   public Pageable withPage(int pageNumber) {
     // TODO
-    return new Builder<>().build();
+    return builder().build();
   }
 
   @Override
@@ -81,37 +83,5 @@ public class PageSearch<T> implements Pageable {
 
   public Specification<T> getSearch() {
     return search;
-  }
-
-  public static class Builder<T> {
-    private final PageSearch<T> pageSearch;
-
-    public Builder() {
-      this.pageSearch = new PageSearch<>();
-    }
-
-    public Builder<T> offset(long offset) {
-      this.pageSearch.offset = offset;
-      return this;
-    }
-
-    public Builder<T> limit(long limit) {
-      this.pageSearch.limit = limit;
-      return this;
-    }
-
-    public Builder<T> search(Specification<T> search) {
-      this.pageSearch.search = search;
-      return this;
-    }
-
-    public Builder<T> sorting(Sort sorting) {
-      this.pageSearch.sorting = sorting;
-      return this;
-    }
-
-    public PageSearch<T> build() {
-      return new PageSearch<>(pageSearch);
-    }
   }
 }

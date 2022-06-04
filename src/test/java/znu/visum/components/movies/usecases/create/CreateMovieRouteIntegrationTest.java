@@ -119,7 +119,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata.Builder()
+                            CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
                                 .imdbId("tt2222")
@@ -153,7 +153,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata.Builder()
+                            CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
                                 .imdbId("tt12345")

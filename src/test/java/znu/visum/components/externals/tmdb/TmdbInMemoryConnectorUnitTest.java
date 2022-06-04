@@ -35,7 +35,7 @@ public class TmdbInMemoryConnectorUnitTest {
     @Test
     public void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
-          new TmdbInMemoryExceptions.Builder()
+          TmdbInMemoryExceptions.builder()
               .searchMovies(new TmdbApiException("Unprocessable Entity", 422))
               .build());
 
@@ -45,7 +45,7 @@ public class TmdbInMemoryConnectorUnitTest {
     @Test
     public void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
       this.connector.setExceptions(
-          new TmdbInMemoryExceptions.Builder()
+          TmdbInMemoryExceptions.builder()
               .searchMovies(
                   new ExternalApiUnexpectedResponseBodyException(
                       "Exception message", ExternalApi.TMDB))
@@ -80,9 +80,9 @@ public class TmdbInMemoryConnectorUnitTest {
                   null));
 
       this.connector.setResponses(
-          new TmdbInMemoryResponses.Builder()
+          TmdbInMemoryResponses.builder()
               .searchMovies(
-                  new VisumPage.Builder<ExternalMovieFromSearch>()
+                  VisumPage.<ExternalMovieFromSearch>builder()
                       .totalPages(38)
                       .totalElements(744)
                       .current(38)

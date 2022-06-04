@@ -62,7 +62,7 @@ public class PostgresMovieRepository implements MovieRepository {
     Specification<MovieEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<MovieEntity> pageSearch =
-        new PageSearch.Builder<MovieEntity>()
+        PageSearch.<MovieEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

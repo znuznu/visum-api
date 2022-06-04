@@ -151,13 +151,13 @@ public class TmdbGetMovieByIdResponse {
   }
 
   public ExternalMovie toDomain() {
-    return new ExternalMovie.Builder()
+    return ExternalMovie.builder()
         .id(Long.toString(this.id))
         .title(this.title)
         .releaseDate(this.releaseDate)
         .genres(Arrays.stream(this.tmdbGenres).map(TmdbGenre::getName).collect(Collectors.toList()))
         .metadata(
-            new ExternalMovieMetadata.Builder()
+            ExternalMovieMetadata.builder()
                 .tmdbId(this.id)
                 .imdbId(this.imdbId)
                 .runtime(this.runtime)
