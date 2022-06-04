@@ -54,7 +54,7 @@ public class TmdbUpcomingMovie {
   }
 
   public ExternalUpcomingMovie toDomain() {
-    return new ExternalUpcomingMovie.Builder()
+    return ExternalUpcomingMovie.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import znu.visum.components.genres.domain.models.Genre;
 import znu.visum.components.movies.domain.models.ActorFromMovie;
 import znu.visum.components.movies.domain.models.DirectorFromMovie;
@@ -186,6 +189,9 @@ public class CreateMovieRequest {
   }
 
   @Schema(description = "Represents metadata related to the movie.")
+  @AllArgsConstructor
+  @Builder
+  @Getter
   public static class RequestMovieMetadata {
     @Schema(description = "The movie's TMDB identifier.")
     private Long tmdbId;
@@ -214,8 +220,6 @@ public class CreateMovieRequest {
     @Schema(description = "The movie's poster URL from an external source.")
     private String posterUrl;
 
-    public RequestMovieMetadata() {}
-
     public MovieMetadata toDomain() {
       return MovieMetadata.builder()
           .tmdbId(this.getTmdbId())
@@ -228,99 +232,6 @@ public class CreateMovieRequest {
           .originalLanguage(this.getOriginalLanguage())
           .posterUrl(this.posterUrl)
           .build();
-    }
-
-    public Long getTmdbId() {
-      return tmdbId;
-    }
-
-    public String getImdbId() {
-      return imdbId;
-    }
-
-    public String getOriginalLanguage() {
-      return originalLanguage;
-    }
-
-    public String getTagline() {
-      return tagline;
-    }
-
-    public String getOverview() {
-      return overview;
-    }
-
-    public long getBudget() {
-      return budget;
-    }
-
-    public long getRevenue() {
-      return revenue;
-    }
-
-    public int getRuntime() {
-      return runtime;
-    }
-
-    public String getPosterUrl() {
-      return posterUrl;
-    }
-
-    public static class Builder {
-      private final RequestMovieMetadata metadata;
-
-      public Builder() {
-        this.metadata = new RequestMovieMetadata();
-      }
-
-      public Builder imdbId(String imdbId) {
-        this.metadata.imdbId = imdbId;
-        return this;
-      }
-
-      public Builder tmdbId(Long tmdbId) {
-        this.metadata.tmdbId = tmdbId;
-        return this;
-      }
-
-      public Builder originalLanguage(String originalLanguage) {
-        this.metadata.originalLanguage = originalLanguage;
-        return this;
-      }
-
-      public Builder tagline(String tagline) {
-        this.metadata.tagline = tagline;
-        return this;
-      }
-
-      public Builder overview(String overview) {
-        this.metadata.overview = overview;
-        return this;
-      }
-
-      public Builder budget(long budget) {
-        this.metadata.budget = budget;
-        return this;
-      }
-
-      public Builder revenue(long revenue) {
-        this.metadata.revenue = revenue;
-        return this;
-      }
-
-      public Builder runtime(int runtime) {
-        this.metadata.runtime = runtime;
-        return this;
-      }
-
-      public Builder posterUrl(String posterUrl) {
-        this.metadata.posterUrl = posterUrl;
-        return this;
-      }
-
-      public RequestMovieMetadata build() {
-        return this.metadata;
-      }
     }
   }
 }

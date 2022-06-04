@@ -39,7 +39,7 @@ public class TmdbGetCreditsByMovieIdResponse {
   }
 
   public ExternalMovieCredits toDomain() {
-    return new ExternalMovieCredits.Builder()
+    return ExternalMovieCredits.builder()
         .actors(
             this.cast.stream()
                 .distinct()

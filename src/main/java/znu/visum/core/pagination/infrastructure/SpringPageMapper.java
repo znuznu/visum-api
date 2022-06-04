@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /** Convert Spring Page to our domain. */
 public class SpringPageMapper {
   public static <S, T> VisumPage<T> toVisumPage(Page<S> page, Function<S, T> mapper) {
-    return new VisumPage.Builder<T>()
+    return VisumPage.<T>builder()
         .current(page.getNumber())
         .totalPages(page.getTotalPages())
         .totalElements(page.getTotalElements())

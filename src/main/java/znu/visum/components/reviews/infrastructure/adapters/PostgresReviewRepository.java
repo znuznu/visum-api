@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+import znu.visum.components.genres.infrastructure.models.GenreEntity;
 import znu.visum.components.reviews.domain.models.Review;
 import znu.visum.components.reviews.domain.ports.ReviewRepository;
 import znu.visum.components.reviews.infrastructure.models.MovieReviewEntity;
@@ -35,7 +36,7 @@ public class PostgresReviewRepository implements ReviewRepository {
         PaginationSearchSpecification.parse(search);
 
     PageSearch<MovieReviewEntity> pageSearch =
-        new PageSearch.Builder<MovieReviewEntity>()
+        PageSearch.<MovieReviewEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

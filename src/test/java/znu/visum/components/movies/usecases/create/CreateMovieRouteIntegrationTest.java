@@ -64,7 +64,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata()))))
+                            CreateMovieRequest.RequestMovieMetadata.builder().build()))))
         .andExpect(status().isForbidden());
   }
 
@@ -89,7 +89,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata()))))
+                            CreateMovieRequest.RequestMovieMetadata.builder().build()))))
         .andExpect(status().isBadRequest())
         .andExpect(
             MockMvcResultMatchers.jsonPath("$.message").value("The given MOVIE already exists."))
@@ -119,7 +119,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata.Builder()
+                            CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
                                 .imdbId("tt2222")
@@ -153,7 +153,7 @@ public class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                             List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            new CreateMovieRequest.RequestMovieMetadata.Builder()
+                            CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
                                 .imdbId("tt12345")
@@ -232,7 +232,7 @@ public class CreateMovieRouteIntegrationTest {
                                   new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                   new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                               List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                              new CreateMovieRequest.RequestMovieMetadata()))))
+                              CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
@@ -259,7 +259,7 @@ public class CreateMovieRouteIntegrationTest {
                                   new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                   new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
                               List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                              new CreateMovieRequest.RequestMovieMetadata()))))
+                              CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))

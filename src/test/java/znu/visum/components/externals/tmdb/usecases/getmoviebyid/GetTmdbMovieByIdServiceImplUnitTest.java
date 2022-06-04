@@ -76,12 +76,12 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
-                new ExternalMovie.Builder()
+                ExternalMovie.builder()
                     .id(null)
                     .releaseDate(LocalDate.of(1998, 12, 26))
                     .genres(List.of("Horror", "Drama"))
                     .metadata(
-                        new ExternalMovieMetadata.Builder()
+                        ExternalMovieMetadata.builder()
                             .tmdbId(42L)
                             .imdbId("tt12345_00")
                             .budget(100000)
@@ -111,12 +111,12 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
-                new ExternalMovie.Builder()
+                ExternalMovie.builder()
                     .id(null)
                     .releaseDate(LocalDate.of(1998, 12, 26))
                     .genres(List.of("Horror", "Drama"))
                     .metadata(
-                        new ExternalMovieMetadata.Builder()
+                        ExternalMovieMetadata.builder()
                             .tmdbId(42L)
                             .imdbId("tt12345_00")
                             .budget(100000)
@@ -145,13 +145,13 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
-                new ExternalMovie.Builder()
+                ExternalMovie.builder()
                     .id("42")
                     .title("Alien")
                     .releaseDate(LocalDate.of(1998, 12, 26))
                     .genres(List.of("Horror", "Drama"))
                     .metadata(
-                        new ExternalMovieMetadata.Builder()
+                        ExternalMovieMetadata.builder()
                             .tmdbId(42L)
                             .imdbId("tt12345_00")
                             .budget(100000)
@@ -168,7 +168,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
     Mockito.when(connector.getCreditsByMovieId(42))
         .thenReturn(
             Optional.of(
-                new ExternalMovieCredits.Builder()
+                ExternalMovieCredits.builder()
                     .actors(
                         List.of(
                             new ExternalActor(1L, "Jacques", "Dupont"),

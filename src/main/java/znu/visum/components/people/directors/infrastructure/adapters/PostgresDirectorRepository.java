@@ -30,7 +30,7 @@ public class PostgresDirectorRepository implements DirectorRepository {
     Specification<DirectorEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<DirectorEntity> pageSearch =
-        new PageSearch.Builder<DirectorEntity>()
+        PageSearch.<DirectorEntity>builder()
             .search(searchSpecification)
             .offset(offset)
             .limit(limit)

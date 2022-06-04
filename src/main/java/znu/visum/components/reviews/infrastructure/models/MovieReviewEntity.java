@@ -3,6 +3,7 @@ package znu.visum.components.reviews.infrastructure.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import znu.visum.components.movies.domain.models.ReviewFromMovie;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "movie_review")
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Getter
 public class MovieReviewEntity {
@@ -33,8 +35,6 @@ public class MovieReviewEntity {
   @UpdateTimestamp private LocalDateTime updateDate;
 
   private String content;
-
-  public MovieReviewEntity() {}
 
   public static MovieReviewEntity from(ReviewFromMovie reviewFromMovie) {
     return MovieReviewEntity.builder()

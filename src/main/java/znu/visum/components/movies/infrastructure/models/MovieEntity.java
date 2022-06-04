@@ -3,6 +3,7 @@ package znu.visum.components.movies.infrastructure.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import znu.visum.components.genres.infrastructure.models.GenreEntity;
 import znu.visum.components.history.infrastructure.models.MovieViewingHistoryEntity;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class MovieEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_seq")
@@ -76,8 +78,6 @@ public class MovieEntity {
       cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   @PrimaryKeyJoinColumn
   private MovieMetadataEntity movieMetadataEntity;
-
-  public MovieEntity() {}
 
   public static MovieEntity from(MovieFromReview movieFromReview) {
     return MovieEntity.builder()

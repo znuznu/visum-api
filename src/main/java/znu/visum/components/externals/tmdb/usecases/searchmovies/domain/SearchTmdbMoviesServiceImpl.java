@@ -34,7 +34,7 @@ public class SearchTmdbMoviesServiceImpl implements SearchTmdbMoviesService {
       try {
         String basePosterUrl = this.connector.getConfigurationBasePosterUrl();
 
-        return new VisumPage.Builder<ExternalMovieFromSearch>()
+        return VisumPage.<ExternalMovieFromSearch>builder()
             .size(page.getSize())
             .isFirst(page.isFirst())
             .isLast(page.isLast())
@@ -45,7 +45,7 @@ public class SearchTmdbMoviesServiceImpl implements SearchTmdbMoviesService {
                 page.getContent().stream()
                     .map(
                         movie ->
-                            new ExternalMovieFromSearch.Builder()
+                            ExternalMovieFromSearch.builder()
                                 .id(movie.getId())
                                 .releaseDate(movie.getReleaseDate())
                                 .posterPath(movie.getPosterPath())

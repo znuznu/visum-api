@@ -51,7 +51,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
       whenTheConnectorThrowsOnGetConfigurationBasePosterUrl_itShouldReturnThePageUnaltered() {
     Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
-            new VisumPage.Builder<ExternalUpcomingMovie>()
+            VisumPage.<ExternalUpcomingMovie>builder()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -60,7 +60,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
@@ -75,7 +75,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
     assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()
         .isEqualTo(
-            new VisumPage.Builder<ExternalUpcomingMovie>()
+            VisumPage.<ExternalUpcomingMovie>builder()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -84,7 +84,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
@@ -100,7 +100,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
   public void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
     Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
-            new VisumPage.Builder<ExternalUpcomingMovie>()
+            VisumPage.<ExternalUpcomingMovie>builder()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -109,14 +109,14 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
                             .posterPath("/poster1")
                             .basePosterUrl(null)
                             .build(),
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))
@@ -131,7 +131,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
     assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()
         .isEqualTo(
-            new VisumPage.Builder<ExternalUpcomingMovie>()
+            VisumPage.<ExternalUpcomingMovie>builder()
                 .isFirst(true)
                 .isLast(true)
                 .current(0)
@@ -140,14 +140,14 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .totalPages(1)
                 .content(
                     List.of(
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
                             .posterPath("/poster1")
                             .basePosterUrl("https://image.tmdb.org/t/p/w500")
                             .build(),
-                        new ExternalUpcomingMovie.Builder()
+                        ExternalUpcomingMovie.builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))

@@ -35,7 +35,7 @@ public class GetUpcomingTmdbMoviesServiceImpl implements GetUpcomingTmdbMoviesSe
       try {
         String basePosterUrl = this.connector.getConfigurationBasePosterUrl();
 
-        return new VisumPage.Builder<ExternalUpcomingMovie>()
+        return VisumPage.<ExternalUpcomingMovie>builder()
             .size(page.getSize())
             .isFirst(page.isFirst())
             .isLast(page.isLast())
@@ -46,7 +46,7 @@ public class GetUpcomingTmdbMoviesServiceImpl implements GetUpcomingTmdbMoviesSe
                 page.getContent().stream()
                     .map(
                         movie ->
-                            new ExternalUpcomingMovie.Builder()
+                            ExternalUpcomingMovie.builder()
                                 .id(movie.getId())
                                 .releaseDate(movie.getReleaseDate())
                                 .posterPath(movie.getPosterPath())

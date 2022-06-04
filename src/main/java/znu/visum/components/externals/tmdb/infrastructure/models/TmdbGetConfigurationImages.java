@@ -2,10 +2,12 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class TmdbGetConfigurationImages {
 
   @JsonProperty("base_url")
@@ -14,8 +16,6 @@ public class TmdbGetConfigurationImages {
   private String secureBaseUrl;
 
   private List<String> posterSizes;
-
-  public TmdbGetConfigurationImages() {}
 
   public TmdbGetConfigurationImages(
       String baseUrl, String secureBaseUrl, List<String> posterSizes) {
