@@ -3,6 +3,7 @@
 ## 2.8.0
 
 - Add spring-boot-starter-batch
+- Add findAll() to MovieRepository
 
 ## 2.7.3
 
