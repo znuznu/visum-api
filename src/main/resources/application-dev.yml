@@ -6,6 +6,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  batch:
+    jdbc:
+      initialize-schema: never
+    job:
+      enabled: true
 
 logging:
   level:

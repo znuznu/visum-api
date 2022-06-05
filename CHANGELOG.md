@@ -2,8 +2,9 @@
 
 ## 2.8.0
 
+- Add `findAll()` to MovieRepository
 - Add spring-boot-starter-batch
-- Add findAll() to MovieRepository
+- Add `UpdateMovieMetadataJobLauncher` to update movie metadata periodically with Spring Batch
 
 ## 2.7.3
 
@@ -73,8 +74,8 @@
 ## 2.2.0
 
 - Add statistics:
-  - _get all-time_ and _get per year_ usecases
-  - add two routes: `/statistics/years` and `/statistics/years/<year>`
+    - _get all-time_ and _get per year_ usecases
+    - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
 ## 2.1.1
 

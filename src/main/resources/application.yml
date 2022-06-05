@@ -5,6 +5,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  batch:
+    jdbc:
+      initialize-schema: never
+    job:
+      enabled: false
 
 visum:
   allowed-origins: ${ALLOWED_ORIGIN}

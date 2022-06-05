@@ -7,3 +7,8 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
