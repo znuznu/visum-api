@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.0
+
+- Add spring-boot-starter-batch
+
 ## 2.7.3
 
 - Use Lombok for all builders
@@ -68,8 +72,8 @@
 ## 2.2.0
 
 - Add statistics:
-    - _get all-time_ and _get per year_ usecases
-    - add two routes: `/statistics/years` and `/statistics/years/<year>`
+  - _get all-time_ and _get per year_ usecases
+  - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
 ## 2.1.1
 
