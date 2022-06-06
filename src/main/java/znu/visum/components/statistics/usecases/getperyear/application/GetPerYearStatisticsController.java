@@ -17,11 +17,11 @@ import java.time.Year;
 @RequestMapping(value = "/api/statistics/years", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPerYearStatisticsController.class)
 public class GetPerYearStatisticsController {
-  private final GetPerYearStatisticsService GetPerYearStatisticsService;
+  private final GetPerYearStatisticsService getPerYearStatisticsService;
 
   @Autowired
   public GetPerYearStatisticsController(GetPerYearStatisticsService getPerYearStatisticsService) {
-    this.GetPerYearStatisticsService = getPerYearStatisticsService;
+    this.getPerYearStatisticsService = getPerYearStatisticsService;
   }
 
   @Operation(summary = "Get per year statistics.")
@@ -29,6 +29,6 @@ public class GetPerYearStatisticsController {
   @ResponseStatus(HttpStatus.OK)
   public GetPerYearStatisticsResponse getAllTimeStatistics(@PathVariable @Min(1900) int year) {
     return GetPerYearStatisticsResponse.from(
-        GetPerYearStatisticsService.getStatisticsForYear(Year.of(year)));
+        getPerYearStatisticsService.getStatisticsForYear(Year.of(year)));
   }
 }
