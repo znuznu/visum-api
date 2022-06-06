@@ -9,6 +9,8 @@ public class ExternalApiErrorHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(ExternalApiErrorHandler.class);
 
+  private ExternalApiErrorHandler() {}
+
   public static TmdbApiException from(WebClientResponseException exception) {
     logger.error(String.format("TMDB error occured: %s", exception.getMessage()));
 
