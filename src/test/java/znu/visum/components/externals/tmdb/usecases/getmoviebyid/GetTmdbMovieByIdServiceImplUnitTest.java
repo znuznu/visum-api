@@ -24,7 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetTmdbMovieByIdServiceImplUnitTest")
-public class GetTmdbMovieByIdServiceImplUnitTest {
+class GetTmdbMovieByIdServiceImplUnitTest {
   private GetTmdbMovieByIdService service;
 
   @Mock private TmdbConnector connector;
@@ -36,7 +36,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
 
   @Test
   @DisplayName("When the connector throws on the get poster base URL method, it should throw")
-  public void whenTheConnectorThrowOnPoster_itShouldReturnTheMovieMapped() {
+  void whenTheConnectorThrowOnPoster_itShouldReturnTheMovieMapped() {
     Mockito.when(connector.getConfigurationBasePosterUrl())
         .thenThrow(new TmdbApiException("Some message.", 500));
 
@@ -47,7 +47,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
 
   @Test
   @DisplayName("When the connector return an empty movie, it should throw")
-  public void whenTheMovieIsEmpty_itShouldThrow() {
+  void whenTheMovieIsEmpty_itShouldThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
     Mockito.when(connector.getMovieById(42)).thenReturn(Optional.empty());
 
@@ -59,7 +59,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
   @Test
   @DisplayName(
       "When the connector throws on the method called to get the movie, it should bubble up and throw")
-  public void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
+  void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
     Mockito.when(connector.getMovieById(42)).thenThrow(new TmdbApiException("Some message.", 500));
 
@@ -71,7 +71,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
   @Test
   @DisplayName(
       "When the connector return the movie but throws when the method to get the credits is called, it should bubble up and throw")
-  public void whenTheConnectorThrowsOnCredits_itShouldBubbleUpAndThrow() {
+  void whenTheConnectorThrowsOnCredits_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
@@ -106,7 +106,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
   @Test
   @DisplayName(
       "When the connector return the movie but an empty credits, it should throw (inconsistency)")
-  public void whenTheConnectorReturnTheMovieButNoCredits_itShouldThrow() {
+  void whenTheConnectorReturnTheMovieButNoCredits_itShouldThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
@@ -140,7 +140,7 @@ public class GetTmdbMovieByIdServiceImplUnitTest {
   @Test
   @DisplayName(
       "When the connector return the poster base URL, the movie and his credits, it should return the movie mapped")
-  public void whenTheConnectorReturnTheMovieAndHisCredits_itShouldReturnTheMovieMapped() {
+  void whenTheConnectorReturnTheMovieAndHisCredits_itShouldReturnTheMovieMapped() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
     Mockito.when(connector.getMovieById(42))
         .thenReturn(

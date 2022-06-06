@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("SignupServiceImplUnitTest")
 @ExtendWith(MockitoExtension.class)
-public class SignupServiceImplUnitTest {
+class SignupServiceImplUnitTest {
   @Mock private AccountRepository accountRepository;
 
   @Mock private PasswordEncoder passwordEncoder;
@@ -28,7 +28,7 @@ public class SignupServiceImplUnitTest {
   private SignupService signupService;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     this.signupService = new SignupServiceImpl("right-key", accountRepository, passwordEncoder);
   }
 

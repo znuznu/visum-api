@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("UpdateReviewRouteIntegrationTest")
-public class UpdateReviewRouteIntegrationTest {
+class UpdateReviewRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -40,7 +40,7 @@ public class UpdateReviewRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             put("/api/reviews/{id}/movies", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +50,7 @@ public class UpdateReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenAReview_whenTheReviewDoesNotExist_itShouldReturnA404Response() throws Exception {
+  void givenAReview_whenTheReviewDoesNotExist_itShouldReturnA404Response() throws Exception {
     mvc.perform(
             put("/api/reviews/{id}/movies", 269)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -69,7 +69,7 @@ public class UpdateReviewRouteIntegrationTest {
         "/sql/insert_cast_and_genres.sql",
         "/sql/insert_movie_with_review_and_viewing_history_and_metadata.sql"
       })
-  public void givenAReview_whenTheReviewHaveAMovie_itShouldReturnA200Response() throws Exception {
+  void givenAReview_whenTheReviewHaveAMovie_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             put("/api/reviews/{id}/movies", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -87,7 +87,7 @@ public class UpdateReviewRouteIntegrationTest {
   class InvalidRequest {
     @Test
     @WithMockUser
-    public void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1L)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -100,7 +100,7 @@ public class UpdateReviewRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAnEmptyContent_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyContent_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -113,7 +113,7 @@ public class UpdateReviewRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAGradeLowerThanTheLimit_itShouldReturnA400Response() throws Exception {
+    void givenAGradeLowerThanTheLimit_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -126,7 +126,7 @@ public class UpdateReviewRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAGradeHigherThanTheLimit_itShouldReturnA400Response() throws Exception {
+    void givenAGradeHigherThanTheLimit_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)

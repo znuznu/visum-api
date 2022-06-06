@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("TmdbHttpConnectorUnitTest")
-public class TmdbHttpConnectorUnitTest {
+class TmdbHttpConnectorUnitTest {
   private static MockWebServer tmdbApiMockServer;
 
   private TmdbConnector connector;
@@ -47,7 +47,7 @@ public class TmdbHttpConnectorUnitTest {
   class SearchMovies {
 
     @Test
-    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -72,14 +72,14 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
       assertThrows(TmdbApiException.class, () -> connector.searchMovies("Something", 6));
     }
 
     @Test
-    public void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+    void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -93,7 +93,7 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnMovies_itShouldReturnMovies() {
+    void whenTmdbReturnMovies_itShouldReturnMovies() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -113,8 +113,8 @@ public class TmdbHttpConnectorUnitTest {
       assertThat(response.getCurrent()).isEqualTo(38);
       assertThat(response.getTotalPages()).isEqualTo(38);
       assertThat(response.getTotalElements()).isEqualTo(744);
-      assertThat(response.isLast()).isEqualTo(true);
-      assertThat(response.isFirst()).isEqualTo(false);
+      assertThat(response.isLast()).isTrue();
+      assertThat(response.isFirst()).isFalse();
       assertThat(response.getSize()).isEqualTo(3);
       assertThat(response.getContent())
           .usingRecursiveFieldByFieldElementComparator()
@@ -144,7 +144,7 @@ public class TmdbHttpConnectorUnitTest {
   class GetUpcomingMovies {
 
     @Test
-    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -213,14 +213,14 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
       assertThrows(TmdbApiException.class, () -> connector.getUpcomingMovies(6));
     }
 
     @Test
-    public void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+    void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -234,7 +234,7 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnMovies_itShouldReturnMovies() {
+    void whenTmdbReturnMovies_itShouldReturnMovies() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -298,8 +298,8 @@ public class TmdbHttpConnectorUnitTest {
       assertThat(response.getCurrent()).isEqualTo(1);
       assertThat(response.getTotalPages()).isEqualTo(17);
       assertThat(response.getTotalElements()).isEqualTo(321);
-      assertThat(response.isLast()).isEqualTo(false);
-      assertThat(response.isFirst()).isEqualTo(true);
+      assertThat(response.isLast()).isFalse();
+      assertThat(response.isFirst()).isTrue();
       assertThat(response.getSize()).isEqualTo(2);
       assertThat(response.getContent())
           .usingRecursiveFieldByFieldElementComparator()
@@ -323,7 +323,7 @@ public class TmdbHttpConnectorUnitTest {
   class GetMovieById {
 
     @Test
-    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
@@ -336,14 +336,14 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+    void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThrows(TmdbApiException.class, () -> connector.getMovieById(6));
     }
 
     @Test
-    public void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+    void whenTmdbReturnA404Error_itShouldReturnEmpty() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
       assertThat(connector.getMovieById(6)).isEmpty();
@@ -351,7 +351,7 @@ public class TmdbHttpConnectorUnitTest {
 
     @Disabled("Should pass! see TODO in getMovieById() from the HTTP connector")
     @Test
-    public void whenTmdbReturnA200ResponseWithAnUnexpectedResponseBody_itShouldThrow() {
+    void whenTmdbReturnA200ResponseWithAnUnexpectedResponseBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -365,7 +365,7 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAMovie_itShouldReturnTheMovie() {
+    void whenTmdbReturnAMovie_itShouldReturnTheMovie() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -476,7 +476,7 @@ public class TmdbHttpConnectorUnitTest {
   class GetCreditsByMovieId {
 
     @Test
-    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
@@ -490,21 +490,21 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+    void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThrows(TmdbApiException.class, () -> connector.getCreditsByMovieId(6));
     }
 
     @Test
-    public void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+    void whenTmdbReturnA404Error_itShouldReturnEmpty() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
       assertThat(connector.getCreditsByMovieId(6)).isEmpty();
     }
 
     @Test
-    public void whenTmdbReturnCredits_itShouldReturnCredits() {
+    void whenTmdbReturnCredits_itShouldReturnCredits() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -661,7 +661,7 @@ public class TmdbHttpConnectorUnitTest {
   class GetConfigurationBasePosterUrl {
 
     @Test
-    public void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -726,7 +726,7 @@ public class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThrows(TmdbApiException.class, () -> connector.getConfigurationBasePosterUrl());
@@ -735,7 +735,7 @@ public class TmdbHttpConnectorUnitTest {
     @Test
     @DisplayName(
         "when TMDB return the image base URL and poster sizes, it should return the merged URL (base + second to last)")
-    public void whenTmdbReturnUrlAndPosterSizes_itShouldReturnMergedUrl() {
+    void whenTmdbReturnUrlAndPosterSizes_itShouldReturnMergedUrl() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -799,7 +799,7 @@ public class TmdbHttpConnectorUnitTest {
     @Test
     @Disabled("It should pass!")
     @DisplayName("when TMDB return the image base URL and empty poster sizes, it should throw")
-    public void whenTmdbReturnUrlAndEmptyPosterSizes_itShouldThrow() {
+    void whenTmdbReturnUrlAndEmptyPosterSizes_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)

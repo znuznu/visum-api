@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("TmdbInMemoryConnectorUnitTest")
-public class TmdbInMemoryConnectorUnitTest {
+class TmdbInMemoryConnectorUnitTest {
 
   @Nested
   class SearchMovies {
@@ -33,7 +33,7 @@ public class TmdbInMemoryConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
           TmdbInMemoryExceptions.builder()
               .searchMovies(new TmdbApiException("Unprocessable Entity", 422))
@@ -43,7 +43,7 @@ public class TmdbInMemoryConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+    void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
       this.connector.setExceptions(
           TmdbInMemoryExceptions.builder()
               .searchMovies(
@@ -57,7 +57,7 @@ public class TmdbInMemoryConnectorUnitTest {
     }
 
     @Test
-    public void whenTmdbReturnMovies_itShouldReturnMovies() {
+    void whenTmdbReturnMovies_itShouldReturnMovies() {
       List<ExternalMovieFromSearch> movies =
           List.of(
               new ExternalMovieFromSearch(
@@ -99,8 +99,8 @@ public class TmdbInMemoryConnectorUnitTest {
       assertThat(response.getTotalPages()).isEqualTo(38);
       assertThat(response.getTotalElements()).isEqualTo(744);
       assertThat(response.getSize()).isEqualTo(3);
-      assertThat(response.isLast()).isEqualTo(true);
-      assertThat(response.isFirst()).isEqualTo(false);
+      assertThat(response.isLast()).isTrue();
+      assertThat(response.isFirst()).isFalse();
       assertThat(response.getContent())
           .usingRecursiveFieldByFieldElementComparator()
           .contains(

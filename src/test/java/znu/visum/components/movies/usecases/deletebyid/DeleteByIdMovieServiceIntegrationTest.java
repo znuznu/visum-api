@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdMovieServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class DeleteByIdMovieServiceIntegrationTest {
+class DeleteByIdMovieServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -47,7 +47,7 @@ public class DeleteByIdMovieServiceIntegrationTest {
   }
 
   @Test
-  public void givenAMovieIdThatDoesNotExist_whenTheMovieIsDeleted_itShouldThrowAnError() {
+  void givenAMovieIdThatDoesNotExist_whenTheMovieIsDeleted_itShouldThrowAnError() {
     Assertions.assertThrows(NoSuchMovieIdException.class, () -> service.deleteById(1000L));
   }
 
@@ -57,7 +57,7 @@ public class DeleteByIdMovieServiceIntegrationTest {
         "/sql/insert_cast_and_genres.sql",
         "/sql/insert_movie_with_review_and_viewing_history_and_metadata.sql"
       })
-  public void givenAMovieIdThatExists_whenTheMovieIsDeleted_itShouldDeleteTheMovieAndHisOrphans() {
+  void givenAMovieIdThatExists_whenTheMovieIsDeleted_itShouldDeleteTheMovieAndHisOrphans() {
     service.deleteById(3L);
 
     assertThat(movieRepository.findById(3L)).isNotPresent();

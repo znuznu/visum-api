@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdActorRouteIntegrationTest")
-public class DeleteByIdActorRouteIntegrationTest {
+class DeleteByIdActorRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -37,14 +37,14 @@ public class DeleteByIdActorRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
@@ -54,8 +54,7 @@ public class DeleteByIdActorRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoActorWithTheIdExists_itShouldReturnA404Response()
-      throws Exception {
+  void givenANumericalId_whenNoActorWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No ACTOR with id 1 found."))
@@ -66,8 +65,7 @@ public class DeleteByIdActorRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_actor.sql")
-  public void givenANumericalId_whenAnActorWithTheIdExists_itShouldReturnA204Response()
-      throws Exception {
+  void givenANumericalId_whenAnActorWithTheIdExists_itShouldReturnA204Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent())
         .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist());

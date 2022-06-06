@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdMovieViewingHistoryServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class DeleteByIdMovieViewingHistoryServiceIntegrationTest {
+class DeleteByIdMovieViewingHistoryServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,14 +39,14 @@ public class DeleteByIdMovieViewingHistoryServiceIntegrationTest {
   }
 
   @Test
-  public void
+  void
       givenAViewingHistoryIdThatDoesNotExist_whenTheViewingHistoryIsDeleted_itShouldThrowAnError() {
     Assertions.assertThrows(NoSuchViewingHistoryException.class, () -> service.deleteById(1000L));
   }
 
   @Test
   @Sql("/sql/insert_movie_with_viewing_history.sql")
-  public void
+  void
       givenAViewingHistoryIdThatExists_whenTheViewingHistoryIsDeleted_itShouldDeleteTheViewingHistoryButNotTheMovie() {
     movieViewingHistoryRepository.deleteById(1L);
 

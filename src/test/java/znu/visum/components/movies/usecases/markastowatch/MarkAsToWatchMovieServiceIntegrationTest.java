@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("MarkAsToWatchMovieServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class MarkAsToWatchMovieServiceIntegrationTest {
+class MarkAsToWatchMovieServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -40,7 +40,7 @@ public class MarkAsToWatchMovieServiceIntegrationTest {
 
   @Test
   @DisplayName("when the movie does not exists it should throw")
-  public void givenAMovieIdThatDoesNotExist_itShouldThrowAnError() {
+  void givenAMovieIdThatDoesNotExist_itShouldThrowAnError() {
     Assertions.assertThrows(NoSuchMovieIdException.class, () -> service.markAsToWatch(1000L));
   }
 
@@ -48,7 +48,7 @@ public class MarkAsToWatchMovieServiceIntegrationTest {
   @DisplayName(
       "when the movie exists and is not already a one to watch, it should mark it to watch and return true")
   @Sql("/sql/insert_movie_with_metadata.sql")
-  public void givenAMovieThatExists_whenTheMovieIsNotAlreadyMarked_itShouldMarkTheMovieAsToWatch() {
+  void givenAMovieThatExists_whenTheMovieIsNotAlreadyMarked_itShouldMarkTheMovieAsToWatch() {
     boolean hasChanged = service.markAsToWatch(90L);
 
     assertThat(hasChanged).isTrue();
@@ -66,7 +66,7 @@ public class MarkAsToWatchMovieServiceIntegrationTest {
   @DisplayName(
       "when the movie exists and is already a one to watch, it should not affect it and return false")
   @Sql("/sql/insert_movie_with_metadata_with_favorite_with_should_watch.sql")
-  public void givenAMovieThatExists_whenTheMovieIsAlreadyMarked_itShouldNotAffectTheMovie() {
+  void givenAMovieThatExists_whenTheMovieIsAlreadyMarked_itShouldNotAffectTheMovie() {
     boolean hasChanged = service.markAsToWatch(91L);
 
     assertThat(hasChanged).isFalse();

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetPageGenreRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetPageReviewRouteIntegrationTest {
+class GetPageReviewRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class GetPageReviewRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get(
                     "/api/reviews/movies?sort=type&search=type={type}&limit={limit}&offset={offset}",
@@ -59,7 +59,7 @@ public class GetPageReviewRouteIntegrationTest {
       })
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on content)")
-  public void defaultCase_itShouldReturnA200Response() throws Exception {
+  void defaultCase_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/reviews/movies").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -143,7 +143,7 @@ public class GetPageReviewRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_reviews_metadata.sql"
       })
   @DisplayName("when a content is provided, it should return the movie with the content")
-  public void givenAContent_itShouldReturnA200Response() throws Exception {
+  void givenAContent_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/reviews/movies?search=content=Some text for movie 30.")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -184,7 +184,7 @@ public class GetPageReviewRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_reviews_metadata.sql"
       })
   @DisplayName("given ASC grade, it should return all the reviews order by ascending grade")
-  public void ascGrade_itShouldReturnA200Response() throws Exception {
+  void ascGrade_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/reviews/movies?sort=grade,ASC").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())

@@ -15,11 +15,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("DiaryYearResponseUnitTest")
-public class DiaryYearResponseUnitTest {
+class DiaryYearResponseUnitTest {
 
   @DisplayName("from() - it should return movies by month, sorted by day (desc)")
   @Test
-  public void itShouldMapMoviesToADiaryResponse() {
+  void itShouldMapMoviesToADiaryResponse() {
     DiaryMovie movie1 =
         DiaryMovie.builder()
             .id(1L)

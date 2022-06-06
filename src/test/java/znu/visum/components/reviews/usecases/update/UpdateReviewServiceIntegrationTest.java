@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("UpdateReviewServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class UpdateReviewServiceIntegrationTest {
+class UpdateReviewServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -44,7 +44,7 @@ public class UpdateReviewServiceIntegrationTest {
   }
 
   @Test
-  public void givenAReviewIdThatDoesNotExist_whenTheReviewIsUpdated_itShouldThrowAnError() {
+  void givenAReviewIdThatDoesNotExist_whenTheReviewIsUpdated_itShouldThrowAnError() {
     Assertions.assertThrows(
         NoSuchReviewIdException.class,
         () -> service.update(ReviewFactory.INSTANCE.getOneWithIdAndMovieId(42L, 1L)));
@@ -52,7 +52,7 @@ public class UpdateReviewServiceIntegrationTest {
 
   @Test
   @Sql("/sql/insert_movie_with_review.sql")
-  public void givenAReviewThatExists_whenTheReviewIsUpdated_itShouldUpdateTheReview() {
+  void givenAReviewThatExists_whenTheReviewIsUpdated_itShouldUpdateTheReview() {
     service.update(ReviewFactory.INSTANCE.getOneWithIdAndMovieId(1L, 30L));
 
     Movie movie = movieRepository.findById(30L).get();

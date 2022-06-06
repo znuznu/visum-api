@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetByIdGenreRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetByIdTmdbGenreRouteIntegrationTest {
+class GetByIdTmdbGenreRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,14 +39,14 @@ public class GetByIdTmdbGenreRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
@@ -56,8 +56,7 @@ public class GetByIdTmdbGenreRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoGenreWithTheIdExists_itShouldReturnA404Response()
-      throws Exception {
+  void givenANumericalId_whenNoGenreWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No GENRE with id 1 found."))
@@ -68,8 +67,7 @@ public class GetByIdTmdbGenreRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_genre.sql")
-  public void givenANumericalId_whenAGenreWithTheIdExists_itShouldReturnA200Response()
-      throws Exception {
+  void givenANumericalId_whenAGenreWithTheIdExists_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))

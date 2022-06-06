@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("MarkAsFavoriteMovieRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class MarkAsToWatchMovieRouteIntegrationTest {
+class MarkAsToWatchMovieRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class MarkAsToWatchMovieRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             put("/api/movies/{id}/watchlist", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
@@ -47,7 +47,7 @@ public class MarkAsToWatchMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             put("/api/movies/{id}/watchlist", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
@@ -58,8 +58,7 @@ public class MarkAsToWatchMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response()
-      throws Exception {
+  void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(
             put("/api/movies/{id}/watchlist", "1000").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
@@ -73,8 +72,7 @@ public class MarkAsToWatchMovieRouteIntegrationTest {
   @WithMockUser
   @Sql("/sql/insert_movie_with_metadata.sql")
   // We could return a 304 when the field isn't modified
-  public void givenANumericalId_whenAMovieWithTheIdExists_itShouldReturnA204Response()
-      throws Exception {
+  void givenANumericalId_whenAMovieWithTheIdExists_itShouldReturnA204Response() throws Exception {
     mvc.perform(
             put("/api/movies/{id}/watchlist", "90").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent())

@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("h2")
 @DisplayName("GetUpcomingTmdbMoviesRouteIntegrationTest")
-public class GetUpcomingTmdbMoviesRouteIntegrationTest {
+class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
@@ -30,7 +30,7 @@ public class GetUpcomingTmdbMoviesRouteIntegrationTest {
   private TmdbConnector connector;
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -44,7 +44,7 @@ public class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
+    void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", "x")
                   .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -56,7 +56,7 @@ public class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
+    void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", -1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE))

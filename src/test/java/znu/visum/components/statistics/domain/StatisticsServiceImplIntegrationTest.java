@@ -44,7 +44,7 @@ class StatisticsServiceImplIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void itShouldReturnTheCountOfAllMovieReleasedIn2014() {
+  void itShouldReturnTheCountOfAllMovieReleasedIn2014() {
     long count = this.service.getMovieCountOfTheYear(Year.of(2014));
 
     assertThat(count).isEqualTo(4);
@@ -58,7 +58,7 @@ class StatisticsServiceImplIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void itShouldReturnTheCountOfAllReviewsLastUpdatedIn2015() {
+  void itShouldReturnTheCountOfAllReviewsLastUpdatedIn2015() {
     long count = this.service.getReviewCountOfTheYear(Year.of(2015));
 
     assertThat(count).isEqualTo(3);
@@ -73,7 +73,7 @@ class StatisticsServiceImplIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })
-  public void itShouldReturnTheListOfAllGenreAndCountOf2001() {
+  void itShouldReturnTheListOfAllGenreAndCountOf2001() {
     List<Pair<String, Integer>> countPerGenre =
         this.service.getNumberOfMoviesOfTheYearPerGenre(Year.of(2001));
 

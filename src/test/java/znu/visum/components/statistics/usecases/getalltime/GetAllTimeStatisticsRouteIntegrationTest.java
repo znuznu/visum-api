@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetAllTimeStatisticsRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetAllTimeStatisticsRouteIntegrationTest {
+class GetAllTimeStatisticsRouteIntegrationTest {
 
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
@@ -40,7 +40,7 @@ public class GetAllTimeStatisticsRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/statistics/years").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
@@ -52,7 +52,7 @@ public class GetAllTimeStatisticsRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })
-  public void itShouldReturnAllTimeStatistics() throws Exception {
+  void itShouldReturnAllTimeStatistics() throws Exception {
     mvc.perform(get("/api/statistics/years").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetByIdMovieRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetByIdMovieRouteIntegrationTest {
+class GetByIdMovieRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,15 +39,14 @@ public class GetByIdMovieRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/movies/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response()
-      throws Exception {
+  void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get("/api/movies/{id}", "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No MOVIE with id 200 found."))
@@ -58,9 +57,8 @@ public class GetByIdMovieRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_movie_with_metadata.sql")
-  public void
-      givenANumericalId_whenTheMovieWithTheIdExistsAndHaveNoReview_itShouldReturnA200Response()
-          throws Exception {
+  void givenANumericalId_whenTheMovieWithTheIdExistsAndHaveNoReview_itShouldReturnA200Response()
+      throws Exception {
     mvc.perform(get("/api/movies/{id}", "90").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -99,8 +97,7 @@ public class GetByIdMovieRouteIntegrationTest {
         "/sql/insert_cast_and_genres.sql",
         "/sql/insert_movie_with_review_and_viewing_history_and_metadata.sql"
       })
-  public void givenANumericalId_whenTheMovieWithTheIdExists_itShouldReturnA200Response()
-      throws Exception {
+  void givenANumericalId_whenTheMovieWithTheIdExists_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/movies/{id}", "3").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(

@@ -14,7 +14,7 @@ import znu.visum.components.people.directors.usecases.deletebyid.domain.DeleteBy
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteByIdDirectorControllerUnitTest")
-public class DeleteByIdDirectorControllerUnitTest {
+class DeleteByIdDirectorControllerUnitTest {
   private DeleteByIdDirectorController controller;
 
   @Mock private DeleteByIdDirectorService service;
@@ -25,7 +25,7 @@ public class DeleteByIdDirectorControllerUnitTest {
   }
 
   @Test
-  public void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
+  void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).deleteById(1L);
 
     Assertions.assertThrows(NoSuchDirectorIdException.class, () -> controller.deleteById(1));

@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetByIdGenreControllerUnitTest")
-public class GetByIdTmdbGenreControllerUnitTest {
+class GetByIdTmdbGenreControllerUnitTest {
   private GetByIdGenreController controller;
 
   @Mock private GetByIdGenreService service;
@@ -29,7 +29,7 @@ public class GetByIdTmdbGenreControllerUnitTest {
   }
 
   @Test
-  public void givenAGenreId_whenTheGenreWithTheIdExists_thenItShouldReturnTheGenre() {
+  void givenAGenreId_whenTheGenreWithTheIdExists_thenItShouldReturnTheGenre() {
     Mockito.when(service.findById(1L)).thenReturn(new Genre(1L, "Something"));
 
     assertThat(controller.getGenreById(1))
@@ -38,7 +38,7 @@ public class GetByIdTmdbGenreControllerUnitTest {
   }
 
   @Test
-  public void givenAGenreId_whenNoGenreWithTheIdExists_thenItShouldThrow() {
+  void givenAGenreId_whenNoGenreWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchGenreIdException("1")).when(service).findById(1L);
 
     Assertions.assertThrows(NoSuchGenreIdException.class, () -> controller.getGenreById(1));

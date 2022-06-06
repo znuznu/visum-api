@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("SignupRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class SignupRouteIntegrationTest {
+class SignupRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -38,7 +38,7 @@ public class SignupRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheAccountHaveBeenSaved_itShouldReturnA201Response() throws Exception {
+  void whenTheAccountHaveBeenSaved_itShouldReturnA201Response() throws Exception {
     mvc.perform(
             post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +49,7 @@ public class SignupRouteIntegrationTest {
 
   @Test
   @Sql("/sql/truncate_account_table.sql")
-  public void givenAWrongRegistrationKey_itShouldReturnA401Response() throws Exception {
+  void givenAWrongRegistrationKey_itShouldReturnA401Response() throws Exception {
     mvc.perform(
             post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -62,8 +62,7 @@ public class SignupRouteIntegrationTest {
 
   @Test
   @Sql("/sql/insert_single_account.sql")
-  public void whenTheMaximumAccountNumberHasBeenReached_itShouldReturnA403Response()
-      throws Exception {
+  void whenTheMaximumAccountNumberHasBeenReached_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -80,7 +79,7 @@ public class SignupRouteIntegrationTest {
   class InvalidRequest {
 
     @Test
-    public void givenABlankUsername_itShouldReturnA400Response() throws Exception {
+    void givenABlankUsername_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/accounts")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -92,7 +91,7 @@ public class SignupRouteIntegrationTest {
     }
 
     @Test
-    public void givenABlankPassword_itShouldReturnA400Response() throws Exception {
+    void givenABlankPassword_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/accounts")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -104,7 +103,7 @@ public class SignupRouteIntegrationTest {
     }
 
     @Test
-    public void givenABlankRegistrationKey_itShouldReturnA400Response() throws Exception {
+    void givenABlankRegistrationKey_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/accounts")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)

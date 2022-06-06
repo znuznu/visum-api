@@ -14,12 +14,12 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("TmdbPageResponseMapperUnitTest")
-public class TmdbPageResponseMapperUnitTest {
+class TmdbPageResponseMapperUnitTest {
 
   @Nested
   class SearchMovie {
     @Test
-    public void itShouldMapWithIsFirstToTrueAndIsLastToFalse() {
+    void itShouldMapWithIsFirstToTrueAndIsLastToFalse() {
       TmdbMovieFromSearch[] movies = new TmdbMovieFromSearch[3];
       movies[0] = new TmdbMovieFromSearch(1, "Movie 1", LocalDate.of(1990, 12, 18), "/something");
       movies[1] = new TmdbMovieFromSearch(2, "Movie 2", LocalDate.of(1991, 12, 18), "/something");
@@ -62,7 +62,7 @@ public class TmdbPageResponseMapperUnitTest {
     }
 
     @Test
-    public void itShouldMapWithNeitherIsFirstOrIsLastToTrue() {
+    void itShouldMapWithNeitherIsFirstOrIsLastToTrue() {
       TmdbMovieFromSearch[] movies = new TmdbMovieFromSearch[3];
       movies[0] = new TmdbMovieFromSearch(1, "Movie 1", LocalDate.of(1990, 12, 18), "/something");
       movies[1] = new TmdbMovieFromSearch(2, "Movie 2", LocalDate.of(1991, 12, 18), "/something");
@@ -105,7 +105,7 @@ public class TmdbPageResponseMapperUnitTest {
     }
 
     @Test
-    public void itShouldMapWithIsFirstToFalseAndIsLastToTrue() {
+    void itShouldMapWithIsFirstToFalseAndIsLastToTrue() {
       TmdbMovieFromSearch[] movies = new TmdbMovieFromSearch[3];
       movies[0] = new TmdbMovieFromSearch(1, "Movie 1", LocalDate.of(1990, 12, 18), "/something");
       movies[1] = new TmdbMovieFromSearch(2, "Movie 2", LocalDate.of(1991, 12, 18), "/something");
@@ -148,7 +148,7 @@ public class TmdbPageResponseMapperUnitTest {
     }
 
     @Test
-    public void itShouldMapToEmptyContentWithIsFirstAndIsLastToTrue() {
+    void itShouldMapToEmptyContentWithIsFirstAndIsLastToTrue() {
       TmdbMovieFromSearch[] movies = new TmdbMovieFromSearch[0];
 
       VisumPage<ExternalMovieFromSearch> expectedPage =

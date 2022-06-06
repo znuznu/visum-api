@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetByIdDirectorRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetByIdDirectorRouteIntegrationTest {
+class GetByIdDirectorRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,14 +39,14 @@ public class GetByIdDirectorRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/directors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/directors/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
@@ -56,7 +56,7 @@ public class GetByIdDirectorRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoDirectorWithTheIdExists_itShouldReturnA404Response()
+  void givenANumericalId_whenNoDirectorWithTheIdExists_itShouldReturnA404Response()
       throws Exception {
     mvc.perform(get("/api/directors/{id}", "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
@@ -69,7 +69,7 @@ public class GetByIdDirectorRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_director_with_movies.sql")
-  public void givenANumericalId_whenAnDirectorWithTheIdExists_itShouldReturnA200Response()
+  void givenANumericalId_whenAnDirectorWithTheIdExists_itShouldReturnA200Response()
       throws Exception {
     mvc.perform(get("/api/directors/{id}", '2').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
@@ -82,7 +82,7 @@ public class GetByIdDirectorRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_director.sql")
-  public void
+  void
       givenANumericalId_whenAnDirectorWithTheIdExistsAndDoesNotHaveAnyMovies_itShouldReturnA200Response()
           throws Exception {
     mvc.perform(get("/api/directors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))

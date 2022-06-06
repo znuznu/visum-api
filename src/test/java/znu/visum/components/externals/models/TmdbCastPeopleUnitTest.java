@@ -9,13 +9,13 @@ import znu.visum.components.externals.tmdb.infrastructure.models.TmdbCastPeople;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("TmdbCastPeopleUnitTest")
-public class TmdbCastPeopleUnitTest {
+class TmdbCastPeopleUnitTest {
   @Nested
   class ToDomain {
 
     @Test
     @DisplayName("When the actor has a name made of two words, separated by a space")
-    public void itShouldReturnNameAndForenameWithASimpleSplitOnSpace() {
+    void itShouldReturnNameAndForenameWithASimpleSplitOnSpace() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques Dupont");
@@ -27,7 +27,7 @@ public class TmdbCastPeopleUnitTest {
 
     @Test
     @DisplayName("When the actor has a name made of a single word")
-    public void itShouldReturnAnActorWithAnEmptyName() {
+    void itShouldReturnAnActorWithAnEmptyName() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques");
@@ -39,7 +39,7 @@ public class TmdbCastPeopleUnitTest {
 
     @Test
     @DisplayName("When the actor has an empty name")
-    public void itShouldReturnAnActorWithAnEmptyNameAndForename() {
+    void itShouldReturnAnActorWithAnEmptyNameAndForename() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("");
@@ -51,7 +51,7 @@ public class TmdbCastPeopleUnitTest {
 
     @Test
     @DisplayName("When the actor has a name composed of more than 2 words separated by spaces")
-    public void itShouldReturnAnActorWithLeftPartAsForenameAndRightPartAsName() {
+    void itShouldReturnAnActorWithLeftPartAsForenameAndRightPartAsName() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques Dupont Baguette Camembert");
@@ -63,7 +63,7 @@ public class TmdbCastPeopleUnitTest {
 
     @Test
     @DisplayName("When the actor has a name composed one word but ending with a space")
-    public void itShouldReturnAnActorWithATrimForenameAndAnEmptyName() {
+    void itShouldReturnAnActorWithATrimForenameAndAnEmptyName() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques ");
@@ -75,7 +75,7 @@ public class TmdbCastPeopleUnitTest {
 
     @Test
     @DisplayName("When the actor has a name starting with a space")
-    public void itShouldReturnAnActorWithATrimForename() {
+    void itShouldReturnAnActorWithATrimForename() {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName(" Jacques");

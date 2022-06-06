@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("CreateMovieViewingHistoryRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class CreateMovieViewingHistoryRouteIntegrationTest {
+class CreateMovieViewingHistoryRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -40,14 +40,14 @@ public class CreateMovieViewingHistoryRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/history", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+  void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
     mvc.perform(post("/api/history").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
@@ -58,7 +58,7 @@ public class CreateMovieViewingHistoryRouteIntegrationTest {
   @Test
   @WithMockUser
   @DisplayName("When the date has a wrong format (valid one: MM/dd/yyyy)")
-  public void givenADateWithAWrongFormat_itShouldReturnA400Response() throws Exception {
+  void givenADateWithAWrongFormat_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             post("/api/history")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +71,7 @@ public class CreateMovieViewingHistoryRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenAMovieViewingHistory_whenTheMovieIdDoesNotExist_itReturnA404Response()
+  void givenAMovieViewingHistory_whenTheMovieIdDoesNotExist_itReturnA404Response()
       throws Exception {
     mvc.perform(
             post("/api/history")
@@ -87,7 +87,7 @@ public class CreateMovieViewingHistoryRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_movie.sql")
-  public void givenAMovieViewingHistory_whenTheMovieIdExists_itShouldReturnA201Response()
+  void givenAMovieViewingHistory_whenTheMovieIdExists_itShouldReturnA201Response()
       throws Exception {
     mvc.perform(
             post("/api/history")

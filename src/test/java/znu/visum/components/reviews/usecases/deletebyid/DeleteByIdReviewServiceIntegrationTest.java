@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdReviewServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class DeleteByIdReviewServiceIntegrationTest {
+class DeleteByIdReviewServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,14 +39,13 @@ public class DeleteByIdReviewServiceIntegrationTest {
   }
 
   @Test
-  public void givenAReviewIdThatDoesNotExist_whenTheReviewIsDeleted_itShouldThrowAnError() {
+  void givenAReviewIdThatDoesNotExist_whenTheReviewIsDeleted_itShouldThrowAnError() {
     Assertions.assertThrows(NoSuchReviewIdException.class, () -> service.deleteById(1000L));
   }
 
   @Test
   @Sql("/sql/insert_movie_with_review.sql")
-  public void
-      givenAReviewIdThatExists_whenTheReviewIsDeleted_itShouldDeleteTheReviewButNotTheMovie() {
+  void givenAReviewIdThatExists_whenTheReviewIsDeleted_itShouldDeleteTheReviewButNotTheMovie() {
     reviewRepository.deleteById(1L);
 
     assertThat(reviewRepository.findById(1L)).isNotPresent();

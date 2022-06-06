@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("CreateMovieServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class CreateMovieServiceIntegrationTest {
+class CreateMovieServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -56,7 +56,7 @@ public class CreateMovieServiceIntegrationTest {
 
   @Test
   @Sql("/sql/insert_single_movie.sql")
-  public void givenAMovieThatExists_whenTheMovieIsSaved_itShouldThrowAnError() {
+  void givenAMovieThatExists_whenTheMovieIsSaved_itShouldThrowAnError() {
     Assertions.assertThrows(
         MovieAlreadyExistsException.class,
         () ->
@@ -69,7 +69,7 @@ public class CreateMovieServiceIntegrationTest {
 
   @Test
   @Sql("/sql/insert_cast_and_genres.sql")
-  public void givenAMovieThatDoesNotExist_whenTheMovieIsSaved_itShouldSaveTheMovie() {
+  void givenAMovieThatDoesNotExist_whenTheMovieIsSaved_itShouldSaveTheMovie() {
     Movie movie = MovieFactory.INSTANCE.getWithKindAndId(MovieKind.WITHOUT_REVIEW, null);
     movie.setDirectors(
         List.of(

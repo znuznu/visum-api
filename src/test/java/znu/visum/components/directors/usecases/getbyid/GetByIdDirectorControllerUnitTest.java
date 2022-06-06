@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetByIdDirectorControllerUnitTest")
-public class GetByIdDirectorControllerUnitTest {
+class GetByIdDirectorControllerUnitTest {
   private GetByIdDirectorController controller;
 
   @Mock private GetByIdDirectorService service;
@@ -35,7 +35,7 @@ public class GetByIdDirectorControllerUnitTest {
   }
 
   @Test
-  public void givenADirector_whenTheDirectorHasBeenSaved_thenItShouldReturnTheDirector() {
+  void givenADirector_whenTheDirectorHasBeenSaved_thenItShouldReturnTheDirector() {
     Director director =
         (Director)
             SingletonPeopleFactory.INSTANCE
@@ -59,7 +59,7 @@ public class GetByIdDirectorControllerUnitTest {
   }
 
   @Test
-  public void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
+  void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).findById(1L);
 
     Assertions.assertThrows(NoSuchDirectorIdException.class, () -> controller.getDirectorById(1));

@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetByIdActorControllerUnitTest")
-public class GetByIdActorControllerUnitTest {
+class GetByIdActorControllerUnitTest {
   private GetByIdActorController controller;
 
   @Mock private GetByIdActorService service;
@@ -35,7 +35,7 @@ public class GetByIdActorControllerUnitTest {
   }
 
   @Test
-  public void givenAnActor_whenTheActorHasBeenSaved_thenItShouldReturnTheActor() {
+  void givenAnActor_whenTheActorHasBeenSaved_thenItShouldReturnTheActor() {
     Actor actor =
         (Actor)
             SingletonPeopleFactory.INSTANCE.getActorFactory().getWithKind(PeopleKind.WITH_MOVIES);
@@ -59,7 +59,7 @@ public class GetByIdActorControllerUnitTest {
   }
 
   @Test
-  public void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
+  void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchActorIdException("1")).when(service).findById(1L);
 
     Assertions.assertThrows(NoSuchActorIdException.class, () -> controller.getActorById(1));

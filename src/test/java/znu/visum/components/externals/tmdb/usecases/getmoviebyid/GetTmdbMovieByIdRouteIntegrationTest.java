@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("h2")
 @DisplayName("GetTmdbMovieByIdRouteIntegrationTest")
-public class GetTmdbMovieByIdRouteIntegrationTest {
+class GetTmdbMovieByIdRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
@@ -30,7 +30,7 @@ public class GetTmdbMovieByIdRouteIntegrationTest {
   private TmdbConnector connector;
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/tmdb/movies/{id}", 1).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
@@ -41,7 +41,7 @@ public class GetTmdbMovieByIdRouteIntegrationTest {
   class InvalidRequest {
     @Test
     @WithMockUser
-    public void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
+    void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get("/api/tmdb/movies/x", "x", "Something")
                   .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -53,7 +53,7 @@ public class GetTmdbMovieByIdRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
+    void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
       mvc.perform(get("/api/tmdb/movies/{id}", -1).contentType(MediaType.APPLICATION_JSON_VALUE))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetPageMovieRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetPageMovieRouteIntegrationTest {
+class GetPageMovieRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class GetPageMovieRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get(
                     "/api/movies?sort=type&search=type={type}&limit={limit}&offset={offset}",
@@ -59,7 +59,7 @@ public class GetPageMovieRouteIntegrationTest {
       })
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on title)")
-  public void defaultCase_itShouldReturnA200Response() throws Exception {
+  void defaultCase_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/movies").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -84,7 +84,7 @@ public class GetPageMovieRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_reviews_metadata.sql"
       })
   @DisplayName("when a title is provided, it should return the movie with the title")
-  public void givenATitle_itShouldReturnA200Response() throws Exception {
+  void givenATitle_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/movies?search=title={title}", "Fake movie with review 20")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -109,7 +109,7 @@ public class GetPageMovieRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_reviews_metadata.sql"
       })
   @DisplayName("when a like title is provided, it should return movies containing the title")
-  public void givenALikeTitle_itShouldReturnA200Response() throws Exception {
+  void givenALikeTitle_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/movies?search=title={title}", "%with review 3%")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))

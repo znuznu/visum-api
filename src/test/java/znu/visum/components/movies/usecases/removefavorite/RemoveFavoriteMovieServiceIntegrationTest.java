@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("MarkAsFavoriteServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class RemoveFavoriteMovieServiceIntegrationTest {
+class RemoveFavoriteMovieServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -40,7 +40,7 @@ public class RemoveFavoriteMovieServiceIntegrationTest {
 
   @Test
   @DisplayName("when the movie does not exists it should throw")
-  public void givenAMovieIdThatDoesNotExist_itShouldThrowAnError() {
+  void givenAMovieIdThatDoesNotExist_itShouldThrowAnError() {
     Assertions.assertThrows(NoSuchMovieIdException.class, () -> service.removeFavorite(1000L));
   }
 
@@ -48,7 +48,7 @@ public class RemoveFavoriteMovieServiceIntegrationTest {
   @DisplayName(
       "when the movie exists and is already not a favorite one, it should not affect it and return false")
   @Sql("/sql/insert_movie_with_metadata.sql")
-  public void givenAMovieThatExists_whenTheMovieIsAlreadyNotMarked_itShouldNotAffectTheMovie() {
+  void givenAMovieThatExists_whenTheMovieIsAlreadyNotMarked_itShouldNotAffectTheMovie() {
     boolean hasChanged = service.removeFavorite(90L);
 
     assertThat(hasChanged).isFalse();
@@ -66,7 +66,7 @@ public class RemoveFavoriteMovieServiceIntegrationTest {
   @DisplayName(
       "when the movie exists and is a favorite one, it should mark it as not favorite and return true")
   @Sql("/sql/insert_movie_with_metadata_with_favorite_with_should_watch.sql")
-  public void givenAMovieThatExists_whenTheMovieIsMarked_itShouldRemoveTheFavorite() {
+  void givenAMovieThatExists_whenTheMovieIsMarked_itShouldRemoveTheFavorite() {
     boolean hasChanged = service.removeFavorite(91L);
 
     assertThat(hasChanged).isTrue();
