@@ -3,6 +3,7 @@ package znu.visum.components.externals.domain.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import java.util.Optional;
 
@@ -32,5 +33,22 @@ public class ExternalMovieMetadata {
 
   public void setPosterBaseUrl(String basePosterUrl) {
     this.basePosterUrl = basePosterUrl;
+  }
+
+  public MovieMetadata toMovieMetadataWithMovieId(long movieId) {
+    String posterUrl = this.getCompletePosterUrl().orElse(null);
+
+    return MovieMetadata.builder()
+        .movieId(movieId)
+        .tmdbId(this.getTmdbId())
+        .imdbId(this.getImdbId())
+        .runtime(this.getRuntime())
+        .revenue(this.getRevenue())
+        .originalLanguage(this.getOriginalLanguage())
+        .tagline(this.getTagline())
+        .budget(this.getBudget())
+        .overview(this.getOverview())
+        .posterUrl(posterUrl)
+        .build();
   }
 }

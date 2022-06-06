@@ -6,6 +6,12 @@ spring:
       ddl-auto: create-drop
   flyway:
     enabled: false
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+
 visum:
   allowed-origins: localhost:3000
   tmdb-api-key: 'test-api-key'

@@ -25,6 +25,8 @@ public interface MovieRepository {
 
   long count();
 
+  List<Movie> findAll();
+
   long countAllByReleaseDateYear(Year year);
 
   List<Movie> findHighestRatedMoviesReleasedBetween(LocalDate start, LocalDate end, int limit);

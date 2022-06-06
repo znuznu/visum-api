@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.0
+
+- Add `findAll()` to MovieRepository
+- Add spring-boot-starter-batch
+- Add `UpdateMovieMetadataJobLauncher` to update movie metadata periodically with Spring Batch
+
 ## 2.7.3
 
 - Use Lombok for all builders

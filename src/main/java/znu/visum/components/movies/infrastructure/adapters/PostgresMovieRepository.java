@@ -108,6 +108,13 @@ public class PostgresMovieRepository implements MovieRepository {
   }
 
   @Override
+  public List<Movie> findAll() {
+    return this.dataJpaMovieRepository.findAll().stream()
+        .map(MovieEntity::toDomain)
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public long countAllByReleaseDateYear(Year year) {
     LocalDate startDate = LocalDate.ofYearDay(year.getValue(), 1);
     LocalDate endDate = LocalDate.of(year.getValue(), 12, 31);

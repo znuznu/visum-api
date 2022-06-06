@@ -1,9 +1,6 @@
 package znu.visum.components.movies.infrastructure.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class MovieMetadataEntity {
   @Id
   @Column(name = "movie_id")
