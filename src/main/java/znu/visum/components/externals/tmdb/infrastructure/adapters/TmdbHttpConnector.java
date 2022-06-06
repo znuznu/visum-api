@@ -28,7 +28,8 @@ import java.util.Optional;
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
 
-  private final static String CONTENT_TYPE = "application/json; charset=utf-8";
+  private static final String CONTENT_TYPE = "application/json; charset=utf-8";
+  private static final String LANGUAGE = "en-US";
 
   private final WebClient webClient;
 
@@ -66,7 +67,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .path("/search/movie")
                           .queryParam("query", search)
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
@@ -100,7 +101,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path("/movie/upcoming")
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
@@ -135,7 +136,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path(String.format("/movie/%d", movieId))
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .build())
               .header("Accept", CONTENT_TYPE)
               .retrieve()
@@ -171,7 +172,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path(String.format("/movie/%d/credits", movieId))
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .build())
               .header("Accept", CONTENT_TYPE)
               .retrieve()
