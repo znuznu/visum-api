@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class GetUpcomingTmdbMoviesServiceImpl implements GetUpcomingTmdbMoviesService {
-  private final Logger logger = LoggerFactory.getLogger(SearchTmdbMoviesServiceImpl.class);
+  private final Logger logger = LoggerFactory.getLogger(GetUpcomingTmdbMoviesServiceImpl.class);
   private final TmdbConnector connector;
 
   @Autowired
