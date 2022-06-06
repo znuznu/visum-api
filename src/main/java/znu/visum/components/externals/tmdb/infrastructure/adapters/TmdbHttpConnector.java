@@ -50,7 +50,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
-    logger.info(String.format("Call to TMDb /search/movie?query=%s&page=%s", search, pageNumber));
+    logger.info("Call to TMDb /search/movie?query={}&page={}", search, pageNumber);
 
     try {
       TmdbSearchMoviesResponse response =
@@ -120,7 +120,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovie> getMovieById(long movieId) {
-    logger.info(String.format("Call to TMDb /movie/%d", movieId));
+    logger.info("Call to TMDb /movie/{}", movieId);
 
     try {
       Optional<TmdbGetMovieByIdResponse> response =
@@ -156,7 +156,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
-    logger.info(String.format("Call to TMDb /movie/%d/credits", movieId));
+    logger.info("Call to TMDb /movie/{}/credits", movieId);
 
     try {
       Optional<TmdbGetCreditsByMovieIdResponse> response =
@@ -216,7 +216,7 @@ public class TmdbHttpConnector implements TmdbConnector {
       String secondToLastPosterSize =
           response.getImages().getPosterSizes().get(posterSizesLength - 2);
 
-      return String.format("%s%s", secureBaseUrl, secondToLastPosterSize);
+      return secureBaseUrl + secondToLastPosterSize;
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
