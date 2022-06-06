@@ -27,6 +27,9 @@ import java.util.Optional;
 
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
+
+  private final static String CONTENT_TYPE = "application/json; charset=utf-8";
+
   private final WebClient webClient;
 
   private final Logger logger = LoggerFactory.getLogger(TmdbHttpConnector.class);
@@ -67,7 +70,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbSearchMoviesResponse.class)
               .flatMap(
@@ -101,7 +104,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetUpcomingMoviesResponse.class)
               .flatMap(
@@ -134,7 +137,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .queryParam("api_key", tmdbApiKey)
                           .queryParam("language", "en-US")
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetMovieByIdResponse.class)
               // TODO fix to only validate non Empty mono
@@ -170,7 +173,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .queryParam("api_key", tmdbApiKey)
                           .queryParam("language", "en-US")
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetCreditsByMovieIdResponse.class)
               .onErrorResume(
@@ -198,7 +201,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                   tmdbApiBaseUrl,
                   uriBuilder ->
                       uriBuilder.path("/configuration").queryParam("api_key", tmdbApiKey).build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetConfigurationResponse.class)
               .flatMap(
