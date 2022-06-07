@@ -14,7 +14,7 @@ import znu.visum.components.genres.usecases.deletebyid.domain.DeleteByIdGenreSer
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteByIdGenreControllerUnitTest")
-public class DeleteByIdTmdbGenreControllerUnitTest {
+class DeleteByIdTmdbGenreControllerUnitTest {
   private DeleteByIdGenreController controller;
 
   @Mock private DeleteByIdGenreService service;
@@ -25,7 +25,7 @@ public class DeleteByIdTmdbGenreControllerUnitTest {
   }
 
   @Test
-  public void givenAGenreId_whenNoGenreWithTheIdExists_thenItShouldThrow() {
+  void givenAGenreId_whenNoGenreWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchGenreIdException("1")).when(service).deleteById(1L);
 
     Assertions.assertThrows(NoSuchGenreIdException.class, () -> controller.deleteById(1));

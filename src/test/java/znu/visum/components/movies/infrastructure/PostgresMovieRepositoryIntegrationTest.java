@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("PostgresMovieRepositoryIntegrationTest")
 @ActiveProfiles("flyway")
-public class PostgresMovieRepositoryIntegrationTest {
+class PostgresMovieRepositoryIntegrationTest {
 
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
@@ -46,7 +46,7 @@ public class PostgresMovieRepositoryIntegrationTest {
 
   @DisplayName("findHighestRatedMoviesReleasedBetween() - no movies")
   @Test
-  public void whenNoMoviesExists_itShouldReturnAnEmptyList() {
+  void whenNoMoviesExists_itShouldReturnAnEmptyList() {
     List<Movie> movies =
         this.movieRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1), 5);
@@ -60,7 +60,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void whenMoreMoviesThanTheLimitExists_itShouldReturnAListWithTheLengthOfTheLimit() {
+  void whenMoreMoviesThanTheLimitExists_itShouldReturnAListWithTheLengthOfTheLimit() {
     List<Movie> movies =
         this.movieRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.of(2000, 1, 1), LocalDate.of(2004, 1, 1), 2);
@@ -166,7 +166,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void whenLessMoviesThanTheLimitExists_itShouldReturnMoviesFound() {
+  void whenLessMoviesThanTheLimitExists_itShouldReturnMoviesFound() {
     List<Movie> movies =
         this.movieRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.of(2000, 1, 1), LocalDate.of(2003, 1, 1), 10);
@@ -272,7 +272,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void itShouldReturnTheTotalRunningHours() {
+  void itShouldReturnTheTotalRunningHours() {
     int totalRunningHours =
         this.movieRepository.getTotalRunningHoursBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
@@ -286,7 +286,7 @@ public class PostgresMovieRepositoryIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnZero() {
+  void whenThereIsNoMovies_itShouldReturnZero() {
     int totalRunningHours =
         this.movieRepository.getTotalRunningHoursBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
@@ -301,7 +301,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void itShouldReturnTheMoviesCountPerOriginalLanguageOrderedByDescCount() {
+  void itShouldReturnTheMoviesCountPerOriginalLanguageOrderedByDescCount() {
     List<Pair<String, Integer>> pairs =
         this.movieRepository.getNumberOfMoviesPerOriginalLanguageBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
@@ -317,7 +317,7 @@ public class PostgresMovieRepositoryIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnAnEmptyPerOriginalLanguageList() {
+  void whenThereIsNoMovies_itShouldReturnAnEmptyPerOriginalLanguageList() {
     List<Pair<String, Integer>> pairs =
         this.movieRepository.getNumberOfMoviesPerOriginalLanguageBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
@@ -332,7 +332,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
-  public void itShouldReturnTheMoviesCountPerYearOrderedByDescCount() {
+  void itShouldReturnTheMoviesCountPerYearOrderedByDescCount() {
     List<Pair<Integer, Integer>> pairs =
         this.movieRepository.getNumberOfMoviesPerYearBetween(
             LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
@@ -346,7 +346,7 @@ public class PostgresMovieRepositoryIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnAnEmptyPerYearList() {
+  void whenThereIsNoMovies_itShouldReturnAnEmptyPerYearList() {
     List<Pair<Integer, Integer>> pairs =
         this.movieRepository.getNumberOfMoviesPerYearBetween(
             LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
@@ -362,7 +362,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })
-  public void itShouldReturnTheMoviesCountPerGenreOrderedByDescCount() {
+  void itShouldReturnTheMoviesCountPerGenreOrderedByDescCount() {
     List<Pair<String, Integer>> pairs =
         this.movieRepository.getNumberOfMoviesPerGenreBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2020, 1));
@@ -379,7 +379,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldReturnTheAverageRatedMoviesOrderedByDescYear() {
+  void itShouldReturnTheAverageRatedMoviesOrderedByDescYear() {
     List<Pair<Integer, Float>> pairs =
         this.movieRepository.getRatedMoviesAveragePerYearBetween(
             LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
@@ -395,7 +395,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldAvoidTheMovieWithoutReviewAndReturnTheAverageRatedMoviesOrderedByDescYear() {
+  void itShouldAvoidTheMovieWithoutReviewAndReturnTheAverageRatedMoviesOrderedByDescYear() {
     List<Pair<Integer, Float>> pairs =
         this.movieRepository.getRatedMoviesAveragePerYearBetween(
             LocalDate.ofYearDay(2015, 1), LocalDate.ofYearDay(2016, 1));
@@ -410,7 +410,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldReturnAnEmptyList() {
+  void itShouldReturnAnEmptyList() {
     List<Pair<Integer, Float>> pairs =
         this.movieRepository.getRatedMoviesAveragePerYearBetween(
             LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
@@ -424,7 +424,7 @@ public class PostgresMovieRepositoryIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnAnEmptyAveragePerYearList() {
+  void whenThereIsNoMovies_itShouldReturnAnEmptyAveragePerYearList() {
     List<Pair<Integer, Float>> pairs =
         this.movieRepository.getRatedMoviesAveragePerYearBetween(
             LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
@@ -438,7 +438,7 @@ public class PostgresMovieRepositoryIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnAnEmptyHighestRatedDuringYearsOlderMoviesList() {
+  void whenThereIsNoMovies_itShouldReturnAnEmptyHighestRatedDuringYearsOlderMoviesList() {
     List<Movie> movies = this.movieRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
 
     assertThat(movies).isEmpty();
@@ -451,7 +451,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldReturnHighestRatedDuringYearOlderMovies() {
+  void itShouldReturnHighestRatedDuringYearOlderMovies() {
     List<Movie> movies = this.movieRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
 
     assertThat(movies)
@@ -556,7 +556,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldReturnCountOfAllMoviesFrom2014() {
+  void itShouldReturnCountOfAllMoviesFrom2014() {
     long count = this.movieRepository.countAllByReleaseDateYear(Year.of(2014));
 
     assertThat(count).isEqualTo(4);
@@ -569,7 +569,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_movie_with_viewing_history.sql",
       })
-  public void whenThereIsNoMovies_itShouldReturnNone() {
+  void whenThereIsNoMovies_itShouldReturnNone() {
     List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2014), null, null);
 
     assertThat(movies).isEmpty();
@@ -582,7 +582,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_movies_viewing_year.sql",
       })
-  public void givenYear_whenThereIsMovies_itShouldReturnMoviesSeenDuringYear() {
+  void givenYear_whenThereIsMovies_itShouldReturnMoviesSeenDuringYear() {
     List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), null, null);
 
     assertThat(movies).hasSize(3);
@@ -595,7 +595,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_movies_viewing_year.sql",
       })
-  public void givenYearGrade_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearAndGrade() {
+  void givenYearGrade_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearAndGrade() {
     List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), 9, null);
 
     assertThat(movies).hasSize(2);
@@ -610,8 +610,7 @@ public class PostgresMovieRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_movies_viewing_year.sql",
       })
-  public void
-      givenYearGradeGenreId_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearGradeGenreId() {
+  void givenYearGradeGenreId_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearGradeGenreId() {
     List<Movie> movies = this.movieRepository.findByDiaryFilters(Year.of(2019), 9, 3L);
 
     assertThat(movies).hasSize(1);

@@ -7,6 +7,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TmdbPageResponseMapper {
+
+  private TmdbPageResponseMapper() {}
+
   public static <T, V> VisumPage<V> toVisumPage(
       TmdbPageResponse<T> searchResponse, Function<T, V> mapper) {
     return VisumPage.<V>builder()

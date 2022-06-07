@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("CreateMovieViewingHistoryServiceUnitTest")
-public class CreateMovieViewingHistoryServiceUnitTest {
+class CreateMovieViewingHistoryServiceUnitTest {
   private CreateMovieViewingHistoryService service;
 
   @Mock private MovieViewingHistoryRepository historyRepository;
@@ -38,7 +38,7 @@ public class CreateMovieViewingHistoryServiceUnitTest {
   }
 
   @Test
-  public void givenAMovieViewingHistory_whenTheMovieIdDoesNotExist_itShouldThrow() {
+  void givenAMovieViewingHistory_whenTheMovieIdDoesNotExist_itShouldThrow() {
     Mockito.when(movieRepository.findById(1L)).thenReturn(Optional.empty());
 
     Assertions.assertThrows(
@@ -52,7 +52,7 @@ public class CreateMovieViewingHistoryServiceUnitTest {
   }
 
   @Test
-  public void givenAMovieViewingHistory_whenTheMovieIdExists_itShouldReturnTheHistory() {
+  void givenAMovieViewingHistory_whenTheMovieIdExists_itShouldReturnTheHistory() {
     Mockito.when(movieRepository.findById(1L))
         .thenReturn(
             Optional.of(MovieFactory.INSTANCE.getWithKindAndId(MovieKind.WITHOUT_REVIEW, 1L)));

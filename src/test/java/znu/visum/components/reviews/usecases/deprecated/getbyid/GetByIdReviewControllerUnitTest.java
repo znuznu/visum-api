@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetByIdMovieReviewControllerUnitTest")
-public class GetByIdReviewControllerUnitTest {
+class GetByIdReviewControllerUnitTest {
   private GetByIdMovieReviewController controller;
 
   @Mock private GetByIdMovieReviewService service;
@@ -32,7 +32,7 @@ public class GetByIdReviewControllerUnitTest {
   }
 
   @Test
-  public void givenAMovieReviewId_whenAMovieReviewWithIdExists_thenItShouldReturnTheMovieReview() {
+  void givenAMovieReviewId_whenAMovieReviewWithIdExists_thenItShouldReturnTheMovieReview() {
     Mockito.when(service.findById(1L))
         .thenReturn(ReviewFactory.INSTANCE.getOneWithIdAndMovieId(1L, 1L));
 
@@ -52,7 +52,7 @@ public class GetByIdReviewControllerUnitTest {
   }
 
   @Test
-  public void givenAMovieReviewId_whenNoMovieReviewWithTheIdExists_thenItShouldThrow() {
+  void givenAMovieReviewId_whenNoMovieReviewWithTheIdExists_thenItShouldThrow() {
     Mockito.doThrow(new NoSuchReviewIdException("1")).when(service).findById(1L);
 
     Assertions.assertThrows(NoSuchReviewIdException.class, () -> controller.getMovieReviewById(1));

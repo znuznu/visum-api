@@ -34,7 +34,7 @@ public class CreateReviewServiceImpl implements CreateReviewService {
             .orElseThrow(() -> new NoSuchMovieIdException(Long.toString(movieId)));
 
     if (movie.getReview() != null) {
-      throw new MaximumMovieReviewsReachedException(movieId);
+      throw MaximumMovieReviewsReachedException.withId(movieId);
     }
 
     return reviewRepository.save(review);

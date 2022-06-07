@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetPageActorRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetPageActorRouteIntegrationTest {
+class GetPageActorRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class GetPageActorRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get(
                     "/api/actors?sort=type&search=type={type}&limit={limit}&offset={offset}",
@@ -55,7 +55,7 @@ public class GetPageActorRouteIntegrationTest {
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_actors.sql"})
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on forename and name)")
-  public void defaultCase_itShouldReturnA200Response() throws Exception {
+  void defaultCase_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/actors").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -82,7 +82,7 @@ public class GetPageActorRouteIntegrationTest {
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_actors.sql"})
   @DisplayName(
       "when a forename and name is provided, it should return the actors with the forename or name")
-  public void givenAForenameAndName_itShouldReturnA200Response() throws Exception {
+  void givenAForenameAndName_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/actors?search=forename={forename},name={name}", "Robert", "De Niro")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -106,7 +106,7 @@ public class GetPageActorRouteIntegrationTest {
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_actors.sql"})
   @DisplayName(
       "when a like forename or like name is provided (comma), it should return the actors containing like forename or like name")
-  public void givenALikeForenameOrLikeName_itShouldReturnA200Response() throws Exception {
+  void givenALikeForenameOrLikeName_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/actors?search=forename={forename},name={name}", "%dha%", "%y%")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))

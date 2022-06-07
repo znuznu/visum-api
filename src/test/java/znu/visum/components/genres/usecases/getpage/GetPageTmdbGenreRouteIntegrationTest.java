@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetPageGenreRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetPageTmdbGenreRouteIntegrationTest {
+class GetPageTmdbGenreRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class GetPageTmdbGenreRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get(
                     "/api/genres?sort=type&search=type={type}&limit={limit}&offset={offset}",
@@ -55,7 +55,7 @@ public class GetPageTmdbGenreRouteIntegrationTest {
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
   @DisplayName(
       "when only empty parameters are passed, it should use default value (limit 20, offset 0, ascending sort on type, search empty like on type)")
-  public void defaultCase_itShouldReturnA200Response() throws Exception {
+  void defaultCase_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/genres").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -94,7 +94,7 @@ public class GetPageTmdbGenreRouteIntegrationTest {
   @WithMockUser
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
   @DisplayName("when a type is provided, it should return the movie with the type")
-  public void givenAType_itShouldReturnA200Response() throws Exception {
+  void givenAType_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/genres?search=type={type}", "Horror")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -117,7 +117,7 @@ public class GetPageTmdbGenreRouteIntegrationTest {
   @WithMockUser
   @Sql(scripts = {"/sql/truncate_all_tables.sql", "/sql/insert_multiple_genres.sql"})
   @DisplayName("when a like type is provided, it should return genres containing the type")
-  public void givenALikeType_itShouldReturnA200Response() throws Exception {
+  void givenALikeType_itShouldReturnA200Response() throws Exception {
     mvc.perform(
             get("/api/genres?search=type={type}", "%ta%")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))

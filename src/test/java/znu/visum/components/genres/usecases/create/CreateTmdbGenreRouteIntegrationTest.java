@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("CreateGenreRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class CreateTmdbGenreRouteIntegrationTest {
+class CreateTmdbGenreRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -42,7 +42,7 @@ public class CreateTmdbGenreRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             post("/api/genres")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +53,7 @@ public class CreateTmdbGenreRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_genre.sql")
-  public void whenAGenreWithTheTypeExists_itShouldReturnA400Response() throws Exception {
+  void whenAGenreWithTheTypeExists_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             post("/api/genres")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +67,7 @@ public class CreateTmdbGenreRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void whenNoGenreWithTheTypeExist_itShouldReturnTheCreateGenreResponse() throws Exception {
+  void whenNoGenreWithTheTypeExist_itShouldReturnTheCreateGenreResponse() throws Exception {
     mvc.perform(
             post("/api/genres")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -83,7 +83,7 @@ public class CreateTmdbGenreRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
       mvc.perform(post("/api/genres").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
@@ -93,7 +93,7 @@ public class CreateTmdbGenreRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAnEmptyType_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyType_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/genres")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)

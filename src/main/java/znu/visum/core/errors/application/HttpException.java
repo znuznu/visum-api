@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 @Value
 @Builder
-public class HttpExceptionResponse {
+public class HttpException {
 
   HttpStatus status;
   String code;
@@ -15,7 +15,7 @@ public class HttpExceptionResponse {
   String error;
   String path;
 
-  public ResponseEntity<HttpExceptionResponse> toResponseEntity() {
+  public ResponseEntity<HttpException> toResponseEntity() {
     return new ResponseEntity<>(this, status != null ? status : HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

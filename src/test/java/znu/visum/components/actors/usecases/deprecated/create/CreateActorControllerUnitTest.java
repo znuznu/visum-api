@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("CreateActorControllerUnitTest")
-public class CreateActorControllerUnitTest {
+class CreateActorControllerUnitTest {
   private CreateActorController controller;
 
   @Mock private CreateActorService service;
@@ -33,7 +33,7 @@ public class CreateActorControllerUnitTest {
   }
 
   @Test
-  public void givenAnActorWithoutMovies_whenTheActorIsSaved_thenTheActorWithoutMoviesIsReturned() {
+  void givenAnActorWithoutMovies_whenTheActorIsSaved_thenTheActorWithoutMoviesIsReturned() {
     Mockito.when(service.save(any(Actor.class)))
         .thenReturn(
             Actor.builder()

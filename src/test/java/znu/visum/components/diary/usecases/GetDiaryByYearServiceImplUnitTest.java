@@ -26,14 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GetDiaryByYearServiceImplUnitTest")
 @ExtendWith(MockitoExtension.class)
-public class GetDiaryByYearServiceImplUnitTest {
+class GetDiaryByYearServiceImplUnitTest {
 
   private GetDiaryByYearService diaryService;
 
   @Mock private MovieRepository movieRepository;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     this.diaryService = new GetDiaryByYearServiceImpl(movieRepository);
   }
 
@@ -43,7 +43,7 @@ public class GetDiaryByYearServiceImplUnitTest {
 
     @Test
     @DisplayName("When there is no movies, it should return none")
-    public void itShouldReturnEmptyList() {
+    void itShouldReturnEmptyList() {
       Mockito.when(movieRepository.findByDiaryFilters(Year.of(2019), 10, 2L))
           .thenReturn(new ArrayList<>());
 
@@ -52,7 +52,7 @@ public class GetDiaryByYearServiceImplUnitTest {
 
     @Test
     @DisplayName("When there is movies, it should return all movies based on their viewing dates")
-    public void itShouldReturnMovies() {
+    void itShouldReturnMovies() {
       Movie movie1 =
           Movie.builder()
               .id(1L)

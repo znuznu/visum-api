@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("CreateReviewServiceIntegrationTest")
 @ActiveProfiles("flyway")
-public class CreateReviewServiceIntegrationTest {
+class CreateReviewServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -42,7 +42,7 @@ public class CreateReviewServiceIntegrationTest {
   }
 
   @Test
-  public void givenAReviewWithAMovieIdThatDoesNotExist_whenTheReviewIsSaved_itShouldThrowAnError() {
+  void givenAReviewWithAMovieIdThatDoesNotExist_whenTheReviewIsSaved_itShouldThrowAnError() {
     Assertions.assertThrows(
         NoSuchMovieIdException.class,
         () -> service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(42L)));
@@ -50,8 +50,7 @@ public class CreateReviewServiceIntegrationTest {
 
   @Test
   @Sql("/sql/insert_movie_with_review.sql")
-  public void
-      givenAReviewWithAMovieIdThatAlreadyHaveAReview_whenTheReviewIsSaved_itShouldThrowAnError() {
+  void givenAReviewWithAMovieIdThatAlreadyHaveAReview_whenTheReviewIsSaved_itShouldThrowAnError() {
     Assertions.assertThrows(
         MaximumMovieReviewsReachedException.class,
         () -> service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(30L)));
@@ -59,7 +58,7 @@ public class CreateReviewServiceIntegrationTest {
 
   @Test
   @Sql("/sql/insert_single_movie.sql")
-  public void givenAReviewWithAMovieIdThatExists_whenTheReviewIsSaved_itShouldSaveTheReview() {
+  void givenAReviewWithAMovieIdThatExists_whenTheReviewIsSaved_itShouldSaveTheReview() {
     assertThat(movieRepository.findById(1L).get().getReview()).isNull();
 
     Review review = service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(1L));

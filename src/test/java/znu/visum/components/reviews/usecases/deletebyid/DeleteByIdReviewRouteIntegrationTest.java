@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdReviewRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class DeleteByIdReviewRouteIntegrationTest {
+class DeleteByIdReviewRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,14 +39,14 @@ public class DeleteByIdReviewRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(delete("/api/reviews/{id}/movies", 1).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             delete("/api/reviews/{id}/movies", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
@@ -57,8 +57,7 @@ public class DeleteByIdReviewRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoReviewWithTheIdExists_itShouldReturnA404Response()
-      throws Exception {
+  void givenANumericalId_whenNoReviewWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(
             delete("/api/reviews/{id}/movies", 1000).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
@@ -71,8 +70,7 @@ public class DeleteByIdReviewRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_movie_with_review.sql")
-  public void givenANumericalId_whenAReviewWithTheIdExists_itShouldReturnA204Response()
-      throws Exception {
+  void givenANumericalId_whenAReviewWithTheIdExists_itShouldReturnA204Response() throws Exception {
     mvc.perform(delete("/api/reviews/{id}/movies", 1).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent())
         .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist());

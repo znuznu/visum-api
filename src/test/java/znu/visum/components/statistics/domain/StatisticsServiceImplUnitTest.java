@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("StatisticsServiceImplUnitTest")
 @ExtendWith(MockitoExtension.class)
-public class StatisticsServiceImplUnitTest {
+class StatisticsServiceImplUnitTest {
   @Mock private MovieRepository movieRepository;
 
   @Mock private ReviewRepository reviewRepository;
@@ -28,7 +28,7 @@ public class StatisticsServiceImplUnitTest {
   private StatisticsService statisticsService;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     this.statisticsService = new StatisticsServiceImpl(movieRepository, reviewRepository);
   }
 
@@ -38,7 +38,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.findHighestRatedMoviesReleasedBetween(
@@ -49,7 +49,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the limit is negative")
-    public void whenNegativeLimit_itShouldThrow() {
+    void whenNegativeLimit_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.findHighestRatedMoviesReleasedBetween(
@@ -65,7 +65,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.getTotalRunningHoursBetween(
@@ -81,7 +81,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.getNumberOfMoviesPerOriginalLanguageBetween(
@@ -97,7 +97,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.getNumberOfMoviesPerGenreBetween(
@@ -113,7 +113,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.getNumberOfMoviesPerYearBetween(
@@ -129,7 +129,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the start time is after the end time")
-    public void whenStartAfterEnd_itShouldThrow() {
+    void whenStartAfterEnd_itShouldThrow() {
       assertThatThrownBy(
               () ->
                   statisticsService.getRatedMoviesAveragePerYearBetween(
@@ -145,7 +145,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the provided decade is invalid")
-    public void whenDecadeIsInvalid_itShouldThrow() {
+    void whenDecadeIsInvalid_itShouldThrow() {
       assertThatThrownBy(() -> statisticsService.getHighestRatedMoviesForDecade(2003, 1))
           .isInstanceOf(InvalidDecadeException.class)
           .hasMessage("Invalid decade: 2003");
@@ -153,7 +153,7 @@ public class StatisticsServiceImplUnitTest {
 
     @Test
     @DisplayName("When the provided limit is negative")
-    public void whenLimitIsNegative_itShouldThrow() {
+    void whenLimitIsNegative_itShouldThrow() {
       assertThatThrownBy(() -> statisticsService.getHighestRatedMoviesForDecade(2010, -1))
           .isInstanceOf(IllegalArgumentException.class)
           .hasMessage("Negative limit is not allowed.");

@@ -22,7 +22,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetUpcomingTmdbMoviesServiceImplUnitTest")
-public class GetUpcomingTmdbMoviesServiceImplUnitTest {
+class GetUpcomingTmdbMoviesServiceImplUnitTest {
 
   private GetUpcomingTmdbMoviesService service;
 
@@ -35,20 +35,19 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
 
   @Test
   @DisplayName("when the connector throws on the search method, it should bubble up and throw")
-  public void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
+  void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getUpcomingMovies(1))
-        .thenThrow(new TmdbApiException("Some message.", 500));
+        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> service.getUpcomingMovies(1))
         .isInstanceOf(TmdbApiException.class)
-        .hasMessage("Some message.");
+        .hasMessage("Message: Some message. Status code: 500");
   }
 
   @Test
   @DisplayName(
       "when the connector throws on the get poster URL method, it should return the page with unaltered base poster URL")
-  public void
-      whenTheConnectorThrowsOnGetConfigurationBasePosterUrl_itShouldReturnThePageUnaltered() {
+  void whenTheConnectorThrowsOnGetConfigurationBasePosterUrl_itShouldReturnThePageUnaltered() {
     Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
             VisumPage.<ExternalUpcomingMovie>builder()
@@ -70,7 +69,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
                 .build());
 
     Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenThrow(new TmdbApiException("Some message.", 500));
+        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThat(service.getUpcomingMovies(1))
         .usingRecursiveComparison()
@@ -97,7 +96,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
   @Test
   @DisplayName(
       "when the connector return movies and base poster url, it should return the page with a complete URL")
-  public void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
+  void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
     Mockito.when(connector.getUpcomingMovies(1))
         .thenReturn(
             VisumPage.<ExternalUpcomingMovie>builder()
@@ -159,7 +158,7 @@ public class GetUpcomingTmdbMoviesServiceImplUnitTest {
 
   @Test
   @DisplayName("given an invalid page number (< 0), it should bubble up and throw")
-  public void whenTheConnectorThrowsOnSearchMovie_itShouldBubbleUpAndThrow() {
+  void whenTheConnectorThrowsOnSearchMovie_itShouldBubbleUpAndThrow() {
     assertThatThrownBy(() -> service.getUpcomingMovies(0))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("TMDb page number should be >= 1.");

@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
-import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesServiceImpl;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.stream.Collectors;
 
 @Service
 public class GetUpcomingTmdbMoviesServiceImpl implements GetUpcomingTmdbMoviesService {
-  private final Logger logger = LoggerFactory.getLogger(SearchTmdbMoviesServiceImpl.class);
+  private final Logger logger = LoggerFactory.getLogger(GetUpcomingTmdbMoviesServiceImpl.class);
   private final TmdbConnector connector;
 
   @Autowired

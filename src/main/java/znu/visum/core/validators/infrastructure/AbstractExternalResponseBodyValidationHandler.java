@@ -33,7 +33,7 @@ public abstract class AbstractExternalResponseBodyValidationHandler<T, U extends
           }
 
           return Mono.error(
-              new ExternalApiUnexpectedResponseBodyException(
+              ExternalApiUnexpectedResponseBodyException.withMessageForApi(
                   errors.getAllErrors().toString(), this.externalApi));
         });
   }

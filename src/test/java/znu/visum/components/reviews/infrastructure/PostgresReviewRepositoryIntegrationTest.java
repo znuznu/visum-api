@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("PostgresReviewRepositoryIntegrationTest")
 @ActiveProfiles("flyway")
-public class PostgresReviewRepositoryIntegrationTest {
+class PostgresReviewRepositoryIntegrationTest {
 
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
@@ -37,7 +37,7 @@ public class PostgresReviewRepositoryIntegrationTest {
 
   @DisplayName("countAllByUpdateDateYear() - no reviews")
   @Test
-  public void itShouldReturnZero() {
+  void itShouldReturnZero() {
     long count = this.reviewRepository.countAllByUpdateDateYear(Year.of(2021));
 
     assertThat(count).isEqualTo(0);
@@ -50,7 +50,7 @@ public class PostgresReviewRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
-  public void itShouldReturnCountOfAllReviewsUpdatedIn2021() {
+  void itShouldReturnCountOfAllReviewsUpdatedIn2021() {
     long count = this.reviewRepository.countAllByUpdateDateYear(Year.of(2021));
 
     assertThat(count).isEqualTo(8);

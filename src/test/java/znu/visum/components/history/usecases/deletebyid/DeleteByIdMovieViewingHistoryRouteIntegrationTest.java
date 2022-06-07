@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("DeleteByIdMovieViewingHistoryRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
+class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -39,7 +39,7 @@ public class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             delete("/api/history/{id}/movies", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
@@ -47,7 +47,7 @@ public class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             delete("/api/history/{id}/movies", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
@@ -58,7 +58,7 @@ public class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenANumericalId_whenNoViewingHistoryWithTheIdExists_itShouldReturnA404Response()
+  void givenANumericalId_whenNoViewingHistoryWithTheIdExists_itShouldReturnA404Response()
       throws Exception {
     mvc.perform(
             delete("/api/history/{id}/movies", "1000")
@@ -74,7 +74,7 @@ public class DeleteByIdMovieViewingHistoryRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_movie_with_viewing_history.sql")
-  public void givenANumericalId_whenAViewingHistoryWithTheIdExists_itShouldReturnA204Response()
+  void givenANumericalId_whenAViewingHistoryWithTheIdExists_itShouldReturnA204Response()
       throws Exception {
     mvc.perform(
             delete("/api/history/{id}/movies", '1').contentType(MediaType.APPLICATION_JSON_VALUE))

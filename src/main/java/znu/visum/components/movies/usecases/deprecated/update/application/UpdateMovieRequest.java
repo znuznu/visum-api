@@ -61,7 +61,7 @@ public class UpdateMovieRequest {
             this.genreIds.stream().map(genre -> new Genre(id, null)).collect(Collectors.toList()))
         .actors(
             this.actorIds.stream()
-                .map(id -> ActorFromMovie.builder().id(id).build())
+                .map(actorId -> ActorFromMovie.builder().id(actorId).build())
                 .collect(Collectors.toList()))
         .directors(
             this.directorIds.stream()

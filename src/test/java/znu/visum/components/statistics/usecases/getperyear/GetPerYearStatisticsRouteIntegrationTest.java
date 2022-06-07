@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("GetPerYearStatisticsRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class GetPerYearStatisticsRouteIntegrationTest {
+class GetPerYearStatisticsRouteIntegrationTest {
 
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
@@ -40,14 +40,14 @@ public class GetPerYearStatisticsRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(get("/api/statistics/years/2014").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isForbidden());
   }
 
   @Test
   @WithMockUser
-  public void givenANonNumericalYear_itShouldReturnA400Response() throws Exception {
+  void givenANonNumericalYear_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/statistics/years/xxx").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
@@ -57,7 +57,7 @@ public class GetPerYearStatisticsRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenAYearInferiorTo1900_itShouldReturnA400Response() throws Exception {
+  void givenAYearInferiorTo1900_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/statistics/years/1899").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
@@ -71,7 +71,7 @@ public class GetPerYearStatisticsRouteIntegrationTest {
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
-  public void itShouldReturnEmptyPerYearStatistics() throws Exception {
+  void itShouldReturnEmptyPerYearStatistics() throws Exception {
     mvc.perform(get("/api/statistics/years/2015").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
@@ -96,7 +96,7 @@ public class GetPerYearStatisticsRouteIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
         "/sql/insert_multiple_movie_genres.sql"
       })
-  public void itShouldReturnPerYearStatistics() throws Exception {
+  void itShouldReturnPerYearStatistics() throws Exception {
     mvc.perform(get("/api/statistics/years/2015").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(

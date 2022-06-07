@@ -27,6 +27,10 @@ import java.util.Optional;
 
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
+
+  private static final String CONTENT_TYPE = "application/json; charset=utf-8";
+  private static final String LANGUAGE = "en-US";
+
   private final WebClient webClient;
 
   private final Logger logger = LoggerFactory.getLogger(TmdbHttpConnector.class);
@@ -50,7 +54,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
-    logger.info(String.format("Call to TMDb /search/movie?query=%s&page=%s", search, pageNumber));
+    logger.info("Call to TMDb /search/movie?query={}&page={}", search, pageNumber);
 
     try {
       TmdbSearchMoviesResponse response =
@@ -63,11 +67,11 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .path("/search/movie")
                           .queryParam("query", search)
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbSearchMoviesResponse.class)
               .flatMap(
@@ -97,11 +101,11 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path("/movie/upcoming")
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetUpcomingMoviesResponse.class)
               .flatMap(
@@ -120,7 +124,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovie> getMovieById(long movieId) {
-    logger.info(String.format("Call to TMDb /movie/%d", movieId));
+    logger.info("Call to TMDb /movie/{}", movieId);
 
     try {
       Optional<TmdbGetMovieByIdResponse> response =
@@ -132,9 +136,9 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path(String.format("/movie/%d", movieId))
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetMovieByIdResponse.class)
               // TODO fix to only validate non Empty mono
@@ -156,7 +160,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
-    logger.info(String.format("Call to TMDb /movie/%d/credits", movieId));
+    logger.info("Call to TMDb /movie/{}/credits", movieId);
 
     try {
       Optional<TmdbGetCreditsByMovieIdResponse> response =
@@ -168,9 +172,9 @@ public class TmdbHttpConnector implements TmdbConnector {
                       uriBuilder
                           .path(String.format("/movie/%d/credits", movieId))
                           .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", "en-US")
+                          .queryParam("language", LANGUAGE)
                           .build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetCreditsByMovieIdResponse.class)
               .onErrorResume(
@@ -198,7 +202,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                   tmdbApiBaseUrl,
                   uriBuilder ->
                       uriBuilder.path("/configuration").queryParam("api_key", tmdbApiKey).build())
-              .header("Accept", "application/json; charset=utf-8")
+              .header("Accept", CONTENT_TYPE)
               .retrieve()
               .bodyToMono(TmdbGetConfigurationResponse.class)
               .flatMap(
@@ -216,7 +220,7 @@ public class TmdbHttpConnector implements TmdbConnector {
       String secondToLastPosterSize =
           response.getImages().getPosterSizes().get(posterSizesLength - 2);
 
-      return String.format("%s%s", secureBaseUrl, secondToLastPosterSize);
+      return secureBaseUrl + secondToLastPosterSize;
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }

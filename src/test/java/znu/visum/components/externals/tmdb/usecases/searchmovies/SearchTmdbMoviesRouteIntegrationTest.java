@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("h2")
 @DisplayName("SearchTmdbMoviesRouteIntegrationTest")
-public class SearchTmdbMoviesRouteIntegrationTest {
+class SearchTmdbMoviesRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
@@ -30,7 +30,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
   private TmdbConnector connector;
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             get(
                     "/api/tmdb/movies/search?pageNumber={pageNumber}&search={search}",
@@ -46,7 +46,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
   class InvalidRequest {
     @Test
     @WithMockUser
-    public void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
+    void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get(
                       "/api/tmdb/movies/search?pageNumber={pageNumber}&search={search}",
@@ -61,7 +61,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
+    void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get(
                       "/api/tmdb/movies/search?pageNumber={pageNumber}&search={search}",
@@ -76,7 +76,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenABlankSearch_itShouldReturnA400Response() throws Exception {
+    void givenABlankSearch_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               get("/api/tmdb/movies/search?pageNumber={pageNumber}&search={search}", 1, " ")
                   .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -89,7 +89,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
 
   //  @Test
   //  @WithMockUser
-  //  public void givenAValidRequest_whenAnErrorIsReceivedFromTmdb_itShouldReturnA500Response()
+  //  void givenAValidRequest_whenAnErrorIsReceivedFromTmdb_itShouldReturnA500Response()
   //      throws Exception {
   //    var coco = (TmdbInMemoryConnector) this.connector;
   //    coco.setExceptions(
@@ -110,7 +110,7 @@ public class SearchTmdbMoviesRouteIntegrationTest {
   //
   //  @Test
   //  @WithMockUser
-  //  public void
+  //  void
   // givenAValidRequest_whenAnUnexpectedBodyIsReceivedFromTmdb_itShouldReturnA500Response()
   //      throws Exception {
   //    var coco = (TmdbInMemoryConnector) this.connector;
@@ -129,5 +129,5 @@ public class SearchTmdbMoviesRouteIntegrationTest {
   //  }
 
   //  @Test
-  //  public void givenAValidRequest_whenMoviesWereFound_itShouldReturnA200Response() {}
+  //  void givenAValidRequest_whenMoviesWereFound_itShouldReturnA200Response() {}
 }

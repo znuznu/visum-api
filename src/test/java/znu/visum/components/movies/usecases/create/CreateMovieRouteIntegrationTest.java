@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("CreateMovieRouteIntegrationTest")
 @ActiveProfiles("flyway")
-public class CreateMovieRouteIntegrationTest {
+class CreateMovieRouteIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
@@ -46,7 +46,7 @@ public class CreateMovieRouteIntegrationTest {
   }
 
   @Test
-  public void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +71,7 @@ public class CreateMovieRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql("/sql/insert_single_movie.sql")
-  public void givenAMovie_whenTheMovieAlreadyExists_itShouldReturnA400Response() throws Exception {
+  void givenAMovie_whenTheMovieAlreadyExists_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -100,8 +100,7 @@ public class CreateMovieRouteIntegrationTest {
   @Test
   @WithMockUser
   @Sql(scripts = "/sql/insert_movie_with_metadata.sql")
-  public void givenAMovieWithATmdbIdThatAlreadyExists_itShouldReturnA400Response()
-      throws Exception {
+  void givenAMovieWithATmdbIdThatAlreadyExists_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -135,7 +134,7 @@ public class CreateMovieRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  public void givenAMovie_whenTheMovieDoesNotExist_itShouldReturnA201Response() throws Exception {
+  void givenAMovie_whenTheMovieDoesNotExist_itShouldReturnA201Response() throws Exception {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -204,7 +203,7 @@ public class CreateMovieRouteIntegrationTest {
   class InvalidRequest {
     @Test
     @WithMockUser
-    public void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
       mvc.perform(post("/api/movies").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
@@ -214,7 +213,7 @@ public class CreateMovieRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAnEmptyTitle_itShouldReturnA400Response() throws Exception {
+    void givenAnEmptyTitle_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/movies")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -241,7 +240,7 @@ public class CreateMovieRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenAnNullTitle_itShouldReturnA400Response() throws Exception {
+    void givenAnNullTitle_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/movies")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)

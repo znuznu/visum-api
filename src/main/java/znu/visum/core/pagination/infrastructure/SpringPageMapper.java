@@ -6,8 +6,11 @@ import znu.visum.core.pagination.domain.VisumPage;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/** Convert Spring Page to our domain. */
+/** Converts Spring Page to our domain. */
 public class SpringPageMapper {
+
+  private SpringPageMapper() {}
+
   public static <S, T> VisumPage<T> toVisumPage(Page<S> page, Function<S, T> mapper) {
     return VisumPage.<T>builder()
         .current(page.getNumber())
