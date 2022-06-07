@@ -38,11 +38,11 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName("When the connector throws on the get poster base URL method, it should throw")
   void whenTheConnectorThrowOnPoster_itShouldReturnTheMovieMapped() {
     Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenThrow(new TmdbApiException("Some message.", 500));
+        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
-        .hasMessage("Some message.");
+        .hasMessage("Message: Some message. Status code: 500");
   }
 
   @Test
@@ -61,11 +61,12 @@ class GetTmdbMovieByIdServiceImplUnitTest {
       "When the connector throws on the method called to get the movie, it should bubble up and throw")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
-    Mockito.when(connector.getMovieById(42)).thenThrow(new TmdbApiException("Some message.", 500));
+    Mockito.when(connector.getMovieById(42))
+        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
-        .hasMessage("Some message.");
+        .hasMessage("Message: Some message. Status code: 500");
   }
 
   @Test
@@ -96,11 +97,11 @@ class GetTmdbMovieByIdServiceImplUnitTest {
                     .build()));
 
     Mockito.when(connector.getCreditsByMovieId(42))
-        .thenThrow(new TmdbApiException("Some message.", 500));
+        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(TmdbApiException.class)
-        .hasMessage("Some message.");
+        .hasMessage("Message: Some message. Status code: 500");
   }
 
   @Test

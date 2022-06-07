@@ -14,6 +14,7 @@ public class ExternalApiErrorHandler {
   public static TmdbApiException from(WebClientResponseException exception) {
     logger.error(String.format("TMDB error occured: %s", exception.getMessage()));
 
-    throw new TmdbApiException(exception.getMessage(), exception.getRawStatusCode());
+    throw TmdbApiException.withMessageAndStatusCode(
+        exception.getMessage(), exception.getRawStatusCode());
   }
 }

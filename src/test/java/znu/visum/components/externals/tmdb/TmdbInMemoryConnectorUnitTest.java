@@ -36,7 +36,7 @@ class TmdbInMemoryConnectorUnitTest {
     void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
           TmdbInMemoryExceptions.builder()
-              .searchMovies(new TmdbApiException("Unprocessable Entity", 422))
+              .searchMovies(TmdbApiException.withMessageAndStatusCode("Unprocessable Entity", 422))
               .build());
 
       assertThrows(TmdbApiException.class, () -> connector.searchMovies("Something", 6));
@@ -47,7 +47,7 @@ class TmdbInMemoryConnectorUnitTest {
       this.connector.setExceptions(
           TmdbInMemoryExceptions.builder()
               .searchMovies(
-                  new ExternalApiUnexpectedResponseBodyException(
+                  ExternalApiUnexpectedResponseBodyException.withMessageForApi(
                       "Exception message", ExternalApi.TMDB))
               .build());
 

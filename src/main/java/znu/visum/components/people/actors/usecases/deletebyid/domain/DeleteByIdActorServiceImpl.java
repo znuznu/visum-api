@@ -17,7 +17,7 @@ public class DeleteByIdActorServiceImpl implements DeleteByIdActorService {
   @Override
   public void deleteById(long id) {
     if (actorRepository.findById(id).isEmpty()) {
-      throw new NoSuchActorIdException(Long.toString(id));
+      throw NoSuchActorIdException.withId(Long.toString(id));
     }
 
     actorRepository.deleteById(id);

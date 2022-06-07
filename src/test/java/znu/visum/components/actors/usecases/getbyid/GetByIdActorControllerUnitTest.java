@@ -60,7 +60,7 @@ class GetByIdActorControllerUnitTest {
 
   @Test
   void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchActorIdException("1")).when(service).findById(1L);
+    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).findById(1L);
 
     Assertions.assertThrows(NoSuchActorIdException.class, () -> controller.getActorById(1));
   }

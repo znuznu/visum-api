@@ -34,7 +34,7 @@ public class GetTmdbMovieByIdServiceImpl implements GetTmdbMovieByIdService {
             .getCreditsByMovieId(movieId)
             .orElseThrow(
                 () ->
-                    new ExternalInconsistencyException(
+                    ExternalInconsistencyException.withMessage(
                         String.format(
                             "No credits found for the existing TMDB movie %d.", movieId)));
 

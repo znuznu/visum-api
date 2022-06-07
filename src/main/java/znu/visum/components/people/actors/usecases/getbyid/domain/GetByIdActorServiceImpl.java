@@ -19,6 +19,6 @@ public class GetByIdActorServiceImpl implements GetByIdActorService {
   public Actor findById(long id) {
     return actorRepository
         .findById(id)
-        .orElseThrow(() -> new NoSuchActorIdException(Long.toString(id)));
+        .orElseThrow(() -> NoSuchActorIdException.withId(Long.toString(id)));
   }
 }
