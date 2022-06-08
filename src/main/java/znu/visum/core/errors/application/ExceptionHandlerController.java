@@ -14,6 +14,8 @@ import znu.visum.core.errors.domain.VisumException;
 import znu.visum.core.errors.domain.VisumExceptionStatus;
 
 import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -55,8 +57,29 @@ public class ExceptionHandlerController {
         .toResponseEntity();
   }
 
-  @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentNotValidException.class})
-  public ResponseEntity<HttpException> handleInvalidBody(Exception exception, WebRequest request) {
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<HttpException> handleMethodArgumentNotValidException(
+      MethodArgumentNotValidException exception, WebRequest request) {
+    log.error(exception.getMessage());
+
+    List<String> errors =
+        exception.getBindingResult().getFieldErrors().stream()
+            .map(e -> e.getField() + ": " + e.getDefaultMessage())
+            .collect(Collectors.toList());
+
+    return HttpException.builder()
+        .code("INVALID_BODY")
+        .message(String.join(",", errors))
+        .error("Bad Request")
+        .path(request.getDescription(false).substring(4))
+        .status(HttpStatus.BAD_REQUEST)
+        .build()
+        .toResponseEntity();
+  }
+
+  @ExceptionHandler({HttpMessageNotReadableException.class})
+  public ResponseEntity<HttpException> handleHttpMessageNotReadableException(
+      Exception exception, WebRequest request) {
     log.error(exception.getMessage());
 
     return HttpException.builder()

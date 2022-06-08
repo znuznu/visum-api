@@ -1,6 +1,7 @@
 package znu.visum.components.genres.usecases.create;
 
 import helpers.mappers.TestMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,10 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.genres.usecases.create.application.CreateGenreRequest;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.Matchers.allOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,9 +89,17 @@ class CreateTmdbGenreRouteIntegrationTest {
     @Test
     @WithMockUser
     void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+      var expectedSubmessages = List.of("type: must not be null", "type: Type cannot be empty.");
+
       mvc.perform(post("/api/genres").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value(
+                      allOf(
+                          expectedSubmessages.stream()
+                              .map(Matchers::containsString)
+                              .collect(Collectors.toList()))))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/genres"));
     }
@@ -99,7 +112,8 @@ class CreateTmdbGenreRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new CreateGenreRequest(""))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message").value("type: Type cannot be empty."))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/genres"));
     }

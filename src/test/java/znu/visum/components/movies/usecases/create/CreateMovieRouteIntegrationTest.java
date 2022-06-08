@@ -23,7 +23,9 @@ import znu.visum.components.movies.usecases.create.application.CreateMovieReques
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.hamcrest.Matchers.allOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -204,9 +206,23 @@ class CreateMovieRouteIntegrationTest {
     @Test
     @WithMockUser
     void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
+      var expectedSubmessages =
+          List.of(
+              "metadata: must not be null",
+              "genres: must not be null",
+              "title: must not be blank",
+              "directors: must not be null",
+              "releaseDate: must not be null",
+              "actors: must not be null");
       mvc.perform(post("/api/movies").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value(
+                      allOf(
+                          expectedSubmessages.stream()
+                              .map(Matchers::containsString)
+                              .collect(Collectors.toList()))))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
     }
@@ -233,7 +249,7 @@ class CreateMovieRouteIntegrationTest {
                               List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
                               CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
     }
@@ -260,7 +276,7 @@ class CreateMovieRouteIntegrationTest {
                               List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
                               CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
     }
