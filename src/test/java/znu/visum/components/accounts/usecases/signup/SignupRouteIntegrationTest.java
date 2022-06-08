@@ -85,7 +85,8 @@ class SignupRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(
                       "{\"username\": \"\",\"password\": \"something\",\"registrationKey\": \"test-registration-key\"}"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message").value("username: must not be blank"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/accounts"));
     }
@@ -97,7 +98,8 @@ class SignupRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(
                       "{\"username\": \"billy\",\"password\": \"\",\"registrationKey\": \"test-registration-key\"}"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message").value("password: must not be blank"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/accounts"));
     }
@@ -109,7 +111,9 @@ class SignupRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(
                       "{\"username\": \"billy\",\"password\": \"pwd1234\",\"registrationKey\": \"\"}"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value("registrationKey: must not be blank"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/accounts"));
     }

@@ -50,7 +50,8 @@ class CreateMovieViewingHistoryRouteIntegrationTest {
   void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
     mvc.perform(post("/api/history").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.message").value("viewingDate: must not be null"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/history"));
   }

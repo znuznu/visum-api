@@ -19,6 +19,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.reviews.usecases.update.application.UpdateMovieReviewRequest;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -93,7 +94,12 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content("{}"))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value(containsString("content: must not be empty")))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value(containsString("content: must not be null")))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
     }
@@ -106,7 +112,8 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(10, ""))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message").value("content: must not be empty"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
     }
@@ -119,7 +126,9 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(-1, "Some text."))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value("grade: must be greater than or equal to 0"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
     }
@@ -132,7 +141,9 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(11, "Some text."))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
+          .andExpect(
+              MockMvcResultMatchers.jsonPath("$.message")
+                  .value("grade: must be less than or equal to 10"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
     }
