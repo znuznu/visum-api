@@ -10,6 +10,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -21,7 +22,6 @@ import java.util.Map;
 @Configuration
 public class UpdateMovieMetadataJobLauncher {
 
-  private static final String JOB_DATE = "30 0 * * * FRI";
   private final Job job;
   private final JobLauncher jobLauncher;
 
@@ -31,7 +31,7 @@ public class UpdateMovieMetadataJobLauncher {
     this.jobLauncher = jobLauncher;
   }
 
-  @Scheduled(cron = JOB_DATE)
+  @Scheduled(cron = "${visum.update-movie-metadata-job-cron}")
   public void runJob()
       throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
           JobRestartException, JobInstanceAlreadyCompleteException {

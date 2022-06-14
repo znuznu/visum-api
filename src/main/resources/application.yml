@@ -17,3 +17,4 @@ visum:
   tmdb-api-base-url: ${TMDB_API_BASE_URL}
   registration-key: ${REGISTRATION_KEY}
   jwt-secret-key: ${JWT_SECRET_KEY}
+  update-movie-metadata-job-cron: "0 30 0 * * FRI"
