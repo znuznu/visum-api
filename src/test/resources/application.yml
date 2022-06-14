@@ -18,3 +18,4 @@ visum:
   tmdb-api-base-url: 'http://localhost'
   registration-key: 'test-registration-key'
   jwt-secret-key: 'test-jwt-secret-key'
+  update-movie-metadata-job-cron: "0 30 0 * * FRI"

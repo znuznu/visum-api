@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.1
+
+- Set the update movie metadata job cron value as a Spring expression
+
 ## 2.8.0
 
 - Add `findAll()` to MovieRepository
@@ -74,8 +78,8 @@
 ## 2.2.0
 
 - Add statistics:
-    - _get all-time_ and _get per year_ usecases
-    - add two routes: `/statistics/years` and `/statistics/years/<year>`
+  - _get all-time_ and _get per year_ usecases
+  - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
 ## 2.1.1
 
