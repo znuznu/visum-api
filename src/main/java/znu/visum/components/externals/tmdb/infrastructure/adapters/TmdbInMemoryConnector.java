@@ -53,7 +53,7 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   }
 
   @Override
-  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
+  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId, String basePosterUrl) {
     throw new UnsupportedOperationException();
   }
 

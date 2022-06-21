@@ -44,7 +44,7 @@ class GetByIdDirectorControllerUnitTest {
 
     Mockito.when(service.findById(1L)).thenReturn(director);
 
-    List<GetByIdDirectorResponse.ResponseMovie> expectedResponseMovies =
+    var expectedResponseMovies =
         Arrays.asList(
             new GetByIdDirectorResponse.ResponseMovie(
                 1L, "Movie 1", LocalDate.of(2021, 10, 10), false, true),
@@ -53,9 +53,19 @@ class GetByIdDirectorControllerUnitTest {
             new GetByIdDirectorResponse.ResponseMovie(
                 3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false));
 
+    var expectedResponse =
+        GetByIdDirectorResponse.builder()
+            .id(1L)
+            .name("Lynch")
+            .forename("David")
+            .movies(expectedResponseMovies)
+            .posterUrl("fake_url")
+            .tmdbId(1234L)
+            .build();
+
     assertThat(controller.getDirectorById(1L))
         .usingRecursiveComparison()
-        .isEqualTo(new GetByIdDirectorResponse(1L, "Lynch", "David", expectedResponseMovies));
+        .isEqualTo(expectedResponse);
   }
 
   @Test

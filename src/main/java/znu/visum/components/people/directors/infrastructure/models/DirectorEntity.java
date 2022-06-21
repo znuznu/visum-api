@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "director", uniqueConstraints = @UniqueConstraint(columnNames = {"forename", "name"}))
+@Table(name = "director", uniqueConstraints = @UniqueConstraint(columnNames = {"tmdbId"}))
 @NoArgsConstructor
 @Getter
 public class DirectorEntity extends PeopleEntity {
@@ -29,11 +29,19 @@ public class DirectorEntity extends PeopleEntity {
       inverseJoinColumns = @JoinColumn(name = "movie_id"))
   private Set<MovieEntity> movieEntities;
 
+  @Embedded private DirectorMetadataEntity metadataEntity;
+
   @Builder
-  public DirectorEntity(Long id, Set<MovieEntity> movieEntities, String name, String forename) {
+  public DirectorEntity(
+      Long id,
+      Set<MovieEntity> movieEntities,
+      String name,
+      String forename,
+      DirectorMetadataEntity metadataEntity) {
     super(name, forename);
     this.id = id;
     this.movieEntities = movieEntities;
+    this.metadataEntity = metadataEntity;
   }
 
   public static DirectorEntity from(Director director) {
@@ -44,14 +52,16 @@ public class DirectorEntity extends PeopleEntity {
         .movieEntities(
             new HashSet<>(
                 director.getMovies().stream().map(MovieEntity::from).collect(Collectors.toSet())))
+        .metadataEntity(DirectorMetadataEntity.from(director.getMetadata()))
         .build();
   }
 
-  public static DirectorEntity fromDirectorFromMovie(DirectorFromMovie directorFromMovie) {
+  public static DirectorEntity from(DirectorFromMovie directorFromMovie) {
     return DirectorEntity.builder()
         .id(directorFromMovie.getId())
         .name(directorFromMovie.getName())
         .forename(directorFromMovie.getForename())
+        .metadataEntity(DirectorMetadataEntity.from(directorFromMovie.getMetadata()))
         .build();
   }
 
@@ -64,11 +74,17 @@ public class DirectorEntity extends PeopleEntity {
             this.movieEntities.stream()
                 .map(MovieEntity::toMovieFromDirector)
                 .collect(Collectors.toList()))
+        .metadata(this.metadataEntity.toDomain())
         .build();
   }
 
   public DirectorFromMovie toDirectorFromMovieDomain() {
-    return DirectorFromMovie.builder().id(this.id).name(this.name).forename(this.forename).build();
+    return DirectorFromMovie.builder()
+        .id(this.id)
+        .name(this.name)
+        .forename(this.forename)
+        .metadata(this.metadataEntity.toDomain())
+        .build();
   }
 
   @Override

@@ -24,9 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(
-    name = "movie",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"title", "releaseDate"}))
+@Table(name = "movie")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -97,9 +95,7 @@ public class MovieEntity {
         .actorEntities(
             movie.getActors().stream().map(ActorEntity::from).collect(Collectors.toSet()))
         .directorEntities(
-            movie.getDirectors().stream()
-                .map(DirectorEntity::fromDirectorFromMovie)
-                .collect(Collectors.toSet()))
+            movie.getDirectors().stream().map(DirectorEntity::from).collect(Collectors.toSet()))
         .isFavorite(movie.isFavorite())
         .shouldWatch(movie.isToWatch())
         .review(movie.getReview() == null ? null : MovieReviewEntity.from(movie.getReview()))

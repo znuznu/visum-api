@@ -12,12 +12,14 @@ import znu.visum.components.movies.domain.ports.MovieRepository;
 import znu.visum.components.people.actors.domain.models.Actor;
 import znu.visum.components.people.actors.domain.ports.ActorRepository;
 import znu.visum.components.people.directors.domain.models.Director;
+import znu.visum.components.people.directors.domain.models.DirectorMetadata;
 import znu.visum.components.people.directors.domain.ports.DirectorRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CreateMovieServiceImpl implements CreateMovieService {
@@ -41,18 +43,14 @@ public class CreateMovieServiceImpl implements CreateMovieService {
 
   @Override
   @Transactional
-  public Movie saveWithNameFromPeople(Movie movie) {
+  public Movie saveMovie(Movie movie) {
     boolean movieAlreadyExists =
-        movieRepository
-            .findByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate())
-            .isPresent();
+        movieRepository.findByTmdbId(movie.getMetadata().getTmdbId()).isPresent();
 
     if (movieAlreadyExists) {
       throw new MovieAlreadyExistsException();
     }
-
     List<ActorFromMovie> actors = new ArrayList<>();
-    List<DirectorFromMovie> directors = new ArrayList<>();
     List<Genre> genres = new ArrayList<>();
 
     movie
@@ -77,29 +75,26 @@ public class CreateMovieServiceImpl implements CreateMovieService {
               actors.add(actorToSave);
             });
 
-    movie
-        .getDirectors()
-        .forEach(
-            director -> {
-              DirectorFromMovie directorToSave =
-                  DirectorFromMovie.builder()
-                      .name(director.getName())
-                      .forename(director.getForename())
-                      .build();
+    List<DirectorFromMovie> directors =
+        movie.getDirectors().stream()
+            .map(
+                director ->
+                    directorRepository
+                        .findByTmdbId(director.getMetadata().getTmdbId())
+                        .map(DirectorFromMovie::from)
+                        .orElseGet(
+                            () -> {
+                              long directorId =
+                                  directorRepository.save(Director.from(director)).getId();
 
-              Optional<Director> directorSaved =
-                  directorRepository.findByNameAndForename(
-                      director.getName(), director.getForename());
-
-              if (directorSaved.isPresent()) {
-                directorToSave.setId(directorSaved.get().getId());
-              } else {
-                directorToSave.setId(
-                    directorRepository.save(Director.from(directorToSave)).getId());
-              }
-
-              directors.add(directorToSave);
-            });
+                              return DirectorFromMovie.builder()
+                                  .id(directorId)
+                                  .name(director.getName())
+                                  .forename(director.getForename())
+                                  .metadata(director.getMetadata())
+                                  .build();
+                            }))
+            .collect(Collectors.toList());
 
     movie
         .getGenres()

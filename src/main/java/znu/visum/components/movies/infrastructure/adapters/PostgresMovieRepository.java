@@ -81,9 +81,9 @@ public class PostgresMovieRepository implements MovieRepository {
   }
 
   @Override
-  public Optional<Movie> findByTitleAndReleaseDate(String title, LocalDate releaseDate) {
-    return dataJpaMovieRepository
-        .findByTitleAndReleaseDate(title, releaseDate)
+  public Optional<Movie> findByTmdbId(long tmdbId) {
+    return this.dataJpaMovieRepository
+        .findByMovieMetadataEntity_TmdbId(tmdbId)
         .map(MovieEntity::toDomain);
   }
 

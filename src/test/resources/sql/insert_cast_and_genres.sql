@@ -1,6 +1,6 @@
 -- Director
-INSERT INTO director (id, name, forename)
-values (1, 'Lynch', 'David');
+INSERT INTO director (id, name, forename, poster_url, tmdb_id)
+values (1, 'Lynch', 'David', 'fake_url', 1234);
 
 -- Actors
 INSERT INTO actor (id, name, forename)

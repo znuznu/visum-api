@@ -12,9 +12,13 @@ import znu.visum.components.movies.domain.models.ActorFromMovie;
 import znu.visum.components.movies.domain.models.DirectorFromMovie;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
+import znu.visum.components.people.directors.domain.models.DirectorMetadata;
+import znu.visum.core.errors.domain.VisumException;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +51,7 @@ public class CreateMovieRequest {
 
   @Schema(description = "The directors of the movie.")
   @NotNull
+  @Valid
   private final List<RequestDirector> directors;
 
   @Schema(description = "The movie's metadata.")
@@ -147,27 +152,32 @@ public class CreateMovieRequest {
     }
   }
 
+  @Getter
   public static class RequestDirector {
-    private final String name;
-    private final String forename;
+    @NotNull private final String name;
+    @NotNull private final String forename;
+    private final String posterUrl;
+    @NotNull private final Long tmdbId;
 
     @JsonCreator
     public RequestDirector(
-        @JsonProperty("name") String name, @JsonProperty("forename") String forename) {
+        @JsonProperty("name") String name,
+        @JsonProperty("forename") String forename,
+        @JsonProperty("posterUrl") String posterUrl,
+        @JsonProperty("tmdbId") Long tmdbId) {
       this.name = name;
       this.forename = forename;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getForename() {
-      return forename;
+      this.posterUrl = posterUrl;
+      this.tmdbId = tmdbId;
     }
 
     public DirectorFromMovie toDomain() {
-      return DirectorFromMovie.builder().name(this.name).forename(this.forename).build();
+      return DirectorFromMovie.builder()
+          .name(this.name)
+          .forename(this.forename)
+          .metadata(
+              DirectorMetadata.builder().posterUrl(this.posterUrl).tmdbId(this.tmdbId).build())
+          .build();
     }
   }
 

@@ -61,17 +61,18 @@ class GetPageDirectorRouteIntegrationTest {
         .andExpect(
             MockMvcResultMatchers.content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':4,"
-                        + "'content':["
-                        + "{'id':1,'name': 'Gans', 'forename':'Christopher'},"
-                        + "{'id':2,'name': 'Lyne', 'forename':'Adrian'},"
-                        + "{'id':3,'name': 'González Iñárritu', 'forename':'Alejandro'},"
-                        + "{'id':4,'name': 'Winding Refn', 'forename':'Nicolas'}],"
-                        + "'totalPages':1,"
-                        + "'first':true,"
-                        + "'last':true}"));
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":4,"
+                        + "\"content\":["
+                        + "{\"id\":1,\"name\": \"Gans\", \"forename\":\"Christopher\", \"posterUrl\": \"https://fakeurl1.com\", \"tmdbId\": 1111},"
+                        + "{\"id\":2,\"name\": \"Lyne\", \"forename\":\"Adrian\", \"posterUrl\": \"https://fakeurl2.com\", \"tmdbId\": 2222},"
+                        + "{\"id\":3,\"name\": \"González Iñárritu\", \"forename\":\"Alejandro\", \"posterUrl\": \"https://fakeurl3.com\", \"tmdbId\": 3333},"
+                        + "{\"id\":4,\"name\": \"Winding Refn\", \"forename\":\"Nicolas\", \"posterUrl\": \"https://fakeurl4.com\", \"tmdbId\": 4444}"
+                        + "],"
+                        + "\"totalPages\":1,"
+                        + "\"first\":true,"
+                        + "\"last\":true}"));
   }
 
   @Test
@@ -87,15 +88,15 @@ class GetPageDirectorRouteIntegrationTest {
         .andExpect(
             MockMvcResultMatchers.content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':1,"
-                        + "'content':["
-                        + "{'id':4,'name': 'Winding Refn', 'forename':'Nicolas'}"
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":1,"
+                        + "\"content\":["
+                        + "{\"id\":4,\"name\": \"Winding Refn\", \"forename\":\"Nicolas\", \"posterUrl\": \"https://fakeurl4.com\", \"tmdbId\": 4444}"
                         + "],"
-                        + "'totalPages':1,"
-                        + "'first':true,"
-                        + "'last':true}"));
+                        + "\"totalPages\":1,"
+                        + "\"first\":true,"
+                        + "\"last\":true}"));
   }
 
   @Test
@@ -111,16 +112,16 @@ class GetPageDirectorRouteIntegrationTest {
         .andExpect(
             MockMvcResultMatchers.content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':3,"
-                        + "'content':["
-                        + "{'id':1,'name': 'Gans', 'forename':'Christopher'},"
-                        + "{'id':2,'name': 'Lyne', 'forename':'Adrian'},"
-                        + "{'id':3,'name': 'González Iñárritu', 'forename':'Alejandro'}"
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":3,"
+                        + "\"content\":["
+                        + "{\"id\":1,\"name\": \"Gans\", \"forename\":\"Christopher\", \"posterUrl\": \"https://fakeurl1.com\", \"tmdbId\": 1111},"
+                        + "{\"id\":2,\"name\": \"Lyne\", \"forename\":\"Adrian\", \"posterUrl\": \"https://fakeurl2.com\", \"tmdbId\": 2222},"
+                        + "{\"id\":3,\"name\": \"González Iñárritu\", \"forename\":\"Alejandro\", \"posterUrl\": \"https://fakeurl3.com\", \"tmdbId\": 3333}"
                         + "],"
-                        + "'totalPages':1,"
-                        + "'first':true,"
-                        + "'last':true}"));
+                        + "\"totalPages\":1,"
+                        + "\"first\":true,"
+                        + "\"last\":true}"));
   }
 }

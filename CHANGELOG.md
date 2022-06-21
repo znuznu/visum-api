@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.0
+
+- Add `posterUrl` and `tmdbId` to `Director`
+- Remove the unique `title` and `releaseDate` constraints on `Movie` (`tmdbId` used instead)
+
 ## 2.8.1
 
 - Set the update movie metadata job cron value as a Spring expression

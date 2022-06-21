@@ -25,6 +25,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetTmdbMovieByIdServiceImplUnitTest")
 class GetTmdbMovieByIdServiceImplUnitTest {
+
+  private static final String BASE_POSTER_URL = "https://tmdb.com/w780";
+
   private GetTmdbMovieByIdService service;
 
   @Mock private TmdbConnector connector;
@@ -48,7 +51,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @Test
   @DisplayName("When the connector return an empty movie, it should throw")
   void whenTheMovieIsEmpty_itShouldThrow() {
-    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
+    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn(BASE_POSTER_URL);
     Mockito.when(connector.getMovieById(42)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
@@ -60,7 +63,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName(
       "When the connector throws on the method called to get the movie, it should bubble up and throw")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
-    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
+    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn(BASE_POSTER_URL);
     Mockito.when(connector.getMovieById(42))
         .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
@@ -73,7 +76,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName(
       "When the connector return the movie but throws when the method to get the credits is called, it should bubble up and throw")
   void whenTheConnectorThrowsOnCredits_itShouldBubbleUpAndThrow() {
-    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
+    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn(BASE_POSTER_URL);
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
@@ -96,7 +99,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
                             .build())
                     .build()));
 
-    Mockito.when(connector.getCreditsByMovieId(42))
+    Mockito.when(connector.getCreditsByMovieId(42, BASE_POSTER_URL))
         .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
@@ -108,7 +111,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName(
       "When the connector return the movie but an empty credits, it should throw (inconsistency)")
   void whenTheConnectorReturnTheMovieButNoCredits_itShouldThrow() {
-    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
+    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn(BASE_POSTER_URL);
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
@@ -131,7 +134,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
                             .build())
                     .build()));
 
-    Mockito.when(connector.getCreditsByMovieId(42)).thenReturn(Optional.empty());
+    Mockito.when(connector.getCreditsByMovieId(42, BASE_POSTER_URL)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> service.getTmdbMovieById(42))
         .isInstanceOf(ExternalInconsistencyException.class)
@@ -142,7 +145,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
   @DisplayName(
       "When the connector return the poster base URL, the movie and his credits, it should return the movie mapped")
   void whenTheConnectorReturnTheMovieAndHisCredits_itShouldReturnTheMovieMapped() {
-    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn("https://tmdb.com/w780");
+    Mockito.when(connector.getConfigurationBasePosterUrl()).thenReturn(BASE_POSTER_URL);
     Mockito.when(connector.getMovieById(42))
         .thenReturn(
             Optional.of(
@@ -166,7 +169,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
                             .build())
                     .build()));
 
-    Mockito.when(connector.getCreditsByMovieId(42))
+    Mockito.when(connector.getCreditsByMovieId(42, BASE_POSTER_URL))
         .thenReturn(
             Optional.of(
                 ExternalMovieCredits.builder()
@@ -176,8 +179,13 @@ class GetTmdbMovieByIdServiceImplUnitTest {
                             new ExternalActor(2L, "Robert", "Some Long Name")))
                     .directors(
                         List.of(
-                            new ExternalDirector(1L, "David", "Lynch"),
-                            new ExternalDirector(3L, "Joseph", "Some Super Long Name")))
+                            new ExternalDirector(
+                                1L, "David", "Lynch", BASE_POSTER_URL + "/poster1.jpg"),
+                            new ExternalDirector(
+                                3L,
+                                "Joseph",
+                                "Some Super Long Name",
+                                BASE_POSTER_URL + "/poster2.jpg")))
                     .build()));
 
     ExternalMovie movie = service.getTmdbMovieById(42);
@@ -192,7 +200,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
     assertThat(movie.getMetadata().getRevenue()).isEqualTo(200000);
     assertThat(movie.getMetadata().getOriginalLanguage()).isEqualTo("en");
     assertThat(movie.getMetadata().getOverview()).isEqualTo("An awesome overview.");
-    assertThat(movie.getMetadata().getBasePosterUrl()).isEqualTo("https://tmdb.com/w780");
+    assertThat(movie.getMetadata().getBasePosterUrl()).isEqualTo(BASE_POSTER_URL);
     assertThat(movie.getMetadata().getPosterPath()).isEqualTo("/something");
     assertThat(movie.getMetadata().getRuntime()).isEqualTo(156);
     assertThat(movie.getMetadata().getTagline()).isEqualTo("Such a cool tagline.");

@@ -31,7 +31,7 @@ public class GetTmdbMovieByIdServiceImpl implements GetTmdbMovieByIdService {
 
     ExternalMovieCredits credits =
         connector
-            .getCreditsByMovieId(movieId)
+            .getCreditsByMovieId(movieId, basePosterUrl)
             .orElseThrow(
                 () ->
                     ExternalInconsistencyException.withMessage(

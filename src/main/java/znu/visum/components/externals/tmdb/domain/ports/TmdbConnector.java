@@ -15,7 +15,7 @@ public interface TmdbConnector {
 
   Optional<ExternalMovie> getMovieById(long movieId);
 
-  Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId);
+  Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId, String basePosterUrl);
 
   String getConfigurationBasePosterUrl();
 }

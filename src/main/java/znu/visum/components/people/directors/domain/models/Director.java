@@ -13,7 +13,9 @@ import java.util.List;
 @SuperBuilder
 @Getter
 public class Director extends People {
-  List<MovieFromDirector> movies;
+
+  private List<MovieFromDirector> movies;
+  private DirectorMetadata metadata;
 
   public static Director from(DirectorFromMovie directorFromMovie) {
     return Director.builder()
@@ -21,6 +23,7 @@ public class Director extends People {
         .name(directorFromMovie.getName())
         .forename(directorFromMovie.getForename())
         .movies(new ArrayList<>())
+        .metadata(directorFromMovie.getMetadata())
         .build();
   }
 }

@@ -1,5 +1,5 @@
-INSERT INTO director (id, name, forename)
-values (2, 'Nolan', 'Christopher');
+INSERT INTO director (id, name, forename, tmdb_id, poster_url)
+values (2, 'Nolan', 'Christopher', 1234, 'https://fakeurl.com');
 
 INSERT INTO movie (id, title, release_date, is_favorite, should_watch)
 values (1, 'Fake movie 1', '2001-10-12', FALSE, FALSE);

@@ -16,5 +16,5 @@ public interface DataJpaDirectorRepository
     return findAll(page.getSearch(), page);
   }
 
-  Optional<DirectorEntity> findByNameAndForename(String name, String forename);
+  Optional<DirectorEntity> findByMetadataEntity_TmdbId(long tmdbId);
 }

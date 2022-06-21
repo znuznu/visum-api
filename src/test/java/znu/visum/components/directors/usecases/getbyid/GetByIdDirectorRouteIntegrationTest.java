@@ -76,12 +76,14 @@ class GetByIdDirectorRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nolan"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Christopher"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("https://fakeurl.com"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value("1234"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isNotEmpty());
   }
 
   @Test
   @WithMockUser
-  @Sql("/sql/insert_single_director.sql")
+  @Sql({"/sql/truncate_all_tables.sql", "/sql/insert_single_director.sql"})
   void
       givenANumericalId_whenAnDirectorWithTheIdExistsAndDoesNotHaveAnyMovies_itShouldReturnA200Response()
           throws Exception {
@@ -90,6 +92,8 @@ class GetByIdDirectorRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Lynch"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("David"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("https://fakeurl.com"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value("1234"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isEmpty());
   }
 }
