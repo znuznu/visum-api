@@ -47,9 +47,9 @@ public class PostgresDirectorRepository implements DirectorRepository {
   }
 
   @Override
-  public Optional<Director> findByNameAndForename(String name, String forename) {
+  public Optional<Director> findByTmdbId(long tmdbId) {
     return dataJpaDirectorRepository
-        .findByNameAndForename(name, forename)
+        .findByMetadataEntity_TmdbId(tmdbId)
         .map(DirectorEntity::toDomain);
   }
 

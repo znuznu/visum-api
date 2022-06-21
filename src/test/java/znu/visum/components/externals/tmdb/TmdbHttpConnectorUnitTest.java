@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("TmdbHttpConnectorUnitTest")
 class TmdbHttpConnectorUnitTest {
+
+  private static final String BASE_POSTER_URL = "https://fake-url.io";
+
   private static MockWebServer tmdbApiMockServer;
 
   private TmdbConnector connector;
@@ -480,7 +483,7 @@ class TmdbHttpConnectorUnitTest {
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
-      connector.getCreditsByMovieId(6);
+      connector.getCreditsByMovieId(6, BASE_POSTER_URL);
 
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath())
@@ -493,14 +496,14 @@ class TmdbHttpConnectorUnitTest {
     void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
-      assertThrows(TmdbApiException.class, () -> connector.getCreditsByMovieId(6));
+      assertThrows(TmdbApiException.class, () -> connector.getCreditsByMovieId(6, BASE_POSTER_URL));
     }
 
     @Test
     void whenTmdbReturnA404Error_itShouldReturnEmpty() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
-      assertThat(connector.getCreditsByMovieId(6)).isEmpty();
+      assertThat(connector.getCreditsByMovieId(6, BASE_POSTER_URL)).isEmpty();
     }
 
     @Test
@@ -592,7 +595,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"James Cameron\","
                       + "      \"original_name\": \"James Cameron\","
                       + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/9NAZnTjBQ9WcXAQEzZpKy4vdQto.jpg\","
+                      + "      \"profile_path\": \"/poster2710.jpg\","
                       + "      \"credit_id\": \"52fe425ac3a36847f8017961\","
                       + "      \"department\": \"Writing\","
                       + "      \"job\": \"Director\""
@@ -605,7 +608,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"James Cameron Number Two\","
                       + "      \"original_name\": \"James Cameron\","
                       + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/9NAZnTjBQ9WcXAQEzZpKy4vdQto.jpg\","
+                      + "      \"profile_path\": \"/poster7890.jpg\","
                       + "      \"credit_id\": \"52fe425ac3a36847f801795b\","
                       + "      \"department\": \"Directing\","
                       + "      \"job\": \"Director\""
@@ -618,7 +621,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"James Cameron\","
                       + "      \"original_name\": \"James Cameron\","
                       + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/9NAZnTjBQ9WcXAQEzZpKy4vdQto.jpg\","
+                      + "      \"profile_path\": \"/poster2710.jpg\","
                       + "      \"credit_id\": \"52fe425ac3a36847f8017961\","
                       + "      \"department\": \"Writing\","
                       + "      \"job\": \"Director\""
@@ -631,7 +634,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"   James   \","
                       + "      \"original_name\": \"James Cameron\","
                       + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/9NAZnTjBQ9WcXAQEzZpKy4vdQto.jpg\","
+                      + "      \"profile_path\": \"/poster1000.jpg\","
                       + "      \"credit_id\": \"52fe425ac3a36847f801795b\","
                       + "      \"department\": \"Directing\","
                       + "      \"job\": \"Director\""
@@ -639,7 +642,7 @@ class TmdbHttpConnectorUnitTest {
                       + "   ]"
                       + "}"));
 
-      ExternalMovieCredits credits = connector.getCreditsByMovieId(597).get();
+      ExternalMovieCredits credits = connector.getCreditsByMovieId(597, BASE_POSTER_URL).get();
 
       assertThat(credits.getActors())
           .usingRecursiveFieldByFieldElementComparator()
@@ -651,9 +654,10 @@ class TmdbHttpConnectorUnitTest {
       assertThat(credits.getDirectors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalDirector(2710, "James", "Cameron"),
-              new ExternalDirector(7890, "James", "Cameron Number Two"),
-              new ExternalDirector(1000, "James", ""));
+              new ExternalDirector(2710, "James", "Cameron", BASE_POSTER_URL + "/poster2710.jpg"),
+              new ExternalDirector(
+                  7890, "James", "Cameron Number Two", BASE_POSTER_URL + "/poster7890.jpg"),
+              new ExternalDirector(1000, "James", "", BASE_POSTER_URL + "/poster1000.jpg"));
     }
   }
 
@@ -798,7 +802,7 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     @Disabled("It should pass!")
-    @DisplayName("when TMDB return the image base URL and empty poster sizes, it should throw")
+    @DisplayName("when TMDb return the image base URL and empty poster sizes, it should throw")
     void whenTmdbReturnUrlAndEmptyPosterSizes_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()

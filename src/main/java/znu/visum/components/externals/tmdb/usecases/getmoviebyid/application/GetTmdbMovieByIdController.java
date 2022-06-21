@@ -23,7 +23,7 @@ public class GetTmdbMovieByIdController {
     this.getTmdbMovieByIdService = getTmdbMovieByIdService;
   }
 
-  @Operation(summary = "Get a TMDB movie by his identifier.")
+  @Operation(summary = "Get a TMDb movie by his identifier.")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public GetTmdbMovieByIdResponse getTmdbMovieById(@PathVariable @Min(0) long id) {

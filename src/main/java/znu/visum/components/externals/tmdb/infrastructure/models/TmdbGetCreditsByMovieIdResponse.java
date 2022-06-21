@@ -38,7 +38,7 @@ public class TmdbGetCreditsByMovieIdResponse {
     this.crew = crew;
   }
 
-  public ExternalMovieCredits toDomain() {
+  public ExternalMovieCredits toDomainWithBasePosterUrl(String basePosterUrl) {
     return ExternalMovieCredits.builder()
         .actors(
             this.cast.stream()
@@ -49,7 +49,7 @@ public class TmdbGetCreditsByMovieIdResponse {
             this.crew.stream()
                 .filter(TmdbCrewPeople::isDirector)
                 .distinct()
-                .map(TmdbCrewPeople::toDomainExternalDirector)
+                .map(people -> people.toDomainWithBasePosterUrl(basePosterUrl))
                 .collect(Collectors.toList()))
         .build();
   }

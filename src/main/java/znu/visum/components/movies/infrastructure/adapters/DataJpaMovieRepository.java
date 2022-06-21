@@ -26,6 +26,8 @@ public interface DataJpaMovieRepository
 
   long countAllByReleaseDateBetween(LocalDate start, LocalDate end);
 
+  Optional<MovieEntity> findByMovieMetadataEntity_TmdbId(long tmdbId);
+
   @Query(
       value =
           "SELECT *\n"

@@ -81,7 +81,7 @@ public class GetTmdbMovieByIdResponse {
   @AllArgsConstructor
   @Builder
   @Getter
-  @Schema(description = "Represents a director from a TMDB movie.")
+  @Schema(description = "Represents a director from a TMDb movie.")
   public static class ResponseDirector {
     @Schema(description = "The director's identifier.")
     private final long id;
@@ -92,9 +92,16 @@ public class GetTmdbMovieByIdResponse {
     @Schema(description = "The director's forename.")
     private final String forename;
 
+    @Schema(description = "The director's poster URL.")
+    private String posterUrl;
+
     public static ResponseDirector from(ExternalDirector externalDirector) {
-      return new ResponseDirector(
-          externalDirector.getId(), externalDirector.getName(), externalDirector.getForename());
+      return ResponseDirector.builder()
+          .id(externalDirector.getId())
+          .name(externalDirector.getName())
+          .forename(externalDirector.getForename())
+          .posterUrl(externalDirector.getPosterUrl())
+          .build();
     }
   }
 

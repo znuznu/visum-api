@@ -17,7 +17,7 @@ public interface MovieRepository {
 
   Optional<Movie> findById(long id);
 
-  Optional<Movie> findByTitleAndReleaseDate(String title, LocalDate releaseDate);
+  Optional<Movie> findByTmdbId(long tmdbId);
 
   Movie save(Movie movie);
 

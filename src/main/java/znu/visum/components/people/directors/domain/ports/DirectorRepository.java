@@ -11,7 +11,7 @@ public interface DirectorRepository {
 
   Optional<Director> findById(long id);
 
-  Optional<Director> findByNameAndForename(String name, String forename);
+  Optional<Director> findByTmdbId(long tmdbId);
 
   void deleteById(long id);
 

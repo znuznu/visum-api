@@ -25,6 +25,7 @@ import znu.visum.components.movies.domain.models.MovieMetadata;
 import znu.visum.components.movies.domain.ports.MovieRepository;
 import znu.visum.components.movies.usecases.create.domain.CreateMovieService;
 import znu.visum.components.people.actors.domain.ports.ActorRepository;
+import znu.visum.components.people.directors.domain.models.DirectorMetadata;
 import znu.visum.components.people.directors.domain.ports.DirectorRepository;
 
 import java.time.LocalDate;
@@ -55,15 +56,16 @@ class CreateMovieServiceIntegrationTest {
   }
 
   @Test
-  @Sql("/sql/insert_single_movie.sql")
+  @Sql("/sql/insert_movie_with_metadata.sql")
   void givenAMovieThatExists_whenTheMovieIsSaved_itShouldThrowAnError() {
     Assertions.assertThrows(
         MovieAlreadyExistsException.class,
         () ->
-            service.saveWithNameFromPeople(
+            service.saveMovie(
                 Movie.builder()
                     .title("Fake movie")
                     .releaseDate(LocalDate.of(2001, 10, 12))
+                    .metadata(MovieMetadata.builder().tmdbId(555L).build())
                     .build()));
   }
 
@@ -73,8 +75,15 @@ class CreateMovieServiceIntegrationTest {
     Movie movie = MovieFactory.INSTANCE.getWithKindAndId(MovieKind.WITHOUT_REVIEW, null);
     movie.setDirectors(
         List.of(
-            DirectorFromMovie.builder().forename("David").name("Lynch").build(),
-            DirectorFromMovie.builder().forename("Christopher").name("Nolan").build()));
+            DirectorFromMovie.builder()
+                // The TMDb identifier is the only mandatory field since the director already exists
+                .metadata(DirectorMetadata.builder().tmdbId(1234L).build())
+                .build(),
+            DirectorFromMovie.builder()
+                .forename("Christopher")
+                .name("Nolan")
+                .metadata(DirectorMetadata.builder().tmdbId(2222L).posterUrl("fake_url2").build())
+                .build()));
     movie.setActors(
         List.of(
             ActorFromMovie.builder().name("Dicaprio").forename("Leonardo").build(),
@@ -95,22 +104,19 @@ class CreateMovieServiceIntegrationTest {
             .posterUrl("https://poster.com/jk8hYt709fDErfgtV")
             .build());
 
-    Long movieId = service.saveWithNameFromPeople(movie).getId();
+    Long movieId = service.saveMovie(movie).getId();
 
     assertThat(movieRepository.findById(movieId)).isPresent();
-    assertThat(directorRepository.findByNameAndForename("Nolan", "Christopher")).isPresent();
+    assertThat(directorRepository.findByTmdbId(2222L)).isPresent();
     assertThat(actorRepository.findByNameAndForename("Depp", "Johnny")).isPresent();
     assertThat(genreRepository.findByType("Drama")).isPresent();
 
     Movie expectedMovie = movieRepository.findById(movieId).get();
 
-    MatcherAssert.assertThat(
-        expectedMovie,
-        allOf(
-            hasProperty("title", is("Mulholland Drive")),
-            hasProperty("toWatch", is(true)),
-            hasProperty("favorite", is(true)),
-            hasProperty("releaseDate", is(LocalDate.of(2001, 10, 12)))));
+    assertThat(expectedMovie.getTitle()).isEqualTo("Mulholland Drive");
+    assertThat(expectedMovie.isToWatch()).isTrue();
+    assertThat(expectedMovie.isFavorite()).isTrue();
+    assertThat(expectedMovie.getReleaseDate()).isEqualTo(LocalDate.of(2001, 10, 12));
 
     MatcherAssert.assertThat(
         expectedMovie.getActors(),
@@ -122,8 +128,16 @@ class CreateMovieServiceIntegrationTest {
     MatcherAssert.assertThat(
         expectedMovie.getDirectors(),
         containsInAnyOrder(
-            allOf(hasProperty("name", is("Lynch")), hasProperty("forename", is("David"))),
-            allOf(hasProperty("name", is("Nolan")), hasProperty("forename", is("Christopher")))));
+            allOf(
+                hasProperty("name", is("Lynch")),
+                hasProperty("forename", is("David")),
+                hasProperty("metadata", hasProperty("posterUrl", is("fake_url"))),
+                hasProperty("metadata", hasProperty("tmdbId", is(1234L)))),
+            allOf(
+                hasProperty("name", is("Nolan")),
+                hasProperty("forename", is("Christopher")),
+                hasProperty("metadata", hasProperty("posterUrl", is("fake_url2"))),
+                hasProperty("metadata", hasProperty("tmdbId", is(2222L))))));
 
     MatcherAssert.assertThat(
         expectedMovie.getGenres(),

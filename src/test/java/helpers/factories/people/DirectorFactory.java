@@ -1,6 +1,7 @@
 package helpers.factories.people;
 
 import znu.visum.components.people.directors.domain.models.Director;
+import znu.visum.components.people.directors.domain.models.DirectorMetadata;
 import znu.visum.components.people.directors.domain.models.MovieFromDirector;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class DirectorFactory extends PeopleFactory {
           .name("Lynch")
           .forename("David")
           .movies(new ArrayList<>())
+          .metadata(DirectorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
     }
 
@@ -47,6 +49,7 @@ public class DirectorFactory extends PeopleFactory {
                       .isFavorite(false)
                       .isToWatch(false)
                       .build()))
+          .metadata(DirectorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
     }
 

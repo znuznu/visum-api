@@ -65,38 +65,11 @@ class CreateMovieRouteIntegrationTest {
                             List.of(
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                            List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
+                            List.of(
+                                new CreateMovieRequest.RequestDirector(
+                                    "Lynch", "David", "fake_url", 1234L)),
                             CreateMovieRequest.RequestMovieMetadata.builder().build()))))
         .andExpect(status().isForbidden());
-  }
-
-  @Test
-  @WithMockUser
-  @Sql("/sql/insert_single_movie.sql")
-  void givenAMovie_whenTheMovieAlreadyExists_itShouldReturnA400Response() throws Exception {
-    mvc.perform(
-            post("/api/movies")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                    TestMapper.toJsonString(
-                        new CreateMovieRequest(
-                            "Fake movie",
-                            LocalDate.of(2001, 10, 12),
-                            true,
-                            false,
-                            List.of(
-                                new CreateMovieRequest.RequestGenre("Drama"),
-                                new CreateMovieRequest.RequestGenre("Comedy")),
-                            List.of(
-                                new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                            List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
-                            CreateMovieRequest.RequestMovieMetadata.builder().build()))))
-        .andExpect(status().isBadRequest())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("The given MOVIE already exists."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
   }
 
   @Test
@@ -109,7 +82,7 @@ class CreateMovieRouteIntegrationTest {
                 .content(
                     TestMapper.toJsonString(
                         new CreateMovieRequest(
-                            "A movie with a TMDB id that exists",
+                            "A movie with a TMDb id that exists",
                             LocalDate.of(2001, 10, 12),
                             true,
                             false,
@@ -119,7 +92,9 @@ class CreateMovieRouteIntegrationTest {
                             List.of(
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                            List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
+                            List.of(
+                                new CreateMovieRequest.RequestDirector(
+                                    "Lynch", "David", "fake_url", 1234L)),
                             CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
@@ -131,7 +106,11 @@ class CreateMovieRouteIntegrationTest {
                                 .runtime(134)
                                 .posterUrl("http://someUrl/KjuIhYyyG78")
                                 .build()))))
-        .andExpect(status().isInternalServerError()); // TODO maybe throw a 400 ?
+        .andExpect(status().isBadRequest())
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.message").value("The given MOVIE already exists."))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
   }
 
   @Test
@@ -153,7 +132,9 @@ class CreateMovieRouteIntegrationTest {
                             List.of(
                                 new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                 new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                            List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
+                            List.of(
+                                new CreateMovieRequest.RequestDirector(
+                                    "Lynch", "David", "fake_url", 1234L)),
                             CreateMovieRequest.RequestMovieMetadata.builder()
                                 .budget(1000)
                                 .revenue(6000)
@@ -173,7 +154,6 @@ class CreateMovieRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.isToWatch").value("false"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.review", Matchers.is(Matchers.nullValue())))
         .andExpect(MockMvcResultMatchers.jsonPath("$.viewingHistory").isArray())
-        // TODO really match the payload
         .andExpect(
             MockMvcResultMatchers.jsonPath(
                 "$.genres[*].type", Matchers.containsInAnyOrder("Drama", "Comedy")))
@@ -246,7 +226,9 @@ class CreateMovieRouteIntegrationTest {
                               List.of(
                                   new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                   new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                              List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
+                              List.of(
+                                  new CreateMovieRequest.RequestDirector(
+                                      "Lynch", "David", "fake_url", 1234L)),
                               CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
@@ -273,7 +255,9 @@ class CreateMovieRouteIntegrationTest {
                               List.of(
                                   new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
                                   new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
-                              List.of(new CreateMovieRequest.RequestDirector("Lynch", "David")),
+                              List.of(
+                                  new CreateMovieRequest.RequestDirector(
+                                      "Lynch", "David", "fake_url", 1234L)),
                               CreateMovieRequest.RequestMovieMetadata.builder().build()))))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
