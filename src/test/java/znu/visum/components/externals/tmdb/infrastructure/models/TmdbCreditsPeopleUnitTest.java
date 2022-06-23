@@ -116,7 +116,7 @@ class TmdbCreditsPeopleUnitTest {
     }
 
     @Test
-    @DisplayName("When the director no poster path")
+    @DisplayName("When the director has no poster path")
     void itShouldReturnDirectorWithNullPosterUrl() {
       TmdbCrewPeople crewPeople = new TmdbCrewPeople();
       crewPeople.setId(1);

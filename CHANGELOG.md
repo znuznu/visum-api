@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.10.0
+
+- Add `posterUrl` and `tmdbId` to `Actor`
+
 ## 2.9.0
 
 - Add `posterUrl` and `tmdbId` to `Director`

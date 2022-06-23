@@ -524,7 +524,21 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"Leonardo DiCaprio\","
                       + "      \"original_name\": \"Leonardo DiCaprio\","
                       + "      \"popularity\": 28.19,"
-                      + "      \"profile_path\": \"/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg\","
+                      + "      \"profile_path\": \"/poster6193.jpg\","
+                      + "      \"cast_id\": 21,"
+                      + "      \"character\": \"Jack Dawson\","
+                      + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
+                      + "      \"order\": 0"
+                      + "    },"
+                      + "{"
+                      + "      \"adult\": false,"
+                      + "      \"gender\": 2,"
+                      + "      \"id\": 9999,"
+                      + "      \"known_for_department\": \"Acting\","
+                      + "      \"name\": \"Leonardo DiCaprio\","
+                      + "      \"original_name\": \"Leonardo DiCaprio\","
+                      + "      \"popularity\": 28.19,"
+                      + "      \"profile_path\": \"/poster9999.jpg\","
                       + "      \"cast_id\": 21,"
                       + "      \"character\": \"Jack Dawson\","
                       + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
@@ -538,7 +552,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"Kate Winslet\","
                       + "      \"original_name\": \"Kate Winslet\","
                       + "      \"popularity\": 8.066,"
-                      + "      \"profile_path\": \"/e3tdop3WhseRnn8KwMVLAV25Ybv.jpg\","
+                      + "      \"profile_path\": \"/poster204.jpg\","
                       + "      \"cast_id\": 20,"
                       + "      \"character\": \"Rose DeWitt Bukater\","
                       + "      \"credit_id\": \"52fe425ac3a36847f80179cb\","
@@ -552,7 +566,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"Leonardo DiCaprio\","
                       + "      \"original_name\": \"Leonardo DiCaprio\","
                       + "      \"popularity\": 28.19,"
-                      + "      \"profile_path\": \"/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg\","
+                      + "      \"profile_path\": \"/poster6193.jpg\","
                       + "      \"cast_id\": 21,"
                       + "      \"character\": \"Jack Dawson\","
                       + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
@@ -566,7 +580,7 @@ class TmdbHttpConnectorUnitTest {
                       + "      \"name\": \"Billy Zane Zune Zone\","
                       + "      \"original_name\": \"Billy\","
                       + "      \"popularity\": 15.4,"
-                      + "      \"profile_path\": \"/9HIubetYWAVLlHNb9aObL0fc0sT.jpg\","
+                      + "      \"profile_path\": \"/poster1954.jpg\","
                       + "      \"cast_id\": 23,"
                       + "      \"character\": \"Cal Hockley\","
                       + "      \"credit_id\": \"52fe425ac3a36847f80179d7\","
@@ -646,9 +660,11 @@ class TmdbHttpConnectorUnitTest {
       assertThat(credits.getActors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalActor(6193, "Leonardo", "DiCaprio"),
-              new ExternalActor(204, "Kate", "Winslet"),
-              new ExternalActor(1954, "Billy", "Zane Zune Zone"));
+              new ExternalActor(6193, "Leonardo", "DiCaprio", BASE_POSTER_URL + "/poster6193.jpg"),
+              new ExternalActor(9999, "Leonardo", "DiCaprio", BASE_POSTER_URL + "/poster9999.jpg"),
+              new ExternalActor(204, "Kate", "Winslet", BASE_POSTER_URL + "/poster204.jpg"),
+              new ExternalActor(
+                  1954, "Billy", "Zane Zune Zone", BASE_POSTER_URL + "/poster1954.jpg"));
 
       assertThat(credits.getDirectors())
           .usingRecursiveFieldByFieldElementComparator()

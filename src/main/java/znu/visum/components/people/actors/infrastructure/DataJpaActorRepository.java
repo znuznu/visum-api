@@ -15,5 +15,5 @@ public interface DataJpaActorRepository
     return findAll(page.getSearch(), page);
   }
 
-  Optional<ActorEntity> findByNameAndForename(String name, String forename);
+  Optional<ActorEntity> findByMetadataEntity_TmdbId(long tmdbId);
 }

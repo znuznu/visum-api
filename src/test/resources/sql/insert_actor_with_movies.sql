@@ -1,5 +1,5 @@
-INSERT INTO actor (id, name, forename)
-values (2, 'Winslet', 'Kate');
+INSERT INTO actor (id, name, forename, poster_url, tmdb_id)
+values (2, 'Winslet', 'Kate', 'poster', 2);
 
 INSERT INTO movie (id, title, release_date, is_favorite, should_watch)
 values (1, 'Fake movie 1', '2001-10-12', FALSE, FALSE);

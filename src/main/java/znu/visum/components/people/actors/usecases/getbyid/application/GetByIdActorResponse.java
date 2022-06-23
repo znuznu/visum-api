@@ -3,6 +3,7 @@ package znu.visum.components.people.actors.usecases.getbyid.application;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import znu.visum.components.people.actors.domain.Actor;
 import znu.visum.components.people.actors.domain.MovieFromActor;
@@ -12,27 +13,40 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Builder
 @Getter
 @Schema(description = "Represents an actor.")
 public class GetByIdActorResponse {
-  @Schema(description = "The actor identifier.")
+  @Schema(description = "The actor's identifier.")
   private final long id;
 
-  @Schema(description = "The actor name.")
+  @Schema(description = "The actor's name.")
   private final String name;
 
-  @Schema(description = "The actor forename.")
+  @Schema(description = "The actor's forename.")
   private final String forename;
 
-  @Schema(description = "The actor movies.")
+  @Schema(description = "The actor's movies.")
   private final List<ResponseMovie> movies;
 
+  @Schema(description = "The actor's TMDb id.")
+  private long tmdbId;
+
+  @Schema(description = "The actor's poster URL.")
+  private String posterUrl;
+
   public static GetByIdActorResponse from(Actor actor) {
-    return new GetByIdActorResponse(
-        actor.getId(),
-        actor.getName(),
-        actor.getForename(),
-        actor.getMovies().stream().map(ResponseMovie::from).collect(Collectors.toList()));
+    return GetByIdActorResponse.builder()
+        .id(actor.getId())
+        .name(actor.getName())
+        .forename(actor.getForename())
+        .movies(
+            actor.getMovies().stream()
+                .map(GetByIdActorResponse.ResponseMovie::from)
+                .collect(Collectors.toList()))
+        .tmdbId(actor.getMetadata().getTmdbId())
+        .posterUrl(actor.getMetadata().getPosterUrl())
+        .build();
   }
 
   @AllArgsConstructor

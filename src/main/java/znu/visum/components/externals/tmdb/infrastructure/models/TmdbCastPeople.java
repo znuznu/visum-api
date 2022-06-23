@@ -2,37 +2,38 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 import znu.visum.components.externals.domain.ExternalActor;
 
-// Not useful yet, we might want to save the character later
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
 public class TmdbCastPeople extends TmdbCreditsPeople {
   @JsonProperty("character")
   private String character;
+
+  @JsonProperty("profile_path")
+  private String profilePath;
 
   public TmdbCastPeople() {
     super();
   }
 
-  public String getCharacter() {
-    return character;
-  }
+  public ExternalActor toDomainWithBasePosterUrl(String basePosterUrl) {
+    String posterUrl = profilePath != null ? basePosterUrl + profilePath : null;
 
-  public void setCharacter(String character) {
-    this.character = character;
-  }
-
-  public ExternalActor toDomain() {
     String trimName = this.getName().trim();
     int firstDelimiterIndex = trimName.indexOf(" ");
 
     if (firstDelimiterIndex < 0) {
-      return new ExternalActor(this.getId(), trimName, "");
+      return new ExternalActor(this.getId(), trimName, "", posterUrl);
     }
 
     return new ExternalActor(
         this.getId(),
         trimName.substring(0, firstDelimiterIndex),
-        trimName.substring(firstDelimiterIndex + 1));
+        trimName.substring(firstDelimiterIndex + 1),
+        posterUrl);
   }
 }

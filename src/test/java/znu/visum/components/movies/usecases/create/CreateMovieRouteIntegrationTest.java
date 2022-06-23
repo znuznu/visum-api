@@ -63,8 +63,10 @@ class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestGenre("Drama"),
                                 new CreateMovieRequest.RequestGenre("Comedy")),
                             List.of(
-                                new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
+                                new CreateMovieRequest.RequestActor(
+                                    "Radcliffe", "Daniel", "poster1", 1L),
+                                new CreateMovieRequest.RequestActor(
+                                    "MacLachlan", "Kyle", "poster2", 2L)),
                             List.of(
                                 new CreateMovieRequest.RequestDirector(
                                     "Lynch", "David", "fake_url", 1234L)),
@@ -90,8 +92,10 @@ class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestGenre("Drama"),
                                 new CreateMovieRequest.RequestGenre("Comedy")),
                             List.of(
-                                new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
+                                new CreateMovieRequest.RequestActor(
+                                    "Radcliffe", "Daniel", "poster1", 1L),
+                                new CreateMovieRequest.RequestActor(
+                                    "MacLachlan", "Kyle", "poster2", 2L)),
                             List.of(
                                 new CreateMovieRequest.RequestDirector(
                                     "Lynch", "David", "fake_url", 1234L)),
@@ -130,8 +134,10 @@ class CreateMovieRouteIntegrationTest {
                                 new CreateMovieRequest.RequestGenre("Drama"),
                                 new CreateMovieRequest.RequestGenre("Comedy")),
                             List.of(
-                                new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
+                                new CreateMovieRequest.RequestActor(
+                                    "Radcliffe", "Daniel", "poster1", 1L),
+                                new CreateMovieRequest.RequestActor(
+                                    "MacLachlan", "Kyle", "poster2", 2L)),
                             List.of(
                                 new CreateMovieRequest.RequestDirector(
                                     "Lynch", "David", "fake_url", 1234L)),
@@ -224,8 +230,10 @@ class CreateMovieRouteIntegrationTest {
                                   new CreateMovieRequest.RequestGenre("Drama"),
                                   new CreateMovieRequest.RequestGenre("Comedy")),
                               List.of(
-                                  new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                  new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
+                                  new CreateMovieRequest.RequestActor(
+                                      "Radcliffe", "Daniel", "poster1", 1L),
+                                  new CreateMovieRequest.RequestActor(
+                                      "MacLachlan", "Kyle", "poster2", 2L)),
                               List.of(
                                   new CreateMovieRequest.RequestDirector(
                                       "Lynch", "David", "fake_url", 1234L)),
@@ -253,8 +261,10 @@ class CreateMovieRouteIntegrationTest {
                                   new CreateMovieRequest.RequestGenre("Drama"),
                                   new CreateMovieRequest.RequestGenre("Comedy")),
                               List.of(
-                                  new CreateMovieRequest.RequestActor("Radcliffe", "Daniel"),
-                                  new CreateMovieRequest.RequestActor("MacLachlan", "Kyle")),
+                                  new CreateMovieRequest.RequestActor(
+                                      "Radcliffe", "Daniel", "poster1", 1L),
+                                  new CreateMovieRequest.RequestActor(
+                                      "MacLachlan", "Kyle", "poster2", 2L)),
                               List.of(
                                   new CreateMovieRequest.RequestDirector(
                                       "Lynch", "David", "fake_url", 1234L)),

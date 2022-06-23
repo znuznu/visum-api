@@ -46,8 +46,8 @@ public class PostgresActorRepository implements ActorRepository {
   }
 
   @Override
-  public Optional<Actor> findByNameAndForename(String name, String forename) {
-    return dataJpaActorRepository.findByNameAndForename(name, forename).map(ActorEntity::toDomain);
+  public Optional<Actor> findByTmdbId(long tmdbId) {
+    return dataJpaActorRepository.findByMetadataEntity_TmdbId(tmdbId).map(ActorEntity::toDomain);
   }
 
   @Override
@@ -58,10 +58,5 @@ public class PostgresActorRepository implements ActorRepository {
   @Override
   public void deleteById(long id) {
     dataJpaActorRepository.deleteById(id);
-  }
-
-  @Override
-  public void deleteAll() {
-    dataJpaActorRepository.deleteAll();
   }
 }

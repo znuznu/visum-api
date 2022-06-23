@@ -53,9 +53,17 @@ class GetByIdActorControllerUnitTest {
         new GetByIdActorResponse.ResponseMovie(
             3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false));
 
-    assertThat(controller.getActorById(1L))
-        .usingRecursiveComparison()
-        .isEqualTo(new GetByIdActorResponse(1L, "Pattinson", "Robert", expectedResponseMovies));
+    var expectedResponse =
+        GetByIdActorResponse.builder()
+            .id(1L)
+            .name("Pattinson")
+            .forename("Robert")
+            .movies(expectedResponseMovies)
+            .tmdbId(1234L)
+            .posterUrl("fake_url")
+            .build();
+
+    assertThat(controller.getActorById(1L)).usingRecursiveComparison().isEqualTo(expectedResponse);
   }
 
   @Test
