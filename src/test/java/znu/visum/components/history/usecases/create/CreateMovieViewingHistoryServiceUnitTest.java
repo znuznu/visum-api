@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.history.domain.port.MovieViewingHistoryRepository;
 import znu.visum.components.history.usecases.create.domain.CreateMovieViewingHistoryService;
-import znu.visum.components.history.usecases.create.domain.CreateMovieViewingHistoryServiceImpl;
 import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
 import znu.visum.components.movies.domain.ports.MovieRepository;
 
@@ -34,7 +33,7 @@ class CreateMovieViewingHistoryServiceUnitTest {
 
   @BeforeEach
   void setup() {
-    this.service = new CreateMovieViewingHistoryServiceImpl(historyRepository, movieRepository);
+    this.service = new CreateMovieViewingHistoryService(historyRepository, movieRepository);
   }
 
   @Test
