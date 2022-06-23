@@ -1,4 +1,4 @@
-package znu.visum.components.history.usecases.deprecated.getbymovieid.application;
+package znu.visum.components.history.usecases.getbymovieid.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import znu.visum.components.history.domain.MovieViewingHistory;
-import znu.visum.components.history.usecases.deprecated.getbymovieid.domain.GetByMovieIdMovieViewingHistoryService;
+import znu.visum.components.history.usecases.getbymovieid.domain.GetByMovieIdMovieViewingHistoryService;
 
 import java.util.List;
 
-@Deprecated
 @RestController
 @RequestMapping(value = "/api/history", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(MovieViewingHistory.class)
