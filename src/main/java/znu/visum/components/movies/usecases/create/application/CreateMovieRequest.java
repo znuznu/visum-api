@@ -12,6 +12,7 @@ import znu.visum.components.movies.domain.ActorFromMovie;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.people.actors.domain.ActorMetadata;
 import znu.visum.components.people.directors.domain.DirectorMetadata;
 
 import javax.validation.Valid;
@@ -45,6 +46,7 @@ public class CreateMovieRequest {
 
   @Schema(description = "The actors of the movie.")
   @NotNull
+  @Valid
   private final List<RequestActor> actors;
 
   @Schema(description = "The directors of the movie.")
@@ -126,27 +128,31 @@ public class CreateMovieRequest {
     return metadata;
   }
 
+  @Getter
   public static class RequestActor {
     private final String name;
     private final String forename;
+    private final String posterUrl;
+    @NotNull private final Long tmdbId;
 
     @JsonCreator
     public RequestActor(
-        @JsonProperty("name") String name, @JsonProperty("forename") String forename) {
+        @JsonProperty("name") String name,
+        @JsonProperty("forename") String forename,
+        @JsonProperty("posterUrl") String posterUrl,
+        @JsonProperty("tmdbId") Long tmdbId) {
       this.name = name;
       this.forename = forename;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getForename() {
-      return forename;
+      this.posterUrl = posterUrl;
+      this.tmdbId = tmdbId;
     }
 
     public ActorFromMovie toDomain() {
-      return ActorFromMovie.builder().name(this.name).forename(this.forename).build();
+      return ActorFromMovie.builder()
+          .name(this.name)
+          .forename(this.forename)
+          .metadata(ActorMetadata.builder().posterUrl(this.posterUrl).tmdbId(this.tmdbId).build())
+          .build();
     }
   }
 

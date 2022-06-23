@@ -60,6 +60,7 @@ public class GetTmdbMovieByIdResponse {
   }
 
   @AllArgsConstructor
+  @Builder
   @Getter
   @Schema(description = "Represents an actor from a TMDB movie.")
   public static class ResponseActor {
@@ -72,9 +73,16 @@ public class GetTmdbMovieByIdResponse {
     @Schema(description = "The actor's forename.")
     private final String forename;
 
+    @Schema(description = "The actor's poster URL.")
+    private String posterUrl;
+
     public static ResponseActor from(ExternalActor externalActor) {
-      return new ResponseActor(
-          externalActor.getId(), externalActor.getName(), externalActor.getForename());
+      return ResponseActor.builder()
+          .id(externalActor.getId())
+          .name(externalActor.getName())
+          .forename(externalActor.getForename())
+          .posterUrl(externalActor.getPosterUrl())
+          .build();
     }
   }
 

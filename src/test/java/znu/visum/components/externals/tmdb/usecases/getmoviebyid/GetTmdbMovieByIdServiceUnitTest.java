@@ -173,8 +173,8 @@ class GetTmdbMovieByIdServiceUnitTest {
                 ExternalMovieCredits.builder()
                     .actors(
                         List.of(
-                            new ExternalActor(1L, "Jacques", "Dupont"),
-                            new ExternalActor(2L, "Robert", "Some Long Name")))
+                            new ExternalActor(1L, "Jacques", "Dupont", "poster1"),
+                            new ExternalActor(2L, "Robert", "Some Long Name", null)))
                     .directors(
                         List.of(
                             new ExternalDirector(

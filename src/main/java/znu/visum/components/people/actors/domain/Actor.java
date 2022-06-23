@@ -13,7 +13,8 @@ import java.util.List;
 @SuperBuilder
 @Getter
 public class Actor extends People {
-  List<MovieFromActor> movies;
+  private List<MovieFromActor> movies;
+  private ActorMetadata metadata;
 
   public static Actor from(ActorFromMovie actorFromMovie) {
     return Actor.builder()
@@ -21,6 +22,7 @@ public class Actor extends People {
         .name(actorFromMovie.getName())
         .forename(actorFromMovie.getForename())
         .movies(new ArrayList<>())
+        .metadata(actorFromMovie.getMetadata())
         .build();
   }
 }

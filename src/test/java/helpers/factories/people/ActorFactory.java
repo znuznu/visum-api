@@ -1,6 +1,7 @@
 package helpers.factories.people;
 
 import znu.visum.components.people.actors.domain.Actor;
+import znu.visum.components.people.actors.domain.ActorMetadata;
 import znu.visum.components.people.actors.domain.MovieFromActor;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class ActorFactory extends PeopleFactory {
           .name("Pattinson")
           .forename("Robert")
           .movies(new ArrayList<>())
+          .metadata(ActorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
     }
 
@@ -47,6 +49,7 @@ public class ActorFactory extends PeopleFactory {
                       .isFavorite(false)
                       .isToWatch(false)
                       .build()))
+          .metadata(ActorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
     }
 

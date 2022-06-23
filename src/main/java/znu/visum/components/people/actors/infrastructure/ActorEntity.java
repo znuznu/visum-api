@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "actor", uniqueConstraints = @UniqueConstraint(columnNames = {"forename", "name"}))
+@Table(name = "actor", uniqueConstraints = @UniqueConstraint(columnNames = {"tmdbId"}))
 @Getter
 @NoArgsConstructor
 public class ActorEntity extends PeopleEntity {
@@ -29,11 +29,19 @@ public class ActorEntity extends PeopleEntity {
       inverseJoinColumns = @JoinColumn(name = "movie_id"))
   private Set<MovieEntity> movieEntities;
 
+  @Embedded private ActorMetadataEntity metadataEntity;
+
   @Builder
-  public ActorEntity(Long id, Set<MovieEntity> movieEntities, String name, String forename) {
+  public ActorEntity(
+      Long id,
+      Set<MovieEntity> movieEntities,
+      String name,
+      String forename,
+      ActorMetadataEntity metadataEntity) {
     super(name, forename);
     this.id = id;
     this.movieEntities = movieEntities;
+    this.metadataEntity = metadataEntity;
   }
 
   public static ActorEntity from(Actor actor) {
@@ -44,6 +52,7 @@ public class ActorEntity extends PeopleEntity {
         .movieEntities(
             new HashSet<>(
                 actor.getMovies().stream().map(MovieEntity::from).collect(Collectors.toList())))
+        .metadataEntity(ActorMetadataEntity.from(actor.getMetadata()))
         .build();
   }
 
@@ -52,6 +61,7 @@ public class ActorEntity extends PeopleEntity {
         .id(actorFromMovie.getId())
         .name(actorFromMovie.getName())
         .forename(actorFromMovie.getForename())
+        .metadataEntity(ActorMetadataEntity.from(actorFromMovie.getMetadata()))
         .build();
   }
 
@@ -64,11 +74,17 @@ public class ActorEntity extends PeopleEntity {
             this.movieEntities.stream()
                 .map(MovieEntity::toMovieFromActor)
                 .collect(Collectors.toList()))
+        .metadata(this.metadataEntity.toDomain())
         .build();
   }
 
   public ActorFromMovie toActorFromMovieDomain() {
-    return ActorFromMovie.builder().id(this.id).name(this.name).forename(this.forename).build();
+    return ActorFromMovie.builder()
+        .id(this.id)
+        .name(this.name)
+        .forename(this.forename)
+        .metadata(this.metadataEntity.toDomain())
+        .build();
   }
 
   @Override

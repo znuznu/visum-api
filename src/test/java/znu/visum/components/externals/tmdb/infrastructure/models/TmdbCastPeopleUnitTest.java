@@ -9,6 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("TmdbCastPeopleUnitTest")
 class TmdbCastPeopleUnitTest {
+
+  private static final String BASE_POSTER_URL = "https://fake-url.io";
+
   @Nested
   class ToDomain {
 
@@ -18,10 +21,11 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques Dupont");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "Jacques", "Dupont"));
+          .isEqualTo(new ExternalActor(1, "Jacques", "Dupont", BASE_POSTER_URL + "/poster1.jpg"));
     }
 
     @Test
@@ -30,10 +34,11 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "Jacques", ""));
+          .isEqualTo(new ExternalActor(1, "Jacques", "", BASE_POSTER_URL + "/poster1.jpg"));
     }
 
     @Test
@@ -42,10 +47,11 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "", ""));
+          .isEqualTo(new ExternalActor(1, "", "", BASE_POSTER_URL + "/poster1.jpg"));
     }
 
     @Test
@@ -54,10 +60,13 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques Dupont Baguette Camembert");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "Jacques", "Dupont Baguette Camembert"));
+          .isEqualTo(
+              new ExternalActor(
+                  1, "Jacques", "Dupont Baguette Camembert", BASE_POSTER_URL + "/poster1.jpg"));
     }
 
     @Test
@@ -66,10 +75,11 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName("Jacques ");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "Jacques", ""));
+          .isEqualTo(new ExternalActor(1, "Jacques", "", BASE_POSTER_URL + "/poster1.jpg"));
     }
 
     @Test
@@ -78,10 +88,24 @@ class TmdbCastPeopleUnitTest {
       TmdbCastPeople castPeople = new TmdbCastPeople();
       castPeople.setId(1);
       castPeople.setName(" Jacques");
+      castPeople.setProfilePath("/poster1.jpg");
 
-      assertThat(castPeople.toDomain())
+      assertThat(castPeople.toDomainWithBasePosterUrl(BASE_POSTER_URL))
           .usingRecursiveComparison()
-          .isEqualTo(new ExternalActor(1, "Jacques", ""));
+          .isEqualTo(new ExternalActor(1, "Jacques", "", BASE_POSTER_URL + "/poster1.jpg"));
+    }
+
+    @Test
+    @DisplayName("When the actor no poster path")
+    void itShouldReturnActorWithNullPosterUrl() {
+      TmdbCastPeople cast = new TmdbCastPeople();
+      cast.setId(1);
+      cast.setName(" Jacques");
+      cast.setProfilePath(null);
+
+      assertThat(cast.toDomainWithBasePosterUrl(BASE_POSTER_URL))
+          .usingRecursiveComparison()
+          .isEqualTo(new ExternalActor(1, "Jacques", "", null));
     }
   }
 }

@@ -10,11 +10,9 @@ public interface ActorRepository {
 
   Optional<Actor> findById(long id);
 
-  Optional<Actor> findByNameAndForename(String name, String forename);
+  Optional<Actor> findByTmdbId(long tmdbId);
 
   Actor save(Actor actor);
 
   void deleteById(long id);
-
-  void deleteAll();
 }

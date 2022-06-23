@@ -44,30 +44,27 @@ public class CreateMovieService {
     if (movieAlreadyExists) {
       throw new MovieAlreadyExistsException();
     }
-    List<ActorFromMovie> actors = new ArrayList<>();
     List<Genre> genres = new ArrayList<>();
 
-    movie
-        .getActors()
-        .forEach(
-            actor -> {
-              ActorFromMovie actorToSave =
-                  ActorFromMovie.builder()
-                      .name(actor.getName())
-                      .forename(actor.getForename())
-                      .build();
+    List<ActorFromMovie> actors =
+        movie.getActors().stream()
+            .map(
+                actor ->
+                    actorRepository
+                        .findByTmdbId(actor.getMetadata().getTmdbId())
+                        .map(ActorFromMovie::from)
+                        .orElseGet(
+                            () -> {
+                              long actorId = actorRepository.save(Actor.from(actor)).getId();
 
-              Optional<Actor> actorSaved =
-                  actorRepository.findByNameAndForename(actor.getName(), actor.getForename());
-
-              if (actorSaved.isPresent()) {
-                actorToSave.setId(actorSaved.get().getId());
-              } else {
-                actorToSave.setId(actorRepository.save(Actor.from(actorToSave)).getId());
-              }
-
-              actors.add(actorToSave);
-            });
+                              return ActorFromMovie.builder()
+                                  .id(actorId)
+                                  .name(actor.getName())
+                                  .forename(actor.getForename())
+                                  .metadata(actor.getMetadata())
+                                  .build();
+                            }))
+            .collect(Collectors.toList());
 
     List<DirectorFromMovie> directors =
         movie.getDirectors().stream()

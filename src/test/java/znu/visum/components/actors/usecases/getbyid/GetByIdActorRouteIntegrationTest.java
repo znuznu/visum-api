@@ -73,7 +73,8 @@ class GetByIdActorRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Winslet"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Kate"))
-        // TODO match payload
+        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("poster"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value(2L))
         .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isNotEmpty());
   }
 
@@ -88,6 +89,8 @@ class GetByIdActorRouteIntegrationTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("MaclachLan"))
         .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Kyle"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("poster"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value(1))
         .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isEmpty());
   }
 }
