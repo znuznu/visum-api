@@ -11,7 +11,6 @@ import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesService;
-import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesServiceImpl;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
@@ -21,8 +20,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("SearchTmdbMoviesServiceImplUnitTest")
-class SearchTmdbMoviesServiceImplUnitTest {
+@DisplayName("SearchTmdbMoviesServiceUnitTest")
+class SearchTmdbMoviesServiceUnitTest {
 
   private SearchTmdbMoviesService service;
 
@@ -30,7 +29,7 @@ class SearchTmdbMoviesServiceImplUnitTest {
 
   @BeforeEach
   void setup() {
-    this.service = new SearchTmdbMoviesServiceImpl(connector);
+    this.service = new SearchTmdbMoviesService(connector);
   }
 
   @Test

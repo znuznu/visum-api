@@ -21,9 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("StatisticsServiceImplIntegrationTest")
+@DisplayName("StatisticsServicelIntegrationTest")
 @ActiveProfiles("flyway")
-class StatisticsServiceImplIntegrationTest {
+class StatisticsServicelIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 

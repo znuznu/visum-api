@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.diary.domain.models.DiaryMovie;
 import znu.visum.components.diary.usecases.query.domain.GetDiaryByYearService;
-import znu.visum.components.diary.usecases.query.domain.GetDiaryByYearServiceImpl;
 import znu.visum.components.history.domain.models.MovieViewingHistory;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
@@ -24,9 +23,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("GetDiaryByYearServiceImplUnitTest")
+@DisplayName("GetDiaryByYearServiceUnitTest")
 @ExtendWith(MockitoExtension.class)
-class GetDiaryByYearServiceImplUnitTest {
+class GetDiaryByYearServiceUnitTest {
 
   private GetDiaryByYearService diaryService;
 
@@ -34,7 +33,7 @@ class GetDiaryByYearServiceImplUnitTest {
 
   @BeforeEach
   void setup() {
-    this.diaryService = new GetDiaryByYearServiceImpl(movieRepository);
+    this.diaryService = new GetDiaryByYearService(movieRepository);
   }
 
   @Nested

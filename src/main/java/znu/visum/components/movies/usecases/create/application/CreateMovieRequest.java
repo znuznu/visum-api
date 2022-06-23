@@ -13,12 +13,10 @@ import znu.visum.components.movies.domain.models.DirectorFromMovie;
 import znu.visum.components.movies.domain.models.Movie;
 import znu.visum.components.movies.domain.models.MovieMetadata;
 import znu.visum.components.people.directors.domain.models.DirectorMetadata;
-import znu.visum.core.errors.domain.VisumException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

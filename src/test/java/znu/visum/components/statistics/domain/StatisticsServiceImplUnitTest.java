@@ -18,9 +18,9 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("StatisticsServiceImplUnitTest")
+@DisplayName("StatisticsServiceUnitTest")
 @ExtendWith(MockitoExtension.class)
-class StatisticsServiceImplUnitTest {
+class StatisticsServiceUnitTest {
   @Mock private MovieRepository movieRepository;
 
   @Mock private ReviewRepository reviewRepository;

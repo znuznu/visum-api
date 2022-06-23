@@ -70,7 +70,7 @@
 
 - Add TMDb poster's URL in the `/tmdb/movies/search` and `/tmdb/movies/<id>` responses
 - Add `String getConfigurationBasePosterUrl();` to the `TmdbConnector` port and the implementation in the HTTP adapter
-- Add `SearchTmdbMoviesServiceImplUnitTest`
+- Add `SearchTmdbMoviesServiceUnitTest`
 - Rename `external` package to `externals`
 - Add [Caffeine](https://github.com/ben-manes/caffeine) in order to cache the TMDb (base) poster's URL with `@Cacheable`
 

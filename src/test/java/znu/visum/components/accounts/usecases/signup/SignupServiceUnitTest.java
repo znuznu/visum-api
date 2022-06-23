@@ -14,13 +14,12 @@ import znu.visum.components.accounts.domain.errors.MaximumAccountReachedExceptio
 import znu.visum.components.accounts.domain.models.AccountToRegister;
 import znu.visum.components.accounts.domain.ports.AccountRepository;
 import znu.visum.components.accounts.usecases.signup.domain.SignupService;
-import znu.visum.components.accounts.usecases.signup.domain.SignupServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("SignupServiceImplUnitTest")
+@DisplayName("SignupServiceUnitTest")
 @ExtendWith(MockitoExtension.class)
-class SignupServiceImplUnitTest {
+class SignupServiceUnitTest {
   @Mock private AccountRepository accountRepository;
 
   @Mock private PasswordEncoder passwordEncoder;
@@ -29,7 +28,7 @@ class SignupServiceImplUnitTest {
 
   @BeforeEach
   void setup() {
-    this.signupService = new SignupServiceImpl("right-key", accountRepository, passwordEncoder);
+    this.signupService = new SignupService("right-key", accountRepository, passwordEncoder);
   }
 
   @Nested

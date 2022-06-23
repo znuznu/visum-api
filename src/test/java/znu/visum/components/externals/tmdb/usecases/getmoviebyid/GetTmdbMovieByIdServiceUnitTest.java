@@ -12,7 +12,6 @@ import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
-import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdServiceImpl;
 import znu.visum.core.errors.domain.ExternalInconsistencyException;
 
 import java.time.LocalDate;
@@ -23,8 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("GetTmdbMovieByIdServiceImplUnitTest")
-class GetTmdbMovieByIdServiceImplUnitTest {
+@DisplayName("GetTmdbMovieByIdServiceUnitTest")
+class GetTmdbMovieByIdServiceUnitTest {
 
   private static final String BASE_POSTER_URL = "https://tmdb.com/w780";
 
@@ -34,7 +33,7 @@ class GetTmdbMovieByIdServiceImplUnitTest {
 
   @BeforeEach
   void setup() {
-    this.service = new GetTmdbMovieByIdServiceImpl(connector);
+    this.service = new GetTmdbMovieByIdService(connector);
   }
 
   @Test

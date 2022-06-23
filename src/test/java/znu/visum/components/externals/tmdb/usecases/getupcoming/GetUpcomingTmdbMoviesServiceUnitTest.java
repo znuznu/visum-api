@@ -11,7 +11,6 @@ import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMoviesService;
-import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMoviesServiceImpl;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
@@ -21,8 +20,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("GetUpcomingTmdbMoviesServiceImplUnitTest")
-class GetUpcomingTmdbMoviesServiceImplUnitTest {
+@DisplayName("GetUpcomingTmdbMoviesServiceUnitTest")
+class GetUpcomingTmdbMoviesServiceUnitTest {
 
   private GetUpcomingTmdbMoviesService service;
 
@@ -30,7 +29,7 @@ class GetUpcomingTmdbMoviesServiceImplUnitTest {
 
   @BeforeEach
   void setup() {
-    this.service = new GetUpcomingTmdbMoviesServiceImpl(connector);
+    this.service = new GetUpcomingTmdbMoviesService(connector);
   }
 
   @Test
