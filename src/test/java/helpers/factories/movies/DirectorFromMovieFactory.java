@@ -1,6 +1,6 @@
 package helpers.factories.movies;
 
-import znu.visum.components.movies.domain.models.DirectorFromMovie;
+import znu.visum.components.movies.domain.DirectorFromMovie;
 
 public enum DirectorFromMovieFactory {
   INSTANCE;

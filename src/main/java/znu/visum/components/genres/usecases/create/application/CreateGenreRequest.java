@@ -3,7 +3,7 @@ package znu.visum.components.genres.usecases.create.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import znu.visum.components.genres.domain.models.Genre;
+import znu.visum.components.genres.domain.Genre;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

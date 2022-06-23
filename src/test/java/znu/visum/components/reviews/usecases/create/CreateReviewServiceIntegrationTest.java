@@ -13,11 +13,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.reviews.domain.errors.MaximumMovieReviewsReachedException;
-import znu.visum.components.reviews.domain.models.Review;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
+import znu.visum.components.reviews.domain.MaximumMovieReviewsReachedException;
+import znu.visum.components.reviews.domain.Review;
+import znu.visum.components.reviews.domain.ReviewRepository;
 import znu.visum.components.reviews.usecases.create.domain.CreateReviewService;
 
 import static org.assertj.core.api.Assertions.assertThat;

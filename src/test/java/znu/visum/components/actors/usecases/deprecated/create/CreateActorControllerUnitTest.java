@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.people.actors.domain.models.Actor;
+import znu.visum.components.people.actors.domain.Actor;
 import znu.visum.components.people.actors.usecases.deprecated.create.application.CreateActorController;
 import znu.visum.components.people.actors.usecases.deprecated.create.application.CreateActorRequest;
 import znu.visum.components.people.actors.usecases.deprecated.create.application.CreateActorResponse;

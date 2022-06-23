@@ -7,10 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.externals.domain.errors.NoSuchExternalMovieIdException;
-import znu.visum.components.externals.domain.models.*;
-import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
-import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
+import znu.visum.components.externals.domain.*;
+import znu.visum.components.externals.tmdb.domain.TmdbApiException;
+import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
 import znu.visum.core.errors.domain.ExternalInconsistencyException;
 

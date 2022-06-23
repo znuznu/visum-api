@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import znu.visum.components.reviews.domain.models.Review;
+import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.usecases.deprecated.getbyid.domain.GetByIdMovieReviewService;
 
 @Deprecated

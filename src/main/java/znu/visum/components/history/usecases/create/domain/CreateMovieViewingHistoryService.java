@@ -2,10 +2,10 @@ package znu.visum.components.history.usecases.create.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
-import znu.visum.components.history.domain.port.MovieViewingHistoryRepository;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.ports.MovieRepository;
+import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.history.domain.MovieViewingHistoryRepository;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
 
 @Service
 public class CreateMovieViewingHistoryService {

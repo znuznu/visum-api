@@ -3,10 +3,10 @@ package znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import znu.visum.components.externals.domain.errors.NoSuchExternalMovieIdException;
-import znu.visum.components.externals.domain.models.ExternalMovie;
-import znu.visum.components.externals.domain.models.ExternalMovieCredits;
-import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.ExternalMovieCredits;
+import znu.visum.components.externals.domain.NoSuchExternalMovieIdException;
+import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.core.errors.domain.ExternalInconsistencyException;
 
 @Service

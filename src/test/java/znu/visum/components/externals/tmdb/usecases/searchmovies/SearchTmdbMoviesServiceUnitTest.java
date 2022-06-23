@@ -7,9 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
-import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalMovieFromSearch;
+import znu.visum.components.externals.tmdb.domain.TmdbApiException;
+import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesService;
 import znu.visum.core.pagination.domain.VisumPage;
 

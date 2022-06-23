@@ -3,7 +3,7 @@ package znu.visum.components.genres.usecases.create.application;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.genres.domain.models.Genre;
+import znu.visum.components.genres.domain.Genre;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

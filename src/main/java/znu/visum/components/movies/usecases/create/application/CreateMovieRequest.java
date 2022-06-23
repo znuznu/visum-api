@@ -7,12 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.genres.domain.models.Genre;
-import znu.visum.components.movies.domain.models.ActorFromMovie;
-import znu.visum.components.movies.domain.models.DirectorFromMovie;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.models.MovieMetadata;
-import znu.visum.components.people.directors.domain.models.DirectorMetadata;
+import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.movies.domain.ActorFromMovie;
+import znu.visum.components.movies.domain.DirectorFromMovie;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.people.directors.domain.DirectorMetadata;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

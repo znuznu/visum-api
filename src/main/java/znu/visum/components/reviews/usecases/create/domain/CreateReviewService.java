@@ -2,12 +2,12 @@ package znu.visum.components.reviews.usecases.create.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.reviews.domain.errors.MaximumMovieReviewsReachedException;
-import znu.visum.components.reviews.domain.models.Review;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
+import znu.visum.components.reviews.domain.MaximumMovieReviewsReachedException;
+import znu.visum.components.reviews.domain.Review;
+import znu.visum.components.reviews.domain.ReviewRepository;
 
 import javax.transaction.Transactional;
 

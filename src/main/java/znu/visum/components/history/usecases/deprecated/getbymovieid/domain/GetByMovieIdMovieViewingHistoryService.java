@@ -1,6 +1,6 @@
 package znu.visum.components.history.usecases.deprecated.getbymovieid.domain;
 
-import znu.visum.components.history.domain.models.MovieViewingHistory;
+import znu.visum.components.history.domain.MovieViewingHistory;
 
 import java.util.List;
 

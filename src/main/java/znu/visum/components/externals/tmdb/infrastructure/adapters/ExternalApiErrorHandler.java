@@ -3,7 +3,7 @@ package znu.visum.components.externals.tmdb.infrastructure.adapters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import znu.visum.components.externals.tmdb.domain.errors.TmdbApiException;
+import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 
 public class ExternalApiErrorHandler {
 

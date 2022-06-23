@@ -2,11 +2,11 @@ package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
-import znu.visum.components.externals.domain.models.ExternalMovie;
-import znu.visum.components.externals.domain.models.ExternalMovieCredits;
-import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
-import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
-import znu.visum.components.externals.tmdb.domain.ports.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.ExternalMovieCredits;
+import znu.visum.components.externals.domain.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.ExternalUpcomingMovie;
+import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
 import znu.visum.core.pagination.domain.VisumPage;

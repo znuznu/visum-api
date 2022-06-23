@@ -1,6 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.validators;
 
-import znu.visum.components.externals.domain.models.ExternalApi;
+import znu.visum.components.externals.domain.ExternalApi;
 import znu.visum.components.externals.tmdb.infrastructure.models.TmdbSearchMoviesResponse;
 import znu.visum.core.validators.infrastructure.AbstractExternalResponseBodyValidationHandler;
 

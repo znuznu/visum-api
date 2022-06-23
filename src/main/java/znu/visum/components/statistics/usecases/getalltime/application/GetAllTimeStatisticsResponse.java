@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.statistics.domain.models.AllTimeStatistics;
-import znu.visum.components.statistics.domain.models.MovieCount;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.statistics.domain.AllTimeStatistics;
+import znu.visum.components.statistics.domain.MovieCount;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;

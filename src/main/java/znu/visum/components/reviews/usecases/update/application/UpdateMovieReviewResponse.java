@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.reviews.domain.models.Review;
+import znu.visum.components.reviews.domain.Review;
 
 import java.time.LocalDateTime;
 

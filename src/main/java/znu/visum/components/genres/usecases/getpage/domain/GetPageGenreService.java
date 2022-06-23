@@ -3,8 +3,8 @@ package znu.visum.components.genres.usecases.getpage.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import znu.visum.components.genres.domain.models.Genre;
-import znu.visum.components.genres.domain.ports.GenreRepository;
+import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.genres.domain.GenreRepository;
 import znu.visum.core.pagination.domain.VisumPage;
 
 @Service

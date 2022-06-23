@@ -2,8 +2,8 @@ package znu.visum.components.history.usecases.deprecated.getbymovieid.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
-import znu.visum.components.history.domain.port.MovieViewingHistoryRepository;
+import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.history.domain.MovieViewingHistoryRepository;
 
 import java.util.List;
 

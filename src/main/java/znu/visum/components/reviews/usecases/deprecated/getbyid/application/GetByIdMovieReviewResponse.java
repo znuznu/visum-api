@@ -1,8 +1,8 @@
 package znu.visum.components.reviews.usecases.deprecated.getbyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import znu.visum.components.reviews.domain.models.MovieFromReview;
-import znu.visum.components.reviews.domain.models.Review;
+import znu.visum.components.reviews.domain.MovieFromReview;
+import znu.visum.components.reviews.domain.Review;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

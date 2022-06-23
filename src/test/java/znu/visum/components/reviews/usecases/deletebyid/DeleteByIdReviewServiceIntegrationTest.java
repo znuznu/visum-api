@@ -12,9 +12,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.reviews.domain.NoSuchReviewIdException;
+import znu.visum.components.reviews.domain.ReviewRepository;
 import znu.visum.components.reviews.usecases.deletebyid.domain.DeleteByIdMovieReviewService;
 
 import static org.assertj.core.api.Assertions.assertThat;

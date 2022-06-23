@@ -12,14 +12,14 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.genres.domain.ports.GenreRepository;
-import znu.visum.components.history.domain.port.MovieViewingHistoryRepository;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.ports.MovieRepository;
+import znu.visum.components.genres.domain.GenreRepository;
+import znu.visum.components.history.domain.MovieViewingHistoryRepository;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
 import znu.visum.components.movies.usecases.deletebyid.domain.DeleteByIdMovieService;
-import znu.visum.components.people.actors.domain.ports.ActorRepository;
-import znu.visum.components.people.directors.domain.ports.DirectorRepository;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.people.actors.domain.ActorRepository;
+import znu.visum.components.people.directors.domain.DirectorRepository;
+import znu.visum.components.reviews.domain.ReviewRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

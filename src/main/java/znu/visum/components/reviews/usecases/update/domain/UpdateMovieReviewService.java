@@ -2,9 +2,9 @@ package znu.visum.components.reviews.usecases.update.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
-import znu.visum.components.reviews.domain.models.Review;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.reviews.domain.NoSuchReviewIdException;
+import znu.visum.components.reviews.domain.Review;
+import znu.visum.components.reviews.domain.ReviewRepository;
 
 @Service
 public class UpdateMovieReviewService {

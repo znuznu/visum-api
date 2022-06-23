@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.people.directors.domain.errors.NoSuchDirectorIdException;
+import znu.visum.components.people.directors.domain.NoSuchDirectorIdException;
 import znu.visum.components.people.directors.usecases.deletebyid.application.DeleteByIdDirectorController;
 import znu.visum.components.people.directors.usecases.deletebyid.domain.DeleteByIdDirectorService;
 

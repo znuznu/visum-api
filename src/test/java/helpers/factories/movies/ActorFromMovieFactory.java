@@ -1,6 +1,6 @@
 package helpers.factories.movies;
 
-import znu.visum.components.movies.domain.models.ActorFromMovie;
+import znu.visum.components.movies.domain.ActorFromMovie;
 
 import java.util.List;
 import java.util.stream.Collectors;

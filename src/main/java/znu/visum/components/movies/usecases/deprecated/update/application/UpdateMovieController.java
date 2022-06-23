@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.movies.domain.models.Movie;
+import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.usecases.deprecated.update.domain.UpdateMovieService;
 
 @Deprecated

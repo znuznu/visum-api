@@ -3,7 +3,7 @@ package znu.visum.components.accounts.usecases.signup.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import znu.visum.components.accounts.domain.models.AccountToRegister;
+import znu.visum.components.accounts.domain.AccountToRegister;
 
 import javax.validation.constraints.NotBlank;
 

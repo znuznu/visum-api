@@ -1,8 +1,8 @@
 package znu.visum.components.people.directors.usecases.deprecated.create.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import znu.visum.components.people.directors.domain.models.Director;
-import znu.visum.components.people.directors.domain.models.MovieFromDirector;
+import znu.visum.components.people.directors.domain.Director;
+import znu.visum.components.people.directors.domain.MovieFromDirector;
 
 import java.time.LocalDate;
 import java.util.List;

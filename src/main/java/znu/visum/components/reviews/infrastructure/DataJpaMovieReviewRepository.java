@@ -1,0 +1,19 @@
+package znu.visum.components.reviews.infrastructure;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+import znu.visum.core.pagination.infrastructure.PageSearch;
+
+import java.time.LocalDateTime;
+
+@Repository
+public interface DataJpaMovieReviewRepository
+    extends JpaRepository<MovieReviewEntity, Long>, JpaSpecificationExecutor<MovieReviewEntity> {
+  default Page<MovieReviewEntity> findPage(PageSearch<MovieReviewEntity> page) {
+    return findAll(page.getSearch(), page);
+  }
+
+  long countAllByUpdateDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+}

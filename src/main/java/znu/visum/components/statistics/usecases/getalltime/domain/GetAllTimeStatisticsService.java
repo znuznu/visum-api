@@ -2,10 +2,10 @@ package znu.visum.components.statistics.usecases.getalltime.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.statistics.domain.models.AllTimeStatistics;
-import znu.visum.components.statistics.domain.models.MovieCount;
-import znu.visum.components.statistics.domain.services.StatisticsService;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.statistics.domain.AllTimeStatistics;
+import znu.visum.components.statistics.domain.MovieCount;
+import znu.visum.components.statistics.domain.StatisticsService;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;

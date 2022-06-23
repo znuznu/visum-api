@@ -2,7 +2,7 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import znu.visum.components.externals.domain.models.ExternalActor;
+import znu.visum.components.externals.domain.ExternalActor;
 
 // Not useful yet, we might want to save the character later
 @JsonIgnoreProperties(ignoreUnknown = true)

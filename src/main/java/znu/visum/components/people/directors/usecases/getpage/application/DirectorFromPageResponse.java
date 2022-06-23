@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.people.directors.domain.models.Director;
+import znu.visum.components.people.directors.domain.Director;
 
 @AllArgsConstructor
 @Builder

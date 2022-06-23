@@ -1,7 +1,7 @@
 package znu.visum.components.diary.usecases.query.application.types;
 
 import lombok.Getter;
-import znu.visum.components.diary.domain.models.DiaryMovie;
+import znu.visum.components.diary.domain.DiaryMovie;
 import znu.visum.core.models.common.Month;
 
 import java.time.Year;

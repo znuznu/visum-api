@@ -1,7 +1,7 @@
 package znu.visum.components.history.usecases.deprecated.getbyid.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
+import znu.visum.components.history.domain.MovieViewingHistory;
 
 import java.time.LocalDate;
 

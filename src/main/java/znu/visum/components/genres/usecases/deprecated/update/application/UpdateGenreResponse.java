@@ -1,6 +1,6 @@
 package znu.visum.components.genres.usecases.deprecated.update.application;
 
-import znu.visum.components.genres.domain.models.Genre;
+import znu.visum.components.genres.domain.Genre;
 
 public class UpdateGenreResponse {
   private Long id;
