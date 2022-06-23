@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.statistics.domain.models.PerYearStatistics;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.statistics.domain.PerYearStatistics;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;

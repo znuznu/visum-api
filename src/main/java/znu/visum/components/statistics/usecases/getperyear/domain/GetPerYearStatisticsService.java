@@ -2,9 +2,9 @@ package znu.visum.components.statistics.usecases.getperyear.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.statistics.domain.models.PerYearStatistics;
-import znu.visum.components.statistics.domain.services.StatisticsService;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.statistics.domain.PerYearStatistics;
+import znu.visum.components.statistics.domain.StatisticsService;
 import znu.visum.core.models.common.Pair;
 
 import java.time.Year;

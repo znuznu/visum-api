@@ -1,7 +1,7 @@
 package helpers.factories.people;
 
-import znu.visum.components.people.actors.domain.models.Actor;
-import znu.visum.components.people.actors.domain.models.MovieFromActor;
+import znu.visum.components.people.actors.domain.Actor;
+import znu.visum.components.people.actors.domain.MovieFromActor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

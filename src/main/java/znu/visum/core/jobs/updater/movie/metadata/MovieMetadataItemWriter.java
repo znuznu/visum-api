@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.models.MovieMetadata;
-import znu.visum.components.movies.infrastructure.adapters.DataJpaMovieRepository;
+import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
+import znu.visum.components.movies.infrastructure.DataJpaMovieRepository;
 
 import java.util.List;
 

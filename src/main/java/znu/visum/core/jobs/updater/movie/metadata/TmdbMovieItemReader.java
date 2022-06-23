@@ -5,9 +5,9 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.models.MovieMetadata;
-import znu.visum.components.movies.domain.ports.MovieRepository;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.movies.domain.MovieRepository;
 
 import java.util.List;
 import java.util.function.Function;

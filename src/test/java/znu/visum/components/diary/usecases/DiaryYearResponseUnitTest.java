@@ -2,10 +2,10 @@ package znu.visum.components.diary.usecases;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import znu.visum.components.diary.domain.models.DiaryMovie;
+import znu.visum.components.diary.domain.DiaryMovie;
 import znu.visum.components.diary.usecases.query.application.types.DiaryMonth;
 import znu.visum.components.diary.usecases.query.application.types.DiaryYear;
-import znu.visum.components.movies.domain.models.ReviewFromMovie;
+import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.core.models.common.Month;
 
 import java.time.LocalDate;
@@ -90,7 +90,7 @@ class DiaryYearResponseUnitTest {
     assertThat(january.getMonth()).isEqualTo(Month.JANUARY);
     assertThat(january.getDays().size()).isEqualTo(2);
     assertThat(january.getDays().get(0).getDay()).isEqualTo(5);
-    assertThat(january.getDays().get(1).getDay()).isEqualTo(1);
+    assertThat(january.getDays().get(1).getDay()).isOne();
 
     assertThat(october.getMonth()).isEqualTo(Month.OCTOBER);
     assertThat(october.getDays().size()).isEqualTo(3);

@@ -2,8 +2,8 @@ package znu.visum.components.reviews.usecases.deletebyid.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.reviews.domain.NoSuchReviewIdException;
+import znu.visum.components.reviews.domain.ReviewRepository;
 
 @Service
 public class DeleteByIdMovieReviewService {

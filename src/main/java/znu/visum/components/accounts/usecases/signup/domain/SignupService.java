@@ -9,11 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import znu.visum.components.accounts.domain.errors.InvalidRegistrationKeyException;
-import znu.visum.components.accounts.domain.errors.MaximumAccountReachedException;
-import znu.visum.components.accounts.domain.models.Account;
-import znu.visum.components.accounts.domain.models.AccountToRegister;
-import znu.visum.components.accounts.domain.ports.AccountRepository;
+import znu.visum.components.accounts.domain.*;
 
 import java.util.ArrayList;
 

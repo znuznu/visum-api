@@ -6,7 +6,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.reviews.domain.models.Review;
+import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.usecases.update.domain.UpdateMovieReviewService;
 
 import javax.validation.Valid;

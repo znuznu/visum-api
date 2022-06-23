@@ -2,8 +2,8 @@ package znu.visum.components.people.directors.usecases.deprecated.update.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.people.directors.domain.models.Director;
-import znu.visum.components.people.directors.domain.ports.DirectorRepository;
+import znu.visum.components.people.directors.domain.Director;
+import znu.visum.components.people.directors.domain.DirectorRepository;
 
 import java.util.NoSuchElementException;
 

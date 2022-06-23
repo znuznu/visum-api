@@ -2,8 +2,8 @@ package znu.visum.components.movies.usecases.deletebyid.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.errors.NoSuchMovieIdException;
-import znu.visum.components.movies.domain.ports.MovieRepository;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.NoSuchMovieIdException;
 
 @Service
 public class DeleteByIdMovieService {

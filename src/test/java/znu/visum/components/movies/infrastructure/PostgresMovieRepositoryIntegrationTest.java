@@ -11,11 +11,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.models.MovieMetadata;
-import znu.visum.components.movies.domain.models.ReviewFromMovie;
-import znu.visum.components.movies.domain.ports.MovieRepository;
+import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
@@ -291,7 +291,7 @@ class PostgresMovieRepositoryIntegrationTest {
         this.movieRepository.getTotalRunningHoursBetween(
             LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
 
-    assertThat(totalRunningHours).isEqualTo(0);
+    assertThat(totalRunningHours).isZero();
   }
 
   @DisplayName("getNumberOfMoviesPerOriginalLanguage()")

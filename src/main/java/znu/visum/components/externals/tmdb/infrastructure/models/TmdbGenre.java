@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
-import znu.visum.components.genres.domain.models.Genre;
+import znu.visum.components.genres.domain.Genre;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor

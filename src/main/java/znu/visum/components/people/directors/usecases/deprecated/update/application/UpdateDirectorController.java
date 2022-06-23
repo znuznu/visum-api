@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.people.directors.domain.models.Director;
+import znu.visum.components.people.directors.domain.Director;
 import znu.visum.components.people.directors.usecases.deprecated.update.domain.UpdateDirectorService;
 
 @Deprecated

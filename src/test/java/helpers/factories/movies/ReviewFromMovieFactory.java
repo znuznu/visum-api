@@ -1,6 +1,6 @@
 package helpers.factories.movies;
 
-import znu.visum.components.movies.domain.models.ReviewFromMovie;
+import znu.visum.components.movies.domain.ReviewFromMovie;
 
 import java.time.LocalDateTime;
 

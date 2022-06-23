@@ -2,8 +2,8 @@ package znu.visum.components.genres.usecases.deprecated.update;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.genres.domain.models.Genre;
-import znu.visum.components.genres.domain.ports.GenreRepository;
+import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.genres.domain.GenreRepository;
 import znu.visum.components.genres.usecases.deprecated.update.domain.UpdateGenreService;
 
 import java.util.NoSuchElementException;

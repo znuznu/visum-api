@@ -3,7 +3,7 @@ package znu.visum.components.reviews.usecases.create.application;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.reviews.domain.models.Review;
+import znu.visum.components.reviews.domain.Review;
 
 @AllArgsConstructor
 @Getter

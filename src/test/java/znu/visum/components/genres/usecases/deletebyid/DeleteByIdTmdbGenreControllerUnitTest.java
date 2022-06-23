@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.genres.domain.errors.NoSuchGenreIdException;
+import znu.visum.components.genres.domain.NoSuchGenreIdException;
 import znu.visum.components.genres.usecases.deletebyid.application.DeleteByIdGenreController;
 import znu.visum.components.genres.usecases.deletebyid.domain.DeleteByIdGenreService;
 

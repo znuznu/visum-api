@@ -10,7 +10,7 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import znu.visum.components.movies.domain.models.MovieMetadata;
+import znu.visum.components.movies.domain.MovieMetadata;
 
 @Configuration
 @EnableBatchProcessing

@@ -1,6 +1,6 @@
 package helpers.factories.people;
 
-import znu.visum.components.people.domain.models.People;
+import znu.visum.components.people.domain.People;
 
 import java.util.List;
 

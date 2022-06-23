@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Setter;
-import znu.visum.components.genres.domain.models.Genre;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
-import znu.visum.components.movies.domain.models.ActorFromMovie;
-import znu.visum.components.movies.domain.models.DirectorFromMovie;
-import znu.visum.components.movies.domain.models.Movie;
+import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.movies.domain.ActorFromMovie;
+import znu.visum.components.movies.domain.DirectorFromMovie;
+import znu.visum.components.movies.domain.Movie;
 
 import java.time.LocalDate;
 import java.util.List;

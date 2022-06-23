@@ -2,7 +2,7 @@ package znu.visum.components.history.usecases.create.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import znu.visum.components.history.domain.models.MovieViewingHistory;
+import znu.visum.components.history.domain.MovieViewingHistory;
 
 import java.time.LocalDate;
 

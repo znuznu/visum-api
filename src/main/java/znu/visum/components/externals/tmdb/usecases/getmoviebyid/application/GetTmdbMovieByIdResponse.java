@@ -5,10 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.externals.domain.models.ExternalActor;
-import znu.visum.components.externals.domain.models.ExternalDirector;
-import znu.visum.components.externals.domain.models.ExternalMovie;
-import znu.visum.components.externals.domain.models.ExternalMovieMetadata;
+import znu.visum.components.externals.domain.ExternalActor;
+import znu.visum.components.externals.domain.ExternalDirector;
+import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.ExternalMovieMetadata;
 
 import java.time.LocalDate;
 import java.util.List;

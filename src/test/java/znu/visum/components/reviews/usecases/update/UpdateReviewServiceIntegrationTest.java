@@ -13,11 +13,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
-import znu.visum.components.reviews.domain.models.Review;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.reviews.domain.NoSuchReviewIdException;
+import znu.visum.components.reviews.domain.Review;
+import znu.visum.components.reviews.domain.ReviewRepository;
 import znu.visum.components.reviews.usecases.update.domain.UpdateMovieReviewService;
 
 import java.time.LocalDateTime;

@@ -2,17 +2,13 @@ package znu.visum.components.movies.usecases.create.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.genres.domain.models.Genre;
-import znu.visum.components.genres.domain.ports.GenreRepository;
-import znu.visum.components.movies.domain.errors.MovieAlreadyExistsException;
-import znu.visum.components.movies.domain.models.ActorFromMovie;
-import znu.visum.components.movies.domain.models.DirectorFromMovie;
-import znu.visum.components.movies.domain.models.Movie;
-import znu.visum.components.movies.domain.ports.MovieRepository;
-import znu.visum.components.people.actors.domain.models.Actor;
-import znu.visum.components.people.actors.domain.ports.ActorRepository;
-import znu.visum.components.people.directors.domain.models.Director;
-import znu.visum.components.people.directors.domain.ports.DirectorRepository;
+import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.genres.domain.GenreRepository;
+import znu.visum.components.movies.domain.*;
+import znu.visum.components.people.actors.domain.Actor;
+import znu.visum.components.people.actors.domain.ActorRepository;
+import znu.visum.components.people.directors.domain.Director;
+import znu.visum.components.people.directors.domain.DirectorRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

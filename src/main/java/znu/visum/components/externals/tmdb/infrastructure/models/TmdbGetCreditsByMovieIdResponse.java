@@ -2,7 +2,7 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import znu.visum.components.externals.domain.models.ExternalMovieCredits;
+import znu.visum.components.externals.domain.ExternalMovieCredits;
 
 import java.util.List;
 import java.util.stream.Collectors;

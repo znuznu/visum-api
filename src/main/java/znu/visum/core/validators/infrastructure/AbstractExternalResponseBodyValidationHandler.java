@@ -4,7 +4,7 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import reactor.core.publisher.Mono;
-import znu.visum.components.externals.domain.models.ExternalApi;
+import znu.visum.components.externals.domain.ExternalApi;
 import znu.visum.core.errors.domain.ExternalApiUnexpectedResponseBodyException;
 
 public abstract class AbstractExternalResponseBodyValidationHandler<T, U extends Validator> {

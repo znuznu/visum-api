@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.reviews.domain.errors.NoSuchReviewIdException;
+import znu.visum.components.reviews.domain.NoSuchReviewIdException;
 import znu.visum.components.reviews.usecases.deprecated.getbyid.application.GetByIdMovieReviewController;
 import znu.visum.components.reviews.usecases.deprecated.getbyid.application.GetByIdMovieReviewResponse;
 import znu.visum.components.reviews.usecases.deprecated.getbyid.domain.GetByIdMovieReviewService;

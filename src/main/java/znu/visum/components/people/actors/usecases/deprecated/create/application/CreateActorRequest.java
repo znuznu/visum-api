@@ -2,8 +2,8 @@ package znu.visum.components.people.actors.usecases.deprecated.create.applicatio
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import znu.visum.components.people.actors.domain.models.Actor;
-import znu.visum.components.people.actors.domain.models.MovieFromActor;
+import znu.visum.components.people.actors.domain.Actor;
+import znu.visum.components.people.actors.domain.MovieFromActor;
 
 import java.util.List;
 

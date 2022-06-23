@@ -2,8 +2,8 @@ package znu.visum.components.history.usecases.deletebyid.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.history.domain.errors.NoSuchViewingHistoryException;
-import znu.visum.components.history.domain.port.MovieViewingHistoryRepository;
+import znu.visum.components.history.domain.MovieViewingHistoryRepository;
+import znu.visum.components.history.domain.NoSuchViewingHistoryException;
 
 @Service
 public class DeleteByIdMovieViewingHistoryService {

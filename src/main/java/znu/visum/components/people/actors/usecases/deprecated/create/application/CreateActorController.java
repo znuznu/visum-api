@@ -5,7 +5,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.people.actors.domain.models.Actor;
+import znu.visum.components.people.actors.domain.Actor;
 import znu.visum.components.people.actors.usecases.deprecated.create.domain.CreateActorService;
 
 @Deprecated

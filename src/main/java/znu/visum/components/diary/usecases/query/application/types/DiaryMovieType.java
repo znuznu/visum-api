@@ -3,7 +3,7 @@ package znu.visum.components.diary.usecases.query.application.types;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.diary.domain.models.DiaryMovie;
+import znu.visum.components.diary.domain.DiaryMovie;
 
 import java.time.LocalDate;
 

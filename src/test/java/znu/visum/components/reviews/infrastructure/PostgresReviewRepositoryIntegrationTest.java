@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.reviews.domain.ports.ReviewRepository;
+import znu.visum.components.reviews.domain.ReviewRepository;
 
 import java.time.Year;
 
@@ -40,7 +40,7 @@ class PostgresReviewRepositoryIntegrationTest {
   void itShouldReturnZero() {
     long count = this.reviewRepository.countAllByUpdateDateYear(Year.of(2021));
 
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @DisplayName("countAllByUpdateDateYear() - with reviews")

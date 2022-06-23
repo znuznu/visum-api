@@ -3,8 +3,8 @@ package znu.visum.components.people.actors.usecases.deprecated.create.domain;
 import org.hibernate.PersistentObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.people.actors.domain.models.Actor;
-import znu.visum.components.people.actors.domain.ports.ActorRepository;
+import znu.visum.components.people.actors.domain.Actor;
+import znu.visum.components.people.actors.domain.ActorRepository;
 
 @Service
 public class CreateActorServiceImpl implements CreateActorService {
