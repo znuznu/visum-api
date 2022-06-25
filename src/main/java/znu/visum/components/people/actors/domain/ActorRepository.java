@@ -1,6 +1,7 @@
 package znu.visum.components.people.actors.domain;
 
 import org.springframework.data.domain.Sort;
+import znu.visum.components.movies.domain.ActorFromMovie;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
@@ -13,6 +14,8 @@ public interface ActorRepository {
   Optional<Actor> findByTmdbId(long tmdbId);
 
   Actor save(Actor actor);
+
+  ActorFromMovie save(ActorFromMovie actor);
 
   void deleteById(long id);
 }

@@ -21,11 +21,12 @@ public class CreateMovieController {
     this.createMovieService = createMovieService;
   }
 
-  @Operation(summary = "Create a movie with cast, genres, TMDb identifier and a viewing history.")
+  @Operation(summary = "Creates a movie based on a TMDb id.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public CreateMovieResponse createWithNames(
+  public CreateMovieResponse createMovie(
       @Valid @RequestBody CreateMovieRequest createMovieRequest) {
-    return CreateMovieResponse.from(createMovieService.saveMovie(createMovieRequest.toDomain()));
+    return CreateMovieResponse.from(
+        createMovieService.processCommand(createMovieRequest.toCommand()));
   }
 }

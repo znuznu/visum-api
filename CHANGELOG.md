@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.11.0
+
+- The movie creation request is only based on the TMDb movie id
+
 ## 2.10.0
 
 - Add `posterUrl` and `tmdbId` to `Actor`

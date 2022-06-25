@@ -49,7 +49,7 @@ public class CreateMovieResponse {
   @Schema(description = "The review of the movie created.")
   private final ResponseReview review;
 
-  @Schema(description = "The movie's metadata, containing various informations about it.")
+  @Schema(description = "The movie's metadata, containing various information about it.")
   private final ResponseMovieMetadata metadata;
 
   public static CreateMovieResponse from(Movie movie) {

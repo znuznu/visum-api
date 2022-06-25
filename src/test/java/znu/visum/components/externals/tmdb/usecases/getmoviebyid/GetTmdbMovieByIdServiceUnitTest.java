@@ -90,7 +90,7 @@ class GetTmdbMovieByIdServiceUnitTest {
                             .revenue(200000)
                             .originalLanguage("en")
                             .overview("An awesome overview.")
-                            .basePosterUrl(null)
+                            .posterBaseUrl(null)
                             .posterPath("/something")
                             .runtime(156)
                             .tagline("Such a cool tagline.")
@@ -125,7 +125,7 @@ class GetTmdbMovieByIdServiceUnitTest {
                             .revenue(200000)
                             .originalLanguage("en")
                             .overview("An awesome overview.")
-                            .basePosterUrl(null)
+                            .posterBaseUrl(null)
                             .posterPath("/something")
                             .runtime(156)
                             .tagline("Such a cool tagline.")
@@ -161,7 +161,7 @@ class GetTmdbMovieByIdServiceUnitTest {
                             .originalLanguage("en")
                             .overview("An awesome overview.")
                             .posterPath("/something")
-                            .basePosterUrl(null)
+                            .posterBaseUrl(null)
                             .runtime(156)
                             .tagline("Such a cool tagline.")
                             .build())
@@ -198,7 +198,7 @@ class GetTmdbMovieByIdServiceUnitTest {
     assertThat(movie.getMetadata().getRevenue()).isEqualTo(200000);
     assertThat(movie.getMetadata().getOriginalLanguage()).isEqualTo("en");
     assertThat(movie.getMetadata().getOverview()).isEqualTo("An awesome overview.");
-    assertThat(movie.getMetadata().getBasePosterUrl()).isEqualTo(BASE_POSTER_URL);
+    assertThat(movie.getMetadata().getPosterBaseUrl()).isEqualTo(BASE_POSTER_URL);
     assertThat(movie.getMetadata().getPosterPath()).isEqualTo("/something");
     assertThat(movie.getMetadata().getRuntime()).isEqualTo(156);
     assertThat(movie.getMetadata().getTagline()).isEqualTo("Such a cool tagline.");

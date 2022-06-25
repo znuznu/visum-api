@@ -1,6 +1,7 @@
 package znu.visum.components.people.directors.domain;
 
 import org.springframework.data.domain.Sort;
+import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
@@ -14,5 +15,7 @@ public interface DirectorRepository {
 
   void deleteById(long id);
 
-  Director save(Director movie);
+  Director save(Director director);
+
+  DirectorFromMovie save(DirectorFromMovie director);
 }

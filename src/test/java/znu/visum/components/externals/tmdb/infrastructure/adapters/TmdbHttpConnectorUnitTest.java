@@ -468,7 +468,7 @@ class TmdbHttpConnectorUnitTest {
                   + "team of the crew discovers a chamber containing thousands of eggs on the planet, a creature "
                   + "inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare"
                   + " set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.");
-      assertThat(response.getMetadata().getBasePosterUrl()).isNull();
+      assertThat(response.getMetadata().getPosterBaseUrl()).isNull();
       assertThat(response.getMetadata().getOriginalLanguage()).isEqualTo("en");
       assertThat(response.getGenres()).contains("Horror", "Science Fiction");
     }

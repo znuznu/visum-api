@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+import znu.visum.components.movies.domain.ActorFromMovie;
 import znu.visum.components.people.actors.domain.Actor;
 import znu.visum.components.people.actors.domain.ActorRepository;
 import znu.visum.core.pagination.domain.VisumPage;
@@ -53,6 +54,11 @@ public class PostgresActorRepository implements ActorRepository {
   @Override
   public Actor save(Actor actor) {
     return dataJpaActorRepository.save(ActorEntity.from(actor)).toDomain();
+  }
+
+  @Override
+  public ActorFromMovie save(ActorFromMovie actor) {
+    return dataJpaActorRepository.save(ActorEntity.from(actor)).toActorFromMovieDomain();
   }
 
   @Override

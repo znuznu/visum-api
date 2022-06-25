@@ -5,9 +5,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,10 +17,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import znu.visum.components.externals.domain.*;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnector;
+import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
 import znu.visum.components.movies.usecases.create.application.CreateMovieRequest;
 
 import java.time.LocalDate;
@@ -27,6 +31,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -35,9 +40,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CreateMovieRouteIntegrationTest")
 @ActiveProfiles("flyway")
 class CreateMovieRouteIntegrationTest {
+
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
+  @MockBean TmdbHttpConnector connector;
+  @MockBean GetTmdbMovieByIdService tmdbService;
   @Autowired private MockMvc mvc;
 
   @DynamicPropertySource
@@ -52,25 +60,7 @@ class CreateMovieRouteIntegrationTest {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                    TestMapper.toJsonString(
-                        new CreateMovieRequest(
-                            "Some title",
-                            LocalDate.of(2000, 1, 1),
-                            true,
-                            false,
-                            List.of(
-                                new CreateMovieRequest.RequestGenre("Drama"),
-                                new CreateMovieRequest.RequestGenre("Comedy")),
-                            List.of(
-                                new CreateMovieRequest.RequestActor(
-                                    "Radcliffe", "Daniel", "poster1", 1L),
-                                new CreateMovieRequest.RequestActor(
-                                    "MacLachlan", "Kyle", "poster2", 2L)),
-                            List.of(
-                                new CreateMovieRequest.RequestDirector(
-                                    "Lynch", "David", "fake_url", 1234L)),
-                            CreateMovieRequest.RequestMovieMetadata.builder().build()))))
+                .content(TestMapper.toJsonString(new CreateMovieRequest(1L, true, false))))
         .andExpect(status().isForbidden());
   }
 
@@ -81,198 +71,105 @@ class CreateMovieRouteIntegrationTest {
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                    TestMapper.toJsonString(
-                        new CreateMovieRequest(
-                            "A movie with a TMDb id that exists",
-                            LocalDate.of(2001, 10, 12),
-                            true,
-                            false,
-                            List.of(
-                                new CreateMovieRequest.RequestGenre("Drama"),
-                                new CreateMovieRequest.RequestGenre("Comedy")),
-                            List.of(
-                                new CreateMovieRequest.RequestActor(
-                                    "Radcliffe", "Daniel", "poster1", 1L),
-                                new CreateMovieRequest.RequestActor(
-                                    "MacLachlan", "Kyle", "poster2", 2L)),
-                            List.of(
-                                new CreateMovieRequest.RequestDirector(
-                                    "Lynch", "David", "fake_url", 1234L)),
-                            CreateMovieRequest.RequestMovieMetadata.builder()
-                                .budget(1000)
-                                .revenue(6000)
-                                .imdbId("tt2222")
-                                .tmdbId(555L)
-                                .originalLanguage("jp")
-                                .overview("An overview.")
-                                .tagline("A tagline.")
-                                .runtime(134)
-                                .posterUrl("http://someUrl/KjuIhYyyG78")
-                                .build()))))
+                .content("{\"tmdbId\":555, \"isFavorite\":true, \"isToWatch\":false}"))
         .andExpect(status().isBadRequest())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("The given MOVIE already exists."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
+        .andExpect(jsonPath("$.message").value("The given MOVIE already exists."))
+        .andExpect(jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
+        .andExpect(jsonPath("$.path").value("/api/movies"));
   }
 
   @Test
   @WithMockUser
-  void givenAMovie_whenTheMovieDoesNotExist_itShouldReturnA201Response() throws Exception {
+  void givenATmdbId_whenTheMovieDoesNotExistInVisum_itShouldReturnA201Response() throws Exception {
+    List<ExternalDirector> directors =
+        List.of(new ExternalDirector(2222L, "David", "Lynch", "fake_url2"));
+    List<ExternalActor> actors = List.of(new ExternalActor(666L, "Amber", "Heard", "fake_url666"));
+
+    ExternalMovieMetadata metadata =
+        ExternalMovieMetadata.builder()
+            .tmdbId(60L)
+            .imdbId("tt12345")
+            .budget(1000)
+            .revenue(6000)
+            .runtime(134)
+            .tagline("A tagline.")
+            .overview("An overview.")
+            .originalLanguage("jp")
+            .posterBaseUrl("https://poster.com")
+            .posterPath("/jk8hYt709fDErfgtV")
+            .build();
+
+    ExternalMovie externalMovie =
+        ExternalMovie.builder()
+            .id("7777")
+            .title("Mulholland Drive")
+            .releaseDate(LocalDate.of(2001, 10, 12))
+            .genres(List.of("Drama", "Adventure"))
+            .credits(ExternalMovieCredits.builder().directors(directors).actors(actors).build())
+            .metadata(metadata)
+            .build();
+
+    Mockito.when(tmdbService.getTmdbMovieById(60L)).thenReturn(externalMovie);
+
     mvc.perform(
             post("/api/movies")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                    TestMapper.toJsonString(
-                        new CreateMovieRequest(
-                            "A cool movie title",
-                            LocalDate.of(2001, 10, 12),
-                            true,
-                            false,
-                            List.of(
-                                new CreateMovieRequest.RequestGenre("Drama"),
-                                new CreateMovieRequest.RequestGenre("Comedy")),
-                            List.of(
-                                new CreateMovieRequest.RequestActor(
-                                    "Radcliffe", "Daniel", "poster1", 1L),
-                                new CreateMovieRequest.RequestActor(
-                                    "MacLachlan", "Kyle", "poster2", 2L)),
-                            List.of(
-                                new CreateMovieRequest.RequestDirector(
-                                    "Lynch", "David", "fake_url", 1234L)),
-                            CreateMovieRequest.RequestMovieMetadata.builder()
-                                .budget(1000)
-                                .revenue(6000)
-                                .imdbId("tt12345")
-                                .tmdbId(60L)
-                                .originalLanguage("jp")
-                                .overview("An overview.")
-                                .tagline("A tagline.")
-                                .runtime(134)
-                                .posterUrl("http://someUrl/KjuIhYyyG78")
-                                .build()))))
+                .content("{\"tmdbId\":60, \"isFavorite\":true, \"isToWatch\":true}"))
         .andExpect(status().isCreated())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("A cool movie title"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.releaseDate").value("10/12/2001"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.isFavorite").value("true"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.isToWatch").value("false"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.review", Matchers.is(Matchers.nullValue())))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.viewingHistory").isArray())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath(
-                "$.genres[*].type", Matchers.containsInAnyOrder("Drama", "Comedy")))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath(
-                "$.actors[*].name", Matchers.containsInAnyOrder("Radcliffe", "MacLachlan")))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath(
-                "$.actors[*].forename", Matchers.containsInAnyOrder("Daniel", "Kyle")))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath(
-                "$.directors[*].name", Matchers.containsInAnyOrder("Lynch")))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath(
-                "$.directors[*].forename", Matchers.containsInAnyOrder("David")))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.tmdbId").value(60))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.imdbId").value("tt12345"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.budget").value(1000))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.revenue").value(6000))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.overview").value("An overview."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.runtime").value(134))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.metadata.originalLanguage").value("jp"))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.metadata.posterUrl")
-                .value("http://someUrl/KjuIhYyyG78"));
+        .andExpect(jsonPath("$.id").isNumber())
+        .andExpect(jsonPath("$.title").value("Mulholland Drive"))
+        .andExpect(jsonPath("$.releaseDate").value("10/12/2001"))
+        .andExpect(jsonPath("$.isFavorite").value("true"))
+        .andExpect(jsonPath("$.isToWatch").value("true"))
+        .andExpect(jsonPath("$.review", Matchers.is(Matchers.nullValue())))
+        .andExpect(jsonPath("$.viewingHistory").isArray())
+        .andExpect(jsonPath("$.genres[*].type", Matchers.containsInAnyOrder("Drama", "Adventure")))
+        .andExpect(jsonPath("$.actors[*].name", Matchers.containsInAnyOrder("Heard")))
+        .andExpect(jsonPath("$.actors[*].forename", Matchers.containsInAnyOrder("Amber")))
+        .andExpect(jsonPath("$.directors[*].name", Matchers.containsInAnyOrder("Lynch")))
+        .andExpect(jsonPath("$.directors[*].forename", Matchers.containsInAnyOrder("David")))
+        .andExpect(jsonPath("$.metadata.tmdbId").value(60))
+        .andExpect(jsonPath("$.metadata.imdbId").value("tt12345"))
+        .andExpect(jsonPath("$.metadata.budget").value(1000))
+        .andExpect(jsonPath("$.metadata.revenue").value(6000))
+        .andExpect(jsonPath("$.metadata.tagline").value("A tagline."))
+        .andExpect(jsonPath("$.metadata.overview").value("An overview."))
+        .andExpect(jsonPath("$.metadata.runtime").value(134))
+        .andExpect(jsonPath("$.metadata.originalLanguage").value("jp"))
+        .andExpect(jsonPath("$.metadata.posterUrl").value("https://poster.com/jk8hYt709fDErfgtV"));
   }
 
   @Nested
   class InvalidRequest {
+
     @Test
     @WithMockUser
     void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
-      var expectedSubmessages =
-          List.of(
-              "metadata: must not be null",
-              "genres: must not be null",
-              "title: must not be blank",
-              "directors: must not be null",
-              "releaseDate: must not be null",
-              "actors: must not be null");
+      var expectedSubmessages = List.of("tmdbId: must not be null");
       mvc.perform(post("/api/movies").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
           .andExpect(status().isBadRequest())
           .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message")
+              jsonPath("$.message")
                   .value(
                       allOf(
                           expectedSubmessages.stream()
                               .map(Matchers::containsString)
                               .collect(Collectors.toList()))))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/movies"));
     }
 
     @Test
     @WithMockUser
-    void givenAnEmptyTitle_itShouldReturnA400Response() throws Exception {
+    void givenAnNullTmdbId_itShouldReturnA400Response() throws Exception {
       mvc.perform(
               post("/api/movies")
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
-                  .content(
-                      TestMapper.toJsonString(
-                          new CreateMovieRequest(
-                              " ",
-                              LocalDate.of(2001, 10, 12),
-                              true,
-                              false,
-                              List.of(
-                                  new CreateMovieRequest.RequestGenre("Drama"),
-                                  new CreateMovieRequest.RequestGenre("Comedy")),
-                              List.of(
-                                  new CreateMovieRequest.RequestActor(
-                                      "Radcliffe", "Daniel", "poster1", 1L),
-                                  new CreateMovieRequest.RequestActor(
-                                      "MacLachlan", "Kyle", "poster2", 2L)),
-                              List.of(
-                                  new CreateMovieRequest.RequestDirector(
-                                      "Lynch", "David", "fake_url", 1234L)),
-                              CreateMovieRequest.RequestMovieMetadata.builder().build()))))
+                  .content(TestMapper.toJsonString(new CreateMovieRequest(null, true, false))))
           .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
-    }
-
-    @Test
-    @WithMockUser
-    void givenAnNullTitle_itShouldReturnA400Response() throws Exception {
-      mvc.perform(
-              post("/api/movies")
-                  .contentType(MediaType.APPLICATION_JSON_VALUE)
-                  .content(
-                      TestMapper.toJsonString(
-                          new CreateMovieRequest(
-                              null,
-                              LocalDate.of(2001, 10, 12),
-                              true,
-                              false,
-                              List.of(
-                                  new CreateMovieRequest.RequestGenre("Drama"),
-                                  new CreateMovieRequest.RequestGenre("Comedy")),
-                              List.of(
-                                  new CreateMovieRequest.RequestActor(
-                                      "Radcliffe", "Daniel", "poster1", 1L),
-                                  new CreateMovieRequest.RequestActor(
-                                      "MacLachlan", "Kyle", "poster2", 2L)),
-                              List.of(
-                                  new CreateMovieRequest.RequestDirector(
-                                      "Lynch", "David", "fake_url", 1234L)),
-                              CreateMovieRequest.RequestMovieMetadata.builder().build()))))
-          .andExpect(status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("title: must not be blank"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies"));
+          .andExpect(jsonPath("$.message").value("tmdbId: must not be null"))
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/movies"));
     }
   }
 }

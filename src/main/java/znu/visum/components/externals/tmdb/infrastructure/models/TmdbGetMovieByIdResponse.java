@@ -165,7 +165,7 @@ public class TmdbGetMovieByIdResponse {
                 .revenue(this.revenue)
                 .tagline(this.tagline)
                 .overview(this.overview)
-                .basePosterUrl(null)
+                .posterBaseUrl(null)
                 .posterPath(this.posterPath)
                 .originalLanguage(this.originalLanguage)
                 .build())

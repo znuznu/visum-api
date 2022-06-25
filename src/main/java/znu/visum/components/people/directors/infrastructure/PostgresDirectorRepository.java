@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.people.directors.domain.Director;
 import znu.visum.components.people.directors.domain.DirectorRepository;
 import znu.visum.core.pagination.domain.VisumPage;
@@ -60,5 +61,12 @@ public class PostgresDirectorRepository implements DirectorRepository {
   @Override
   public Director save(Director director) {
     return dataJpaDirectorRepository.save(DirectorEntity.from(director)).toDomain();
+  }
+
+  @Override
+  public DirectorFromMovie save(DirectorFromMovie director) {
+    return dataJpaDirectorRepository
+        .save(DirectorEntity.from(director))
+        .toDirectorFromMovieDomain();
   }
 }
