@@ -5,7 +5,11 @@ import znu.visum.core.errors.domain.NoSuchModelException;
 
 public class NoSuchExternalMovieIdException extends NoSuchModelException {
 
-  public NoSuchExternalMovieIdException(String id) {
-    super(id, DomainModel.EXTERNAL_MOVIE);
+  private NoSuchExternalMovieIdException(long id) {
+    super(String.valueOf(id), DomainModel.EXTERNAL_MOVIE);
+  }
+
+  public static NoSuchExternalMovieIdException withId(long id) {
+    return new NoSuchExternalMovieIdException(id);
   }
 }

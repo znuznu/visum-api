@@ -19,27 +19,27 @@ public class ExternalMovieMetadata {
   private String overview;
   private long budget;
   private long revenue;
-  private String basePosterUrl;
+  private String posterBaseUrl;
   private String posterPath;
   private int runtime;
 
   public Optional<String> getCompletePosterUrl() {
-    if (this.basePosterUrl == null || this.posterPath == null) {
+    if (this.posterBaseUrl == null || this.posterPath == null) {
       return Optional.empty();
     }
 
-    return Optional.of(this.basePosterUrl + "" + this.posterPath);
+    return Optional.of(this.posterBaseUrl + "" + this.posterPath);
   }
 
-  public void setPosterBaseUrl(String basePosterUrl) {
-    this.basePosterUrl = basePosterUrl;
+  public void setPosterBaseUrl(String posterBaseUrl) {
+    this.posterBaseUrl = posterBaseUrl;
   }
 
-  public MovieMetadata toMovieMetadataWithMovieId(long movieId) {
+  public MovieMetadata toMovieMetadata() {
     String posterUrl = this.getCompletePosterUrl().orElse(null);
 
     return MovieMetadata.builder()
-        .movieId(movieId)
+        .movieId(null)
         .tmdbId(this.getTmdbId())
         .imdbId(this.getImdbId())
         .runtime(this.getRuntime())
@@ -50,5 +50,12 @@ public class ExternalMovieMetadata {
         .overview(this.getOverview())
         .posterUrl(posterUrl)
         .build();
+  }
+
+  public MovieMetadata toMovieMetadataWithMovieId(long movieId) {
+    var metadata = this.toMovieMetadata();
+    metadata.setMovieId(movieId);
+
+    return metadata;
   }
 }
