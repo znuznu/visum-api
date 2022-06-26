@@ -24,8 +24,9 @@ import znu.visum.components.movies.domain.MovieMetadata;
 import znu.visum.components.movies.domain.MovieRepository;
 import znu.visum.components.movies.usecases.create.domain.CreateMovieCommand;
 import znu.visum.components.movies.usecases.create.domain.CreateMovieService;
-import znu.visum.components.people.actors.domain.ActorRepository;
-import znu.visum.components.people.directors.domain.DirectorRepository;
+import znu.visum.components.person.actors.domain.ActorRepository;
+import znu.visum.components.person.directors.domain.DirectorRepository;
+import znu.visum.components.person.domain.Identity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -85,18 +86,25 @@ class CreateMovieServiceIntegrationTest {
     List<ExternalDirector> directors =
         List.of(
             // Existing director
-            new ExternalDirector(1234L, null, null, null),
+            new ExternalDirector(1234L, new Identity("", ""), null),
             // New one
-            new ExternalDirector(2222L, "Christopher", "Nolan", "fake_url2"));
+            new ExternalDirector(
+                2222L,
+                Identity.builder().forename("Christopher").name("Nolan").build(),
+                "fake_url2"));
 
     List<ExternalActor> actors =
         List.of(
             // Existing actors
-            new ExternalActor(111L, "Leonardo", "DiCaprio", null),
-            new ExternalActor(222L, "Kyle", "MacLachlan", null),
-            new ExternalActor(444L, "Johnny", "Depp", null),
+            new ExternalActor(
+                111L, Identity.builder().forename("Leonardo").name("DiCaprio").build(), null),
+            new ExternalActor(
+                222L, Identity.builder().forename("Kyle").name("MacLachlan").build(), null),
+            new ExternalActor(
+                444L, Identity.builder().forename("Johnny").name("Depp").build(), null),
             // New one
-            new ExternalActor(666L, "Amber", "Heard", "fake_url666"));
+            new ExternalActor(
+                666L, Identity.builder().forename("Amber").name("Heard").build(), "fake_url666"));
 
     ExternalMovieMetadata metadata =
         ExternalMovieMetadata.builder()
@@ -147,23 +155,23 @@ class CreateMovieServiceIntegrationTest {
         expectedMovie.getActors(),
         containsInAnyOrder(
             allOf(
-                hasProperty("name", is("DiCaprio")),
-                hasProperty("forename", is("Leonardo")),
+                hasProperty("identity", hasProperty("name", is("DiCaprio"))),
+                hasProperty("identity", hasProperty("forename", is("Leonardo"))),
                 hasProperty("metadata", hasProperty("posterUrl", is("fake_url111"))),
                 hasProperty("metadata", hasProperty("tmdbId", is(111L)))),
             allOf(
-                hasProperty("name", is("MacLachlan")),
-                hasProperty("forename", is("Kyle")),
+                hasProperty("identity", hasProperty("name", is("MacLachlan"))),
+                hasProperty("identity", hasProperty("forename", is("Kyle"))),
                 hasProperty("metadata", hasProperty("posterUrl", is("fake_url222"))),
                 hasProperty("metadata", hasProperty("tmdbId", is(222L)))),
             allOf(
-                hasProperty("name", is("Depp")),
-                hasProperty("forename", is("Johnny")),
+                hasProperty("identity", hasProperty("name", is("Depp"))),
+                hasProperty("identity", hasProperty("forename", is("Johnny"))),
                 hasProperty("metadata", hasProperty("posterUrl", is(nullValue()))),
                 hasProperty("metadata", hasProperty("tmdbId", is(444L)))),
             allOf(
-                hasProperty("name", is("Heard")),
-                hasProperty("forename", is("Amber")),
+                hasProperty("identity", hasProperty("name", is("Heard"))),
+                hasProperty("identity", hasProperty("forename", is("Amber"))),
                 hasProperty("metadata", hasProperty("posterUrl", is("fake_url666"))),
                 hasProperty("metadata", hasProperty("tmdbId", is(666L))))));
 
@@ -171,13 +179,13 @@ class CreateMovieServiceIntegrationTest {
         expectedMovie.getDirectors(),
         containsInAnyOrder(
             allOf(
-                hasProperty("name", is("Lynch")),
-                hasProperty("forename", is("David")),
+                hasProperty("identity", hasProperty("name", is("Lynch"))),
+                hasProperty("identity", hasProperty("forename", is("David"))),
                 hasProperty("metadata", hasProperty("posterUrl", is("fake_url"))),
                 hasProperty("metadata", hasProperty("tmdbId", is(1234L)))),
             allOf(
-                hasProperty("name", is("Nolan")),
-                hasProperty("forename", is("Christopher")),
+                hasProperty("identity", hasProperty("name", is("Nolan"))),
+                hasProperty("identity", hasProperty("forename", is("Christopher"))),
                 hasProperty("metadata", hasProperty("posterUrl", is("fake_url2"))),
                 hasProperty("metadata", hasProperty("tmdbId", is(2222L))))));
 

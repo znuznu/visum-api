@@ -79,8 +79,8 @@ public class GetTmdbMovieByIdResponse {
     public static ResponseActor from(ExternalActor externalActor) {
       return ResponseActor.builder()
           .id(externalActor.getId())
-          .name(externalActor.getName())
-          .forename(externalActor.getForename())
+          .name(externalActor.getIdentity().getName())
+          .forename(externalActor.getIdentity().getForename())
           .posterUrl(externalActor.getPosterUrl())
           .build();
     }
@@ -106,8 +106,8 @@ public class GetTmdbMovieByIdResponse {
     public static ResponseDirector from(ExternalDirector externalDirector) {
       return ResponseDirector.builder()
           .id(externalDirector.getId())
-          .name(externalDirector.getName())
-          .forename(externalDirector.getForename())
+          .name(externalDirector.getIdentity().getName())
+          .forename(externalDirector.getIdentity().getForename())
           .posterUrl(externalDirector.getPosterUrl())
           .build();
     }

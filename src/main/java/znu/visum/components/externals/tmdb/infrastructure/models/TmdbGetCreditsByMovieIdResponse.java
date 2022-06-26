@@ -28,7 +28,7 @@ public class TmdbGetCreditsByMovieIdResponse {
         .actors(
             this.cast.stream()
                 .distinct()
-                .map(people -> people.toDomainWithBasePosterUrl(basePosterUrl))
+                .map(people -> people.toDomainWithRootUrl(basePosterUrl))
                 .collect(Collectors.toList()))
         .directors(
             this.crew.stream()

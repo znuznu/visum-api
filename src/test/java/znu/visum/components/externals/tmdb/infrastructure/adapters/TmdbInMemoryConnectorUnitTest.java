@@ -9,7 +9,7 @@ import znu.visum.components.externals.domain.ExternalMovieFromSearch;
 import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
-import znu.visum.core.errors.domain.ExternalApiUnexpectedResponseBodyException;
+import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;

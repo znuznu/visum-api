@@ -1,7 +1,7 @@
 package znu.visum.components.externals.domain;
 
-import znu.visum.core.errors.domain.DomainModel;
-import znu.visum.core.errors.domain.NoSuchModelException;
+import znu.visum.core.exceptions.domain.DomainModel;
+import znu.visum.core.exceptions.domain.NoSuchModelException;
 
 public class NoSuchExternalMovieIdException extends NoSuchModelException {
 

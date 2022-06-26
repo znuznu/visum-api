@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import znu.visum.components.people.actors.domain.Actor;
-import znu.visum.components.people.actors.domain.ActorMetadata;
+import znu.visum.components.person.actors.domain.Actor;
+import znu.visum.components.person.actors.domain.ActorMetadata;
+import znu.visum.components.person.domain.Identity;
 
 @AllArgsConstructor
 @Builder
@@ -13,16 +14,14 @@ import znu.visum.components.people.actors.domain.ActorMetadata;
 public class ActorFromMovie {
 
   @Setter private Long id;
-  private String name;
-  private String forename;
+  private Identity identity;
   private ActorMetadata metadata;
 
   public static ActorFromMovie from(Actor actor) {
     return ActorFromMovie.builder()
         .id(actor.getId())
         .metadata(actor.getMetadata())
-        .name(actor.getName())
-        .forename(actor.getForename())
+        .identity(actor.getIdentity())
         .build();
   }
 }

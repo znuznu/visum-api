@@ -7,7 +7,7 @@ import znu.visum.components.externals.domain.ExternalMovie;
 import znu.visum.components.externals.domain.ExternalMovieCredits;
 import znu.visum.components.externals.domain.NoSuchExternalMovieIdException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
-import znu.visum.core.errors.domain.ExternalInconsistencyException;
+import znu.visum.core.exceptions.domain.ExternalInconsistencyException;
 
 @Service
 public class GetTmdbMovieByIdService {

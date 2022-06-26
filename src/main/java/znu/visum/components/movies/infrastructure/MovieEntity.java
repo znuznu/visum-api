@@ -9,10 +9,10 @@ import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.ReviewFromMovie;
-import znu.visum.components.people.actors.domain.MovieFromActor;
-import znu.visum.components.people.actors.infrastructure.ActorEntity;
-import znu.visum.components.people.directors.domain.MovieFromDirector;
-import znu.visum.components.people.directors.infrastructure.DirectorEntity;
+import znu.visum.components.person.actors.domain.MovieFromActor;
+import znu.visum.components.person.actors.infrastructure.ActorEntity;
+import znu.visum.components.person.directors.domain.MovieFromDirector;
+import znu.visum.components.person.directors.infrastructure.DirectorEntity;
 import znu.visum.components.reviews.domain.MovieFromReview;
 import znu.visum.components.reviews.infrastructure.MovieReviewEntity;
 

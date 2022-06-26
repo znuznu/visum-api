@@ -10,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.people.directors.domain.Director;
-import znu.visum.components.people.directors.domain.NoSuchDirectorIdException;
-import znu.visum.components.people.directors.usecases.getbyid.application.GetByIdDirectorController;
-import znu.visum.components.people.directors.usecases.getbyid.application.GetByIdDirectorResponse;
-import znu.visum.components.people.directors.usecases.getbyid.domain.GetByIdDirectorService;
+import znu.visum.components.person.directors.domain.Director;
+import znu.visum.components.person.directors.domain.NoSuchDirectorIdException;
+import znu.visum.components.person.directors.usecases.getbyid.application.GetByIdDirectorController;
+import znu.visum.components.person.directors.usecases.getbyid.application.GetByIdDirectorResponse;
+import znu.visum.components.person.directors.usecases.getbyid.domain.GetByIdDirectorService;
 
 import java.time.LocalDate;
 import java.util.Arrays;

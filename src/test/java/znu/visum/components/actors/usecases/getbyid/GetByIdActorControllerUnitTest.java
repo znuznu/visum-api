@@ -10,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.people.actors.domain.Actor;
-import znu.visum.components.people.actors.domain.NoSuchActorIdException;
-import znu.visum.components.people.actors.usecases.getbyid.application.GetByIdActorController;
-import znu.visum.components.people.actors.usecases.getbyid.application.GetByIdActorResponse;
-import znu.visum.components.people.actors.usecases.getbyid.domain.GetByIdActorService;
+import znu.visum.components.person.actors.domain.Actor;
+import znu.visum.components.person.actors.domain.NoSuchActorIdException;
+import znu.visum.components.person.actors.usecases.getbyid.application.GetByIdActorController;
+import znu.visum.components.person.actors.usecases.getbyid.application.GetByIdActorResponse;
+import znu.visum.components.person.actors.usecases.getbyid.domain.GetByIdActorService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
