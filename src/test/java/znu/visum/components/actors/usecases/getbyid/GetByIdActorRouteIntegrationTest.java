@@ -12,12 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -49,9 +49,9 @@ class GetByIdActorRouteIntegrationTest {
   void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/actors/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/actors/x"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/actors/x"));
   }
 
   @Test
@@ -59,9 +59,9 @@ class GetByIdActorRouteIntegrationTest {
   void givenANumericalId_whenNoActorWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No ACTOR with id 1 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/actors/1"));
+        .andExpect(jsonPath("$.message").value("No ACTOR with id 1 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/actors/1"));
   }
 
   @Test
@@ -70,12 +70,12 @@ class GetByIdActorRouteIntegrationTest {
   void givenANumericalId_whenAnActorWithTheIdExists_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/actors/{id}", '2').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Winslet"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Kate"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("poster"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value(2L))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isNotEmpty());
+        .andExpect(jsonPath("$.id").value(2))
+        .andExpect(jsonPath("$.name").value("Winslet"))
+        .andExpect(jsonPath("$.forename").value("Kate"))
+        .andExpect(jsonPath("$.posterUrl").value("poster"))
+        .andExpect(jsonPath("$.tmdbId").value(2L))
+        .andExpect(jsonPath("$.movies").isNotEmpty());
   }
 
   @Test
@@ -86,11 +86,11 @@ class GetByIdActorRouteIntegrationTest {
           throws Exception {
     mvc.perform(get("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("MaclachLan"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Kyle"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("poster"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value(1))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isEmpty());
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.name").value("MaclachLan"))
+        .andExpect(jsonPath("$.forename").value("Kyle"))
+        .andExpect(jsonPath("$.posterUrl").value("poster"))
+        .andExpect(jsonPath("$.tmdbId").value(1))
+        .andExpect(jsonPath("$.movies").isEmpty());
   }
 }

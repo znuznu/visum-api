@@ -11,12 +11,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -47,9 +47,9 @@ class DeleteByIdActorRouteIntegrationTest {
   void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/actors/x"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/actors/x"));
   }
 
   @Test
@@ -57,9 +57,9 @@ class DeleteByIdActorRouteIntegrationTest {
   void givenANumericalId_whenNoActorWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No ACTOR with id 1 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/actors/1"));
+        .andExpect(jsonPath("$.message").value("No ACTOR with id 1 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/actors/1"));
   }
 
   @Test
@@ -68,6 +68,6 @@ class DeleteByIdActorRouteIntegrationTest {
   void givenANumericalId_whenAnActorWithTheIdExists_itShouldReturnA204Response() throws Exception {
     mvc.perform(delete("/api/actors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent())
-        .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist());
+        .andExpect(jsonPath("$").doesNotExist());
   }
 }

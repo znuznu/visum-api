@@ -12,12 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -59,7 +59,7 @@ class GetPageActorRouteIntegrationTest {
     mvc.perform(get("/api/actors").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{\"current\":0,"
                         + "\"size\":20,"
@@ -88,7 +88,7 @@ class GetPageActorRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{\"current\":0,"
                         + "\"size\":20,"
@@ -112,7 +112,7 @@ class GetPageActorRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{\"current\":0,"
                         + "\"size\":20,"

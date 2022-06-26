@@ -12,12 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -49,9 +49,9 @@ class GetByIdDirectorRouteIntegrationTest {
   void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/directors/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/directors/x"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/directors/x"));
   }
 
   @Test
@@ -60,10 +60,9 @@ class GetByIdDirectorRouteIntegrationTest {
       throws Exception {
     mvc.perform(get("/api/directors/{id}", "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("No DIRECTOR with id 200 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/directors/200"));
+        .andExpect(jsonPath("$.message").value("No DIRECTOR with id 200 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/directors/200"));
   }
 
   @Test
@@ -73,12 +72,12 @@ class GetByIdDirectorRouteIntegrationTest {
       throws Exception {
     mvc.perform(get("/api/directors/{id}", '2').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nolan"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("Christopher"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("https://fakeurl.com"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value("1234"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isNotEmpty());
+        .andExpect(jsonPath("$.id").value(2))
+        .andExpect(jsonPath("$.name").value("Nolan"))
+        .andExpect(jsonPath("$.forename").value("Christopher"))
+        .andExpect(jsonPath("$.posterUrl").value("https://fakeurl.com"))
+        .andExpect(jsonPath("$.tmdbId").value("1234"))
+        .andExpect(jsonPath("$.movies").isNotEmpty());
   }
 
   @Test
@@ -89,11 +88,11 @@ class GetByIdDirectorRouteIntegrationTest {
           throws Exception {
     mvc.perform(get("/api/directors/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Lynch"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.forename").value("David"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.posterUrl").value("https://fakeurl.com"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.tmdbId").value("1234"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movies").isEmpty());
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.name").value("Lynch"))
+        .andExpect(jsonPath("$.forename").value("David"))
+        .andExpect(jsonPath("$.posterUrl").value("https://fakeurl.com"))
+        .andExpect(jsonPath("$.tmdbId").value("1234"))
+        .andExpect(jsonPath("$.movies").isEmpty());
   }
 }

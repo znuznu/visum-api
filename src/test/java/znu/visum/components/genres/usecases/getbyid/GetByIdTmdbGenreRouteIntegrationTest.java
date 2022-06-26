@@ -12,12 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -49,9 +49,9 @@ class GetByIdTmdbGenreRouteIntegrationTest {
   void givenANonNumericalCharacterAsId_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", 'x').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/genres/x"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/genres/x"));
   }
 
   @Test
@@ -59,9 +59,9 @@ class GetByIdTmdbGenreRouteIntegrationTest {
   void givenANumericalId_whenNoGenreWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No GENRE with id 1 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/genres/1"));
+        .andExpect(jsonPath("$.message").value("No GENRE with id 1 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/genres/1"));
   }
 
   @Test
@@ -70,7 +70,7 @@ class GetByIdTmdbGenreRouteIntegrationTest {
   void givenANumericalId_whenAGenreWithTheIdExists_itShouldReturnA200Response() throws Exception {
     mvc.perform(get("/api/genres/{id}", '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Drama"));
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.type").value("Drama"));
   }
 }

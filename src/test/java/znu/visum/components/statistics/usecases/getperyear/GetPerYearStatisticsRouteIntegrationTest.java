@@ -12,13 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
 @Testcontainers
@@ -50,19 +49,19 @@ class GetPerYearStatisticsRouteIntegrationTest {
   void givenANonNumericalYear_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/statistics/years/xxx").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/statistics/years/xxx"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/statistics/years/xxx"));
   }
 
   @Test
   @WithMockUser
-  void givenAYearInferiorTo1900_itShouldReturnA400Response() throws Exception {
+  void givenAYearOlderThan1900_itShouldReturnA400Response() throws Exception {
     mvc.perform(get("/api/statistics/years/1899").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/statistics/years/1899"));
+        .andExpect(jsonPath("$.message").value("Invalid argument."))
+        .andExpect(jsonPath("$.code").value("INVALID_ARGUMENT"))
+        .andExpect(jsonPath("$.path").value("/api/statistics/years/1899"));
   }
 
   @Test
@@ -75,17 +74,17 @@ class GetPerYearStatisticsRouteIntegrationTest {
     mvc.perform(get("/api/statistics/years/2015").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{"
-                        + " 'movieCount': 0,"
-                        + " 'reviewCount': 0,"
-                        + " 'totalRuntimeInHours': 0,"
-                        + " 'highestRatedMovies': {"
-                        + "  'released': [],"
-                        + "  'older': []"
+                        + " \"movieCount\": 0,"
+                        + " \"reviewCount\": 0,"
+                        + " \"totalRuntimeInHours\": 0,"
+                        + " \"highestRatedMovies\": {"
+                        + "  \"released\": [],"
+                        + "  \"older\": []"
                         + " },"
-                        + " 'movieCountPerGenre': []"
+                        + " \"movieCountPerGenre\": []"
                         + "}"));
   }
 
@@ -100,42 +99,42 @@ class GetPerYearStatisticsRouteIntegrationTest {
     mvc.perform(get("/api/statistics/years/2015").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{"
-                        + " 'movieCount': 2,"
-                        + " 'reviewCount': 3,"
-                        + " 'totalRuntimeInHours': 6,"
-                        + " 'highestRatedMovies': {"
-                        + "  'released': ["
+                        + " \"movieCount\": 2,"
+                        + " \"reviewCount\": 3,"
+                        + " \"totalRuntimeInHours\": 6,"
+                        + " \"highestRatedMovies\": {"
+                        + "  \"released\": ["
                         + "   {"
-                        + "    'id': 18,"
-                        + "    'title': 'Fake movie 18',"
-                        + "    'releaseDate': '01/01/2015',"
-                        + "    'grade': 4,"
-                        + "    'posterUrl': 'An URL 18'"
+                        + "    \"id\": 18,"
+                        + "    \"title\": \"Fake movie 18\","
+                        + "    \"releaseDate\": \"01/01/2015\","
+                        + "    \"grade\": 4,"
+                        + "    \"posterUrl\": \"An URL 18\""
                         + "   }"
                         + "  ],"
-                        + "  'older': ["
+                        + "  \"older\": ["
                         + "   {"
-                        + "    'id': 8,"
-                        + "    'title': 'Fake movie 8',"
-                        + "    'releaseDate': '10/12/2007',"
-                        + "    'grade': 6,"
-                        + "    'posterUrl': 'An URL 8'"
+                        + "    \"id\": 8,"
+                        + "    \"title\": \"Fake movie 8\","
+                        + "    \"releaseDate\": \"10/12/2007\","
+                        + "    \"grade\": 6,"
+                        + "    \"posterUrl\": \"An URL 8\""
                         + "   },"
                         + "   {"
-                        + "    'id': 14,"
-                        + "    'title': 'Fake movie 14',"
-                        + "    'releaseDate': '10/12/2014',"
-                        + "    'grade': 1,"
-                        + "    'posterUrl': 'An URL 14'"
+                        + "    \"id\": 14,"
+                        + "    \"title\": \"Fake movie 14\","
+                        + "    \"releaseDate\": \"10/12/2014\","
+                        + "    \"grade\": 1,"
+                        + "    \"posterUrl\": \"An URL 14\""
                         + "   }"
                         + "  ]"
                         + " },"
-                        + " 'movieCountPerGenre': ["
-                        + "  {'key':'Horror','value':2},"
-                        + "  {'key':'Animation','value':1}"
+                        + " \"movieCountPerGenre\": ["
+                        + "  {\"key\":\"Horror\",\"value\":2},"
+                        + "  {\"key\":\"Animation\",\"value\":1}"
                         + " ]"
                         + "}"));
   }
