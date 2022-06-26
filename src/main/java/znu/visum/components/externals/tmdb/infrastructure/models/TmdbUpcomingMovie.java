@@ -53,7 +53,7 @@ public class TmdbUpcomingMovie {
     this.posterPath = posterPath;
   }
 
-  public ExternalUpcomingMovie toDomainWithBasePosterUrl(String basePosterUrl) {
+  public ExternalUpcomingMovie toDomainWithRootUrl(String basePosterUrl) {
     String posterUrl = posterPath != null ? basePosterUrl + posterPath : null;
 
     return ExternalUpcomingMovie.builder()
