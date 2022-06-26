@@ -53,7 +53,7 @@ public class TmdbMovieFromSearch {
     this.posterPath = posterPath;
   }
 
-  public ExternalMovieFromSearch toDomainWithBaseUrl(String basePosterUrl) {
+  public ExternalMovieFromSearch toDomainWithRootUrl(String basePosterUrl) {
     String posterUrl = this.posterPath != null ? basePosterUrl + this.posterPath : null;
 
     return ExternalMovieFromSearch.builder()

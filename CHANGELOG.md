@@ -3,6 +3,7 @@
 ## 2.11.0
 
 - The movie creation request is only based on the TMDb movie id
+- Retrieves the configuration root poster URL inside the connector's method
 
 ## 2.10.0
 
@@ -91,8 +92,8 @@
 ## 2.2.0
 
 - Add statistics:
-  - _get all-time_ and _get per year_ usecases
-  - add two routes: `/statistics/years` and `/statistics/years/<year>`
+    - _get all-time_ and _get per year_ usecases
+    - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
 ## 2.1.1
 

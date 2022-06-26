@@ -23,9 +23,7 @@ import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetUpco
 import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbSearchMoviesResponseBodyValidationHandler;
 import znu.visum.core.pagination.domain.VisumPage;
 
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
@@ -83,21 +81,8 @@ public class TmdbHttpConnector implements TmdbConnector {
                       new TmdbSearchMoviesResponseBodyValidationHandler().validate(Mono.just(body)))
               .block();
 
-      // TODO generic Function or BiFunction
-      var movies =
-          Arrays.stream(response.getResults())
-              .map(movie -> movie.toDomainWithBaseUrl(rootUrl))
-              .collect(Collectors.toUnmodifiableList());
-
-      return VisumPage.<ExternalMovieFromSearch>builder()
-          .current(response.getPage())
-          .content(movies)
-          .isFirst(response.getPage() == 1)
-          .isLast(response.getPage() == response.getTotalPages())
-          .size(response.getResults().length)
-          .totalElements(response.getTotalResults())
-          .totalPages(response.getTotalPages())
-          .build();
+      return TmdbPageResponseMapper.toVisumPage(
+          response, TmdbMovieFromSearch::toDomainWithRootUrl, rootUrl);
 
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
@@ -133,21 +118,8 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .validate(Mono.just(body)))
               .block();
 
-      // TODO generic Function or BiFunction
-      var movies =
-          Arrays.stream(response.getResults())
-              .map(movie -> movie.toDomainWithBasePosterUrl(rootUrl))
-              .collect(Collectors.toUnmodifiableList());
-
-      return VisumPage.<ExternalUpcomingMovie>builder()
-          .current(response.getPage())
-          .content(movies)
-          .isFirst(response.getPage() == 1)
-          .isLast(response.getPage() == response.getTotalPages())
-          .size(response.getResults().length)
-          .totalElements(response.getTotalResults())
-          .totalPages(response.getTotalPages())
-          .build();
+      return TmdbPageResponseMapper.toVisumPage(
+          response, TmdbUpcomingMovie::toDomainWithRootUrl, rootUrl);
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
