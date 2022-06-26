@@ -23,6 +23,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @DisplayName("SearchTmdbMoviesServiceUnitTest")
 class SearchTmdbMoviesServiceUnitTest {
 
+  static final String BASE_POSTER_URL = "https://fake-url.io";
+
   private SearchTmdbMoviesService service;
 
   @Mock private TmdbConnector connector;
@@ -33,7 +35,7 @@ class SearchTmdbMoviesServiceUnitTest {
   }
 
   @Test
-  @DisplayName("when the connector throws on the search method, it should bubble up and throw")
+  @DisplayName("when the connector throws, it should bubble up the exception")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.searchMovies("Title", 1))
         .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
@@ -45,56 +47,7 @@ class SearchTmdbMoviesServiceUnitTest {
 
   @Test
   @DisplayName(
-      "when the connector throws on the get poster URL method, it should return the page with unaltered base poster URL")
-  void whenTheConnectorThrowsOnGetConfigurationBasePosterUrl_itShouldReturnThePageUnaltered() {
-    Mockito.when(connector.searchMovies("Title", 1))
-        .thenReturn(
-            VisumPage.<ExternalMovieFromSearch>builder()
-                .isFirst(true)
-                .isLast(true)
-                .current(0)
-                .size(1)
-                .totalElements(1)
-                .totalPages(1)
-                .content(
-                    List.of(
-                        ExternalMovieFromSearch.builder()
-                            .id(1)
-                            .title("Title one")
-                            .releaseDate(LocalDate.of(2020, 1, 1))
-                            .posterPath("/1234abcd")
-                            .basePosterUrl(null)
-                            .build()))
-                .build());
-
-    Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
-
-    assertThat(service.searchMovies("Title", 1))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            VisumPage.<ExternalMovieFromSearch>builder()
-                .isFirst(true)
-                .isLast(true)
-                .current(0)
-                .size(1)
-                .totalElements(1)
-                .totalPages(1)
-                .content(
-                    List.of(
-                        ExternalMovieFromSearch.builder()
-                            .id(1)
-                            .title("Title one")
-                            .releaseDate(LocalDate.of(2020, 1, 1))
-                            .posterPath("/1234abcd")
-                            .basePosterUrl(null)
-                            .build()))
-                .build());
-  }
-
-  @Test
-  @DisplayName(
-      "when the connector return movies and base poster url, it should return the page with a complete URL")
+      "When the connector returnsmovies and base poster url, it should return the page with a complete URL")
   void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
     Mockito.when(connector.searchMovies("Title", 1))
         .thenReturn(
@@ -111,20 +64,15 @@ class SearchTmdbMoviesServiceUnitTest {
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
-                            .posterPath("/poster1")
-                            .basePosterUrl(null)
+                            .posterUrl(BASE_POSTER_URL + "/poster1")
                             .build(),
                         ExternalMovieFromSearch.builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))
-                            .posterPath("/poster2")
-                            .basePosterUrl(null)
+                            .posterUrl(BASE_POSTER_URL + "/poster2")
                             .build()))
                 .build());
-
-    Mockito.when(connector.getConfigurationBasePosterUrl())
-        .thenReturn("https://image.tmdb.org/t/p/w500");
 
     assertThat(service.searchMovies("Title", 1))
         .usingRecursiveComparison()
@@ -142,21 +90,19 @@ class SearchTmdbMoviesServiceUnitTest {
                             .id(1)
                             .title("Title one")
                             .releaseDate(LocalDate.of(2020, 1, 1))
-                            .posterPath("/poster1")
-                            .basePosterUrl("https://image.tmdb.org/t/p/w500")
+                            .posterUrl(BASE_POSTER_URL + "/poster1")
                             .build(),
                         ExternalMovieFromSearch.builder()
                             .id(2)
                             .title("Title two")
                             .releaseDate(LocalDate.of(2013, 1, 1))
-                            .posterPath("/poster2")
-                            .basePosterUrl("https://image.tmdb.org/t/p/w500")
+                            .posterUrl(BASE_POSTER_URL + "/poster2")
                             .build()))
                 .build());
   }
 
   @Test
-  @DisplayName("given an invalid page number (< 0), it should bubble up and throw")
+  @DisplayName("given an invalid page number (< 0), it should bubble up the exception")
   void whenTheConnectorThrowsOnSearchMovie_itShouldBubbleUpAndThrow() {
     assertThatThrownBy(() -> service.searchMovies("Title", 0))
         .isInstanceOf(IllegalArgumentException.class)

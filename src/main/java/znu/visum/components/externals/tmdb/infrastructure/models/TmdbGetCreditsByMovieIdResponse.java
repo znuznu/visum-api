@@ -23,7 +23,7 @@ public class TmdbGetCreditsByMovieIdResponse {
   @JsonProperty("crew")
   private List<TmdbCrewPeople> crew;
 
-  public ExternalMovieCredits toDomainWithBasePosterUrl(String basePosterUrl) {
+  public ExternalMovieCredits toDomainWithRootUrl(String basePosterUrl) {
     return ExternalMovieCredits.builder()
         .actors(
             this.cast.stream()

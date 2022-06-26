@@ -19,18 +19,14 @@ public class GetTmdbMovieByIdService {
   }
 
   public ExternalMovie getTmdbMovieById(long movieId) {
-    String posterBaseUrl = this.connector.getConfigurationBasePosterUrl();
-
     ExternalMovie movie =
         connector
-            // TODO Should pass the posterBaseUrl to avoid doing merge later; it's a TMDb thing
             .getMovieById(movieId)
             .orElseThrow(() -> NoSuchExternalMovieIdException.withId(movieId));
-    movie.getMetadata().setPosterBaseUrl(posterBaseUrl);
 
     ExternalMovieCredits credits =
         connector
-            .getCreditsByMovieId(movieId, posterBaseUrl)
+            .getCreditsByMovieId(movieId)
             .orElseThrow(
                 () ->
                     ExternalInconsistencyException.withMessage(

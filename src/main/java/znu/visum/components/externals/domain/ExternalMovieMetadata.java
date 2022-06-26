@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import znu.visum.components.movies.domain.MovieMetadata;
 
-import java.util.Optional;
-
 @AllArgsConstructor
 @Builder
 @Getter
@@ -19,36 +17,21 @@ public class ExternalMovieMetadata {
   private String overview;
   private long budget;
   private long revenue;
-  private String posterBaseUrl;
-  private String posterPath;
+  private String posterUrl;
   private int runtime;
 
-  public Optional<String> getCompletePosterUrl() {
-    if (this.posterBaseUrl == null || this.posterPath == null) {
-      return Optional.empty();
-    }
-
-    return Optional.of(this.posterBaseUrl + "" + this.posterPath);
-  }
-
-  public void setPosterBaseUrl(String posterBaseUrl) {
-    this.posterBaseUrl = posterBaseUrl;
-  }
-
   public MovieMetadata toMovieMetadata() {
-    String posterUrl = this.getCompletePosterUrl().orElse(null);
-
     return MovieMetadata.builder()
         .movieId(null)
-        .tmdbId(this.getTmdbId())
-        .imdbId(this.getImdbId())
-        .runtime(this.getRuntime())
-        .revenue(this.getRevenue())
-        .originalLanguage(this.getOriginalLanguage())
-        .tagline(this.getTagline())
-        .budget(this.getBudget())
-        .overview(this.getOverview())
-        .posterUrl(posterUrl)
+        .tmdbId(this.tmdbId)
+        .imdbId(this.imdbId)
+        .runtime(this.runtime)
+        .revenue(this.revenue)
+        .originalLanguage(this.originalLanguage)
+        .tagline(this.tagline)
+        .budget(this.budget)
+        .overview(this.overview)
+        .posterUrl(this.posterUrl)
         .build();
   }
 

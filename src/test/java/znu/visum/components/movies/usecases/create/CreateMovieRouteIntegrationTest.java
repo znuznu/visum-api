@@ -95,8 +95,7 @@ class CreateMovieRouteIntegrationTest {
             .tagline("A tagline.")
             .overview("An overview.")
             .originalLanguage("jp")
-            .posterBaseUrl("https://poster.com")
-            .posterPath("/jk8hYt709fDErfgtV")
+            .posterUrl("https://poster.com/jk8hYt709fDErfgtV")
             .build();
 
     ExternalMovie externalMovie =

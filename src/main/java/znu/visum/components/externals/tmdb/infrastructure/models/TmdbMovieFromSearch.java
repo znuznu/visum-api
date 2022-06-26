@@ -53,13 +53,14 @@ public class TmdbMovieFromSearch {
     this.posterPath = posterPath;
   }
 
-  public ExternalMovieFromSearch toDomain() {
+  public ExternalMovieFromSearch toDomainWithBaseUrl(String basePosterUrl) {
+    String posterUrl = this.posterPath != null ? basePosterUrl + this.posterPath : null;
+
     return ExternalMovieFromSearch.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .posterPath(this.posterPath)
-        .basePosterUrl(null)
+        .posterUrl(posterUrl)
         .build();
   }
 }

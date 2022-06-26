@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import znu.visum.components.externals.domain.ExternalUpcomingMovie;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.core.pagination.domain.VisumPage;
-
-import java.util.stream.Collectors;
 
 @Service
 public class GetUpcomingTmdbMoviesService {
@@ -27,38 +24,6 @@ public class GetUpcomingTmdbMoviesService {
       throw new IllegalArgumentException("TMDb page number should be >= 1.");
     }
 
-    VisumPage<ExternalUpcomingMovie> page = this.connector.getUpcomingMovies(pageNumber);
-
-    if (page.getTotalElements() > 0) {
-      try {
-        String basePosterUrl = this.connector.getConfigurationBasePosterUrl();
-
-        return VisumPage.<ExternalUpcomingMovie>builder()
-            .size(page.getSize())
-            .isFirst(page.isFirst())
-            .isLast(page.isLast())
-            .totalElements(page.getTotalElements())
-            .totalPages(page.getTotalPages())
-            .current(page.getCurrent())
-            .content(
-                page.getContent().stream()
-                    .map(
-                        movie ->
-                            ExternalUpcomingMovie.builder()
-                                .id(movie.getId())
-                                .releaseDate(movie.getReleaseDate())
-                                .posterPath(movie.getPosterPath())
-                                .title(movie.getTitle())
-                                .basePosterUrl(basePosterUrl)
-                                .posterPath(movie.getPosterPath())
-                                .build())
-                    .collect(Collectors.toList()))
-            .build();
-      } catch (TmdbApiException e) {
-        logger.warn("An error occurred while calling TMDb configuration endpoint.");
-      }
-    }
-
-    return page;
+    return this.connector.getUpcomingMovies(pageNumber);
   }
 }

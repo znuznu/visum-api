@@ -29,11 +29,6 @@ public class GetUpcomingTmdbMoviesResponse {
 
   public static GetUpcomingTmdbMoviesResponse from(ExternalUpcomingMovie movie) {
     return new GetUpcomingTmdbMoviesResponse(
-        movie.getId(),
-        movie.getTitle(),
-        movie.getReleaseDate(),
-        movie.hasCompletePosterUrl()
-            ? movie.getBasePosterUrl() + "" + movie.getPosterPath()
-            : null);
+        movie.getId(), movie.getTitle(), movie.getReleaseDate(), movie.getPosterUrl());
   }
 }

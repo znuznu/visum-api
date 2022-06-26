@@ -23,7 +23,9 @@ import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetUpco
 import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbSearchMoviesResponseBodyValidationHandler;
 import znu.visum.core.pagination.domain.VisumPage;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
@@ -56,6 +58,8 @@ public class TmdbHttpConnector implements TmdbConnector {
   public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
     logger.info("Call to TMDb /search/movie?query={}&page={}", search, pageNumber);
 
+    String rootUrl = this.getConfigurationRootPosterUrl();
+
     try {
       TmdbSearchMoviesResponse response =
           this.webClient
@@ -79,7 +83,22 @@ public class TmdbHttpConnector implements TmdbConnector {
                       new TmdbSearchMoviesResponseBodyValidationHandler().validate(Mono.just(body)))
               .block();
 
-      return TmdbPageResponseMapper.toVisumPage(response, TmdbMovieFromSearch::toDomain);
+      // TODO generic Function or BiFunction
+      var movies =
+          Arrays.stream(response.getResults())
+              .map(movie -> movie.toDomainWithBaseUrl(rootUrl))
+              .collect(Collectors.toUnmodifiableList());
+
+      return VisumPage.<ExternalMovieFromSearch>builder()
+          .current(response.getPage())
+          .content(movies)
+          .isFirst(response.getPage() == 1)
+          .isLast(response.getPage() == response.getTotalPages())
+          .size(response.getResults().length)
+          .totalElements(response.getTotalResults())
+          .totalPages(response.getTotalPages())
+          .build();
+
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
@@ -88,6 +107,8 @@ public class TmdbHttpConnector implements TmdbConnector {
   @Override
   public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber) {
     logger.info("Call to TMDb /movie/upcoming");
+
+    String rootUrl = getConfigurationRootPosterUrl();
 
     try {
       TmdbGetUpcomingMoviesResponse response =
@@ -112,9 +133,21 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .validate(Mono.just(body)))
               .block();
 
-      assert response != null;
+      // TODO generic Function or BiFunction
+      var movies =
+          Arrays.stream(response.getResults())
+              .map(movie -> movie.toDomainWithBasePosterUrl(rootUrl))
+              .collect(Collectors.toUnmodifiableList());
 
-      return TmdbPageResponseMapper.toVisumPage(response, TmdbUpcomingMovie::toDomain);
+      return VisumPage.<ExternalUpcomingMovie>builder()
+          .current(response.getPage())
+          .content(movies)
+          .isFirst(response.getPage() == 1)
+          .isLast(response.getPage() == response.getTotalPages())
+          .size(response.getResults().length)
+          .totalElements(response.getTotalResults())
+          .totalPages(response.getTotalPages())
+          .build();
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
@@ -124,41 +157,43 @@ public class TmdbHttpConnector implements TmdbConnector {
   public Optional<ExternalMovie> getMovieById(long movieId) {
     logger.info("Call to TMDb /movie/{}", movieId);
 
-    try {
-      Optional<TmdbGetMovieByIdResponse> response =
-          this.webClient
-              .get()
-              .uri(
-                  tmdbApiBaseUrl,
-                  uriBuilder ->
-                      uriBuilder
-                          .path(String.format("/movie/%d", movieId))
-                          .queryParam("api_key", tmdbApiKey)
-                          .queryParam("language", LANGUAGE)
-                          .build())
-              .header("Accept", CONTENT_TYPE)
-              .retrieve()
-              .bodyToMono(TmdbGetMovieByIdResponse.class)
-              // TODO fix to only validate non Empty mono
-              .flatMap(
-                  body ->
-                      new TmdbGetMovieByIdResponseBodyValidationHandler()
-                          .validate(Mono.justOrEmpty(body)))
-              .onErrorResume(
-                  WebClientResponseException.class,
-                  exception ->
-                      exception.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(exception))
-              .blockOptional();
+    String rootUrl = getConfigurationRootPosterUrl();
 
-      return response.map(TmdbGetMovieByIdResponse::toDomain);
+    try {
+      return this.webClient
+          .get()
+          .uri(
+              tmdbApiBaseUrl,
+              uriBuilder ->
+                  uriBuilder
+                      .path(String.format("/movie/%d", movieId))
+                      .queryParam("api_key", tmdbApiKey)
+                      .queryParam("language", LANGUAGE)
+                      .build())
+          .header("Accept", CONTENT_TYPE)
+          .retrieve()
+          .bodyToMono(TmdbGetMovieByIdResponse.class)
+          // TODO fix to only validate non Empty mono
+          .flatMap(
+              body ->
+                  new TmdbGetMovieByIdResponseBodyValidationHandler()
+                      .validate(Mono.justOrEmpty(body)))
+          .onErrorResume(
+              WebClientResponseException.class,
+              exception ->
+                  exception.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(exception))
+          .blockOptional()
+          .map(response -> response.toDomainWithRootUrl(rootUrl));
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
   }
 
   @Override
-  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId, String basePosterUrl) {
+  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
     logger.info("Call to TMDb /movie/{}/credits", movieId);
+
+    String rootUrl = getConfigurationRootPosterUrl();
 
     try {
       return this.webClient
@@ -179,7 +214,7 @@ public class TmdbHttpConnector implements TmdbConnector {
               exception ->
                   exception.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(exception))
           .blockOptional()
-          .map(creditsResponse -> creditsResponse.toDomainWithBasePosterUrl(basePosterUrl));
+          .map(creditsResponse -> creditsResponse.toDomainWithRootUrl(rootUrl));
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }
@@ -187,7 +222,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   @Cacheable("tmdbBasePosterUrl")
-  public String getConfigurationBasePosterUrl() {
+  public String getConfigurationRootPosterUrl() {
     logger.info("Call to TMDb /configuration");
 
     try {
