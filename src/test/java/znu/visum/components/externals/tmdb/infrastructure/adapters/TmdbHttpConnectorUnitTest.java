@@ -9,7 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
-import znu.visum.core.errors.domain.ExternalApiUnexpectedResponseBodyException;
+import znu.visum.components.person.domain.Identity;
+import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.io.IOException;
@@ -356,19 +357,38 @@ class TmdbHttpConnectorUnitTest {
       assertThat(credits.getActors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalActor(6193, "Leonardo", "DiCaprio", ROOT_POSTER_URL + "/poster6193.jpg"),
-              new ExternalActor(9999, "Leonardo", "DiCaprio", ROOT_POSTER_URL + "/poster9999.jpg"),
-              new ExternalActor(204, "Kate", "Winslet", ROOT_POSTER_URL + "/poster204.jpg"),
               new ExternalActor(
-                  1954, "Billy", "Zane Zune Zone", ROOT_POSTER_URL + "/poster1954.jpg"));
+                  6193,
+                  Identity.builder().forename("Leonardo").name("DiCaprio").build(),
+                  ROOT_POSTER_URL + "/poster6193.jpg"),
+              new ExternalActor(
+                  9999,
+                  Identity.builder().forename("Leonardo").name("DiCaprio").build(),
+                  ROOT_POSTER_URL + "/poster9999.jpg"),
+              new ExternalActor(
+                  204,
+                  Identity.builder().forename("Kate").name("Winslet").build(),
+                  ROOT_POSTER_URL + "/poster204.jpg"),
+              new ExternalActor(
+                  1954,
+                  Identity.builder().forename("Billy").name("Zane Zune Zone").build(),
+                  ROOT_POSTER_URL + "/poster1954.jpg"));
 
       assertThat(credits.getDirectors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalDirector(2710, "James", "Cameron", ROOT_POSTER_URL + "/poster2710.jpg"),
               new ExternalDirector(
-                  7890, "James", "Cameron Number Two", ROOT_POSTER_URL + "/poster7890.jpg"),
-              new ExternalDirector(1000, "James", "", ROOT_POSTER_URL + "/poster1000.jpg"));
+                  2710,
+                  Identity.builder().forename("James").name("Cameron").build(),
+                  ROOT_POSTER_URL + "/poster2710.jpg"),
+              new ExternalDirector(
+                  7890,
+                  Identity.builder().forename("James").name("Cameron Number Two").build(),
+                  ROOT_POSTER_URL + "/poster7890.jpg"),
+              new ExternalDirector(
+                  1000,
+                  Identity.builder().forename("James").name("").build(),
+                  ROOT_POSTER_URL + "/poster1000.jpg"));
     }
   }
 

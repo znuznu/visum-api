@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Setter;
 import znu.visum.components.externals.domain.ExternalDirector;
+import znu.visum.components.person.domain.Identity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Setter
@@ -24,22 +25,11 @@ public class TmdbCrewPeople extends TmdbCreditsPeople {
 
   public ExternalDirector toDomainWithBasePosterUrl(String basePosterUrl) {
     if (!this.isDirector()) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Could not map a crew people that isn't a director.");
     }
 
     String posterUrl = profilePath != null ? basePosterUrl + profilePath : null;
 
-    String trimName = this.getName().trim();
-    int firstDelimiterIndex = trimName.indexOf(" ");
-
-    if (firstDelimiterIndex < 0) {
-      return new ExternalDirector(this.getId(), trimName, "", posterUrl);
-    }
-
-    return new ExternalDirector(
-        this.getId(),
-        trimName.substring(0, firstDelimiterIndex),
-        trimName.substring(firstDelimiterIndex + 1),
-        posterUrl);
+    return new ExternalDirector(this.getId(), Identity.fromPlain(this.getName()), posterUrl);
   }
 }

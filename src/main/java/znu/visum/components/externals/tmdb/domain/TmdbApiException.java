@@ -1,7 +1,7 @@
 package znu.visum.components.externals.tmdb.domain;
 
-import znu.visum.core.errors.domain.VisumException;
-import znu.visum.core.errors.domain.VisumExceptionStatus;
+import znu.visum.core.exceptions.domain.VisumException;
+import znu.visum.core.exceptions.domain.VisumExceptionStatus;
 
 public class TmdbApiException extends VisumException {
 

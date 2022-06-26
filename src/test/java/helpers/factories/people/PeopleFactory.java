@@ -1,15 +1,11 @@
 package helpers.factories.people;
 
-import znu.visum.components.people.domain.People;
-
-import java.util.List;
+import znu.visum.components.person.domain.Person;
 
 public abstract class PeopleFactory {
-  public People getWithKind(PeopleKind peopleKind) {
+  public Person getWithKind(PeopleKind peopleKind) {
     return createPeople(peopleKind);
   }
 
-  protected abstract People createPeople(PeopleKind peopleKind);
-
-  protected abstract List<? extends People> createPeoples(PeopleKind peopleKind, int count);
+  protected abstract Person createPeople(PeopleKind peopleKind);
 }

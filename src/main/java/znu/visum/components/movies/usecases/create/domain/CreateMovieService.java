@@ -7,8 +7,8 @@ import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbM
 import znu.visum.components.genres.domain.Genre;
 import znu.visum.components.genres.domain.GenreRepository;
 import znu.visum.components.movies.domain.*;
-import znu.visum.components.people.actors.domain.ActorRepository;
-import znu.visum.components.people.directors.domain.DirectorRepository;
+import znu.visum.components.person.actors.domain.ActorRepository;
+import znu.visum.components.person.directors.domain.DirectorRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

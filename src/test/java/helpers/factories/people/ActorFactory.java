@@ -1,21 +1,20 @@
 package helpers.factories.people;
 
-import znu.visum.components.people.actors.domain.Actor;
-import znu.visum.components.people.actors.domain.ActorMetadata;
-import znu.visum.components.people.actors.domain.MovieFromActor;
+import znu.visum.components.person.actors.domain.Actor;
+import znu.visum.components.person.actors.domain.ActorMetadata;
+import znu.visum.components.person.actors.domain.MovieFromActor;
+import znu.visum.components.person.domain.Identity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ActorFactory extends PeopleFactory {
   protected Actor createPeople(PeopleKind peopleKind) {
     if (peopleKind == PeopleKind.WITHOUT_MOVIES) {
       return Actor.builder()
           .id(1L)
-          .name("Pattinson")
-          .forename("Robert")
+          .identity(Identity.builder().name("Pattinson").forename("Robert").build())
           .movies(new ArrayList<>())
           .metadata(ActorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
@@ -24,8 +23,7 @@ public class ActorFactory extends PeopleFactory {
     if (peopleKind == PeopleKind.WITH_MOVIES) {
       return Actor.builder()
           .id(1L)
-          .name("Pattinson")
-          .forename("Robert")
+          .identity(Identity.builder().name("Pattinson").forename("Robert").build())
           .movies(
               Arrays.asList(
                   MovieFromActor.builder()
@@ -54,26 +52,5 @@ public class ActorFactory extends PeopleFactory {
     }
 
     throw new RuntimeException("Unknown people kind");
-  }
-
-  protected List<Actor> createPeoples(PeopleKind peopleKind, int count) {
-    if (count < 1) {
-      throw new RuntimeException("Count must be >= 1");
-    }
-
-    List<Actor> actors = new ArrayList<>();
-
-    for (long i = 0; i < count; i++) {
-      Actor actor =
-          Actor.builder()
-              .id(i)
-              .name(String.format("Name%s", i))
-              .forename(String.format("Forename%s", i))
-              .build();
-
-      actors.add(actor);
-    }
-
-    return actors;
   }
 }

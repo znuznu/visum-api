@@ -8,9 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.people.actors.domain.NoSuchActorIdException;
-import znu.visum.components.people.actors.usecases.deletebyid.application.DeleteByIdActorController;
-import znu.visum.components.people.actors.usecases.deletebyid.domain.DeleteByIdActorService;
+import znu.visum.components.person.actors.domain.NoSuchActorIdException;
+import znu.visum.components.person.actors.usecases.deletebyid.application.DeleteByIdActorController;
+import znu.visum.components.person.actors.usecases.deletebyid.domain.DeleteByIdActorService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteByIdActorControllerUnitTest")

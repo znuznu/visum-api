@@ -87,9 +87,9 @@ public class CreateMovieResponse {
     private final String name;
     private final String forename;
 
-    public static ResponseActor from(ActorFromMovie actorFromMovie) {
+    public static ResponseActor from(ActorFromMovie actor) {
       return new ResponseActor(
-          actorFromMovie.getId(), actorFromMovie.getName(), actorFromMovie.getForename());
+          actor.getId(), actor.getIdentity().getName(), actor.getIdentity().getForename());
     }
   }
 
@@ -101,9 +101,9 @@ public class CreateMovieResponse {
     private final String name;
     private final String forename;
 
-    public static ResponseDirector from(DirectorFromMovie directorFromMovie) {
+    public static ResponseDirector from(DirectorFromMovie director) {
       return new ResponseDirector(
-          directorFromMovie.getId(), directorFromMovie.getName(), directorFromMovie.getForename());
+          director.getId(), director.getIdentity().getName(), director.getIdentity().getForename());
     }
   }
 

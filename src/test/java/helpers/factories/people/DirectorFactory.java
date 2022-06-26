@@ -1,21 +1,20 @@
 package helpers.factories.people;
 
-import znu.visum.components.people.directors.domain.Director;
-import znu.visum.components.people.directors.domain.DirectorMetadata;
-import znu.visum.components.people.directors.domain.MovieFromDirector;
+import znu.visum.components.person.directors.domain.Director;
+import znu.visum.components.person.directors.domain.DirectorMetadata;
+import znu.visum.components.person.directors.domain.MovieFromDirector;
+import znu.visum.components.person.domain.Identity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class DirectorFactory extends PeopleFactory {
   protected Director createPeople(PeopleKind peopleKind) {
     if (peopleKind == PeopleKind.WITHOUT_MOVIES) {
       return Director.builder()
           .id(1L)
-          .name("Lynch")
-          .forename("David")
+          .identity(Identity.builder().name("Lynch").forename("David").build())
           .movies(new ArrayList<>())
           .metadata(DirectorMetadata.builder().posterUrl("fake_url").tmdbId(1234L).build())
           .build();
@@ -24,8 +23,7 @@ public class DirectorFactory extends PeopleFactory {
     if (peopleKind == PeopleKind.WITH_MOVIES) {
       return Director.builder()
           .id(1L)
-          .name("Lynch")
-          .forename("David")
+          .identity(Identity.builder().name("Lynch").forename("David").build())
           .movies(
               Arrays.asList(
                   MovieFromDirector.builder()
@@ -54,26 +52,5 @@ public class DirectorFactory extends PeopleFactory {
     }
 
     throw new RuntimeException("Unknown people kind");
-  }
-
-  protected List<Director> createPeoples(PeopleKind peopleKind, int count) {
-    if (count < 1) {
-      throw new RuntimeException("Count must be >= 1");
-    }
-
-    List<Director> directors = new ArrayList<>();
-
-    for (long i = 0; i < count; i++) {
-      Director director =
-          Director.builder()
-              .id(i)
-              .name(String.format("Name%s", i))
-              .forename(String.format("Forename%s", i))
-              .build();
-
-      directors.add(director);
-    }
-
-    return directors;
   }
 }

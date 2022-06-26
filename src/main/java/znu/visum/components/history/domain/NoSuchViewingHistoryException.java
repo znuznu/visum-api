@@ -1,7 +1,7 @@
 package znu.visum.components.history.domain;
 
-import znu.visum.core.errors.domain.DomainModel;
-import znu.visum.core.errors.domain.NoSuchModelException;
+import znu.visum.core.exceptions.domain.DomainModel;
+import znu.visum.core.exceptions.domain.NoSuchModelException;
 
 public class NoSuchViewingHistoryException extends NoSuchModelException {
   public NoSuchViewingHistoryException(String id) {

@@ -4,7 +4,7 @@ import lombok.*;
 import znu.visum.components.history.domain.MovieViewingHistory;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.ReviewFromMovie;
-import znu.visum.core.errors.domain.InternalException;
+import znu.visum.core.exceptions.domain.InternalException;
 
 import java.time.LocalDate;
 

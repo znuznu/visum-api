@@ -11,7 +11,8 @@ import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
-import znu.visum.core.errors.domain.ExternalInconsistencyException;
+import znu.visum.components.person.domain.Identity;
+import znu.visum.core.exceptions.domain.ExternalInconsistencyException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -153,16 +154,29 @@ class GetTmdbMovieByIdServiceUnitTest {
                 ExternalMovieCredits.builder()
                     .actors(
                         List.of(
-                            new ExternalActor(1L, "Jacques", "Dupont", "poster1"),
-                            new ExternalActor(2L, "Robert", "Some Long Name", null)))
+                            new ExternalActor(
+                                1L,
+                                Identity.builder().forename("Jacques").name("Dupont").build(),
+                                "poster1"),
+                            new ExternalActor(
+                                2L,
+                                Identity.builder()
+                                    .forename("Robert")
+                                    .name("Some Long Name")
+                                    .build(),
+                                null)))
                     .directors(
                         List.of(
                             new ExternalDirector(
-                                1L, "David", "Lynch", ROOT_POSTER_URL + "/poster1.jpg"),
+                                1L,
+                                Identity.builder().forename("David").name("Lynch").build(),
+                                ROOT_POSTER_URL + "/poster1.jpg"),
                             new ExternalDirector(
                                 3L,
-                                "Joseph",
-                                "Some Super Long Name",
+                                Identity.builder()
+                                    .forename("Joseph")
+                                    .name("Some Super Long Name")
+                                    .build(),
                                 ROOT_POSTER_URL + "/poster2.jpg")))
                     .build()));
 

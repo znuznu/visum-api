@@ -24,6 +24,7 @@ import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnector;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
 import znu.visum.components.movies.usecases.create.application.CreateMovieRequest;
+import znu.visum.components.person.domain.Identity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,8 +83,13 @@ class CreateMovieRouteIntegrationTest {
   @WithMockUser
   void givenATmdbId_whenTheMovieDoesNotExistInVisum_itShouldReturnA201Response() throws Exception {
     List<ExternalDirector> directors =
-        List.of(new ExternalDirector(2222L, "David", "Lynch", "fake_url2"));
-    List<ExternalActor> actors = List.of(new ExternalActor(666L, "Amber", "Heard", "fake_url666"));
+        List.of(
+            new ExternalDirector(
+                2222L, Identity.builder().forename("David").name("Lynch").build(), "fake_url2"));
+    List<ExternalActor> actors =
+        List.of(
+            new ExternalActor(
+                666L, Identity.builder().forename("Amber").name("Heard").build(), "fake_url666"));
 
     ExternalMovieMetadata metadata =
         ExternalMovieMetadata.builder()

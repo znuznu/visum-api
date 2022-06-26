@@ -13,6 +13,7 @@ import znu.visum.components.movies.domain.*;
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieController;
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieResponse;
 import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovieService;
+import znu.visum.components.person.domain.Identity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -50,11 +51,21 @@ class GetByIdMovieControllerUnitTest {
 
     List<ActorFromMovie> actors =
         Arrays.asList(
-            ActorFromMovie.builder().id(1L).forename("Naomi").name("Watts").build(),
-            ActorFromMovie.builder().id(2L).forename("Laura").name("Harring").build());
+            ActorFromMovie.builder()
+                .id(1L)
+                .identity(Identity.builder().forename("Naomi").name("Watts").build())
+                .build(),
+            ActorFromMovie.builder()
+                .id(2L)
+                .identity(Identity.builder().forename("Laura").name("Harring").build())
+                .build());
 
     List<DirectorFromMovie> directors =
-        List.of(DirectorFromMovie.builder().id(1L).forename("David").name("Lynch").build());
+        List.of(
+            DirectorFromMovie.builder()
+                .id(1L)
+                .identity(Identity.builder().forename("David").name("Lynch").build())
+                .build());
 
     MovieMetadata movieMetadata =
         MovieMetadata.builder()

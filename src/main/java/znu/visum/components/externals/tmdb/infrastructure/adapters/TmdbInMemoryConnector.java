@@ -29,8 +29,7 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   }
 
   @Override
-  public VisumPage<ExternalMovieFromSearch> searchMovies(
-      String search, int pageNumber) {
+  public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
     if (this.errors != null && this.errors.getSearchMoviesException() != null) {
       throw this.errors.getSearchMoviesException();
     }
