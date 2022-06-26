@@ -104,7 +104,7 @@ public class GetByIdMovieResponse {
           reviewFromMovie.getContent(),
           reviewFromMovie.getUpdateDate(),
           reviewFromMovie.getCreationDate(),
-          reviewFromMovie.getGrade(),
+          reviewFromMovie.getGrade().getValue(),
           reviewFromMovie.getMovieId());
     }
   }

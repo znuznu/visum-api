@@ -6,6 +6,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.usecases.update.domain.UpdateMovieReviewService;
 
@@ -33,7 +34,7 @@ public class UpdateMovieReviewController {
             Review.builder()
                 .id(id)
                 .content(updateMovieReviewRequest.getContent())
-                .grade(updateMovieReviewRequest.getGrade())
+                .grade(new Grade(updateMovieReviewRequest.getGrade()))
                 .build()));
   }
 }

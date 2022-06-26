@@ -27,7 +27,7 @@ public class DiaryMovieType {
         .title(movie.getTitle())
         .posterUrl(movie.getPosterUrl())
         .releaseDate(movie.getReleaseDate())
-        .grade(movie.getReview() != null ? movie.getReview().getGrade() : null)
+        .grade(movie.getReview() != null ? movie.getReview().getGrade().getValue() : null)
         .reviewId(movie.getReview() != null ? movie.getReview().getId() : null)
         .isFavorite(movie.isFavorite())
         .isRewatch(movie.isRewatch())

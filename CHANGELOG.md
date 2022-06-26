@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.11.1
+
+- Add `Identity` and `Grade`
+- Rename `errors` -> `exceptions`
+
 ## 2.11.0
 
 - The movie creation request is only based on the TMDb movie id
@@ -92,8 +97,8 @@
 ## 2.2.0
 
 - Add statistics:
-    - _get all-time_ and _get per year_ usecases
-    - add two routes: `/statistics/years` and `/statistics/years/<year>`
+  - _get all-time_ and _get per year_ usecases
+  - add two routes: `/statistics/years` and `/statistics/years/<year>`
 
 ## 2.1.1
 

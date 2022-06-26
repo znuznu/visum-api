@@ -6,6 +6,7 @@ import znu.visum.components.diary.domain.DiaryMovie;
 import znu.visum.components.diary.usecases.query.application.types.DiaryMonth;
 import znu.visum.components.diary.usecases.query.application.types.DiaryYear;
 import znu.visum.components.movies.domain.ReviewFromMovie;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.core.models.common.Month;
 
 import java.time.LocalDate;
@@ -52,7 +53,7 @@ class DiaryYearResponseUnitTest {
             .releaseDate(LocalDate.of(1980, 2, 6))
             .isFavorite(false)
             .isRewatch(false)
-            .review(ReviewFromMovie.builder().id(111L).movieId(2L).grade(10).build())
+            .review(ReviewFromMovie.builder().id(111L).movieId(2L).grade(new Grade(10)).build())
             .viewingDate(LocalDate.of(2019, 10, 8))
             .build();
 

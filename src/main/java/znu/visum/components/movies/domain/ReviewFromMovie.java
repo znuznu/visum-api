@@ -3,6 +3,7 @@ package znu.visum.components.movies.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.Review;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class ReviewFromMovie {
   private String content;
   private LocalDateTime updateDate;
   private LocalDateTime creationDate;
-  private int grade;
+  private Grade grade;
   private Long movieId;
 
   public static ReviewFromMovie from(Review review) {
