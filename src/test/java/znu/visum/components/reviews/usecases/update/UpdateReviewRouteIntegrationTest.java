@@ -13,7 +13,6 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -21,6 +20,7 @@ import znu.visum.components.reviews.usecases.update.application.UpdateMovieRevie
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -57,10 +57,9 @@ class UpdateReviewRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(6, "Nice movie."))))
         .andExpect(status().isNotFound())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("No REVIEW with id 269 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/269/movies"));
+        .andExpect(jsonPath("$.message").value("No REVIEW with id 269 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/reviews/269/movies"));
   }
 
   @Test
@@ -76,11 +75,11 @@ class UpdateReviewRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(10, "Something."))))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Something."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.grade").value(10))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movieId").value(3))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.creationDate").value("10/26/2021 15:54:33"));
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.content").value("Something."))
+        .andExpect(jsonPath("$.grade").value(10))
+        .andExpect(jsonPath("$.movieId").value(3))
+        .andExpect(jsonPath("$.creationDate").value("10/26/2021 15:54:33"));
   }
 
   @Nested
@@ -94,14 +93,10 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content("{}"))
           .andExpect(status().isBadRequest())
-          .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message")
-                  .value(containsString("content: must not be empty")))
-          .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message")
-                  .value(containsString("content: must not be null")))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
+          .andExpect(jsonPath("$.message").value(containsString("content: must not be empty")))
+          .andExpect(jsonPath("$.message").value(containsString("content: must not be null")))
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/reviews/1/movies"));
     }
 
     @Test
@@ -112,10 +107,9 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(10, ""))))
           .andExpect(status().isBadRequest())
-          .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message").value("content: must not be empty"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
+          .andExpect(jsonPath("$.message").value("content: must not be empty"))
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/reviews/1/movies"));
     }
 
     @Test
@@ -126,11 +120,9 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(-1, "Some text."))))
           .andExpect(status().isBadRequest())
-          .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message")
-                  .value("grade: must be greater than or equal to 0"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
+          .andExpect(jsonPath("$.message").value("grade: must be greater than or equal to 0"))
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/reviews/1/movies"));
     }
 
     @Test
@@ -141,11 +133,9 @@ class UpdateReviewRouteIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
                   .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(11, "Some text."))))
           .andExpect(status().isBadRequest())
-          .andExpect(
-              MockMvcResultMatchers.jsonPath("$.message")
-                  .value("grade: must be less than or equal to 10"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/reviews/1/movies"));
+          .andExpect(jsonPath("$.message").value("grade: must be less than or equal to 10"))
+          .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+          .andExpect(jsonPath("$.path").value("/api/reviews/1/movies"));
     }
   }
 }

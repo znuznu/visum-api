@@ -12,13 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
 @Testcontainers
@@ -49,9 +48,9 @@ class GetByIdMovieRouteIntegrationTest {
   void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get("/api/movies/{id}", "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No MOVIE with id 200 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/movies/200"));
+        .andExpect(jsonPath("$.message").value("No MOVIE with id 200 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/movies/200"));
   }
 
   @Test
@@ -62,7 +61,7 @@ class GetByIdMovieRouteIntegrationTest {
     mvc.perform(get("/api/movies/{id}", "90").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{"
                         + "  \"id\": 90,"
@@ -101,7 +100,7 @@ class GetByIdMovieRouteIntegrationTest {
     mvc.perform(get("/api/movies/{id}", "3").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
                     "{"
                         + "  \"id\": 3,"

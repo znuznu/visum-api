@@ -12,13 +12,13 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -50,10 +50,9 @@ class CreateMovieViewingHistoryRouteIntegrationTest {
   void givenAnEmptyBody_itShouldReturnA400Response() throws Exception {
     mvc.perform(post("/api/history").contentType(MediaType.APPLICATION_JSON_VALUE).content("{}"))
         .andExpect(status().isBadRequest())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("viewingDate: must not be null"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/history"));
+        .andExpect(jsonPath("$.message").value("viewingDate: must not be null"))
+        .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+        .andExpect(jsonPath("$.path").value("/api/history"));
   }
 
   @Test
@@ -65,9 +64,9 @@ class CreateMovieViewingHistoryRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"viewingDate\": \"2021/01/01\", \"movieId\": 1}"))
         .andExpect(status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid body."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_BODY"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/history"));
+        .andExpect(jsonPath("$.message").value("Invalid body."))
+        .andExpect(jsonPath("$.code").value("INVALID_BODY"))
+        .andExpect(jsonPath("$.path").value("/api/history"));
   }
 
   @Test
@@ -79,10 +78,9 @@ class CreateMovieViewingHistoryRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"viewingDate\": \"01/01/2021\", \"movieId\": 123456}"))
         .andExpect(status().isNotFound())
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.message").value("No MOVIE with id 123456 found."))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/history"));
+        .andExpect(jsonPath("$.message").value("No MOVIE with id 123456 found."))
+        .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
+        .andExpect(jsonPath("$.path").value("/api/history"));
   }
 
   @Test
@@ -95,8 +93,8 @@ class CreateMovieViewingHistoryRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"viewingDate\": \"01/01/2021\", \"movieId\": 1}"))
         .andExpect(status().isCreated())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.viewingDate").value("01/01/2021"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.movieId").value("1"));
+        .andExpect(jsonPath("$.id").isNumber())
+        .andExpect(jsonPath("$.viewingDate").value("01/01/2021"))
+        .andExpect(jsonPath("$.movieId").value("1"));
   }
 }

@@ -12,12 +12,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -63,17 +63,17 @@ class GetPageMovieRouteIntegrationTest {
     mvc.perform(get("/api/movies").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':4,"
-                        + "'content':["
-                        + "{'id':30,'title':'Fake movie with review 30','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':false,'isToWatch':false, 'metadata':{'posterUrl':'An URL 30'}},"
-                        + "{'id':20,'title':'Fake movie with review 20','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':true,'isToWatch':false, 'metadata':{'posterUrl':'An URL 20'}},"
-                        + "{'id':33,'title':'Fake movie with review 33','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':false,'isToWatch':true, 'metadata':{'posterUrl':'An URL 33'}},"
-                        + "{'id':10,'title':'Fake movie with review 10','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':true,'isToWatch':true, 'metadata':{'posterUrl':'An URL 10'}}],"
-                        + "'totalPages':1,'first':true,'last':true}"));
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":4,"
+                        + "\"content\":["
+                        + "{\"id\":30,\"title\":\"Fake movie with review 30\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":false, \"metadata\":{\"posterUrl\":\"An URL 30\"}},"
+                        + "{\"id\":20,\"title\":\"Fake movie with review 20\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":false, \"metadata\":{\"posterUrl\":\"An URL 20\"}},"
+                        + "{\"id\":33,\"title\":\"Fake movie with review 33\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":true, \"metadata\":{\"posterUrl\":\"An URL 33\"}},"
+                        + "{\"id\":10,\"title\":\"Fake movie with review 10\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":true, \"metadata\":{\"posterUrl\":\"An URL 10\"}}],"
+                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
   }
 
   @Test
@@ -90,15 +90,15 @@ class GetPageMovieRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':1,"
-                        + "'content':["
-                        + "{'id':20,'title':'Fake movie with review 20','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':true,'isToWatch':false,'metadata':{'posterUrl':'An URL 20'}}"
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":1,"
+                        + "\"content\":["
+                        + "{\"id\":20,\"title\":\"Fake movie with review 20\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":false,\"metadata\":{\"posterUrl\":\"An URL 20\"}}"
                         + "],"
-                        + "'totalPages':1,'first':true,'last':true}"));
+                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
   }
 
   @Test
@@ -115,15 +115,15 @@ class GetPageMovieRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk())
         .andExpect(
-            MockMvcResultMatchers.content()
+            content()
                 .json(
-                    "{'current':0,"
-                        + "'size':20,"
-                        + "'totalElements':2,"
-                        + "'content':["
-                        + "{'id':30,'title':'Fake movie with review 30','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':false,'isToWatch':false,'metadata':{'posterUrl':'An URL 30'}},"
-                        + "{'id':33,'title':'Fake movie with review 33','releaseDate':'10/12/2001','creationDate':'10/26/2021 15:54:33','isFavorite':false,'isToWatch':true,'metadata':{'posterUrl':'An URL 33'}}"
+                    "{\"current\":0,"
+                        + "\"size\":20,"
+                        + "\"totalElements\":2,"
+                        + "\"content\":["
+                        + "{\"id\":30,\"title\":\"Fake movie with review 30\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":false,\"metadata\":{\"posterUrl\":\"An URL 30\"}},"
+                        + "{\"id\":33,\"title\":\"Fake movie with review 33\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":true,\"metadata\":{\"posterUrl\":\"An URL 33\"}}"
                         + "],"
-                        + "'totalPages':1,'first':true,'last':true}"));
+                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
   }
 }
