@@ -1,5 +1,6 @@
 package helpers.factories.reviews;
 
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.MovieFromReview;
 import znu.visum.components.reviews.domain.Review;
 
@@ -13,7 +14,7 @@ public enum ReviewFactory {
     return Review.builder()
         .id(id)
         .content("Bla bla bla. \n Blo blo blo. \n Wow !")
-        .grade(7)
+        .grade(new Grade(7))
         .movie(
             MovieFromReview.builder()
                 .id(movieId)
@@ -29,7 +30,7 @@ public enum ReviewFactory {
   private Review createReviewToSave(long movieId) {
     return Review.builder()
         .content("Bla bla bla. \n Blo blo blo. \n Wow !")
-        .grade(7)
+        .grade(new Grade(7))
         .movie(MovieFromReview.builder().id(movieId).build())
         .build();
   }

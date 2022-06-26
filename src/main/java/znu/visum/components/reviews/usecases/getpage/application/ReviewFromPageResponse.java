@@ -38,7 +38,7 @@ public class ReviewFromPageResponse {
   public static ReviewFromPageResponse from(Review review) {
     return new ReviewFromPageResponse(
         review.getId(),
-        review.getGrade(),
+        review.getGrade().getValue(),
         review.getContent(),
         ResponseMovie.from(review.getMovie()),
         review.getCreationDate(),

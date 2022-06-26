@@ -6,6 +6,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.MovieFromReview;
 import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.usecases.create.domain.CreateReviewService;
@@ -32,7 +33,7 @@ public class CreateReviewController {
         createReviewService.save(
             Review.builder()
                 .content(createReviewRequest.getContent())
-                .grade(createReviewRequest.getGrade())
+                .grade(new Grade(createReviewRequest.getGrade()))
                 .movie(MovieFromReview.builder().id(createReviewRequest.getMovieId()).build())
                 .build()));
   }

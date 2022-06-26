@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.NoSuchReviewIdException;
 import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.domain.ReviewRepository;
@@ -60,11 +61,11 @@ class UpdateReviewServiceIntegrationTest {
     // No side effect
     assertThat(movie.getTitle()).isEqualTo("Fake movie with review");
 
-    assertThat(movie.getReview().getGrade()).isEqualTo(7);
+    assertThat(movie.getReview().getGrade()).isEqualTo(new Grade(7));
     assertThat(movie.getReview().getContent()).isEqualTo("Bla bla bla. \n Blo blo blo. \n Wow !");
 
     Review reviewUpdated = reviewRepository.findById(1L).get();
-    assertThat(reviewUpdated.getGrade()).isEqualTo(7);
+    assertThat(reviewUpdated.getGrade()).isEqualTo(new Grade(7));
     assertThat(reviewUpdated.getContent()).isEqualTo("Bla bla bla. \n Blo blo blo. \n Wow !");
     assertThat(reviewUpdated.getCreationDate())
         .isEqualTo(LocalDateTime.of(2021, 10, 26, 15, 54, 33));

@@ -162,7 +162,7 @@ public class CreateMovieResponse {
           reviewFromMovie.getContent(),
           reviewFromMovie.getUpdateDate(),
           reviewFromMovie.getCreationDate(),
-          reviewFromMovie.getGrade());
+          reviewFromMovie.getGrade().getValue());
     }
   }
 

@@ -82,7 +82,7 @@ public class GetAllTimeStatisticsResponse {
           movie.getId(),
           movie.getTitle(),
           movie.getReleaseDate(),
-          movie.getReview().getGrade(),
+          movie.getReview().getGrade().getValue(),
           movie.getMetadata().getPosterUrl());
     }
   }

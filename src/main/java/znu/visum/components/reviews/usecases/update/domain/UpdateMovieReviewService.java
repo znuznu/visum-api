@@ -21,10 +21,16 @@ public class UpdateMovieReviewService {
             .findById(newReview.getId())
             .orElseThrow(() -> new NoSuchReviewIdException(Long.toString(newReview.getId())));
 
-    reviewToUpdate.setContent(newReview.getContent());
-    reviewToUpdate.setGrade(newReview.getGrade());
-    reviewToUpdate.setUpdateDate(null);
+    var reviewToSave =
+        Review.builder()
+            .id(reviewToUpdate.getId())
+            .content(newReview.getContent())
+            .grade(newReview.getGrade())
+            .creationDate(reviewToUpdate.getCreationDate())
+            .movie(reviewToUpdate.getMovie())
+            .updateDate(null)
+            .build();
 
-    return reviewRepository.save(reviewToUpdate);
+    return reviewRepository.save(reviewToSave);
   }
 }

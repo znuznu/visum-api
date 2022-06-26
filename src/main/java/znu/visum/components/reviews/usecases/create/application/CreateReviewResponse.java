@@ -23,6 +23,9 @@ public class CreateReviewResponse {
 
   public static CreateReviewResponse from(Review review) {
     return new CreateReviewResponse(
-        review.getId(), review.getGrade(), review.getContent(), review.getMovie().getId());
+        review.getId(),
+        review.getGrade().getValue(),
+        review.getContent(),
+        review.getMovie().getId());
   }
 }

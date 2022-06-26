@@ -14,6 +14,7 @@ import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieCont
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieResponse;
 import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovieService;
 import znu.visum.components.person.domain.Identity;
+import znu.visum.components.reviews.domain.Grade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,7 +44,7 @@ class GetByIdMovieControllerUnitTest {
             .content("Bla bla bla.")
             .creationDate(LocalDateTime.of(2021, 12, 12, 5, 10))
             .updateDate(LocalDateTime.of(2021, 12, 12, 5, 10))
-            .grade(10)
+            .grade(new Grade(10))
             .movieId(1L)
             .build();
 

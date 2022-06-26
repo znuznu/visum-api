@@ -31,7 +31,7 @@ public class UpdateMovieReviewResponse {
   public static UpdateMovieReviewResponse from(Review review) {
     return new UpdateMovieReviewResponse(
         review.getId(),
-        review.getGrade(),
+        review.getGrade().getValue(),
         review.getContent(),
         review.getMovie().getId(),
         review.getCreationDate());
