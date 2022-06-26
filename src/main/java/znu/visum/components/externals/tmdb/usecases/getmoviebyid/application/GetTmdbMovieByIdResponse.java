@@ -155,7 +155,7 @@ public class GetTmdbMovieByIdResponse {
           .revenue(externalMetadata.getRevenue())
           .runtime(externalMetadata.getRuntime())
           .originalLanguage(externalMetadata.getOriginalLanguage())
-          .posterUrl(externalMetadata.getCompletePosterUrl().orElse(null))
+          .posterUrl(externalMetadata.getPosterUrl())
           .build();
     }
   }

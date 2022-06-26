@@ -18,12 +18,5 @@ public class ExternalMovieFromSearch {
   private int id;
   private String title;
   private LocalDate releaseDate;
-  // Right part of a URL (eg: /something1234 for TMDb)
-  private String posterPath;
-  // Left part of a URL (eg: https://image.tmdb.org/t/p/w780 for TMDb)
-  private String basePosterUrl;
-
-  public boolean hasCompletePosterUrl() {
-    return this.getBasePosterUrl() != null && this.getPosterPath() != null;
-  }
+  private String posterUrl;
 }

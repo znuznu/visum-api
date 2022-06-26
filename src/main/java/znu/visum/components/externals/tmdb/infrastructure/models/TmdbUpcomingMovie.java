@@ -53,13 +53,14 @@ public class TmdbUpcomingMovie {
     this.posterPath = posterPath;
   }
 
-  public ExternalUpcomingMovie toDomain() {
+  public ExternalUpcomingMovie toDomainWithBasePosterUrl(String basePosterUrl) {
+    String posterUrl = posterPath != null ? basePosterUrl + posterPath : null;
+
     return ExternalUpcomingMovie.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .posterPath(this.posterPath)
-        .basePosterUrl(null)
+        .posterUrl(posterUrl)
         .build();
   }
 }

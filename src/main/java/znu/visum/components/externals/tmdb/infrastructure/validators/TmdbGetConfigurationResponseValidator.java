@@ -15,7 +15,7 @@ public class TmdbGetConfigurationResponseValidator implements Validator {
     TmdbGetConfigurationResponse response = (TmdbGetConfigurationResponse) target;
 
     if (response.getImages().getPosterSizes().isEmpty()) {
-      errors.rejectValue("poster_sizes", "empty");
+      errors.rejectValue("images.posterSizes", "empty");
     }
   }
 }

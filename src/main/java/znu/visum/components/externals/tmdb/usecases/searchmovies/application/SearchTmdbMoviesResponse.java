@@ -30,10 +30,6 @@ public class SearchTmdbMoviesResponse {
         externalMovieFromSearch.getId(),
         externalMovieFromSearch.getTitle(),
         externalMovieFromSearch.getReleaseDate(),
-        externalMovieFromSearch.hasCompletePosterUrl()
-            ? externalMovieFromSearch.getBasePosterUrl()
-                + ""
-                + externalMovieFromSearch.getPosterPath()
-            : null);
+        externalMovieFromSearch.getPosterUrl());
   }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnectorUnitTest.ROOT_POSTER_URL;
 
 @DisplayName("TmdbInMemoryConnectorUnitTest")
 class TmdbInMemoryConnectorUnitTest {
@@ -63,20 +64,17 @@ class TmdbInMemoryConnectorUnitTest {
                   541715,
                   "Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special",
                   LocalDate.of(2016, 4, 20),
-                  "/biSWYZENgrKztu8A5qa58GM3QUy.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/biSWYZENgrKztu8A5qa58GM3QUy.jpg"),
               new ExternalMovieFromSearch(
                   55952,
                   "Xtro 2: The Second Encounter",
                   LocalDate.of(1990, 5, 4),
-                  "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg"),
               new ExternalMovieFromSearch(
                   2787,
                   "Pitch Black",
                   LocalDate.of(2000, 2, 18),
-                  "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg",
-                  null));
+                  ROOT_POSTER_URL + "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg"));
 
       this.connector.setResponses(
           TmdbInMemoryResponses.builder()
@@ -107,20 +105,17 @@ class TmdbInMemoryConnectorUnitTest {
                   541715,
                   "Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special",
                   LocalDate.of(2016, 4, 20),
-                  "/biSWYZENgrKztu8A5qa58GM3QUy.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/biSWYZENgrKztu8A5qa58GM3QUy.jpg"),
               new ExternalMovieFromSearch(
                   55952,
                   "Xtro 2: The Second Encounter",
                   LocalDate.of(1990, 5, 4),
-                  "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg"),
               new ExternalMovieFromSearch(
                   2787,
                   "Pitch Black",
                   LocalDate.of(2000, 2, 18),
-                  "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg",
-                  null));
+                  ROOT_POSTER_URL + "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg"));
     }
   }
 }

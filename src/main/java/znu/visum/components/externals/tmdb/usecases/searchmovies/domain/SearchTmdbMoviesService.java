@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import znu.visum.components.externals.domain.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.core.pagination.domain.VisumPage;
-
-import java.util.stream.Collectors;
 
 @Service
 public class SearchTmdbMoviesService {
@@ -27,38 +24,6 @@ public class SearchTmdbMoviesService {
       throw new IllegalArgumentException("TMDb page number should be >= 1.");
     }
 
-    VisumPage<ExternalMovieFromSearch> page = this.connector.searchMovies(search, pageNumber);
-
-    if (page.getTotalElements() > 0) {
-      try {
-        String basePosterUrl = this.connector.getConfigurationBasePosterUrl();
-
-        return VisumPage.<ExternalMovieFromSearch>builder()
-            .size(page.getSize())
-            .isFirst(page.isFirst())
-            .isLast(page.isLast())
-            .totalElements(page.getTotalElements())
-            .totalPages(page.getTotalPages())
-            .current(page.getCurrent())
-            .content(
-                page.getContent().stream()
-                    .map(
-                        movie ->
-                            ExternalMovieFromSearch.builder()
-                                .id(movie.getId())
-                                .releaseDate(movie.getReleaseDate())
-                                .posterPath(movie.getPosterPath())
-                                .title(movie.getTitle())
-                                .basePosterUrl(basePosterUrl)
-                                .posterPath(movie.getPosterPath())
-                                .build())
-                    .collect(Collectors.toList()))
-            .build();
-      } catch (TmdbApiException e) {
-        logger.warn("An error occurred while calling TMDb configuration endpoint.");
-      }
-    }
-
-    return page;
+    return this.connector.searchMovies(search, pageNumber);
   }
 }

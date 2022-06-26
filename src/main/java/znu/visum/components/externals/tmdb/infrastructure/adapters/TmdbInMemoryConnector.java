@@ -29,7 +29,8 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   }
 
   @Override
-  public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
+  public VisumPage<ExternalMovieFromSearch> searchMovies(
+      String search, int pageNumber) {
     if (this.errors != null && this.errors.getSearchMoviesException() != null) {
       throw this.errors.getSearchMoviesException();
     }
@@ -53,12 +54,12 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   }
 
   @Override
-  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId, String basePosterUrl) {
+  public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public String getConfigurationBasePosterUrl() {
+  public String getConfigurationRootPosterUrl() {
     throw new UnsupportedOperationException();
   }
 }

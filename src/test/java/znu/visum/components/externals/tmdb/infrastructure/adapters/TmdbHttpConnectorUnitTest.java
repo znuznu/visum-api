@@ -17,12 +17,11 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("TmdbHttpConnectorUnitTest")
 class TmdbHttpConnectorUnitTest {
 
-  private static final String BASE_POSTER_URL = "https://fake-url.io";
+  static final String ROOT_POSTER_URL = "https://image.tmdb.org/t/p/w780";
 
   private static MockWebServer tmdbApiMockServer;
 
@@ -50,22 +49,12 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\"page\":38,"
-                      + "\"results\":["
-                      + "{\"adult\":false,\"backdrop_path\":\"/ckqqh8EjvVyaP23SBxv0ZsGZN51.jpg\",\"genre_ids\":[99,35],\"id\":541715,\"original_language\":\"en\",\"original_title\":\"Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special\",\"overview\":\"420 special of Action Bronson and friends getting high on the holiday watching his favorite show.\",\"popularity\":0.6,\"poster_path\":\"/biSWYZENgrKztu8A5qa58GM3QUy.jpg\",\"release_date\":\"2016-04-20\",\"title\":\"Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special\",\"video\":false,\"vote_average\":6.8,\"vote_count\":4},"
-                      + "{\"adult\":false,\"backdrop_path\":\"/sQbyKuDwfOplT78peqIWcvssVkt.jpg\",\"genre_ids\":[27,878],\"id\":55952,\"original_language\":\"en\",\"original_title\":\"Xtro 2: The Second Encounter\",\"overview\":\"Scientists at a secret underground complex have found a way to travel to another dimension. Three dimension-travellers are the first to go through the gate - but are soon attacked by something that interrupts the communication with Earth. This horrible something uses the gate to travel back to the underground complex. Most of the staff are evacuated, except four heavily-armed militaries and Dr. Casserly and Dr. Summerfield who just can't stand each other.\",\"popularity\":4.32,\"poster_path\":\"/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg\",\"release_date\":\"1990-05-04\",\"title\":\"Xtro 2: The Second Encounter\",\"video\":false,\"vote_average\":3.2,\"vote_count\":18},"
-                      + "{\"adult\":false,\"backdrop_path\":\"/5MCYau94XLkvChn5NlyJEGDe3ml.jpg\",\"genre_ids\":[53,878,28],\"id\":2787,\"original_language\":\"en\",\"original_title\":\"Pitch Black\",\"overview\":\"When their ship crash-lands on a remote planet, the marooned passengers soon learn that escaped convict Riddick isn't the only thing they have to fear. Deadly creatures lurk in the shadows, waiting to attack in the dark, and the planet is rapidly plunging into the utter blackness of a total eclipse. With the body count rising, the doomed survivors are forced to turn to Riddick with his eerie eyes to guide them through the darkness to safety. With time running out, there's only one rule: Stay in the light.\",\"popularity\":10.571,\"poster_path\":\"/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg\",\"release_date\":\"2000-02-18\",\"title\":\"Pitch Black\",\"video\":false,\"vote_average\":6.8,\"vote_count\":3478}],"
-                      + "\"total_pages\":38,"
-                      + "\"total_results\":744}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.searchMoviesResponse());
 
       connector.searchMovies("Alien", 38);
 
+      tmdbApiMockServer.takeRequest();
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath())
           .isEqualTo(
@@ -74,14 +63,26 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.searchMovies("Something", 6))
+          .isInstanceOf(TmdbApiException.class)
+          .hasMessageContaining("/configuration");
+    }
+
+    @Test
     void whenTmdbReturnAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
-      assertThrows(TmdbApiException.class, () -> connector.searchMovies("Something", 6));
+      assertThatThrownBy(() -> connector.searchMovies("Something", 6))
+          .isInstanceOf(TmdbApiException.class);
     }
 
     @Test
     void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -96,19 +97,8 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void whenTmdbReturnMovies_itShouldReturnMovies() {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\"page\":38,"
-                      + "\"results\":["
-                      + "{\"adult\":false,\"backdrop_path\":\"/ckqqh8EjvVyaP23SBxv0ZsGZN51.jpg\",\"genre_ids\":[99,35],\"id\":541715,\"original_language\":\"en\",\"original_title\":\"Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special\",\"overview\":\"420 special of Action Bronson and friends getting high on the holiday watching his favorite show.\",\"popularity\":0.6,\"poster_path\":\"/biSWYZENgrKztu8A5qa58GM3QUy.jpg\",\"release_date\":\"2016-04-20\",\"title\":\"Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special\",\"video\":false,\"vote_average\":6.8,\"vote_count\":4},"
-                      + "{\"adult\":false,\"backdrop_path\":\"/sQbyKuDwfOplT78peqIWcvssVkt.jpg\",\"genre_ids\":[27,878],\"id\":55952,\"original_language\":\"en\",\"original_title\":\"Xtro 2: The Second Encounter\",\"overview\":\"Scientists at a secret underground complex have found a way to travel to another dimension. Three dimension-travellers are the first to go through the gate - but are soon attacked by something that interrupts the communication with Earth. This horrible something uses the gate to travel back to the underground complex. Most of the staff are evacuated, except four heavily-armed militaries and Dr. Casserly and Dr. Summerfield who just can't stand each other.\",\"popularity\":4.32,\"poster_path\":\"/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg\",\"release_date\":\"1990-05-04\",\"title\":\"Xtro 2: The Second Encounter\",\"video\":false,\"vote_average\":3.2,\"vote_count\":18},"
-                      + "{\"adult\":false,\"backdrop_path\":\"/5MCYau94XLkvChn5NlyJEGDe3ml.jpg\",\"genre_ids\":[53,878,28],\"id\":2787,\"original_language\":\"en\",\"original_title\":\"Pitch Black\",\"overview\":\"When their ship crash-lands on a remote planet, the marooned passengers soon learn that escaped convict Riddick isn't the only thing they have to fear. Deadly creatures lurk in the shadows, waiting to attack in the dark, and the planet is rapidly plunging into the utter blackness of a total eclipse. With the body count rising, the doomed survivors are forced to turn to Riddick with his eerie eyes to guide them through the darkness to safety. With time running out, there's only one rule: Stay in the light.\",\"popularity\":10.571,\"poster_path\":\"/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg\",\"release_date\":\"2000-02-18\",\"title\":\"Pitch Black\",\"video\":false,\"vote_average\":6.8,\"vote_count\":3478}],"
-                      + "\"total_pages\":38,"
-                      + "\"total_results\":744}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.searchMoviesResponse());
 
       VisumPage<ExternalMovieFromSearch> response = connector.searchMovies("Alien", 38);
 
@@ -125,20 +115,17 @@ class TmdbHttpConnectorUnitTest {
                   541715,
                   "Traveling the Stars: Ancient Aliens with Action Bronson and Friends - 420 Special",
                   LocalDate.of(2016, 4, 20),
-                  "/biSWYZENgrKztu8A5qa58GM3QUy.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/biSWYZENgrKztu8A5qa58GM3QUy.jpg"),
               new ExternalMovieFromSearch(
                   55952,
                   "Xtro 2: The Second Encounter",
                   LocalDate.of(1990, 5, 4),
-                  "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/n3x5eUOIem5hH2WKEVIsubpBUeK.jpg"),
               new ExternalMovieFromSearch(
                   2787,
                   "Pitch Black",
                   LocalDate.of(2000, 2, 18),
-                  "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg",
-                  null));
+                  ROOT_POSTER_URL + "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg"));
     }
   }
 
@@ -147,66 +134,12 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\n"
-                      + " \"dates\": {\n"
-                      + "  \"maximum\": \"2022-05-02\",\n"
-                      + "  \"minimum\": \"2022-04-15\"\n"
-                      + " },\n"
-                      + " \"page\": 1,\n"
-                      + " \"results\": [\n"
-                      + "  {\n"
-                      + "   \"adult\": false,\n"
-                      + "   \"backdrop_path\": \"/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg\",\n"
-                      + "   \"genre_ids\": [\n"
-                      + "    28,\n"
-                      + "    878,\n"
-                      + "    35,\n"
-                      + "    10751\n"
-                      + "   ],\n"
-                      + "   \"id\": 675353,\n"
-                      + "   \"original_language\": \"en\",\n"
-                      + "   \"original_title\": \"Sonic the Hedgehog 2\",\n"
-                      + "   \"overview\": \"After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.\",\n"
-                      + "   \"popularity\": 6587.056,\n"
-                      + "   \"poster_path\": \"/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg\",\n"
-                      + "   \"release_date\": \"2022-03-30\",\n"
-                      + "   \"title\": \"Sonic the Hedgehog 2\",\n"
-                      + "   \"video\": false,\n"
-                      + "   \"vote_average\": 7.7,\n"
-                      + "   \"vote_count\": 197\n"
-                      + "  },\n"
-                      + "  {\n"
-                      + "   \"adult\": false,\n"
-                      + "   \"backdrop_path\": \"/yzH5zvuEzzsHLZnn0jwYoPf0CMT.jpg\",\n"
-                      + "   \"genre_ids\": [\n"
-                      + "    53,\n"
-                      + "    28\n"
-                      + "   ],\n"
-                      + "   \"id\": 760926,\n"
-                      + "   \"original_language\": \"en\",\n"
-                      + "   \"original_title\": \"Gold\",\n"
-                      + "   \"overview\": \"In the not-too-distant future, two drifters traveling through the desert stumble across the biggest gold nugget ever found and the dream of immense wealth and greed takes hold. They hatch a plan to excavate their bounty, with one man leaving to secure the necessary tools while the other remains with the gold. The man who remains must endure harsh desert elements, ravenous wild dogs, and mysterious intruders, while battling the sinking suspicion that he has been abandoned to his fate.\",\n"
-                      + "   \"popularity\": 1228.945,\n"
-                      + "   \"poster_path\": \"/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg\",\n"
-                      + "   \"release_date\": \"2022-01-13\",\n"
-                      + "   \"title\": \"Gold\",\n"
-                      + "   \"video\": false,\n"
-                      + "   \"vote_average\": 6.6,\n"
-                      + "   \"vote_count\": 168\n"
-                      + "  }"
-                      + "],\n"
-                      + " \"total_pages\": 17,\n"
-                      + " \"total_results\": 321\n"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
 
       connector.getUpcomingMovies(1);
 
+      tmdbApiMockServer.takeRequest();
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath())
           .isEqualTo(
@@ -215,14 +148,26 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.getMovieById(6L))
+          .isInstanceOf(TmdbApiException.class)
+          .hasMessageContaining("/configuration");
+    }
+
+    @Test
     void whenTmdbReturnAnError_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
-      assertThrows(TmdbApiException.class, () -> connector.getUpcomingMovies(6));
+      assertThatThrownBy(() -> connector.getUpcomingMovies(6)).isInstanceOf(TmdbApiException.class);
     }
 
     @Test
     void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -237,63 +182,8 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void whenTmdbReturnMovies_itShouldReturnMovies() {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\n"
-                      + " \"dates\": {\n"
-                      + "  \"maximum\": \"2022-05-02\",\n"
-                      + "  \"minimum\": \"2022-04-15\"\n"
-                      + " },\n"
-                      + " \"page\": 1,\n"
-                      + " \"results\": [\n"
-                      + "  {\n"
-                      + "   \"adult\": false,\n"
-                      + "   \"backdrop_path\": \"/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg\",\n"
-                      + "   \"genre_ids\": [\n"
-                      + "    28,\n"
-                      + "    878,\n"
-                      + "    35,\n"
-                      + "    10751\n"
-                      + "   ],\n"
-                      + "   \"id\": 675353,\n"
-                      + "   \"original_language\": \"en\",\n"
-                      + "   \"original_title\": \"Sonic the Hedgehog 2\",\n"
-                      + "   \"overview\": \"After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.\",\n"
-                      + "   \"popularity\": 6587.056,\n"
-                      + "   \"poster_path\": \"/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg\",\n"
-                      + "   \"release_date\": \"2022-03-30\",\n"
-                      + "   \"title\": \"Sonic the Hedgehog 2\",\n"
-                      + "   \"video\": false,\n"
-                      + "   \"vote_average\": 7.7,\n"
-                      + "   \"vote_count\": 197\n"
-                      + "  },\n"
-                      + "  {\n"
-                      + "   \"adult\": false,\n"
-                      + "   \"backdrop_path\": \"/yzH5zvuEzzsHLZnn0jwYoPf0CMT.jpg\",\n"
-                      + "   \"genre_ids\": [\n"
-                      + "    53,\n"
-                      + "    28\n"
-                      + "   ],\n"
-                      + "   \"id\": 760926,\n"
-                      + "   \"original_language\": \"en\",\n"
-                      + "   \"original_title\": \"Gold\",\n"
-                      + "   \"overview\": \"In the not-too-distant future, two drifters traveling through the desert stumble across the biggest gold nugget ever found and the dream of immense wealth and greed takes hold. They hatch a plan to excavate their bounty, with one man leaving to secure the necessary tools while the other remains with the gold. The man who remains must endure harsh desert elements, ravenous wild dogs, and mysterious intruders, while battling the sinking suspicion that he has been abandoned to his fate.\",\n"
-                      + "   \"popularity\": 1228.945,\n"
-                      + "   \"poster_path\": \"/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg\",\n"
-                      + "   \"release_date\": \"2022-01-13\",\n"
-                      + "   \"title\": \"Gold\",\n"
-                      + "   \"video\": false,\n"
-                      + "   \"vote_average\": 6.6,\n"
-                      + "   \"vote_count\": 168\n"
-                      + "  }"
-                      + "],\n"
-                      + " \"total_pages\": 17,\n"
-                      + " \"total_results\": 321\n"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
 
       VisumPage<ExternalUpcomingMovie> response = connector.getUpcomingMovies(1);
 
@@ -310,14 +200,12 @@ class TmdbHttpConnectorUnitTest {
                   675353,
                   "Sonic the Hedgehog 2",
                   LocalDate.of(2022, 03, 30),
-                  "/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg",
-                  null),
+                  ROOT_POSTER_URL + "/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg"),
               new ExternalUpcomingMovie(
                   760926,
                   "Gold",
                   LocalDate.of(2022, 1, 13),
-                  "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg",
-                  null));
+                  ROOT_POSTER_URL + "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg"));
     }
   }
 
@@ -326,11 +214,13 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
       connector.getMovieById(6);
 
+      tmdbApiMockServer.takeRequest();
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath()).isEqualTo("/movie/6?api_key=tmdb-api-key&language=en-US");
       assertThat(request.getHeader("Content-Type")).isEqualTo("application/json");
@@ -338,14 +228,26 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.getMovieById(6L))
+          .isInstanceOf(TmdbApiException.class)
+          .hasMessageContaining("/configuration");
+    }
+
+    @Test
     void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
-      assertThrows(TmdbApiException.class, () -> connector.getMovieById(6));
+      assertThatThrownBy(() -> connector.getMovieById(6)).isInstanceOf(TmdbApiException.class);
     }
 
     @Test
     void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
       assertThat(connector.getMovieById(6)).isEmpty();
@@ -354,6 +256,7 @@ class TmdbHttpConnectorUnitTest {
     @Disabled("Should pass! see TODO in getMovieById() from the HTTP connector")
     @Test
     void whenTmdbReturnA200ResponseWithAnUnexpectedResponseBody_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)
@@ -368,86 +271,8 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void whenTmdbReturnAMovie_itShouldReturnTheMovie() {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{"
-                      + "  \"adult\": false,"
-                      + "  \"backdrop_path\": \"/AmR3JG1VQVxU8TfAvljUhfSFUOx.jpg\","
-                      + "  \"belongs_to_collection\": {"
-                      + "    \"id\": 8091,"
-                      + "    \"name\": \"Alien Collection\","
-                      + "    \"poster_path\": \"/iVzIeC3PbG9BtDAudpwSNdKAgh6.jpg\","
-                      + "    \"backdrop_path\": \"/kB0Y3uGe9ohJa59Lk8UO9cUOxGM.jpg\""
-                      + "  },"
-                      + "  \"budget\": 11000000,"
-                      + "  \"genres\": ["
-                      + "    {"
-                      + "      \"id\": 27,"
-                      + "      \"name\": \"Horror\""
-                      + "    },"
-                      + "    {"
-                      + "      \"id\": 878,"
-                      + "      \"name\": \"Science Fiction\""
-                      + "    }"
-                      + "  ],"
-                      + "  \"homepage\": \"https://www.20thcenturystudios.com/movies/alien\","
-                      + "  \"id\": 348,"
-                      + "  \"imdb_id\": \"tt0078748\","
-                      + "  \"original_language\": \"en\","
-                      + "  \"original_title\": \"Alien\","
-                      + "  \"overview\": \"During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.\","
-                      + "  \"popularity\": 48.046,"
-                      + "  \"poster_path\": \"/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg\","
-                      + "  \"production_companies\": ["
-                      + "    {"
-                      + "      \"id\": 19747,"
-                      + "      \"logo_path\": null,"
-                      + "      \"name\": \"Brandywine Productions\","
-                      + "      \"origin_country\": \"US\""
-                      + "    },"
-                      + "    {"
-                      + "      \"id\": 25,"
-                      + "      \"logo_path\": \"/qZCc1lty5FzX30aOCVRBLzaVmcp.png\","
-                      + "      \"name\": \"20th Century Fox\","
-                      + "      \"origin_country\": \"US\""
-                      + "    }"
-                      + "  ],"
-                      + "  \"production_countries\": ["
-                      + "    {"
-                      + "      \"iso_3166_1\": \"US\","
-                      + "      \"name\": \"United States of America\""
-                      + "    },"
-                      + "    {"
-                      + "      \"iso_3166_1\": \"GB\","
-                      + "      \"name\": \"United Kingdom\""
-                      + "    }"
-                      + "  ],"
-                      + "  \"release_date\": \"1979-05-25\","
-                      + "  \"revenue\": 104931801,"
-                      + "  \"runtime\": 117,"
-                      + "  \"spoken_languages\": ["
-                      + "    {"
-                      + "      \"english_name\": \"English\","
-                      + "      \"iso_639_1\": \"en\","
-                      + "      \"name\": \"English\""
-                      + "    },"
-                      + "    {"
-                      + "      \"english_name\": \"Spanish\","
-                      + "      \"iso_639_1\": \"es\","
-                      + "      \"name\": \"Español\""
-                      + "    }"
-                      + "  ],"
-                      + "  \"status\": \"Released\","
-                      + "  \"tagline\": \"In space no one can hear you scream.\","
-                      + "  \"title\": \"Alien\","
-                      + "  \"video\": false,"
-                      + "  \"vote_average\": 8.1,"
-                      + "  \"vote_count\": 11018"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.movieResponse());
 
       ExternalMovie response = connector.getMovieById(348).get();
 
@@ -468,7 +293,8 @@ class TmdbHttpConnectorUnitTest {
                   + "team of the crew discovers a chamber containing thousands of eggs on the planet, a creature "
                   + "inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare"
                   + " set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.");
-      assertThat(response.getMetadata().getPosterBaseUrl()).isNull();
+      assertThat(response.getMetadata().getPosterUrl())
+          .isEqualTo(ROOT_POSTER_URL + "/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg");
       assertThat(response.getMetadata().getOriginalLanguage()).isEqualTo("en");
       assertThat(response.getGenres()).contains("Horror", "Science Fiction");
     }
@@ -479,11 +305,13 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
-      connector.getCreditsByMovieId(6, BASE_POSTER_URL);
+      connector.getCreditsByMovieId(6);
 
+      tmdbApiMockServer.takeRequest();
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath())
           .isEqualTo("/movie/6/credits?api_key=tmdb-api-key&language=en-US");
@@ -492,187 +320,55 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.getCreditsByMovieId(6L))
+          .isInstanceOf(TmdbApiException.class)
+          .hasMessageContaining("/configuration");
+    }
+
+    @Test
     void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
-      assertThrows(TmdbApiException.class, () -> connector.getCreditsByMovieId(6, BASE_POSTER_URL));
+      assertThatThrownBy(() -> connector.getCreditsByMovieId(6L))
+          .isInstanceOf(TmdbApiException.class);
     }
 
     @Test
     void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
-      assertThat(connector.getCreditsByMovieId(6, BASE_POSTER_URL)).isEmpty();
+      assertThat(connector.getCreditsByMovieId(6)).isEmpty();
     }
 
     @Test
     void whenTmdbReturnCredits_itShouldReturnCredits() {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{"
-                      + "  \"id\": 597,"
-                      + "  \"cast\": ["
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 6193,"
-                      + "      \"known_for_department\": \"Acting\","
-                      + "      \"name\": \"Leonardo DiCaprio\","
-                      + "      \"original_name\": \"Leonardo DiCaprio\","
-                      + "      \"popularity\": 28.19,"
-                      + "      \"profile_path\": \"/poster6193.jpg\","
-                      + "      \"cast_id\": 21,"
-                      + "      \"character\": \"Jack Dawson\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
-                      + "      \"order\": 0"
-                      + "    },"
-                      + "{"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 9999,"
-                      + "      \"known_for_department\": \"Acting\","
-                      + "      \"name\": \"Leonardo DiCaprio\","
-                      + "      \"original_name\": \"Leonardo DiCaprio\","
-                      + "      \"popularity\": 28.19,"
-                      + "      \"profile_path\": \"/poster9999.jpg\","
-                      + "      \"cast_id\": 21,"
-                      + "      \"character\": \"Jack Dawson\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
-                      + "      \"order\": 0"
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 1,"
-                      + "      \"id\": 204,"
-                      + "      \"known_for_department\": \"Acting\","
-                      + "      \"name\": \"Kate Winslet\","
-                      + "      \"original_name\": \"Kate Winslet\","
-                      + "      \"popularity\": 8.066,"
-                      + "      \"profile_path\": \"/poster204.jpg\","
-                      + "      \"cast_id\": 20,"
-                      + "      \"character\": \"Rose DeWitt Bukater\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f80179cb\","
-                      + "      \"order\": 1"
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 6193,"
-                      + "      \"known_for_department\": \"Acting\","
-                      + "      \"name\": \"Leonardo DiCaprio\","
-                      + "      \"original_name\": \"Leonardo DiCaprio\","
-                      + "      \"popularity\": 28.19,"
-                      + "      \"profile_path\": \"/poster6193.jpg\","
-                      + "      \"cast_id\": 21,"
-                      + "      \"character\": \"Jack Dawson\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f80179cf\","
-                      + "      \"order\": 50"
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 1954,"
-                      + "      \"known_for_department\": \"Acting\","
-                      + "      \"name\": \"Billy Zane Zune Zone\","
-                      + "      \"original_name\": \"Billy\","
-                      + "      \"popularity\": 15.4,"
-                      + "      \"profile_path\": \"/poster1954.jpg\","
-                      + "      \"cast_id\": 23,"
-                      + "      \"character\": \"Cal Hockley\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f80179d7\","
-                      + "      \"order\": 2"
-                      + "    }],"
-                      + "    \"crew\": ["
-                      + "      {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 2216,"
-                      + "      \"known_for_department\": \"Sound\","
-                      + "      \"name\": \"Gary Rydstrom\","
-                      + "      \"original_name\": \"Gary Rydstrom\","
-                      + "      \"popularity\": 0.98,"
-                      + "      \"profile_path\": \"/1DoKaxoJlz6hV9bai43e07GxGQf.jpg\","
-                      + "      \"credit_id\": \"5a71e3709251417f2b00954c\","
-                      + "      \"department\": \"Sound\","
-                      + "      \"job\": \"Sound Re-Recording Mixer\""
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 2710,"
-                      + "      \"known_for_department\": \"Directing\","
-                      + "      \"name\": \"James Cameron\","
-                      + "      \"original_name\": \"James Cameron\","
-                      + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/poster2710.jpg\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f8017961\","
-                      + "      \"department\": \"Writing\","
-                      + "      \"job\": \"Director\""
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 7890,"
-                      + "      \"known_for_department\": \"Directing\","
-                      + "      \"name\": \"James Cameron Number Two\","
-                      + "      \"original_name\": \"James Cameron\","
-                      + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/poster7890.jpg\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f801795b\","
-                      + "      \"department\": \"Directing\","
-                      + "      \"job\": \"Director\""
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 2710,"
-                      + "      \"known_for_department\": \"Directing\","
-                      + "      \"name\": \"James Cameron\","
-                      + "      \"original_name\": \"James Cameron\","
-                      + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/poster2710.jpg\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f8017961\","
-                      + "      \"department\": \"Writing\","
-                      + "      \"job\": \"Director\""
-                      + "    },"
-                      + "    {"
-                      + "      \"adult\": false,"
-                      + "      \"gender\": 2,"
-                      + "      \"id\": 1000,"
-                      + "      \"known_for_department\": \"Directing\","
-                      + "      \"name\": \"   James   \","
-                      + "      \"original_name\": \"James Cameron\","
-                      + "      \"popularity\": 4.238,"
-                      + "      \"profile_path\": \"/poster1000.jpg\","
-                      + "      \"credit_id\": \"52fe425ac3a36847f801795b\","
-                      + "      \"department\": \"Directing\","
-                      + "      \"job\": \"Director\""
-                      + "    }"
-                      + "   ]"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.creditsResponse());
 
-      ExternalMovieCredits credits = connector.getCreditsByMovieId(597, BASE_POSTER_URL).get();
+      ExternalMovieCredits credits = connector.getCreditsByMovieId(597).get();
 
       assertThat(credits.getActors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalActor(6193, "Leonardo", "DiCaprio", BASE_POSTER_URL + "/poster6193.jpg"),
-              new ExternalActor(9999, "Leonardo", "DiCaprio", BASE_POSTER_URL + "/poster9999.jpg"),
-              new ExternalActor(204, "Kate", "Winslet", BASE_POSTER_URL + "/poster204.jpg"),
+              new ExternalActor(6193, "Leonardo", "DiCaprio", ROOT_POSTER_URL + "/poster6193.jpg"),
+              new ExternalActor(9999, "Leonardo", "DiCaprio", ROOT_POSTER_URL + "/poster9999.jpg"),
+              new ExternalActor(204, "Kate", "Winslet", ROOT_POSTER_URL + "/poster204.jpg"),
               new ExternalActor(
-                  1954, "Billy", "Zane Zune Zone", BASE_POSTER_URL + "/poster1954.jpg"));
+                  1954, "Billy", "Zane Zune Zone", ROOT_POSTER_URL + "/poster1954.jpg"));
 
       assertThat(credits.getDirectors())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalDirector(2710, "James", "Cameron", BASE_POSTER_URL + "/poster2710.jpg"),
+              new ExternalDirector(2710, "James", "Cameron", ROOT_POSTER_URL + "/poster2710.jpg"),
               new ExternalDirector(
-                  7890, "James", "Cameron Number Two", BASE_POSTER_URL + "/poster7890.jpg"),
-              new ExternalDirector(1000, "James", "", BASE_POSTER_URL + "/poster1000.jpg"));
+                  7890, "James", "Cameron Number Two", ROOT_POSTER_URL + "/poster7890.jpg"),
+              new ExternalDirector(1000, "James", "", ROOT_POSTER_URL + "/poster1000.jpg"));
     }
   }
 
@@ -681,62 +377,9 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\n"
-                      + "  \"images\": {\n"
-                      + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
-                      + "    \"secure_base_url\": \"https://image.tmdb.org/t/p/\",\n"
-                      + "    \"backdrop_sizes\": [\n"
-                      + "      \"w300\",\n"
-                      + "      \"w780\",\n"
-                      + "      \"w1280\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"logo_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w92\",\n"
-                      + "      \"w154\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"w500\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"poster_sizes\": [\n"
-                      + "      \"w92\",\n"
-                      + "      \"w154\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w342\",\n"
-                      + "      \"w500\",\n"
-                      + "      \"w780\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"profile_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"h632\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"still_sizes\": [\n"
-                      + "      \"w92\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"original\"\n"
-                      + "    ]\n"
-                      + "  },\n"
-                      + "  \"change_keys\": [\n"
-                      + "    \"adult\",\n"
-                      + "    \"air_date\",\n"
-                      + "    \"also_known_as\",\n"
-                      + "    \"alternative_titles\""
-                      + "]\n"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
 
-      connector.getConfigurationBasePosterUrl();
+      connector.getConfigurationRootPosterUrl();
 
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath()).isEqualTo("/configuration?api_key=tmdb-api-key");
@@ -748,75 +391,22 @@ class TmdbHttpConnectorUnitTest {
     void whenTmdbReturnAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
-      assertThrows(TmdbApiException.class, () -> connector.getConfigurationBasePosterUrl());
+      assertThatThrownBy(() -> connector.getConfigurationRootPosterUrl())
+          .isInstanceOf(TmdbApiException.class);
     }
 
     @Test
     @DisplayName(
         "when TMDB return the image base URL and poster sizes, it should return the merged URL (base + second to last)")
     void whenTmdbReturnUrlAndPosterSizes_itShouldReturnMergedUrl() {
-      tmdbApiMockServer.enqueue(
-          new MockResponse()
-              .setResponseCode(200)
-              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
-              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
-              .setBody(
-                  "{\n"
-                      + "  \"images\": {\n"
-                      + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
-                      + "    \"secure_base_url\": \"https://image.tmdb.org/t/p/\",\n"
-                      + "    \"backdrop_sizes\": [\n"
-                      + "      \"w300\",\n"
-                      + "      \"w780\",\n"
-                      + "      \"w1280\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"logo_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w92\",\n"
-                      + "      \"w154\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"w500\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"poster_sizes\": [\n"
-                      + "      \"w92\",\n"
-                      + "      \"w154\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w342\",\n"
-                      + "      \"w500\",\n"
-                      + "      \"w780\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"profile_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"h632\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"still_sizes\": [\n"
-                      + "      \"w92\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"original\"\n"
-                      + "    ]\n"
-                      + "  },\n"
-                      + "  \"change_keys\": [\n"
-                      + "    \"adult\",\n"
-                      + "    \"air_date\",\n"
-                      + "    \"also_known_as\",\n"
-                      + "    \"alternative_titles\""
-                      + "]\n"
-                      + "}"));
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
 
-      String basePosterUrl = connector.getConfigurationBasePosterUrl();
+      String basePosterUrl = connector.getConfigurationRootPosterUrl();
 
       assertThat(basePosterUrl).isEqualTo("https://image.tmdb.org/t/p/w780");
     }
 
     @Test
-    @Disabled("It should pass!")
     @DisplayName("when TMDb return the image base URL and empty poster sizes, it should throw")
     void whenTmdbReturnUrlAndEmptyPosterSizes_itShouldThrow() {
       tmdbApiMockServer.enqueue(
@@ -866,7 +456,7 @@ class TmdbHttpConnectorUnitTest {
                       + "]\n"
                       + "}"));
 
-      assertThatThrownBy(() -> connector.getConfigurationBasePosterUrl())
+      assertThatThrownBy(() -> connector.getConfigurationRootPosterUrl())
           .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class)
           .hasMessageStartingWith("Invalid response from TMDB API:");
     }

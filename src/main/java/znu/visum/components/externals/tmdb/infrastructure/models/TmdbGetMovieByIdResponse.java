@@ -10,6 +10,7 @@ import znu.visum.components.externals.domain.ExternalMovieMetadata;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -150,7 +151,9 @@ public class TmdbGetMovieByIdResponse {
     this.posterPath = posterPath;
   }
 
-  public ExternalMovie toDomain() {
+  public ExternalMovie toDomainWithRootUrl(String basePosterUrl) {
+    String posterUrl = this.getMergedPosterUrl(basePosterUrl).orElse(null);
+
     return ExternalMovie.builder()
         .id(Long.toString(this.id))
         .title(this.title)
@@ -165,10 +168,17 @@ public class TmdbGetMovieByIdResponse {
                 .revenue(this.revenue)
                 .tagline(this.tagline)
                 .overview(this.overview)
-                .posterBaseUrl(null)
-                .posterPath(this.posterPath)
                 .originalLanguage(this.originalLanguage)
+                .posterUrl(posterUrl)
                 .build())
         .build();
+  }
+
+  private Optional<String> getMergedPosterUrl(String basePosterUrl) {
+    if (basePosterUrl == null || this.posterPath == null) {
+      return Optional.empty();
+    }
+
+    return Optional.of(basePosterUrl + "" + this.posterPath);
   }
 }
