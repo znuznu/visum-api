@@ -1,10 +1,12 @@
 package znu.visum.components.reviews.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Builder
 @Getter
 public class Review {
@@ -15,19 +17,4 @@ public class Review {
   private LocalDateTime creationDate;
   private Grade grade;
   private MovieFromReview movie;
-
-  public Review(
-      Long id,
-      String content,
-      LocalDateTime updateDate,
-      LocalDateTime creationDate,
-      Grade grade,
-      MovieFromReview movie) {
-    this.id = id;
-    this.content = content;
-    this.updateDate = updateDate;
-    this.creationDate = creationDate;
-    this.grade = grade;
-    this.movie = movie;
-  }
 }
