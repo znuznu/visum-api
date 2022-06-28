@@ -44,7 +44,7 @@ class GetByIdMovieControllerUnitTest {
             .content("Bla bla bla.")
             .creationDate(LocalDateTime.of(2021, 12, 12, 5, 10))
             .updateDate(LocalDateTime.of(2021, 12, 12, 5, 10))
-            .grade(new Grade(10))
+            .grade(Grade.of(10))
             .movieId(1L)
             .build();
 

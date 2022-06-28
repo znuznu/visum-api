@@ -80,7 +80,7 @@ class GetDiaryByYearServiceUnitTest {
                   List.of(
                       new MovieViewingHistory(4L, LocalDate.of(2019, 10, 8), 2L),
                       new MovieViewingHistory(5L, LocalDate.of(2024, 1, 5), 2L)))
-              .review(ReviewFromMovie.builder().movieId(2L).grade(new Grade(10)).build())
+              .review(ReviewFromMovie.builder().movieId(2L).grade(Grade.of(10)).build())
               .build();
 
       Movie movie3 =
@@ -130,7 +130,7 @@ class GetDiaryByYearServiceUnitTest {
                   .releaseDate(LocalDate.of(1980, 2, 6))
                   .isFavorite(false)
                   .isRewatch(false)
-                  .review(ReviewFromMovie.builder().movieId(2L).grade(new Grade(10)).build())
+                  .review(ReviewFromMovie.builder().movieId(2L).grade(Grade.of(10)).build())
                   .viewingDate(LocalDate.of(2019, 10, 8))
                   .build(),
               DiaryMovie.builder()

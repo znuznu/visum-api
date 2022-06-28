@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Schema(description = "Represents a review updated.")
-public class UpdateMovieReviewResponse {
+public class UpdateReviewResponse {
   @Schema(description = "The identifier of the review updated.")
   private final long id;
 
@@ -28,11 +28,11 @@ public class UpdateMovieReviewResponse {
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime creationDate;
 
-  public static UpdateMovieReviewResponse from(Review review) {
-    return new UpdateMovieReviewResponse(
+  public static UpdateReviewResponse from(Review review) {
+    return new UpdateReviewResponse(
         review.getId(),
         review.getGrade().getValue(),
-        review.getContent(),
+        review.getContent().getText(),
         review.getMovie().getId(),
         review.getCreationDate());
   }

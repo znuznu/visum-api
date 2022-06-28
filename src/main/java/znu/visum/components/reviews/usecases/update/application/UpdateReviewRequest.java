@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Schema(description = "Represents a review to update.")
-public class UpdateMovieReviewRequest {
+public class UpdateReviewRequest {
   @Schema(description = "The grade of the review to update.")
   @Min(0)
   @Max(10)
   @NotNull
-  private final int grade;
+  private final Integer grade;
 
   @Schema(description = "The text of the review to update.")
   @NotNull
@@ -25,8 +25,8 @@ public class UpdateMovieReviewRequest {
   private final String content;
 
   @JsonCreator
-  public UpdateMovieReviewRequest(
-      @JsonProperty("grade") int grade, @JsonProperty("content") String content) {
+  public UpdateReviewRequest(
+      @JsonProperty("grade") Integer grade, @JsonProperty("content") String content) {
     this.grade = grade;
     this.content = content;
   }

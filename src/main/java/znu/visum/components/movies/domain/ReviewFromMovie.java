@@ -23,7 +23,7 @@ public class ReviewFromMovie {
   public static ReviewFromMovie from(Review review) {
     return new ReviewFromMovie(
         review.getId(),
-        review.getContent(),
+        review.getContent().getText(),
         review.getUpdateDate(),
         review.getCreationDate(),
         review.getGrade(),

@@ -25,7 +25,7 @@ public class CreateReviewResponse {
     return new CreateReviewResponse(
         review.getId(),
         review.getGrade().getValue(),
-        review.getContent(),
+        review.getContent().getText(),
         review.getMovie().getId());
   }
 }

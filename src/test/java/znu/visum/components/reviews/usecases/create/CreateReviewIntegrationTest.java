@@ -1,6 +1,5 @@
 package znu.visum.components.reviews.usecases.create;
 
-import helpers.factories.reviews.ReviewFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,19 +17,21 @@ import znu.visum.components.movies.domain.NoSuchMovieIdException;
 import znu.visum.components.reviews.domain.MaximumMovieReviewsReachedException;
 import znu.visum.components.reviews.domain.Review;
 import znu.visum.components.reviews.domain.ReviewRepository;
-import znu.visum.components.reviews.usecases.create.domain.CreateReviewService;
+import znu.visum.components.reviews.usecases.create.domain.CreateReview;
+import znu.visum.components.reviews.usecases.create.domain.CreateReviewCommand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("CreateReviewServiceIntegrationTest")
+@DisplayName("CreateReviewIntegrationTest")
 @ActiveProfiles("flyway")
-class CreateReviewServiceIntegrationTest {
+class CreateReviewIntegrationTest {
+
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
-  @Autowired private CreateReviewService service;
+  @Autowired private CreateReview usecase;
   @Autowired private MovieRepository movieRepository;
   @Autowired private ReviewRepository reviewRepository;
 
@@ -42,18 +43,15 @@ class CreateReviewServiceIntegrationTest {
   }
 
   @Test
-  void givenAReviewWithAMovieIdThatDoesNotExist_whenTheReviewIsSaved_itShouldThrowAnError() {
-    Assertions.assertThrows(
-        NoSuchMovieIdException.class,
-        () -> service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(42L)));
+  void givenACommandWithAMovieIdThatDoesNotExist_whenTheReviewIsSaved_itShouldThrowAnError() {
+    Assertions.assertThrows(NoSuchMovieIdException.class, () -> usecase.process(command(42L)));
   }
 
   @Test
   @Sql("/sql/insert_movie_with_review.sql")
   void givenAReviewWithAMovieIdThatAlreadyHaveAReview_whenTheReviewIsSaved_itShouldThrowAnError() {
     Assertions.assertThrows(
-        MaximumMovieReviewsReachedException.class,
-        () -> service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(30L)));
+        MaximumMovieReviewsReachedException.class, () -> usecase.process(command(30L)));
   }
 
   @Test
@@ -61,9 +59,17 @@ class CreateReviewServiceIntegrationTest {
   void givenAReviewWithAMovieIdThatExists_whenTheReviewIsSaved_itShouldSaveTheReview() {
     assertThat(movieRepository.findById(1L).get().getReview()).isNull();
 
-    Review review = service.save(ReviewFactory.INSTANCE.getOneToSaveWithMovieId(1L));
+    Review review = usecase.process(command(1L));
 
     assertThat(movieRepository.findById(1L).get().getReview()).isNotNull();
     assertThat(reviewRepository.findById(review.getId())).isPresent();
+  }
+
+  private CreateReviewCommand command(long movieId) {
+    return CreateReviewCommand.builder()
+        .content("Bla bla bla. \n Blo blo blo. \n Wow !")
+        .grade(7)
+        .movieId(movieId)
+        .build();
   }
 }
