@@ -9,11 +9,15 @@ public class Grade {
 
   private final int value;
 
-  public Grade(int value) {
+  private Grade(int value) {
     if (value < MIN_VALUE || value > MAX_VALUE) {
-      throw new IllegalArgumentException("Grade" + value + " is out of range [1;10]");
+      throw new IllegalArgumentException("Grade " + value + " is out of range [1;10]");
     }
     this.value = value;
+  }
+
+  public static Grade of(int value) {
+    return new Grade(value);
   }
 
   @Override
@@ -21,6 +25,7 @@ public class Grade {
     if (this == other) {
       return true;
     }
+
     if (other == null || getClass() != other.getClass()) {
       return false;
     }

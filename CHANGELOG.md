@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.11.2
+
+- Add `VisumAssert`
+- Add `Content`
+- Add `CreateReviewCommand` and `UpdateReviewCommand`
+
 ## 2.11.1
 
 - Add `Identity` and `Grade`

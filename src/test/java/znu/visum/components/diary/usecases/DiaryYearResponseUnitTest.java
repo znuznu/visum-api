@@ -53,7 +53,7 @@ class DiaryYearResponseUnitTest {
             .releaseDate(LocalDate.of(1980, 2, 6))
             .isFavorite(false)
             .isRewatch(false)
-            .review(ReviewFromMovie.builder().id(111L).movieId(2L).grade(new Grade(10)).build())
+            .review(ReviewFromMovie.builder().id(111L).movieId(2L).grade(Grade.of(10)).build())
             .viewingDate(LocalDate.of(2019, 10, 8))
             .build();
 

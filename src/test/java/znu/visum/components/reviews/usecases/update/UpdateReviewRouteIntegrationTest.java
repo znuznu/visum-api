@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.reviews.usecases.update.application.UpdateMovieReviewRequest;
+import znu.visum.components.reviews.usecases.update.application.UpdateReviewRequest;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -45,7 +45,7 @@ class UpdateReviewRouteIntegrationTest {
     mvc.perform(
             put("/api/reviews/{id}/movies", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(6, "Nice movie."))))
+                .content(TestMapper.toJsonString(new UpdateReviewRequest(6, "Nice movie."))))
         .andExpect(status().isForbidden());
   }
 
@@ -55,7 +55,7 @@ class UpdateReviewRouteIntegrationTest {
     mvc.perform(
             put("/api/reviews/{id}/movies", 269)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(6, "Nice movie."))))
+                .content(TestMapper.toJsonString(new UpdateReviewRequest(6, "Nice movie."))))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.message").value("No REVIEW with id 269 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
@@ -73,7 +73,7 @@ class UpdateReviewRouteIntegrationTest {
     mvc.perform(
             put("/api/reviews/{id}/movies", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(10, "Something."))))
+                .content(TestMapper.toJsonString(new UpdateReviewRequest(10, "Something."))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id").value(1))
         .andExpect(jsonPath("$.content").value("Something."))
@@ -105,7 +105,7 @@ class UpdateReviewRouteIntegrationTest {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
-                  .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(10, ""))))
+                  .content(TestMapper.toJsonString(new UpdateReviewRequest(10, ""))))
           .andExpect(status().isBadRequest())
           .andExpect(jsonPath("$.message").value("content: must not be empty"))
           .andExpect(jsonPath("$.code").value("INVALID_BODY"))
@@ -118,7 +118,7 @@ class UpdateReviewRouteIntegrationTest {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
-                  .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(-1, "Some text."))))
+                  .content(TestMapper.toJsonString(new UpdateReviewRequest(-1, "Some text."))))
           .andExpect(status().isBadRequest())
           .andExpect(jsonPath("$.message").value("grade: must be greater than or equal to 0"))
           .andExpect(jsonPath("$.code").value("INVALID_BODY"))
@@ -131,7 +131,7 @@ class UpdateReviewRouteIntegrationTest {
       mvc.perform(
               put("/api/reviews/{id}/movies", 1)
                   .contentType(MediaType.APPLICATION_JSON_VALUE)
-                  .content(TestMapper.toJsonString(new UpdateMovieReviewRequest(11, "Some text."))))
+                  .content(TestMapper.toJsonString(new UpdateReviewRequest(11, "Some text."))))
           .andExpect(status().isBadRequest())
           .andExpect(jsonPath("$.message").value("grade: must be less than or equal to 10"))
           .andExpect(jsonPath("$.code").value("INVALID_BODY"))

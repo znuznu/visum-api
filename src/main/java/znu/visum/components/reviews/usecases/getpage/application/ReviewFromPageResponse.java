@@ -39,7 +39,7 @@ public class ReviewFromPageResponse {
     return new ReviewFromPageResponse(
         review.getId(),
         review.getGrade().getValue(),
-        review.getContent(),
+        review.getContent().getText(),
         ResponseMovie.from(review.getMovie()),
         review.getCreationDate(),
         review.getUpdateDate());

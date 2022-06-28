@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import znu.visum.components.genres.domain.Genre;
 import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.reviews.domain.MaximumMovieReviewsReachedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,4 +31,12 @@ public class Movie {
   private LocalDateTime creationDate;
   @Builder.Default private List<MovieViewingHistory> viewingHistory = new ArrayList<>();
   private MovieMetadata metadata;
+
+  public void addReview(ReviewFromMovie review) {
+    if (this.review != null) {
+      throw MaximumMovieReviewsReachedException.withId(this.id);
+    }
+
+    this.review = review;
+  }
 }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.components.movies.infrastructure.MovieEntity;
+import znu.visum.components.reviews.domain.Content;
 import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.Review;
 
@@ -52,7 +53,7 @@ public class MovieReviewEntity {
     return MovieReviewEntity.builder()
         .id(review.getId())
         .grade(review.getGrade().getValue())
-        .content(review.getContent())
+        .content(review.getContent().getText())
         .movieEntity(MovieEntity.from(review.getMovie()))
         .creationDate(review.getCreationDate())
         .updateDate(review.getUpdateDate())
@@ -62,11 +63,11 @@ public class MovieReviewEntity {
   public Review toDomain() {
     return Review.builder()
         .id(this.id)
-        .content(this.content)
+        .grade(Grade.of(this.grade))
+        .content(Content.of(this.content))
+        .movie(this.movieEntity == null ? null : this.movieEntity.toMovieFromReview())
         .updateDate(this.updateDate)
         .creationDate(this.creationDate)
-        .grade(new Grade(this.grade))
-        .movie(this.movieEntity == null ? null : this.movieEntity.toMovieFromReview())
         .build();
   }
 

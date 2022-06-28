@@ -81,7 +81,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(1L)
-                        .grade(new Grade(9))
+                        .grade(Grade.of(9))
                         .content("Some text 1")
                         .movieId(1L)
                         .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
@@ -126,7 +126,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(3L)
-                        .grade(new Grade(10))
+                        .grade(Grade.of(10))
                         .content("Some text 3")
                         .movieId(3L)
                         .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
@@ -187,7 +187,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(1L)
-                        .grade(new Grade(9))
+                        .grade(Grade.of(9))
                         .content("Some text 1")
                         .movieId(1L)
                         .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
@@ -232,7 +232,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(2L)
-                        .grade(new Grade(1))
+                        .grade(Grade.of(1))
                         .content("Some text 2")
                         .movieId(2L)
                         .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
@@ -471,7 +471,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(8L)
-                        .grade(new Grade(6))
+                        .grade(Grade.of(6))
                         .content("Some text 8")
                         .movieId(8L)
                         .creationDate(LocalDateTime.of(2015, 10, 26, 15, 54, 33))
@@ -516,7 +516,7 @@ class PostgresMovieRepositoryIntegrationTest {
                 .review(
                     ReviewFromMovie.builder()
                         .id(14L)
-                        .grade(new Grade(1))
+                        .grade(Grade.of(1))
                         .content("Some text 14")
                         .movieId(14L)
                         .creationDate(LocalDateTime.of(2015, 10, 26, 15, 54, 33))
