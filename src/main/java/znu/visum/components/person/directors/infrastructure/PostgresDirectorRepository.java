@@ -47,6 +47,11 @@ public class PostgresDirectorRepository implements DirectorRepository {
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaDirectorRepository.existsById(id);
+  }
+
+  @Override
   public Optional<Director> findByTmdbId(long tmdbId) {
     return dataJpaDirectorRepository
         .findByMetadataEntity_TmdbId(tmdbId)

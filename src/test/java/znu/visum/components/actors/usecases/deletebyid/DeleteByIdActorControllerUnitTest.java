@@ -17,16 +17,16 @@ import znu.visum.components.person.actors.usecases.deletebyid.domain.DeleteByIdA
 class DeleteByIdActorControllerUnitTest {
   private DeleteByIdActorController controller;
 
-  @Mock private DeleteByIdActor service;
+  @Mock private DeleteByIdActor deleteByIdActor;
 
   @BeforeEach
   void setup() {
-    controller = new DeleteByIdActorController(service);
+    controller = new DeleteByIdActorController(deleteByIdActor);
   }
 
   @Test
   void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).process(1L);
+    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(deleteByIdActor).process(1L);
 
     Assertions.assertThrows(NoSuchActorIdException.class, () -> controller.deleteById(1));
   }

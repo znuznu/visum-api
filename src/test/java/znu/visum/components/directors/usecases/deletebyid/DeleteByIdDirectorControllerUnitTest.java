@@ -17,16 +17,16 @@ import znu.visum.components.person.directors.usecases.deletebyid.domain.DeleteBy
 class DeleteByIdDirectorControllerUnitTest {
   private DeleteByIdDirectorController controller;
 
-  @Mock private DeleteByIdDirector service;
+  @Mock private DeleteByIdDirector deleteByIdDirector;
 
   @BeforeEach
   void setup() {
-    controller = new DeleteByIdDirectorController(service);
+    controller = new DeleteByIdDirectorController(deleteByIdDirector);
   }
 
   @Test
   void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).process(1L);
+    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(deleteByIdDirector).process(1L);
 
     Assertions.assertThrows(NoSuchDirectorIdException.class, () -> controller.deleteById(1));
   }

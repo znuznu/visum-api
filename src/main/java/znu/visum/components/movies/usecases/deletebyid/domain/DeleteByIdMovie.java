@@ -7,6 +7,7 @@ import znu.visum.components.movies.domain.NoSuchMovieIdException;
 
 @Service
 public class DeleteByIdMovie {
+
   private final MovieRepository movieRepository;
 
   @Autowired
@@ -15,7 +16,7 @@ public class DeleteByIdMovie {
   }
 
   public void process(long id) {
-    if (movieRepository.findById(id).isEmpty()) {
+    if (!movieRepository.existsById(id)) {
       throw new NoSuchMovieIdException(Long.toString(id));
     }
 

@@ -21,6 +21,8 @@ public interface DataJpaMovieRepository
     return findAll(page.getSearch(), page);
   }
 
+  boolean existsByMovieMetadataEntityTmdbId(long id);
+
   Optional<MovieEntity> findByTitleAndReleaseDate(String title, LocalDate releaseDate);
 
   long countAllByReleaseDateBetween(LocalDate start, LocalDate end);

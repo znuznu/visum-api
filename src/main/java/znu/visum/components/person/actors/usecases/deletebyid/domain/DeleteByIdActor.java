@@ -16,7 +16,7 @@ public class DeleteByIdActor {
   }
 
   public void process(long id) {
-    if (actorRepository.findById(id).isEmpty()) {
+    if (!actorRepository.existsById(id)) {
       throw NoSuchActorIdException.withId(Long.toString(id));
     }
 

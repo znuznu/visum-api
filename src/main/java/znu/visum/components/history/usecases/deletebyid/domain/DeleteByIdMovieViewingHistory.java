@@ -16,7 +16,7 @@ public class DeleteByIdMovieViewingHistory {
   }
 
   public void process(long id) {
-    if (movieViewingHistoryRepository.findById(id).isEmpty()) {
+    if (!movieViewingHistoryRepository.existsById(id)) {
       throw new NoSuchViewingHistoryException(Long.toString(id));
     }
 

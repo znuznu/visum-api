@@ -27,6 +27,11 @@ public class PostgresMovieViewingHistoryRepository implements MovieViewingHistor
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaMovieViewingHistoryRepository.existsById(id);
+  }
+
+  @Override
   public void deleteById(long id) {
     this.dataJpaMovieViewingHistoryRepository.deleteById(id);
   }
