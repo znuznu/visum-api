@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Schema(description = "Represent a movie viewing history created.")
 public class CreateMovieViewingHistoryRequest {
+
   @Schema(description = "A viewing date of the movie.")
   @NotNull
   private final LocalDate viewingDate;

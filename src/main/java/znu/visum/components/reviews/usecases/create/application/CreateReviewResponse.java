@@ -9,6 +9,7 @@ import znu.visum.components.reviews.domain.Review;
 @Getter
 @Schema(description = "Represents the review created.")
 public class CreateReviewResponse {
+
   @Schema(description = "The identifier of the review created.")
   private final long id;
 

@@ -11,6 +11,7 @@ import znu.visum.components.person.directors.domain.Director;
 @Getter
 @Schema(description = "Represents a page of directors.")
 public class DirectorFromPageResponse {
+
   @Schema(description = "The director identifier.")
   private final long id;
 

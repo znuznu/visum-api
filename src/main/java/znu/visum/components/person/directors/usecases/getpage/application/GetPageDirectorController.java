@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import znu.visum.components.person.directors.usecases.getpage.domain.GetPageDirectorService;
+import znu.visum.components.person.directors.usecases.getpage.domain.GetPageDirector;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 @RestController
 @RequestMapping(value = "/api/directors", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
 public class GetPageDirectorController {
-  private final GetPageDirectorService getPageDirectorService;
+
+  private final GetPageDirector getPageDirector;
 
   @Autowired
-  public GetPageDirectorController(GetPageDirectorService getPageDirectorService) {
-    this.getPageDirectorService = getPageDirectorService;
+  public GetPageDirectorController(GetPageDirector getPageDirector) {
+    this.getPageDirector = getPageDirector;
   }
 
   @Operation(summary = "Get a page of directors.")
@@ -32,7 +33,6 @@ public class GetPageDirectorController {
       @RequestParam(required = false, defaultValue = "forename=%%,name=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getPageDirectorService.findPage(limit, offset, sort, search),
-        DirectorFromPageResponse::from);
+        getPageDirector.process(limit, offset, sort, search), DirectorFromPageResponse::from);
   }
 }

@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovieService;
+import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovie;
 
 @RestController
 @RequestMapping(value = "/api/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetByIdMovieResponse.class)
 public class GetByIdMovieController {
-  private final GetByIdMovieService getByIdMovieService;
+  private final GetByIdMovie getByIdMovie;
 
   @Autowired
-  public GetByIdMovieController(GetByIdMovieService getByIdMovieService) {
-    this.getByIdMovieService = getByIdMovieService;
+  public GetByIdMovieController(GetByIdMovie getByIdMovie) {
+    this.getByIdMovie = getByIdMovie;
   }
 
   @Operation(summary = "Get a movie by his identifier.")
   @GetMapping("/{id}")
   public GetByIdMovieResponse getMovieById(@PathVariable long id) {
-    return GetByIdMovieResponse.from(getByIdMovieService.findById(id));
+    return GetByIdMovieResponse.from(getByIdMovie.process(id));
   }
 }

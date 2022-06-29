@@ -12,7 +12,7 @@ import znu.visum.components.genres.domain.Genre;
 import znu.visum.components.movies.domain.*;
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieController;
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieResponse;
-import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovieService;
+import znu.visum.components.movies.usecases.getbyid.domain.GetByIdMovie;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.components.reviews.domain.Grade;
 
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GetByIdMovieControllerUnitTest {
   private GetByIdMovieController controller;
 
-  @Mock private GetByIdMovieService service;
+  @Mock private GetByIdMovie service;
 
   @BeforeEach
   void setup() {
@@ -98,7 +98,7 @@ class GetByIdMovieControllerUnitTest {
             .metadata(movieMetadata)
             .build();
 
-    Mockito.when(service.findById(1L)).thenReturn(movie);
+    Mockito.when(service.process(1L)).thenReturn(movie);
 
     List<GetByIdMovieResponse.ResponseActor> responseActors =
         Arrays.asList(
@@ -155,7 +155,7 @@ class GetByIdMovieControllerUnitTest {
 
   @Test
   void givenAMovieId_whenNoMovieWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchMovieIdException("1")).when(service).findById(1L);
+    Mockito.doThrow(new NoSuchMovieIdException("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchMovieIdException.class, () -> controller.getMovieById(1));
   }

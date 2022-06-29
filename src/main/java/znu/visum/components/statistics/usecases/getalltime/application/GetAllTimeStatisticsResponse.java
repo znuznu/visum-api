@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 @Schema(description = "Represents a bunch of all-time statistics.")
 public class GetAllTimeStatisticsResponse {
+
   @Schema(description = "The sum of all movies runtime in hours.")
   private int totalRuntimeInHours;
 

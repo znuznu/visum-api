@@ -12,7 +12,7 @@ import znu.visum.components.genres.domain.Genre;
 import znu.visum.components.genres.domain.NoSuchGenreIdException;
 import znu.visum.components.genres.usecases.getbyid.application.GetByIdGenreController;
 import znu.visum.components.genres.usecases.getbyid.application.GetByIdGenreResponse;
-import znu.visum.components.genres.usecases.getbyid.domain.GetByIdGenreService;
+import znu.visum.components.genres.usecases.getbyid.domain.GetByIdGenre;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GetByIdTmdbGenreControllerUnitTest {
   private GetByIdGenreController controller;
 
-  @Mock private GetByIdGenreService service;
+  @Mock private GetByIdGenre service;
 
   @BeforeEach
   void setup() {
@@ -30,7 +30,7 @@ class GetByIdTmdbGenreControllerUnitTest {
 
   @Test
   void givenAGenreId_whenTheGenreWithTheIdExists_thenItShouldReturnTheGenre() {
-    Mockito.when(service.findById(1L)).thenReturn(new Genre(1L, "Something"));
+    Mockito.when(service.process(1L)).thenReturn(new Genre(1L, "Something"));
 
     assertThat(controller.getGenreById(1))
         .usingRecursiveComparison()
@@ -39,7 +39,7 @@ class GetByIdTmdbGenreControllerUnitTest {
 
   @Test
   void givenAGenreId_whenNoGenreWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchGenreIdException("1")).when(service).findById(1L);
+    Mockito.doThrow(new NoSuchGenreIdException("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchGenreIdException.class, () -> controller.getGenreById(1));
   }

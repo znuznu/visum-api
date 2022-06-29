@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import znu.visum.components.person.actors.usecases.getpage.domain.GetPageActorService;
+import znu.visum.components.person.actors.usecases.getpage.domain.GetPageActor;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 @RestController
 @RequestMapping(value = "/api/actors", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
 public class GetPageActorController {
-  private final GetPageActorService getPageActorService;
+
+  private final GetPageActor getPageActor;
 
   @Autowired
-  public GetPageActorController(GetPageActorService getPageActorService) {
-    this.getPageActorService = getPageActorService;
+  public GetPageActorController(GetPageActor getPageActor) {
+    this.getPageActor = getPageActor;
   }
 
   @Operation(summary = "Get a page of actors.")
@@ -32,6 +33,6 @@ public class GetPageActorController {
       @RequestParam(required = false, defaultValue = "forename=%%,name=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getPageActorService.findPage(limit, offset, sort, search), ActorFromPageResponse::from);
+        getPageActor.process(limit, offset, sort, search), ActorFromPageResponse::from);
   }
 }

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 @Schema(description = "Represents a director.")
 public class GetByIdDirectorResponse {
+
   @Schema(description = "The director's identifier.")
   private final long id;
 

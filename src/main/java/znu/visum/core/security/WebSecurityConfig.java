@@ -12,20 +12,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import znu.visum.components.accounts.usecases.signup.domain.SignupService;
+import znu.visum.components.accounts.usecases.signup.domain.Signup;
 import znu.visum.core.security.jwt.JWTAuthenticationFilter;
 import znu.visum.core.security.jwt.JWTAuthorizationFilter;
 import znu.visum.core.security.jwt.SecretInitializer;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-  private final SignupService accountService;
+  private final Signup accountService;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final SecretInitializer secretInitializer;
 
   @Autowired
   public WebSecurityConfig(
-      SignupService accountService,
+      Signup accountService,
       BCryptPasswordEncoder bCryptPasswordEncoder,
       SecretInitializer secretInitializer) {
     this.accountService = accountService;

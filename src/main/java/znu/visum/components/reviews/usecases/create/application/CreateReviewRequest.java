@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 @Getter
 @Schema(description = "Represents a review to create.")
 public class CreateReviewRequest {
+
   @Schema(description = "The grade of the review to create.")
   @NotNull
   @Positive

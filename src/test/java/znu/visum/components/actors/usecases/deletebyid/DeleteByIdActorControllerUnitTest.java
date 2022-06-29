@@ -10,14 +10,14 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.person.actors.domain.NoSuchActorIdException;
 import znu.visum.components.person.actors.usecases.deletebyid.application.DeleteByIdActorController;
-import znu.visum.components.person.actors.usecases.deletebyid.domain.DeleteByIdActorService;
+import znu.visum.components.person.actors.usecases.deletebyid.domain.DeleteByIdActor;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteByIdActorControllerUnitTest")
 class DeleteByIdActorControllerUnitTest {
   private DeleteByIdActorController controller;
 
-  @Mock private DeleteByIdActorService service;
+  @Mock private DeleteByIdActor service;
 
   @BeforeEach
   void setup() {
@@ -26,7 +26,7 @@ class DeleteByIdActorControllerUnitTest {
 
   @Test
   void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).deleteById(1L);
+    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchActorIdException.class, () -> controller.deleteById(1));
   }

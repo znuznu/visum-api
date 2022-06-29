@@ -9,6 +9,7 @@ import znu.visum.components.person.actors.domain.Actor;
 @Getter
 @Schema(description = "Represents a page of actors.")
 public class ActorFromPageResponse {
+
   @Schema(description = "The actor identifier.")
   private final long id;
 

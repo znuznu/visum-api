@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import znu.visum.components.history.domain.MovieViewingHistory;
-import znu.visum.components.history.usecases.getbymovieid.domain.GetByMovieIdMovieViewingHistoryService;
+import znu.visum.components.history.usecases.getbymovieid.domain.GetByMovieIdMovieViewingHistory;
 
 import java.util.List;
 
@@ -16,16 +16,17 @@ import java.util.List;
 @RequestMapping(value = "/api/history", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(MovieViewingHistory.class)
 public class GetByMovieIdMovieViewingHistoryController {
-  private final GetByMovieIdMovieViewingHistoryService getByMovieIdMovieViewingHistoryService;
+
+  private final GetByMovieIdMovieViewingHistory getByMovieIdMovieViewingHistory;
 
   @Autowired
   public GetByMovieIdMovieViewingHistoryController(
-      GetByMovieIdMovieViewingHistoryService getByMovieIdMovieViewingHistoryService) {
-    this.getByMovieIdMovieViewingHistoryService = getByMovieIdMovieViewingHistoryService;
+      GetByMovieIdMovieViewingHistory getByMovieIdMovieViewingHistory) {
+    this.getByMovieIdMovieViewingHistory = getByMovieIdMovieViewingHistory;
   }
 
   @GetMapping("/movies/{id}")
   public List<MovieViewingHistory> getByMovieId(@PathVariable long id) {
-    return getByMovieIdMovieViewingHistoryService.findByMovieId(id);
+    return getByMovieIdMovieViewingHistory.process(id);
   }
 }

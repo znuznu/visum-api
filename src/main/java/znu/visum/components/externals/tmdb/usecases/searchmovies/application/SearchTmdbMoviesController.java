@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMoviesService;
+import znu.visum.components.externals.tmdb.usecases.searchmovies.domain.SearchTmdbMovies;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 import javax.validation.constraints.Min;
@@ -20,11 +20,11 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping(value = "/api/tmdb/movies/search", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
 public class SearchTmdbMoviesController {
-  private final SearchTmdbMoviesService searchTmdbMoviesService;
+  private final SearchTmdbMovies searchTmdbMovies;
 
   @Autowired
-  public SearchTmdbMoviesController(SearchTmdbMoviesService searchTmdbMoviesService) {
-    this.searchTmdbMoviesService = searchTmdbMoviesService;
+  public SearchTmdbMoviesController(SearchTmdbMovies searchTmdbMovies) {
+    this.searchTmdbMovies = searchTmdbMovies;
   }
 
   @Operation(summary = "Search movies on TMDb.")
@@ -33,6 +33,6 @@ public class SearchTmdbMoviesController {
   public GetPageResponse<SearchTmdbMoviesResponse> searchTmdbMovies(
       @RequestParam @NotBlank String search, @RequestParam @Min(1) Integer pageNumber) {
     return GetPageResponse.from(
-        searchTmdbMoviesService.searchMovies(search, pageNumber), SearchTmdbMoviesResponse::from);
+        searchTmdbMovies.process(search, pageNumber), SearchTmdbMoviesResponse::from);
   }
 }

@@ -9,22 +9,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import znu.visum.components.movies.usecases.getbyid.application.GetByIdMovieResponse;
-import znu.visum.components.person.directors.usecases.getbyid.domain.GetByIdDirectorService;
+import znu.visum.components.person.directors.usecases.getbyid.domain.GetByIdDirector;
 
 @RestController
 @RequestMapping(value = "/api/directors", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetByIdMovieResponse.class)
 public class GetByIdDirectorController {
-  private final GetByIdDirectorService getByIdDirectorService;
+
+  private final GetByIdDirector getByIdDirector;
 
   @Autowired
-  public GetByIdDirectorController(GetByIdDirectorService getByIdDirectorService) {
-    this.getByIdDirectorService = getByIdDirectorService;
+  public GetByIdDirectorController(GetByIdDirector getByIdDirector) {
+    this.getByIdDirector = getByIdDirector;
   }
 
   @Operation(summary = "Get a director by his identifier.")
   @GetMapping("/{id}")
   public GetByIdDirectorResponse getDirectorById(@PathVariable long id) {
-    return GetByIdDirectorResponse.from(getByIdDirectorService.findById(id));
+    return GetByIdDirectorResponse.from(getByIdDirector.process(id));
   }
 }
