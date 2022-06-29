@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.11.3
+
+- Remove the `Service` prefixes from the usecases
+
 ## 2.11.2
 
 - Add `VisumAssert`

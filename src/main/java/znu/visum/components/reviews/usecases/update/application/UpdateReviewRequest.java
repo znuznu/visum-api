@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Schema(description = "Represents a review to update.")
 public class UpdateReviewRequest {
+
   @Schema(description = "The grade of the review to update.")
   @Min(0)
   @Max(10)

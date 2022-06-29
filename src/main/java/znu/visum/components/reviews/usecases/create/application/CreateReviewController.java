@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/reviews/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(CreateReviewResponse.class)
 public class CreateReviewController {
+
   private final CreateReview createReview;
 
   @Autowired

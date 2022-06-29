@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMoviesService;
+import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMovies;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 import javax.validation.constraints.Min;
@@ -18,12 +18,11 @@ import javax.validation.constraints.Min;
 @ExposesResourceFor(GetUpcomingTmdbMoviesResponse.class)
 public class GetUpcomingTmdbMoviesController {
 
-  private final GetUpcomingTmdbMoviesService getUpcomingTmdbMoviesService;
+  private final GetUpcomingTmdbMovies getUpcomingTmdbMovies;
 
   @Autowired
-  public GetUpcomingTmdbMoviesController(
-      GetUpcomingTmdbMoviesService getUpcomingTmdbMoviesService) {
-    this.getUpcomingTmdbMoviesService = getUpcomingTmdbMoviesService;
+  public GetUpcomingTmdbMoviesController(GetUpcomingTmdbMovies getUpcomingTmdbMovies) {
+    this.getUpcomingTmdbMovies = getUpcomingTmdbMovies;
   }
 
   @Operation(summary = "Get upcoming TMDb movies.")
@@ -32,7 +31,6 @@ public class GetUpcomingTmdbMoviesController {
   public GetPageResponse<GetUpcomingTmdbMoviesResponse> getUpcomingMovies(
       @RequestParam @Min(1) Integer pageNumber) {
     return GetPageResponse.from(
-        getUpcomingTmdbMoviesService.getUpcomingMovies(pageNumber),
-        GetUpcomingTmdbMoviesResponse::from);
+        getUpcomingTmdbMovies.process(pageNumber), GetUpcomingTmdbMoviesResponse::from);
   }
 }

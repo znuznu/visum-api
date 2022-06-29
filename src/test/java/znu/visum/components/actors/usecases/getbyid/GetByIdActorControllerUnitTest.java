@@ -14,7 +14,7 @@ import znu.visum.components.person.actors.domain.Actor;
 import znu.visum.components.person.actors.domain.NoSuchActorIdException;
 import znu.visum.components.person.actors.usecases.getbyid.application.GetByIdActorController;
 import znu.visum.components.person.actors.usecases.getbyid.application.GetByIdActorResponse;
-import znu.visum.components.person.actors.usecases.getbyid.domain.GetByIdActorService;
+import znu.visum.components.person.actors.usecases.getbyid.domain.GetByIdActor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GetByIdActorControllerUnitTest {
   private GetByIdActorController controller;
 
-  @Mock private GetByIdActorService service;
+  @Mock private GetByIdActor service;
 
   @BeforeEach
   void setup() {
@@ -40,7 +40,7 @@ class GetByIdActorControllerUnitTest {
         (Actor)
             SingletonPeopleFactory.INSTANCE.getActorFactory().getWithKind(PeopleKind.WITH_MOVIES);
 
-    Mockito.when(service.findById(1L)).thenReturn(actor);
+    Mockito.when(service.process(1L)).thenReturn(actor);
 
     List<GetByIdActorResponse.ResponseMovie> expectedResponseMovies = new ArrayList<>();
     expectedResponseMovies.add(
@@ -68,7 +68,7 @@ class GetByIdActorControllerUnitTest {
 
   @Test
   void givenAnActorId_whenNoActorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).findById(1L);
+    Mockito.doThrow(NoSuchActorIdException.withId("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchActorIdException.class, () -> controller.getActorById(1));
   }

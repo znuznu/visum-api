@@ -8,18 +8,18 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.genres.usecases.getpage.domain.GetPageGenreService;
+import znu.visum.components.genres.usecases.getpage.domain.GetPageGenre;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 @RestController
 @RequestMapping(value = "/api/genres", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
 public class GetPageGenreController {
-  private final GetPageGenreService getPageGenreService;
+  private final GetPageGenre getPageGenre;
 
   @Autowired
-  public GetPageGenreController(GetPageGenreService getPageGenreService) {
-    this.getPageGenreService = getPageGenreService;
+  public GetPageGenreController(GetPageGenre getPageGenre) {
+    this.getPageGenre = getPageGenre;
   }
 
   @Operation(summary = "Get a page of genres.")
@@ -31,6 +31,6 @@ public class GetPageGenreController {
       @RequestParam(required = false, defaultValue = "type=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getPageGenreService.findPage(limit, offset, sort, search), GenreFromPageResponse::from);
+        getPageGenre.process(limit, offset, sort, search), GenreFromPageResponse::from);
   }
 }

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Getter
 @Schema(description = "Represents a bunch of statistics for a specific year.")
 public class GetPerYearStatisticsResponse {
+
   @Schema(description = "The number of movies released during the year.")
   private long movieCount;
 

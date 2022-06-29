@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Schema(description = "Represents a review updated.")
 public class UpdateReviewResponse {
+
   @Schema(description = "The identifier of the review updated.")
   private final long id;
 

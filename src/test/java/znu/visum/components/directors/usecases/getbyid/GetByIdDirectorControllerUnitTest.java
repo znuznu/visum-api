@@ -14,7 +14,7 @@ import znu.visum.components.person.directors.domain.Director;
 import znu.visum.components.person.directors.domain.NoSuchDirectorIdException;
 import znu.visum.components.person.directors.usecases.getbyid.application.GetByIdDirectorController;
 import znu.visum.components.person.directors.usecases.getbyid.application.GetByIdDirectorResponse;
-import znu.visum.components.person.directors.usecases.getbyid.domain.GetByIdDirectorService;
+import znu.visum.components.person.directors.usecases.getbyid.domain.GetByIdDirector;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GetByIdDirectorControllerUnitTest {
   private GetByIdDirectorController controller;
 
-  @Mock private GetByIdDirectorService service;
+  @Mock private GetByIdDirector service;
 
   @BeforeEach
   void setup() {
@@ -41,7 +41,7 @@ class GetByIdDirectorControllerUnitTest {
                 .getDirectorFactory()
                 .getWithKind(PeopleKind.WITH_MOVIES);
 
-    Mockito.when(service.findById(1L)).thenReturn(director);
+    Mockito.when(service.process(1L)).thenReturn(director);
 
     var expectedResponseMovies =
         Arrays.asList(
@@ -69,7 +69,7 @@ class GetByIdDirectorControllerUnitTest {
 
   @Test
   void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).findById(1L);
+    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchDirectorIdException.class, () -> controller.getDirectorById(1));
   }

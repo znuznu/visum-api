@@ -15,7 +15,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.movies.domain.MovieRepository;
 import znu.visum.components.reviews.domain.NoSuchReviewIdException;
 import znu.visum.components.reviews.domain.ReviewRepository;
-import znu.visum.components.reviews.usecases.deletebyid.domain.DeleteByIdMovieReviewService;
+import znu.visum.components.reviews.usecases.deletebyid.domain.DeleteByIdReview;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +27,7 @@ class DeleteByIdReviewServiceIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
-  @Autowired private DeleteByIdMovieReviewService service;
+  @Autowired private DeleteByIdReview service;
   @Autowired private MovieRepository movieRepository;
   @Autowired private ReviewRepository reviewRepository;
 

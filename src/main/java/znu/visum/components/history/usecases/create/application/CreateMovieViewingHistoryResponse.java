@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Schema(description = "Represents a movie to create.")
 public class CreateMovieViewingHistoryResponse {
+
   @Schema(description = "The movie viewing date created.")
   @JsonFormat(pattern = "MM/dd/yyyy")
   private final LocalDate viewingDate;

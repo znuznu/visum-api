@@ -6,7 +6,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.history.usecases.create.domain.CreateMovieViewingHistoryService;
+import znu.visum.components.history.usecases.create.domain.CreateMovieViewingHistory;
 
 import javax.validation.Valid;
 
@@ -14,12 +14,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/history", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(CreateMovieViewingHistoryResponse.class)
 public class CreateMovieViewingHistoryController {
-  private final CreateMovieViewingHistoryService createMovieViewingHistoryService;
+
+  private final CreateMovieViewingHistory createMovieViewingHistory;
 
   @Autowired
-  public CreateMovieViewingHistoryController(
-      CreateMovieViewingHistoryService createMovieViewingHistoryService) {
-    this.createMovieViewingHistoryService = createMovieViewingHistoryService;
+  public CreateMovieViewingHistoryController(CreateMovieViewingHistory createMovieViewingHistory) {
+    this.createMovieViewingHistory = createMovieViewingHistory;
   }
 
   @Operation(summary = "Create a movie viewing history.")
@@ -28,6 +28,6 @@ public class CreateMovieViewingHistoryController {
   public CreateMovieViewingHistoryResponse create(
       @Valid @RequestBody CreateMovieViewingHistoryRequest movieViewingHistoryRequest) {
     return CreateMovieViewingHistoryResponse.from(
-        createMovieViewingHistoryService.save(movieViewingHistoryRequest.toDomain()));
+        createMovieViewingHistory.process(movieViewingHistoryRequest.toDomain()));
   }
 }

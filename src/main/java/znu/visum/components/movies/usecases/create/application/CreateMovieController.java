@@ -6,7 +6,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import znu.visum.components.movies.usecases.create.domain.CreateMovieService;
+import znu.visum.components.movies.usecases.create.domain.CreateMovie;
 
 import javax.validation.Valid;
 
@@ -14,11 +14,11 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(CreateMovieResponse.class)
 public class CreateMovieController {
-  private final CreateMovieService createMovieService;
+  private final CreateMovie createMovie;
 
   @Autowired
-  public CreateMovieController(CreateMovieService createMovieService) {
-    this.createMovieService = createMovieService;
+  public CreateMovieController(CreateMovie createMovie) {
+    this.createMovie = createMovie;
   }
 
   @Operation(summary = "Creates a movie based on a TMDb id.")
@@ -26,7 +26,6 @@ public class CreateMovieController {
   @ResponseStatus(HttpStatus.CREATED)
   public CreateMovieResponse createMovie(
       @Valid @RequestBody CreateMovieRequest createMovieRequest) {
-    return CreateMovieResponse.from(
-        createMovieService.processCommand(createMovieRequest.toCommand()));
+    return CreateMovieResponse.from(createMovie.process(createMovieRequest.toCommand()));
   }
 }

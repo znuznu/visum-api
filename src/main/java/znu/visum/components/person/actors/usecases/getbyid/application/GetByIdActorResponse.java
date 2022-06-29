@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 @Schema(description = "Represents an actor.")
 public class GetByIdActorResponse {
+
   @Schema(description = "The actor's identifier.")
   private final long id;
 

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Schema(description = "Represents a review from a page.")
 public class ReviewFromPageResponse {
+
   @Schema(description = "The identifier of the review.")
   private final long id;
 

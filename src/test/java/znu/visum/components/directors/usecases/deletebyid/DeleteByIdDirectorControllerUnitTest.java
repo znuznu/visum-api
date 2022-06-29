@@ -10,14 +10,14 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.person.directors.domain.NoSuchDirectorIdException;
 import znu.visum.components.person.directors.usecases.deletebyid.application.DeleteByIdDirectorController;
-import znu.visum.components.person.directors.usecases.deletebyid.domain.DeleteByIdDirectorService;
+import znu.visum.components.person.directors.usecases.deletebyid.domain.DeleteByIdDirector;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteByIdDirectorControllerUnitTest")
 class DeleteByIdDirectorControllerUnitTest {
   private DeleteByIdDirectorController controller;
 
-  @Mock private DeleteByIdDirectorService service;
+  @Mock private DeleteByIdDirector service;
 
   @BeforeEach
   void setup() {
@@ -26,7 +26,7 @@ class DeleteByIdDirectorControllerUnitTest {
 
   @Test
   void givenADirectorId_whenNoDirectorWithTheIdExists_thenItShouldThrow() {
-    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).deleteById(1L);
+    Mockito.doThrow(new NoSuchDirectorIdException("1")).when(service).process(1L);
 
     Assertions.assertThrows(NoSuchDirectorIdException.class, () -> controller.deleteById(1));
   }

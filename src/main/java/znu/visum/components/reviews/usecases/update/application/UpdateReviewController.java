@@ -15,11 +15,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(UpdateReviewResponse.class)
 public class UpdateReviewController {
-  private final UpdateReview usecase;
+
+  private final UpdateReview updateReview;
 
   @Autowired
-  public UpdateReviewController(UpdateReview usecase) {
-    this.usecase = usecase;
+  public UpdateReviewController(UpdateReview updateReview) {
+    this.updateReview = updateReview;
   }
 
   @Operation(summary = "Update a movie review.")
@@ -34,6 +35,6 @@ public class UpdateReviewController {
             .grade(request.getGrade())
             .build();
 
-    return UpdateReviewResponse.from(usecase.process(command));
+    return UpdateReviewResponse.from(updateReview.process(command));
   }
 }

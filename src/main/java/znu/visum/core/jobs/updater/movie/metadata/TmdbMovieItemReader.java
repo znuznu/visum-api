@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
+import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieById;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieMetadata;
 import znu.visum.components.movies.domain.MovieRepository;
@@ -17,15 +17,14 @@ import java.util.stream.Collectors;
 @Component
 public class TmdbMovieItemReader implements ItemReader<MovieMetadata> {
 
-  private final GetTmdbMovieByIdService getTmdbMovieByIdService;
+  private final GetTmdbMovieById getTmdbMovieById;
   private final MovieRepository movieRepository;
   private int nextMetadataIndex = 0;
   private List<MovieMetadata> movieMetadataList;
 
   @Autowired
-  public TmdbMovieItemReader(
-      GetTmdbMovieByIdService getTmdbMovieByIdService, MovieRepository movieRepository) {
-    this.getTmdbMovieByIdService = getTmdbMovieByIdService;
+  public TmdbMovieItemReader(GetTmdbMovieById getTmdbMovieById, MovieRepository movieRepository) {
+    this.getTmdbMovieById = getTmdbMovieById;
     this.movieRepository = movieRepository;
   }
 
@@ -59,8 +58,8 @@ public class TmdbMovieItemReader implements ItemReader<MovieMetadata> {
 
     Function<Movie, MovieMetadata> mapper =
         (movie) ->
-            this.getTmdbMovieByIdService
-                .getTmdbMovieById(movie.getMetadata().getTmdbId())
+            this.getTmdbMovieById
+                .process(movie.getMetadata().getTmdbId())
                 .getMetadata()
                 .toMovieMetadataWithMovieId(movie.getId());
 

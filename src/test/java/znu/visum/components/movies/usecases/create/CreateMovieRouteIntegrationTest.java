@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnector;
-import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieByIdService;
+import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieById;
 import znu.visum.components.movies.usecases.create.application.CreateMovieRequest;
 import znu.visum.components.person.domain.Identity;
 
@@ -46,7 +46,7 @@ class CreateMovieRouteIntegrationTest {
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
   @MockBean TmdbHttpConnector connector;
-  @MockBean GetTmdbMovieByIdService tmdbService;
+  @MockBean GetTmdbMovieById tmdbService;
   @Autowired private MockMvc mvc;
 
   @DynamicPropertySource
@@ -114,7 +114,7 @@ class CreateMovieRouteIntegrationTest {
             .metadata(metadata)
             .build();
 
-    Mockito.when(tmdbService.getTmdbMovieById(60L)).thenReturn(externalMovie);
+    Mockito.when(tmdbService.process(60L)).thenReturn(externalMovie);
 
     mvc.perform(
             post("/api/movies")
