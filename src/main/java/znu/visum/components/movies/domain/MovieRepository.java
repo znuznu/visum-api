@@ -16,6 +16,10 @@ public interface MovieRepository {
 
   Optional<Movie> findById(long id);
 
+  boolean existsById(long id);
+
+  boolean existsByTmdbId(long id);
+
   Optional<Movie> findByTmdbId(long tmdbId);
 
   Movie save(Movie movie);

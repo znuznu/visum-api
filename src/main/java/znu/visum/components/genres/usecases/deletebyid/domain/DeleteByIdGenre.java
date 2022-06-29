@@ -15,7 +15,7 @@ public class DeleteByIdGenre {
   }
 
   public void process(long id) {
-    if (genreRepository.findById(id).isEmpty()) {
+    if (!genreRepository.existsById(id)) {
       throw new NoSuchGenreIdException(Long.toString(id));
     }
 

@@ -79,6 +79,16 @@ public class PostgresMovieRepository implements MovieRepository {
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaMovieRepository.existsById(id);
+  }
+
+  @Override
+  public boolean existsByTmdbId(long id) {
+    return dataJpaMovieRepository.existsByMovieMetadataEntityTmdbId(id);
+  }
+
+  @Override
   public Optional<Movie> findByTmdbId(long tmdbId) {
     return this.dataJpaMovieRepository
         .findByMovieMetadataEntity_TmdbId(tmdbId)

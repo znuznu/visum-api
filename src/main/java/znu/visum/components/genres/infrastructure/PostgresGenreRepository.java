@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 public class PostgresGenreRepository implements GenreRepository {
+
   private final DataJpaGenreRepository dataJpaGenreRepository;
 
   @Autowired
@@ -44,17 +45,22 @@ public class PostgresGenreRepository implements GenreRepository {
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaGenreRepository.existsById(id);
+  }
+
+  @Override
   public Optional<Genre> findByType(String type) {
-    return this.dataJpaGenreRepository.findByType(type).map(GenreEntity::toDomain);
+    return dataJpaGenreRepository.findByType(type).map(GenreEntity::toDomain);
   }
 
   @Override
   public void deleteById(long id) {
-    this.dataJpaGenreRepository.deleteById(id);
+    dataJpaGenreRepository.deleteById(id);
   }
 
   @Override
   public Genre save(Genre genre) {
-    return this.dataJpaGenreRepository.save(GenreEntity.from(genre)).toDomain();
+    return dataJpaGenreRepository.save(GenreEntity.from(genre)).toDomain();
   }
 }

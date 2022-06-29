@@ -40,7 +40,7 @@ public class CreateMovie {
 
   @Transactional
   public Movie process(CreateMovieCommand command) {
-    boolean movieAlreadyExists = this.movieRepository.findByTmdbId(command.getTmdbId()).isPresent();
+    boolean movieAlreadyExists = this.movieRepository.existsByTmdbId(command.getTmdbId());
     if (movieAlreadyExists) {
       throw new MovieAlreadyExistsException();
     }

@@ -10,6 +10,8 @@ public interface GenreRepository {
 
   Optional<Genre> findById(long id);
 
+  boolean existsById(long id);
+
   Optional<Genre> findByType(String type);
 
   void deleteById(long id);

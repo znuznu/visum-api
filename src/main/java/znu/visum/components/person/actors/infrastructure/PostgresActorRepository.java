@@ -47,6 +47,11 @@ public class PostgresActorRepository implements ActorRepository {
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaActorRepository.existsById(id);
+  }
+
+  @Override
   public Optional<Actor> findByTmdbId(long tmdbId) {
     return dataJpaActorRepository.findByMetadataEntity_TmdbId(tmdbId).map(ActorEntity::toDomain);
   }

@@ -15,8 +15,8 @@ public class DeleteByIdDirector {
     this.directorRepository = directorRepository;
   }
 
-  public void process(long id) throws NoSuchDirectorIdException {
-    if (directorRepository.findById(id).isEmpty()) {
+  public void process(long id) {
+    if (!directorRepository.existsById(id)) {
       throw new NoSuchDirectorIdException(Long.toString(id));
     }
 

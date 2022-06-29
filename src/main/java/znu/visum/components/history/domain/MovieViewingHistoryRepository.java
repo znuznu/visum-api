@@ -6,6 +6,8 @@ import java.util.Optional;
 public interface MovieViewingHistoryRepository {
   Optional<MovieViewingHistory> findById(long id);
 
+  boolean existsById(long id);
+
   void deleteById(long id);
 
   MovieViewingHistory save(MovieViewingHistory history);

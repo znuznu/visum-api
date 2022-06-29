@@ -11,6 +11,8 @@ public interface DirectorRepository {
 
   Optional<Director> findById(long id);
 
+  boolean existsById(long id);
+
   Optional<Director> findByTmdbId(long tmdbId);
 
   void deleteById(long id);

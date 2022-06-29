@@ -11,6 +11,8 @@ public interface ActorRepository {
 
   Optional<Actor> findById(long id);
 
+  boolean existsById(long id);
+
   Optional<Actor> findByTmdbId(long tmdbId);
 
   Actor save(Actor actor);

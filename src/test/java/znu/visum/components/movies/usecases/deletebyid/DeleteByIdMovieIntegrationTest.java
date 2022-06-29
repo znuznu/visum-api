@@ -31,7 +31,7 @@ class DeleteByIdMovieIntegrationTest {
   @Container
   private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
 
-  @Autowired private DeleteByIdMovie service;
+  @Autowired private DeleteByIdMovie deleteByIdMovie;
   @Autowired private MovieRepository movieRepository;
   @Autowired private ReviewRepository reviewRepository;
   @Autowired private MovieViewingHistoryRepository movieViewingHistoryRepository;
@@ -48,7 +48,7 @@ class DeleteByIdMovieIntegrationTest {
 
   @Test
   void givenAMovieIdThatDoesNotExist_whenTheMovieIsDeleted_itShouldThrowAnError() {
-    Assertions.assertThrows(NoSuchMovieIdException.class, () -> service.process(1000L));
+    Assertions.assertThrows(NoSuchMovieIdException.class, () -> deleteByIdMovie.process(1000L));
   }
 
   @Test
@@ -58,7 +58,7 @@ class DeleteByIdMovieIntegrationTest {
         "/sql/insert_movie_with_review_and_viewing_history_and_metadata.sql"
       })
   void givenAMovieIdThatExists_whenTheMovieIsDeleted_itShouldDeleteTheMovieAndHisOrphans() {
-    service.process(3L);
+    deleteByIdMovie.process(3L);
 
     assertThat(movieRepository.findById(3L)).isNotPresent();
     assertThat(reviewRepository.findById(1L)).isNotPresent();
