@@ -1,16 +1,13 @@
 package znu.visum.components.movies.infrastructure;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
+import znu.visum.components.movies.domain.Cast;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.components.person.actors.domain.MovieFromActor;
-import znu.visum.components.person.actors.infrastructure.ActorEntity;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
 import znu.visum.components.person.directors.infrastructure.DirectorEntity;
 import znu.visum.components.reviews.domain.MovieFromReview;
@@ -19,17 +16,20 @@ import znu.visum.components.reviews.infrastructure.MovieReviewEntity;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "movie")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "movie")
 public class MovieEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_seq")
   private Long id;
@@ -38,12 +38,8 @@ public class MovieEntity {
 
   private LocalDate releaseDate;
 
-  @ManyToMany
-  @JoinTable(
-      name = "movie_actor",
-      joinColumns = @JoinColumn(name = "movie_id"),
-      inverseJoinColumns = @JoinColumn(name = "actor_id"))
-  private Set<ActorEntity> actorEntities;
+  @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<CastMemberEntity> castMembersEntity = new ArrayList<>();
 
   @ManyToMany
   @JoinTable(
@@ -55,7 +51,7 @@ public class MovieEntity {
   @OneToOne(mappedBy = "movieEntity", cascade = CascadeType.REMOVE)
   private MovieReviewEntity review;
 
-  @ManyToMany
+  @ManyToMany(cascade = {CascadeType.PERSIST})
   @JoinTable(
       name = "movie_genre",
       joinColumns = @JoinColumn(name = "movie_id"),
@@ -91,9 +87,6 @@ public class MovieEntity {
         .title(movie.getTitle())
         .releaseDate(movie.getReleaseDate())
         .creationDate(movie.getCreationDate())
-        // HERE
-        .actorEntities(
-            movie.getActors().stream().map(ActorEntity::from).collect(Collectors.toSet()))
         .directorEntities(
             movie.getDirectors().stream().map(DirectorEntity::from).collect(Collectors.toSet()))
         .isFavorite(movie.isFavorite())
@@ -105,6 +98,7 @@ public class MovieEntity {
             movie.getViewingHistory().stream()
                 .map(MovieViewingHistoryEntity::from)
                 .collect(Collectors.toList()))
+        .castMembersEntity(null)
         .movieMetadataEntity(null) // We want to override this property anyway
         .build();
   }
@@ -130,10 +124,13 @@ public class MovieEntity {
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .actors(
-            this.actorEntities.stream()
-                .map(ActorEntity::toActorFromMovieDomain)
-                .collect(Collectors.toList()))
+        .cast(
+            this.castMembersEntity != null
+                ? Cast.of(
+                    this.castMembersEntity.stream()
+                        .map(CastMemberEntity::toDomain)
+                        .collect(Collectors.toList()))
+                : Cast.of(List.of()))
         .directors(
             this.directorEntities.stream()
                 .map(DirectorEntity::toDirectorFromMovieDomain)
@@ -176,6 +173,10 @@ public class MovieEntity {
 
   public void setMovieMetadata(MovieMetadataEntity metadata) {
     this.movieMetadataEntity = metadata;
+  }
+
+  public void setCastMembers(List<CastMemberEntity> members) {
+    this.castMembersEntity = members;
   }
 
   @Override

@@ -2,7 +2,7 @@ package znu.visum.components.reviews.usecases.create.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.movies.domain.NoSuchMovieIdException;
 import znu.visum.components.reviews.domain.*;
 
@@ -12,18 +12,19 @@ import javax.transaction.Transactional;
 public class CreateReview {
 
   private final ReviewRepository reviewRepository;
-  private final MovieRepository movieRepository;
+  private final MovieQueryRepository movieQueryRepository;
 
   @Autowired
-  public CreateReview(ReviewRepository reviewRepository, MovieRepository movieRepository) {
+  public CreateReview(
+      ReviewRepository reviewRepository, MovieQueryRepository movieQueryRepository) {
     this.reviewRepository = reviewRepository;
-    this.movieRepository = movieRepository;
+    this.movieQueryRepository = movieQueryRepository;
   }
 
   @Transactional
   public Review process(CreateReviewCommand command) {
     var movie =
-        movieRepository
+        movieQueryRepository
             .findById(command.getMovieId())
             .orElseThrow(() -> new NoSuchMovieIdException(Long.toString(command.getMovieId())));
     if (movie.getReview() != null) {

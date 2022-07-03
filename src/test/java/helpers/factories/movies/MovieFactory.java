@@ -1,5 +1,6 @@
 package helpers.factories.movies;
 
+import znu.visum.components.movies.domain.Cast;
 import znu.visum.components.movies.domain.Movie;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public enum MovieFactory {
           .title("Mulholland Drive")
           .isToWatch(true)
           .isFavorite(true)
-          .actors(new ArrayList<>())
+          .cast(Cast.of(new ArrayList<>()))
           .directors(new ArrayList<>())
           .genres(new ArrayList<>())
           .releaseDate(LocalDate.of(2001, 10, 12))
@@ -33,7 +34,7 @@ public enum MovieFactory {
           .title("Mulholland Drive")
           .isToWatch(true)
           .isFavorite(true)
-          .actors(new ArrayList<>())
+          .cast(Cast.of(new ArrayList<>()))
           .directors(new ArrayList<>())
           .genres(new ArrayList<>())
           .releaseDate(LocalDate.of(2001, 10, 12))

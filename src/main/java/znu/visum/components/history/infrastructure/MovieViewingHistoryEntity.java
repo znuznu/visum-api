@@ -3,7 +3,7 @@ package znu.visum.components.history.infrastructure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 
 import javax.persistence.*;
@@ -21,15 +21,15 @@ public class MovieViewingHistoryEntity extends ViewingHistoryEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   private MovieEntity movie;
 
-  public static MovieViewingHistoryEntity from(MovieViewingHistory movieViewingHistory) {
+  public static MovieViewingHistoryEntity from(ViewingHistory viewingHistory) {
     return MovieViewingHistoryEntity.builder()
-        .id(movieViewingHistory.getId())
-        .movie(MovieEntity.builder().id(movieViewingHistory.getMovieId()).build())
-        .viewingDate(movieViewingHistory.getViewingDate())
+        .id(viewingHistory.getId())
+        .movie(MovieEntity.builder().id(viewingHistory.getMovieId()).build())
+        .viewingDate(viewingHistory.getViewingDate())
         .build();
   }
 
-  public MovieViewingHistory toDomain() {
-    return new MovieViewingHistory(this.id, this.getViewingDate(), this.movie.getId());
+  public ViewingHistory toDomain() {
+    return new ViewingHistory(this.id, this.getViewingDate(), this.movie.getId());
   }
 }

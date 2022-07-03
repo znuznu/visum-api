@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.domain.TmdbApiException;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
 import znu.visum.core.pagination.domain.VisumPage;
@@ -19,7 +20,6 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("TmdbHttpConnectorUnitTest")
 class TmdbHttpConnectorUnitTest {
 
   static final String ROOT_POSTER_URL = "https://image.tmdb.org/t/p/w780";
@@ -354,24 +354,28 @@ class TmdbHttpConnectorUnitTest {
 
       ExternalMovieCredits credits = connector.getCreditsByMovieId(597).get();
 
-      assertThat(credits.getActors())
+      assertThat(credits.getCast().getMembers())
           .usingRecursiveFieldByFieldElementComparator()
           .containsOnlyOnce(
-              new ExternalActor(
+              new ExternalCastMember(
                   6193,
                   Identity.builder().forename("Leonardo").name("DiCaprio").build(),
+                  new Role("Jack Dawson 1", 0),
                   ROOT_POSTER_URL + "/poster6193.jpg"),
-              new ExternalActor(
+              new ExternalCastMember(
                   9999,
                   Identity.builder().forename("Leonardo").name("DiCaprio").build(),
+                  new Role("Jack Dawson 2", 1),
                   ROOT_POSTER_URL + "/poster9999.jpg"),
-              new ExternalActor(
+              new ExternalCastMember(
                   204,
                   Identity.builder().forename("Kate").name("Winslet").build(),
+                  new Role("Rose DeWitt Bukater", 2),
                   ROOT_POSTER_URL + "/poster204.jpg"),
-              new ExternalActor(
+              new ExternalCastMember(
                   1954,
                   Identity.builder().forename("Billy").name("Zane Zune Zone").build(),
+                  new Role("Cal Hockley", 10),
                   ROOT_POSTER_URL + "/poster1954.jpg"));
 
       assertThat(credits.getDirectors())

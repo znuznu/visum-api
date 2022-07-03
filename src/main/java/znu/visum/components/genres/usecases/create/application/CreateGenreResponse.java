@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Schema(description = "Represent a genre created.")
 public class CreateGenreResponse {
+
   @Schema(description = "The identifier of the Genre created.", example = "1", required = true)
   @Min(1)
   private final Long id;

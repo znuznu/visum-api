@@ -9,7 +9,6 @@ import znu.visum.components.person.domain.Identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("TmdbCreditsPeopleUnitTest")
 class TmdbCreditsPersonUnitTest {
   @Nested
   class ToDomainExternalDirector {

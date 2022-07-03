@@ -7,17 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.reviews.domain.ReviewRepository;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("StatisticsServiceUnitTest")
 @ExtendWith(MockitoExtension.class)
 class StatisticsServiceUnitTest {
-  @Mock private MovieRepository movieRepository;
+  @Mock private MovieQueryRepository movieQueryRepository;
 
   @Mock private ReviewRepository reviewRepository;
 
@@ -25,7 +24,7 @@ class StatisticsServiceUnitTest {
 
   @BeforeEach
   void setup() {
-    this.statisticsService = new StatisticsService(movieRepository, reviewRepository);
+    this.statisticsService = new StatisticsService(movieQueryRepository, reviewRepository);
   }
 
   @Nested

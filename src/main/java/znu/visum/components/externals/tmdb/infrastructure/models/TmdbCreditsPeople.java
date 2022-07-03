@@ -20,9 +20,6 @@ public abstract class TmdbCreditsPeople {
   @JsonProperty("name")
   private String name;
 
-  @JsonProperty("order")
-  private int order;
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

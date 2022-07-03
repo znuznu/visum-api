@@ -1,9 +1,6 @@
 package znu.visum.components.reviews.infrastructure;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import znu.visum.components.movies.domain.ReviewFromMovie;
@@ -21,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class MovieReviewEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_review_id_seq")

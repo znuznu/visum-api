@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieById;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieMetadata;
-import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 
 import java.util.List;
 import java.util.function.Function;
@@ -18,14 +18,15 @@ import java.util.stream.Collectors;
 public class TmdbMovieItemReader implements ItemReader<MovieMetadata> {
 
   private final GetTmdbMovieById getTmdbMovieById;
-  private final MovieRepository movieRepository;
+  private final MovieQueryRepository movieQueryRepository;
   private int nextMetadataIndex = 0;
   private List<MovieMetadata> movieMetadataList;
 
   @Autowired
-  public TmdbMovieItemReader(GetTmdbMovieById getTmdbMovieById, MovieRepository movieRepository) {
+  public TmdbMovieItemReader(
+      GetTmdbMovieById getTmdbMovieById, MovieQueryRepository movieQueryRepository) {
     this.getTmdbMovieById = getTmdbMovieById;
-    this.movieRepository = movieRepository;
+    this.movieQueryRepository = movieQueryRepository;
   }
 
   @Override
@@ -53,7 +54,7 @@ public class TmdbMovieItemReader implements ItemReader<MovieMetadata> {
   }
 
   private List<MovieMetadata> fetchTmdbMovies() {
-    var movies = this.movieRepository.findAll();
+    var movies = this.movieQueryRepository.findAll();
     log.info("Found {} movies", movies.size());
 
     Function<Movie, MovieMetadata> mapper =

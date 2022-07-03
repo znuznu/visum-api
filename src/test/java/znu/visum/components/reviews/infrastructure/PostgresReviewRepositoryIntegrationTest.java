@@ -16,15 +16,16 @@ import znu.visum.components.reviews.domain.ReviewRepository;
 import java.time.Year;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static znu.visum.Constants.POSTGRESQL_DOCKER_IMAGE_NAME;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("PostgresReviewRepositoryIntegrationTest")
 @ActiveProfiles("flyway")
 class PostgresReviewRepositoryIntegrationTest {
 
   @Container
-  private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
+  private static final PostgreSQLContainer container =
+      new PostgreSQLContainer(POSTGRESQL_DOCKER_IMAGE_NAME);
 
   @Autowired private ReviewRepository reviewRepository;
 

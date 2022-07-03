@@ -1,6 +1,5 @@
 package znu.visum.components.externals.tmdb.infrastructure.models;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import znu.visum.components.externals.domain.ExternalMovieFromSearch;
@@ -10,7 +9,6 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("TmdbPageResponseMapperUnitTest")
 class TmdbPageResponseMapperUnitTest {
 
   private static final String ROOT_POST_URL = "https://fake-url.io";

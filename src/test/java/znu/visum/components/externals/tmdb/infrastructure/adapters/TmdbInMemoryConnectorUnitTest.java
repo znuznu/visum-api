@@ -1,7 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import znu.visum.components.externals.domain.ExternalApi;
@@ -16,10 +15,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnectorUnitTest.ROOT_POSTER_URL;
 
-@DisplayName("TmdbInMemoryConnectorUnitTest")
 class TmdbInMemoryConnectorUnitTest {
 
   @Nested
@@ -39,7 +37,8 @@ class TmdbInMemoryConnectorUnitTest {
               .searchMovies(TmdbApiException.withMessageAndStatusCode("Unprocessable Entity", 422))
               .build());
 
-      assertThrows(TmdbApiException.class, () -> connector.searchMovies("Something", 6));
+      assertThatThrownBy(() -> connector.searchMovies("Something", 6))
+          .isInstanceOf(TmdbApiException.class);
     }
 
     @Test
@@ -51,9 +50,8 @@ class TmdbInMemoryConnectorUnitTest {
                       "Exception message", ExternalApi.TMDB))
               .build());
 
-      assertThrows(
-          ExternalApiUnexpectedResponseBodyException.class,
-          () -> connector.searchMovies("Something", 6));
+      assertThatThrownBy(() -> connector.searchMovies("Something", 6))
+          .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class);
     }
 
     @Test

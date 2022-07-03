@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import znu.visum.components.movies.usecases.getpage.domain.GetPageMovie;
+import znu.visum.components.movies.usecases.getpage.domain.GetMoviePage;
 import znu.visum.core.pagination.application.GetPageResponse;
 
 @RestController
 @RequestMapping(value = "/api/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
 public class GetPageMovieController {
-  private final GetPageMovie getPageMovie;
+  private final GetMoviePage getMoviePage;
 
   @Autowired
-  public GetPageMovieController(GetPageMovie getPageMovie) {
-    this.getPageMovie = getPageMovie;
+  public GetPageMovieController(GetMoviePage getMoviePage) {
+    this.getMoviePage = getMoviePage;
   }
 
   @Operation(summary = "Get a page of movies.")
@@ -32,6 +32,6 @@ public class GetPageMovieController {
       @RequestParam(required = false, defaultValue = "title=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getPageMovie.process(limit, offset, sort, search), MovieFromPageResponse::from);
+        getMoviePage.process(limit, offset, sort, search), MovieFromPageResponse::from);
   }
 }

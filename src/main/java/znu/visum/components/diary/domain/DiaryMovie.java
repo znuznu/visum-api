@@ -1,7 +1,7 @@
 package znu.visum.components.diary.domain;
 
 import lombok.*;
-import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.core.exceptions.domain.InternalException;
@@ -28,7 +28,7 @@ public class DiaryMovie {
     LocalDate viewingDate =
         movie.getViewingHistory().stream()
             .filter(history -> history.getId() == viewingHistoryId)
-            .map(MovieViewingHistory::getViewingDate)
+            .map(ViewingHistory::getViewingDate)
             .findFirst()
             .orElseThrow(
                 () ->

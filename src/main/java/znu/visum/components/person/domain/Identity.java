@@ -3,12 +3,14 @@ package znu.visum.components.person.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @AllArgsConstructor
 @Builder
 @Getter
+@ToString
 public class Identity {
 
   private final String forename;

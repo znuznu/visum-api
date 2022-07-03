@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.externals.domain.ExternalActor;
+import znu.visum.components.externals.domain.ExternalCastMember;
 import znu.visum.components.externals.domain.ExternalDirector;
 import znu.visum.components.externals.domain.ExternalMovie;
 import znu.visum.components.externals.domain.ExternalMovieMetadata;
@@ -32,7 +32,7 @@ public class GetTmdbMovieByIdResponse {
   @Schema(description = "The movie's genres.")
   private List<String> genres;
 
-  @Schema(description = "The movie's metadata, containing various informations about it.")
+  @Schema(description = "The movie's metadata, containing various information about it.")
   private ResponseMovieMetadata metadata;
 
   @Schema(description = "The movie's actors.")
@@ -44,7 +44,7 @@ public class GetTmdbMovieByIdResponse {
   public static GetTmdbMovieByIdResponse from(ExternalMovie externalMovie) {
     return GetTmdbMovieByIdResponse.builder()
         .actors(
-            externalMovie.getCredits().getActors().stream()
+            externalMovie.getCredits().getCast().getMembers().stream()
                 .map(ResponseActor::from)
                 .collect(Collectors.toList()))
         .directors(
@@ -74,14 +74,22 @@ public class GetTmdbMovieByIdResponse {
     private final String forename;
 
     @Schema(description = "The actor's poster URL.")
-    private String posterUrl;
+    private final String posterUrl;
 
-    public static ResponseActor from(ExternalActor externalActor) {
+    @Schema(description = "The actor's character name.")
+    private final String character;
+
+    @Schema(description = "The actor's role order (0 is the main one).")
+    private final int roleOrder;
+
+    public static ResponseActor from(ExternalCastMember externalCastMember) {
       return ResponseActor.builder()
-          .id(externalActor.getId())
-          .name(externalActor.getIdentity().getName())
-          .forename(externalActor.getIdentity().getForename())
-          .posterUrl(externalActor.getPosterUrl())
+          .id(externalCastMember.getId())
+          .name(externalCastMember.getIdentity().getName())
+          .forename(externalCastMember.getIdentity().getForename())
+          .posterUrl(externalCastMember.getPosterUrl())
+          .character(externalCastMember.getRole().getCharacter())
+          .roleOrder(externalCastMember.getRole().getOrder())
           .build();
     }
   }

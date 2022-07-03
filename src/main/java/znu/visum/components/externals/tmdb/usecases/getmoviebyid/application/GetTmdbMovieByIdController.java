@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 @RequestMapping(value = "/api/tmdb/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetTmdbMovieByIdResponse.class)
 public class GetTmdbMovieByIdController {
+
   private final GetTmdbMovieById getTmdbMovieById;
 
   @Autowired
