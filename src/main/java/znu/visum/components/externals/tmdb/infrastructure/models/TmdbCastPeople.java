@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import znu.visum.components.externals.domain.ExternalActor;
+import znu.visum.components.externals.domain.ExternalCastMember;
+import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,13 +18,20 @@ public class TmdbCastPeople extends TmdbCreditsPeople {
   @JsonProperty("profile_path")
   private String profilePath;
 
+  @JsonProperty("order")
+  private int order;
+
   public TmdbCastPeople() {
     super();
   }
 
-  public ExternalActor toDomainWithRootUrl(String basePosterUrl) {
+  public ExternalCastMember toDomainWithRootUrl(String basePosterUrl) {
     String posterUrl = profilePath != null ? basePosterUrl + profilePath : null;
 
-    return new ExternalActor(this.getId(), Identity.fromPlain(this.getName()), posterUrl);
+    return new ExternalCastMember(
+        this.getId(),
+        Identity.fromPlain(this.getName()),
+        new Role(this.character, this.order),
+        posterUrl);
   }
 }

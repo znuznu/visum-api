@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import znu.visum.components.genres.domain.Genre;
-import znu.visum.components.history.domain.MovieViewingHistory;
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.domain.*;
 
 import java.time.LocalDate;
@@ -63,7 +63,7 @@ public class CreateMovieResponse {
             .map(ResponseMovieViewingHistory::from)
             .collect(Collectors.toList()),
         movie.getGenres().stream().map(ResponseGenre::from).collect(Collectors.toList()),
-        movie.getActors().stream().map(ResponseActor::from).collect(Collectors.toList()),
+        movie.getCast().getMembers().stream().map(ResponseActor::from).collect(Collectors.toList()),
         movie.getDirectors().stream().map(ResponseDirector::from).collect(Collectors.toList()),
         ResponseReview.from(movie.getReview()),
         ResponseMovieMetadata.from(movie.getMetadata()));
@@ -86,10 +86,16 @@ public class CreateMovieResponse {
     private final long id;
     private final String name;
     private final String forename;
+    private final String character;
+    private final int roleOrder;
 
-    public static ResponseActor from(ActorFromMovie actor) {
+    public static ResponseActor from(CastMember member) {
       return new ResponseActor(
-          actor.getId(), actor.getIdentity().getName(), actor.getIdentity().getForename());
+          member.getActorId(),
+          member.getIdentity().getName(),
+          member.getIdentity().getForename(),
+          member.getRole().getCharacter(),
+          member.getRole().getOrder());
     }
   }
 
@@ -129,7 +135,7 @@ public class CreateMovieResponse {
     @JsonFormat(pattern = "MM/dd/yyyy")
     private final LocalDate viewingDate;
 
-    public static ResponseMovieViewingHistory from(MovieViewingHistory movieViewingHistory) {
+    public static ResponseMovieViewingHistory from(ViewingHistory movieViewingHistory) {
       return new ResponseMovieViewingHistory(
           movieViewingHistory.getId(),
           movieViewingHistory.getMovieId(),

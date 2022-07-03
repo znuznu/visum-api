@@ -3,7 +3,7 @@ package znu.visum.components.statistics.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import znu.visum.components.movies.domain.Movie;
-import znu.visum.components.movies.domain.MovieRepository;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.reviews.domain.ReviewRepository;
 import znu.visum.core.models.common.Pair;
 
@@ -13,13 +13,14 @@ import java.util.List;
 
 @Service
 public class StatisticsService {
-  private final MovieRepository movieRepository;
+  private final MovieQueryRepository movieQueryRepository;
 
   private final ReviewRepository reviewRepository;
 
   @Autowired
-  public StatisticsService(MovieRepository movieRepository, ReviewRepository reviewRepository) {
-    this.movieRepository = movieRepository;
+  public StatisticsService(
+      MovieQueryRepository movieQueryRepository, ReviewRepository reviewRepository) {
+    this.movieQueryRepository = movieQueryRepository;
     this.reviewRepository = reviewRepository;
   }
 
@@ -33,7 +34,7 @@ public class StatisticsService {
       throw new IllegalArgumentException("Negative limit is not allowed.");
     }
 
-    return this.movieRepository.findHighestRatedMoviesReleasedBetween(start, end, limit);
+    return this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(start, end, limit);
   }
 
   public int getTotalRunningHoursBetween(LocalDate start, LocalDate end) {
@@ -41,7 +42,7 @@ public class StatisticsService {
       throw new StatisticsDateRangeException();
     }
 
-    return this.movieRepository.getTotalRunningHoursBetween(start, end);
+    return this.movieQueryRepository.getTotalRunningHoursBetween(start, end);
   }
 
   public int getTotalRunningHoursOfTheYear(Year year) {
@@ -57,7 +58,7 @@ public class StatisticsService {
       throw new StatisticsDateRangeException();
     }
 
-    return this.movieRepository.getNumberOfMoviesPerOriginalLanguageBetween(start, end);
+    return this.movieQueryRepository.getNumberOfMoviesPerOriginalLanguageBetween(start, end);
   }
 
   public List<Pair<String, Integer>> getNumberOfMoviesPerGenreBetween(
@@ -66,7 +67,7 @@ public class StatisticsService {
       throw new StatisticsDateRangeException();
     }
 
-    return this.movieRepository.getNumberOfMoviesPerGenreBetween(start, end);
+    return this.movieQueryRepository.getNumberOfMoviesPerGenreBetween(start, end);
   }
 
   public List<Pair<String, Integer>> getNumberOfMoviesOfTheYearPerGenre(Year year) {
@@ -82,7 +83,7 @@ public class StatisticsService {
       throw new StatisticsDateRangeException();
     }
 
-    return this.movieRepository.getNumberOfMoviesPerYearBetween(start, end);
+    return this.movieQueryRepository.getNumberOfMoviesPerYearBetween(start, end);
   }
 
   public List<Pair<Integer, Float>> getRatedMoviesAveragePerYearBetween(
@@ -91,7 +92,7 @@ public class StatisticsService {
       throw new StatisticsDateRangeException();
     }
 
-    return this.movieRepository.getRatedMoviesAveragePerYearBetween(start, end);
+    return this.movieQueryRepository.getRatedMoviesAveragePerYearBetween(start, end);
   }
 
   public long getReviewCount() {
@@ -108,7 +109,7 @@ public class StatisticsService {
     }
 
     List<Movie> movies =
-        this.movieRepository.findHighestRatedMoviesReleasedBetween(
+        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.ofYearDay(decade, 1), LocalDate.ofYearDay(decade + 10, 1), limit);
 
     return new Pair<>(decade, movies);
@@ -119,7 +120,7 @@ public class StatisticsService {
   }
 
   public long getMovieCountOfTheYear(Year year) {
-    return this.movieRepository.countAllByReleaseDateYear(year);
+    return this.movieQueryRepository.countAllByReleaseDateYear(year);
   }
 
   public List<Movie> findHighestRatedMoviesOfTheYear(Year year, int limit) {
@@ -130,6 +131,6 @@ public class StatisticsService {
   }
 
   public List<Movie> findHighestRatedDuringYearOlderMovies(Year year) {
-    return this.movieRepository.findHighestRatedDuringYearOlderMovies(year);
+    return this.movieQueryRepository.findHighestRatedDuringYearOlderMovies(year);
   }
 }

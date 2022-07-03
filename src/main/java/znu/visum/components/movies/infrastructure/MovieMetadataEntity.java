@@ -1,6 +1,7 @@
 package znu.visum.components.movies.infrastructure;
 
 import lombok.*;
+import znu.visum.components.externals.domain.ExternalMovieMetadata;
 import znu.visum.components.movies.domain.MovieMetadata;
 
 import javax.persistence.*;
@@ -55,6 +56,22 @@ public class MovieMetadataEntity {
         .budget(movieMetadata.getBudget())
         .revenue(movieMetadata.getRevenue())
         .runtime(movieMetadata.getRuntime())
+        .build();
+  }
+
+  public static MovieMetadataEntity from(ExternalMovieMetadata metadata) {
+    return MovieMetadataEntity.builder()
+        .movieId(null)
+        .movie(null)
+        .tmdbId(metadata.getTmdbId())
+        .imdbId(metadata.getImdbId())
+        .originalLanguage(metadata.getOriginalLanguage())
+        .posterUrl(metadata.getPosterUrl())
+        .overview(metadata.getOverview())
+        .tagline(metadata.getTagline())
+        .budget(metadata.getBudget())
+        .revenue(metadata.getRevenue())
+        .runtime(metadata.getRuntime())
         .build();
   }
 

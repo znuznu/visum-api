@@ -3,6 +3,7 @@ package znu.visum.components.person.directors.infrastructure;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import znu.visum.components.externals.domain.ExternalDirector;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 import znu.visum.components.person.directors.domain.Director;
@@ -66,10 +67,24 @@ public class DirectorEntity extends PeopleEntity {
         .build();
   }
 
+  public static DirectorEntity from(ExternalDirector director) {
+    return DirectorEntity.builder()
+        .forename(director.getIdentity().getForename())
+        .name(director.getIdentity().getName())
+        .metadataEntity(
+            DirectorMetadataEntity.builder()
+                .posterUrl(director.getPosterUrl())
+                .tmdbId(director.getId())
+                .build())
+        .id(null)
+        .movieEntities(null)
+        .build();
+  }
+
   public Director toDomain() {
     return Director.builder()
         .id(this.id)
-        .identity(Identity.builder().forename(this.forename).name(this.name).build())
+        .identity(Identity.builder().forename(this.getForename()).name(this.getName()).build())
         .movies(
             this.movieEntities.stream()
                 .map(MovieEntity::toMovieFromDirector)
@@ -81,7 +96,7 @@ public class DirectorEntity extends PeopleEntity {
   public DirectorFromMovie toDirectorFromMovieDomain() {
     return DirectorFromMovie.builder()
         .id(this.id)
-        .identity(Identity.builder().forename(this.forename).name(this.name).build())
+        .identity(Identity.builder().forename(this.getForename()).name(this.getName()).build())
         .metadata(this.metadataEntity.toDomain())
         .build();
   }

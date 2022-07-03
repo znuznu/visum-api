@@ -11,6 +11,6 @@ import java.util.List;
 @Getter
 public class ExternalMovieCredits {
 
-  List<ExternalActor> actors;
-  List<ExternalDirector> directors;
+  private final ExternalCast cast;
+  private final List<ExternalDirector> directors;
 }

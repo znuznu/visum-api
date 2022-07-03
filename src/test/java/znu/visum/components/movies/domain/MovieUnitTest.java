@@ -17,7 +17,7 @@ class MovieUnitTest {
             .id(12L)
             .review(ReviewFromMovie.builder().build())
             .metadata(MovieMetadata.builder().build())
-            .actors(new ArrayList<>())
+            .cast(Cast.of(new ArrayList<>()))
             .build();
 
     Assertions.assertThatThrownBy(() -> movie.addReview(ReviewFromMovie.builder().build()))

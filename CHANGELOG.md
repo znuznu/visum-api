@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.12.0
+
+- Add `cast_member` table
+- Remove `movie_actor` table
+- Improve tests (naming, fixtures, constants, ...)
+- Various classes renaming
+
 ## 2.11.3
 
 - Remove the `Service` prefixes from the usecases

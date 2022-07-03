@@ -11,6 +11,8 @@ public interface ReviewRepository {
 
   Optional<Review> findById(long id);
 
+  boolean existsById(long id);
+
   void deleteById(long id);
 
   Review save(Review review);

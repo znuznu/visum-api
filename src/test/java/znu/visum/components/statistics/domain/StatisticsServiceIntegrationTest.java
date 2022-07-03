@@ -17,14 +17,15 @@ import java.time.Year;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static znu.visum.Constants.POSTGRESQL_DOCKER_IMAGE_NAME;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("StatisticsServiceIntegrationTest")
 @ActiveProfiles("flyway")
 class StatisticsServiceIntegrationTest {
   @Container
-  private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres:12.4");
+  private static final PostgreSQLContainer container =
+      new PostgreSQLContainer(POSTGRESQL_DOCKER_IMAGE_NAME);
 
   @Autowired private StatisticsService service;
 
@@ -81,6 +82,5 @@ class StatisticsServiceIntegrationTest {
         .containsOnly(new Pair<>("Horror", 1), new Pair<>("Animation", 1));
   }
 
-  // TODO We're covered by the it from the movie/review repos, but if a bug happened,
-  // all methods should be tested here
+  // TODO We're covered by the ITs from the movie/review repos, but all methods should be tested
 }

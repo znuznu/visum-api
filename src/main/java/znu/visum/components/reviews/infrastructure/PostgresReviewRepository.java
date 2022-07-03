@@ -21,6 +21,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public class PostgresReviewRepository implements ReviewRepository {
+
   private final DataJpaMovieReviewRepository dataJpaMovieReviewRepository;
 
   @Autowired
@@ -51,8 +52,13 @@ public class PostgresReviewRepository implements ReviewRepository {
   }
 
   @Override
+  public boolean existsById(long id) {
+    return dataJpaMovieReviewRepository.existsById(id);
+  }
+
+  @Override
   public void deleteById(long id) {
-    this.dataJpaMovieReviewRepository.deleteById(id);
+    dataJpaMovieReviewRepository.deleteById(id);
   }
 
   @Override

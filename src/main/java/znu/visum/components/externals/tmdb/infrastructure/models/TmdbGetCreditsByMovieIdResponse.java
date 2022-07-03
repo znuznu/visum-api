@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import znu.visum.components.externals.domain.ExternalCast;
 import znu.visum.components.externals.domain.ExternalMovieCredits;
 
 import java.util.List;
@@ -25,11 +26,12 @@ public class TmdbGetCreditsByMovieIdResponse {
 
   public ExternalMovieCredits toDomainWithRootUrl(String basePosterUrl) {
     return ExternalMovieCredits.builder()
-        .actors(
-            this.cast.stream()
-                .distinct()
-                .map(people -> people.toDomainWithRootUrl(basePosterUrl))
-                .collect(Collectors.toList()))
+        .cast(
+            ExternalCast.of(
+                this.cast.stream()
+                    .distinct()
+                    .map(people -> people.toDomainWithRootUrl(basePosterUrl))
+                    .collect(Collectors.toList())))
         .directors(
             this.crew.stream()
                 .filter(TmdbCrewPeople::isDirector)

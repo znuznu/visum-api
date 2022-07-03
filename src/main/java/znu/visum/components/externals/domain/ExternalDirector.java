@@ -14,11 +14,12 @@ public class ExternalDirector extends ExternalPeople {
     this.posterUrl = posterUrl;
   }
 
-  public DirectorFromMovie toDirectorFromMovie() {
+  public DirectorFromMovie to() {
     return DirectorFromMovie.builder()
         .id(null)
-        .identity(this.identity)
-        .metadata(DirectorMetadata.builder().posterUrl(this.posterUrl).tmdbId(this.id).build())
+        .identity(this.getIdentity())
+        .metadata(
+            DirectorMetadata.builder().tmdbId(this.getId()).posterUrl(this.getPosterUrl()).build())
         .build();
   }
 }

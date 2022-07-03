@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class GradeUnitTest {
 
   @Test
-  void shouldThrowOutOfRange() {
+  void shouldNotBuildWithOutOfRangeValue() {
     assertThatThrownBy(() -> Grade.of(-1))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("Grade -1 is out of range [1;10]");
@@ -20,7 +20,7 @@ class GradeUnitTest {
   }
 
   @Test
-  void shouldCreateGradeWithValueInRange() {
+  void shouldCreateWithValueInRange() {
     IntStream.range(1, 11)
         .forEach(value -> assertThatNoException().isThrownBy(() -> Grade.of(value)));
   }

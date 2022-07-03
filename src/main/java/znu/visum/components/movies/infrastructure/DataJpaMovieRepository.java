@@ -12,7 +12,6 @@ import javax.persistence.Tuple;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DataJpaMovieRepository
@@ -23,11 +22,7 @@ public interface DataJpaMovieRepository
 
   boolean existsByMovieMetadataEntityTmdbId(long id);
 
-  Optional<MovieEntity> findByTitleAndReleaseDate(String title, LocalDate releaseDate);
-
   long countAllByReleaseDateBetween(LocalDate start, LocalDate end);
-
-  Optional<MovieEntity> findByMovieMetadataEntity_TmdbId(long tmdbId);
 
   @Query(
       value =
