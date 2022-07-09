@@ -140,7 +140,7 @@ class CreateMovieRouteIntegrationTest {
         .andExpect(jsonPath("$.isFavorite").value("true"))
         .andExpect(jsonPath("$.isToWatch").value("true"))
         .andExpect(jsonPath("$.review", Matchers.is(Matchers.nullValue())))
-        .andExpect(jsonPath("$.viewingHistory").isArray())
+        .andExpect(jsonPath("$.viewingEntries").isArray())
         .andExpect(jsonPath("$.genres[*].type", Matchers.containsInAnyOrder("Drama", "Adventure")))
         .andExpect(jsonPath("$.actors[*].name", Matchers.containsInAnyOrder("Heard")))
         .andExpect(jsonPath("$.actors[*].forename", Matchers.containsInAnyOrder("Amber")))

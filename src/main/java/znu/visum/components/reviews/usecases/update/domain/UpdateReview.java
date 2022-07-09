@@ -18,7 +18,7 @@ public class UpdateReview {
     Review review =
         reviewRepository
             .findById(command.getId())
-            .orElseThrow(() -> new NoSuchReviewIdException(Long.toString(command.getId())));
+            .orElseThrow(() -> NoSuchReviewIdException.with(Long.toString(command.getId())));
 
     var updatedReview =
         Review.builder()

@@ -4,7 +4,7 @@ import znu.visum.core.exceptions.domain.DomainModel;
 import znu.visum.core.exceptions.domain.NoSuchModelException;
 
 public class NoSuchReviewIdException extends NoSuchModelException {
-  public NoSuchReviewIdException(String id) {
+  private NoSuchReviewIdException(String id) {
     super(id, DomainModel.REVIEW);
   }
 

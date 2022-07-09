@@ -2,7 +2,7 @@ package znu.visum.components.history.usecases.getbymovieid.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.history.domain.ViewingHistory;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.history.domain.ViewingHistoryRepository;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class GetViewingHistoryByMovieId {
     this.viewingHistoryRepository = viewingHistoryRepository;
   }
 
-  public List<ViewingHistory> process(long id) {
+  public List<ViewingEntry> process(long id) {
     return viewingHistoryRepository.findByMovieId(id);
   }
 }

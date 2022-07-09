@@ -2,7 +2,7 @@ package znu.visum.components.history.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import znu.visum.components.history.domain.ViewingHistory;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.history.domain.ViewingHistoryRepository;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class PostgresViewingHistoryRepository implements ViewingHistoryRepositor
   }
 
   @Override
-  public Optional<ViewingHistory> findById(long id) {
+  public Optional<ViewingEntry> findById(long id) {
     return dataJpaMovieViewingHistoryRepository
         .findById(id)
         .map(MovieViewingHistoryEntity::toDomain);
@@ -37,14 +37,14 @@ public class PostgresViewingHistoryRepository implements ViewingHistoryRepositor
   }
 
   @Override
-  public ViewingHistory save(ViewingHistory viewingHistory) {
+  public ViewingEntry save(ViewingEntry viewingEntry) {
     return this.dataJpaMovieViewingHistoryRepository
-        .save(MovieViewingHistoryEntity.from(viewingHistory))
+        .save(MovieViewingHistoryEntity.from(viewingEntry))
         .toDomain();
   }
 
   @Override
-  public List<ViewingHistory> findByMovieId(long id) {
+  public List<ViewingEntry> findByMovieId(long id) {
     return this.dataJpaMovieViewingHistoryRepository.findByMovieId(id).stream()
         .map(MovieViewingHistoryEntity::toDomain)
         .collect(Collectors.toList());

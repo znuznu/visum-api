@@ -63,12 +63,12 @@ public class PostgresReviewRepository implements ReviewRepository {
 
   @Override
   public Review save(Review review) {
-    return this.dataJpaMovieReviewRepository.save(MovieReviewEntity.from(review)).toDomain();
+    return dataJpaMovieReviewRepository.save(MovieReviewEntity.from(review)).toDomain();
   }
 
   @Override
   public long count() {
-    return this.dataJpaMovieReviewRepository.count();
+    return dataJpaMovieReviewRepository.count();
   }
 
   @Override
@@ -77,6 +77,6 @@ public class PostgresReviewRepository implements ReviewRepository {
         LocalDateTime.of(LocalDate.ofYearDay(year.getValue(), 1), LocalTime.MIN);
     LocalDateTime endDate = LocalDateTime.of(LocalDate.of(year.getValue(), 12, 31), LocalTime.MIN);
 
-    return this.dataJpaMovieReviewRepository.countAllByUpdateDateBetween(startDate, endDate);
+    return dataJpaMovieReviewRepository.countAllByUpdateDateBetween(startDate, endDate);
   }
 }

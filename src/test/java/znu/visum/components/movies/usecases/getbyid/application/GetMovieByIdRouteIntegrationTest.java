@@ -78,7 +78,7 @@ class GetMovieByIdRouteIntegrationTest {
         .andExpect(jsonPath("$.isFavorite").isBoolean())
         .andExpect(jsonPath("$.isToWatch").isBoolean())
         .andExpect(jsonPath("$.creationDate").isString())
-        .andExpect(jsonPath("$.viewingHistory").isArray());
+        .andExpect(jsonPath("$.viewingEntries").isArray());
   }
 
   @Test
@@ -102,6 +102,6 @@ class GetMovieByIdRouteIntegrationTest {
         .andExpect(jsonPath("$.isFavorite").isBoolean())
         .andExpect(jsonPath("$.isToWatch").isBoolean())
         .andExpect(jsonPath("$.creationDate").isString())
-        .andExpect(jsonPath("$.viewingHistory").isArray());
+        .andExpect(jsonPath("$.viewingEntries").isArray());
   }
 }

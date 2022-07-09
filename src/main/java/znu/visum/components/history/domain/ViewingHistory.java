@@ -1,17 +1,17 @@
 package znu.visum.components.history.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @AllArgsConstructor
-@Builder
 @Getter
+@Builder
+@EqualsAndHashCode
+@ToString
 public class ViewingHistory {
 
-  private Long id;
-  private LocalDate viewingDate;
   private long movieId;
+  private Collection<ViewingEntry> entries = new ArrayList<>();
 }

@@ -3,7 +3,7 @@ package znu.visum.components.diary.usecases.query.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import znu.visum.components.diary.domain.DiaryMovie;
-import znu.visum.components.history.domain.ViewingHistory;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieQueryRepository;
 
@@ -29,13 +29,12 @@ public class GetDiaryByYear {
     List<DiaryMovie> diaryMovies = new ArrayList<>();
 
     for (Movie movie : moviesSeenDuringTheYear) {
-      for (ViewingHistory movieViewingHistory : movie.getViewingHistory()) {
-        if (movieViewingHistory.getViewingDate() == null
-            || movieViewingHistory.getViewingDate().getYear() != yearValue) {
+      for (ViewingEntry viewingEntry : movie.getViewingHistory().getEntries()) {
+        if (viewingEntry.getDate() == null || viewingEntry.getDate().getYear() != yearValue) {
           continue;
         }
 
-        diaryMovies.add(DiaryMovie.from(movie, movieViewingHistory.getId()));
+        diaryMovies.add(DiaryMovie.from(movie, viewingEntry.getId()));
       }
     }
 

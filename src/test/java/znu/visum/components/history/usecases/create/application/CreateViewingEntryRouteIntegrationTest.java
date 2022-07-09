@@ -26,7 +26,7 @@ import static znu.visum.Constants.POSTGRESQL_DOCKER_IMAGE_NAME;
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("flyway")
-class CreateViewingHistoryRouteIntegrationTest {
+class CreateViewingEntryRouteIntegrationTest {
 
   private static final String URL_TEMPLATE = "/api/history";
 
@@ -61,12 +61,12 @@ class CreateViewingHistoryRouteIntegrationTest {
 
   @Test
   @WithMockUser
-  @DisplayName("When the date has a wrong format (valid one: MM/dd/yyyy)")
+  @DisplayName("When the date has a wrong format (valid one: yyyy/MM/dd)")
   void givenADateWithAWrongFormat_itShouldReturnA400Response() throws Exception {
     mvc.perform(
             post(URL_TEMPLATE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\"viewingDate\": \"2021/01/01\", \"movieId\": 1}"))
+                .content("{\"viewingDate\": \"26/2021/12\", \"movieId\": 1}"))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.message").value("Invalid body."))
         .andExpect(jsonPath("$.code").value("INVALID_BODY"))
@@ -80,7 +80,7 @@ class CreateViewingHistoryRouteIntegrationTest {
     mvc.perform(
             post(URL_TEMPLATE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\"viewingDate\": \"01/01/2021\", \"movieId\": 123456}"))
+                .content("{\"viewingDate\": \"2021-01-26\", \"movieId\": 123456}"))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.message").value("No MOVIE with id 123456 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
@@ -99,10 +99,10 @@ class CreateViewingHistoryRouteIntegrationTest {
     mvc.perform(
             post(URL_TEMPLATE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\"viewingDate\": \"01/01/2021\", \"movieId\": 1}"))
+                .content("{\"viewingDate\": \"2021-01-26\", \"movieId\": 1}"))
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.id").isNumber())
-        .andExpect(jsonPath("$.viewingDate").value("01/01/2021"))
+        .andExpect(jsonPath("$.viewingDate").value("2021-01-26"))
         .andExpect(jsonPath("$.movieId").value("1"));
   }
 }
