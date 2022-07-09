@@ -1,5 +1,6 @@
 package helpers.factories.movies;
 
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.domain.Cast;
 import znu.visum.components.movies.domain.Movie;
 
@@ -23,7 +24,7 @@ public enum MovieFactory {
           .releaseDate(LocalDate.of(2001, 10, 12))
           .creationDate(LocalDateTime.of(2001, 10, 10, 19, 0))
           // TODO viewing dates
-          .viewingHistory(new ArrayList<>())
+          .viewingHistory(ViewingHistory.builder().movieId(id).entries(new ArrayList<>()).build())
           .review(ReviewFromMovieFactory.INSTANCE.getWithId(1L))
           .build();
     }
@@ -40,7 +41,7 @@ public enum MovieFactory {
           .releaseDate(LocalDate.of(2001, 10, 12))
           .creationDate(null)
           // TODO viewing dates
-          .viewingHistory(new ArrayList<>())
+          .viewingHistory(ViewingHistory.builder().movieId(id).entries(new ArrayList<>()).build())
           .review(null)
           .build();
     }

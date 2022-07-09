@@ -3,6 +3,7 @@ package znu.visum.components.movies.infrastructure;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import znu.visum.components.genres.infrastructure.GenreEntity;
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
 import znu.visum.components.movies.domain.Cast;
 import znu.visum.components.movies.domain.Movie;
@@ -95,7 +96,7 @@ public class MovieEntity {
         .genreEntities(
             movie.getGenres().stream().map(GenreEntity::from).collect(Collectors.toSet()))
         .viewingHistory(
-            movie.getViewingHistory().stream()
+            movie.getViewingHistory().getEntries().stream()
                 .map(MovieViewingHistoryEntity::from)
                 .collect(Collectors.toList()))
         .castMembersEntity(null)
@@ -120,30 +121,44 @@ public class MovieEntity {
   }
 
   public Movie toDomain() {
+    var viewingHistory =
+        ViewingHistory.builder()
+            .movieId(this.id)
+            .entries(
+                this.viewingHistory.stream()
+                    .map(MovieViewingHistoryEntity::toDomain)
+                    .collect(Collectors.toList()))
+            .build();
+
+    var directors =
+        this.directorEntities.stream()
+            .map(DirectorEntity::toDirectorFromMovieDomain)
+            .collect(Collectors.toList());
+
+    var genres =
+        this.genreEntities.stream().map(GenreEntity::toDomain).collect(Collectors.toList());
+
+    // FIXME seems weird
+    var cast =
+        this.castMembersEntity != null
+            ? Cast.of(
+                this.castMembersEntity.stream()
+                    .map(CastMemberEntity::toDomain)
+                    .collect(Collectors.toList()))
+            : Cast.of(List.of());
+
     return Movie.builder()
         .id(this.id)
         .title(this.title)
         .releaseDate(this.releaseDate)
-        .cast(
-            this.castMembersEntity != null
-                ? Cast.of(
-                    this.castMembersEntity.stream()
-                        .map(CastMemberEntity::toDomain)
-                        .collect(Collectors.toList()))
-                : Cast.of(List.of()))
-        .directors(
-            this.directorEntities.stream()
-                .map(DirectorEntity::toDirectorFromMovieDomain)
-                .collect(Collectors.toList()))
-        .genres(this.genreEntities.stream().map(GenreEntity::toDomain).collect(Collectors.toList()))
-        .review(this.review == null ? null : ReviewFromMovie.from(this.review.toDomain()))
+        .cast(cast)
+        .directors(directors)
+        .genres(genres)
+        .viewingHistory(viewingHistory)
+        .review(this.review == null ? null : ReviewFromMovie.of(this.review.toDomain()))
         .isToWatch(this.shouldWatch)
         .isFavorite(this.isFavorite)
         .creationDate(this.creationDate)
-        .viewingHistory(
-            this.viewingHistory.stream()
-                .map(MovieViewingHistoryEntity::toDomain)
-                .collect(Collectors.toList()))
         .metadata(this.movieMetadataEntity == null ? null : this.movieMetadataEntity.toDomain())
         .build();
   }

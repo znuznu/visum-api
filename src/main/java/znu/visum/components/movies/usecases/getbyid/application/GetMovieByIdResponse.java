@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import znu.visum.components.genres.domain.Genre;
-import znu.visum.components.history.domain.ViewingHistory;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.movies.domain.*;
 
 import java.time.LocalDate;
@@ -51,7 +51,8 @@ public class GetMovieByIdResponse {
   @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
   private final LocalDateTime creationDate;
 
-  private final List<ResponseMovieViewingHistory> viewingHistory;
+  @Schema(description = "The viewing entries of the movie created.")
+  private final List<ResponseViewingEntry> viewingEntries;
 
   private final ResponseMovieMetadata metadata;
 
@@ -67,8 +68,8 @@ public class GetMovieByIdResponse {
         movie.isFavorite(),
         movie.isToWatch(),
         movie.getCreationDate(),
-        movie.getViewingHistory().stream()
-            .map(ResponseMovieViewingHistory::from)
+        movie.getViewingHistory().getEntries().stream()
+            .map(ResponseViewingEntry::from)
             .collect(Collectors.toList()),
         ResponseMovieMetadata.from(movie.getMetadata()));
   }
@@ -170,19 +171,18 @@ public class GetMovieByIdResponse {
 
   @AllArgsConstructor
   @Getter
-  public static class ResponseMovieViewingHistory {
+  public static class ResponseViewingEntry {
 
     private final long id;
     private final long movieId;
 
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @Schema(description = "A viewing date in ISO 8601 format (i.e. yyyy-MM-dd).")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private final LocalDate viewingDate;
 
-    public static ResponseMovieViewingHistory from(ViewingHistory movieViewingHistory) {
-      return new ResponseMovieViewingHistory(
-          movieViewingHistory.getId(),
-          movieViewingHistory.getMovieId(),
-          movieViewingHistory.getViewingDate());
+    public static ResponseViewingEntry from(ViewingEntry viewingEntry) {
+      return new ResponseViewingEntry(
+          viewingEntry.getId(), viewingEntry.getMovieId(), viewingEntry.getDate());
     }
   }
 

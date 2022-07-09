@@ -20,7 +20,7 @@ public class ReviewFromMovie {
   private Grade grade;
   private Long movieId;
 
-  public static ReviewFromMovie from(Review review) {
+  public static ReviewFromMovie of(Review review) {
     return new ReviewFromMovie(
         review.getId(),
         review.getContent().getText(),

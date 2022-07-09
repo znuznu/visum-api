@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.genres.domain.Genre;
+import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.domain.*;
 import znu.visum.components.movies.usecases.getbyid.domain.GetMovieById;
 import znu.visum.components.person.domain.Identity;
@@ -104,7 +105,7 @@ class GetMovieByIdControllerUnitTest {
         .isToWatch(false)
         .releaseDate(LocalDate.of(2001, 10, 12))
         .creationDate(LocalDateTime.of(2001, 10, 10, 19, 0))
-        .viewingHistory(new ArrayList<>())
+        .viewingHistory(ViewingHistory.builder().entries(new ArrayList<>()).movieId(1L).build())
         .review(review)
         .genres(genres)
         .cast(cast)

@@ -1,7 +1,7 @@
 package znu.visum.components.diary.domain;
 
 import lombok.*;
-import znu.visum.components.history.domain.ViewingHistory;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.core.exceptions.domain.InternalException;
@@ -26,20 +26,18 @@ public class DiaryMovie {
 
   public static DiaryMovie from(Movie movie, long viewingHistoryId) {
     LocalDate viewingDate =
-        movie.getViewingHistory().stream()
+        movie.getViewingHistory().getEntries().stream()
             .filter(history -> history.getId() == viewingHistoryId)
-            .map(ViewingHistory::getViewingDate)
+            .map(ViewingEntry::getDate)
             .findFirst()
             .orElseThrow(
                 () ->
                     InternalException.withMessage(
                         "Viewing history ID not found in the movie viewing dates."));
     boolean isRewatch =
-        movie.getViewingHistory().stream()
+        movie.getViewingHistory().getEntries().stream()
             .anyMatch(
-                history ->
-                    history.getViewingDate() != null
-                        && history.getViewingDate().isBefore(viewingDate));
+                history -> history.getDate() != null && history.getDate().isBefore(viewingDate));
 
     return DiaryMovie.builder()
         .id(movie.getId())

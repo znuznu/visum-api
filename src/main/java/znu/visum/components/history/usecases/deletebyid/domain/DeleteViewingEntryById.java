@@ -6,11 +6,11 @@ import znu.visum.components.history.domain.NoSuchViewingHistoryException;
 import znu.visum.components.history.domain.ViewingHistoryRepository;
 
 @Service
-public class DeleteViewingHistoryById {
+public class DeleteViewingEntryById {
   private final ViewingHistoryRepository viewingHistoryRepository;
 
   @Autowired
-  public DeleteViewingHistoryById(ViewingHistoryRepository viewingHistoryRepository) {
+  public DeleteViewingEntryById(ViewingHistoryRepository viewingHistoryRepository) {
     this.viewingHistoryRepository = viewingHistoryRepository;
   }
 

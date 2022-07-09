@@ -24,7 +24,7 @@ import static znu.visum.Constants.POSTGRESQL_DOCKER_IMAGE_NAME;
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("flyway")
-class DeleteViewingHistoryByIdRouteIntegrationTest {
+class DeleteViewingEntryByIdRouteIntegrationTest {
 
   private static final String URL_TEMPLATE = "/api/history/{id}/movies";
 

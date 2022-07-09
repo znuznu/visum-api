@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import znu.visum.components.diary.domain.DiaryMovie;
 import znu.visum.components.diary.usecases.query.domain.GetDiaryByYear;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieMetadata;
@@ -18,6 +19,7 @@ import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.components.reviews.domain.Grade;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +62,18 @@ class GetDiaryByYearUnitTest {
               .metadata(MovieMetadata.builder().posterUrl("mulho.jpeg").build())
               .releaseDate(LocalDate.of(2001, 10, 12))
               .viewingHistory(
-                  List.of(
-                      new ViewingHistory(1L, LocalDate.of(2019, 1, 1), 1L),
-                      new ViewingHistory(2L, LocalDate.of(2019, 1, 5), 1L),
-                      new ViewingHistory(3L, LocalDate.of(2016, 12, 19), 1L),
-                      new ViewingHistory(3L, null, 1L)))
+                  ViewingHistory.builder()
+                      .movieId(1L)
+                      .entries(
+                          List.of(
+                              new ViewingEntry(
+                                  1L, LocalDate.of(2019, 1, 1), 1L, LocalDateTime.now()),
+                              new ViewingEntry(
+                                  2L, LocalDate.of(2019, 1, 5), 1L, LocalDateTime.now()),
+                              new ViewingEntry(
+                                  3L, LocalDate.of(2016, 12, 19), 1L, LocalDateTime.now()),
+                              new ViewingEntry(3L, null, 1L, LocalDateTime.now())))
+                      .build())
               .review(null)
               .build();
 
@@ -76,9 +85,15 @@ class GetDiaryByYearUnitTest {
               .isFavorite(false)
               .releaseDate(LocalDate.of(1980, 2, 6))
               .viewingHistory(
-                  List.of(
-                      new ViewingHistory(4L, LocalDate.of(2019, 10, 8), 2L),
-                      new ViewingHistory(5L, LocalDate.of(2024, 1, 5), 2L)))
+                  ViewingHistory.builder()
+                      .movieId(2L)
+                      .entries(
+                          List.of(
+                              new ViewingEntry(
+                                  4L, LocalDate.of(2019, 10, 8), 2L, LocalDateTime.now()),
+                              new ViewingEntry(
+                                  5L, LocalDate.of(2024, 1, 5), 2L, LocalDateTime.now())))
+                      .build())
               .review(ReviewFromMovie.builder().movieId(2L).grade(Grade.of(10)).build())
               .build();
 
@@ -90,9 +105,15 @@ class GetDiaryByYearUnitTest {
               .isFavorite(true)
               .releaseDate(LocalDate.of(2012, 5, 14))
               .viewingHistory(
-                  List.of(
-                      new ViewingHistory(6L, LocalDate.of(2019, 12, 19), 3L),
-                      new ViewingHistory(7L, LocalDate.of(2019, 12, 19), 3L)))
+                  ViewingHistory.builder()
+                      .movieId(3L)
+                      .entries(
+                          List.of(
+                              new ViewingEntry(
+                                  6L, LocalDate.of(2019, 12, 19), 3L, LocalDateTime.now()),
+                              new ViewingEntry(
+                                  7L, LocalDate.of(2019, 12, 19), 3L, LocalDateTime.now())))
+                      .build())
               .review(null)
               .build();
 

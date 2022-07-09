@@ -11,15 +11,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.history.domain.ViewingHistory;
-import znu.visum.components.movies.domain.*;
-import znu.visum.components.reviews.domain.Grade;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,99 +60,8 @@ class PostgresMovieQueryRepositoryIntegrationTest {
     List<Movie> movies =
         this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.of(2000, 1, 1), LocalDate.of(2004, 1, 1), 2);
-    assertThat(movies)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsOnly(
-            Movie.builder()
-                .id(1L)
-                .title("Fake movie 1")
-                .releaseDate(LocalDate.of(2001, 10, 12))
-                .isFavorite(true)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(1L)
-                        .grade(Grade.of(9))
-                        .content("Some text 1")
-                        .movieId(1L)
-                        .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt1111")
-                        .tmdbId(1111L)
-                        .movieId(1L)
-                        .budget(1000)
-                        .revenue(10000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 1")
-                        .runtime(111)
-                        .originalLanguage("en")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(1L)
-                            .movieId(1L)
-                            .viewingDate(LocalDate.of(2020, 1, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(2L)
-                            .movieId(1L)
-                            .viewingDate(LocalDate.of(2020, 1, 2))
-                            .build()))
-                .build(),
-            Movie.builder()
-                .id(3L)
-                .title("Fake movie 3")
-                .releaseDate(LocalDate.of(2003, 10, 12))
-                .isFavorite(false)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(3L)
-                        .grade(Grade.of(10))
-                        .content("Some text 3")
-                        .movieId(3L)
-                        .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt3333")
-                        .tmdbId(3333L)
-                        .movieId(3L)
-                        .budget(3000)
-                        .revenue(30000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 3")
-                        .runtime(333)
-                        .originalLanguage("en")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(5L)
-                            .movieId(3L)
-                            .viewingDate(LocalDate.of(2020, 4, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(6L)
-                            .movieId(3L)
-                            .viewingDate(LocalDate.of(2020, 5, 2))
-                            .build()))
-                .build());
+
+    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactlyInAnyOrder(1L, 3L);
   }
 
   @DisplayName("findHighestRatedMoviesReleasedBetween() - limit higher than the number of movies")
@@ -169,99 +75,8 @@ class PostgresMovieQueryRepositoryIntegrationTest {
     List<Movie> movies =
         this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
             LocalDate.of(2000, 1, 1), LocalDate.of(2003, 1, 1), 10);
-    assertThat(movies)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsOnly(
-            Movie.builder()
-                .id(1L)
-                .title("Fake movie 1")
-                .releaseDate(LocalDate.of(2001, 10, 12))
-                .isFavorite(true)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(1L)
-                        .grade(Grade.of(9))
-                        .content("Some text 1")
-                        .movieId(1L)
-                        .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt1111")
-                        .tmdbId(1111L)
-                        .movieId(1L)
-                        .budget(1000)
-                        .revenue(10000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 1")
-                        .runtime(111)
-                        .originalLanguage("en")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(1L)
-                            .movieId(1L)
-                            .viewingDate(LocalDate.of(2020, 1, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(2L)
-                            .movieId(1L)
-                            .viewingDate(LocalDate.of(2020, 1, 2))
-                            .build()))
-                .build(),
-            Movie.builder()
-                .id(2L)
-                .title("Fake movie 2")
-                .releaseDate(LocalDate.of(2002, 10, 12))
-                .isFavorite(true)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2021, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(2L)
-                        .grade(Grade.of(1))
-                        .content("Some text 2")
-                        .movieId(2L)
-                        .creationDate(LocalDateTime.of(2021, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2021, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt2222")
-                        .tmdbId(2222L)
-                        .movieId(2L)
-                        .budget(2000)
-                        .revenue(20000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 2")
-                        .runtime(222)
-                        .originalLanguage("en")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(3L)
-                            .movieId(2L)
-                            .viewingDate(LocalDate.of(2020, 2, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(4L)
-                            .movieId(2L)
-                            .viewingDate(LocalDate.of(2020, 2, 2))
-                            .build()))
-                .build());
+
+    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(1L, 2L);
   }
 
   @DisplayName("getTotalRunningHoursBetween()")
@@ -455,99 +270,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
     List<Movie> movies =
         this.movieQueryRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
 
-    assertThat(movies)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsOnly(
-            Movie.builder()
-                .id(8L)
-                .title("Fake movie 8")
-                .releaseDate(LocalDate.of(2007, 10, 12))
-                .isFavorite(true)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2015, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(8L)
-                        .grade(Grade.of(6))
-                        .content("Some text 8")
-                        .movieId(8L)
-                        .creationDate(LocalDateTime.of(2015, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2015, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt8888")
-                        .tmdbId(8888L)
-                        .movieId(8L)
-                        .budget(8000)
-                        .revenue(80000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 8")
-                        .runtime(888)
-                        .originalLanguage("de")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(100L)
-                            .movieId(8L)
-                            .viewingDate(LocalDate.of(2020, 5, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(101L)
-                            .movieId(8L)
-                            .viewingDate(LocalDate.of(2020, 6, 2))
-                            .build()))
-                .build(),
-            Movie.builder()
-                .id(14L)
-                .title("Fake movie 14")
-                .releaseDate(LocalDate.of(2014, 10, 12))
-                .isFavorite(false)
-                .isToWatch(false)
-                .creationDate(LocalDateTime.of(2015, 10, 20, 15, 54, 33))
-                .cast(Cast.of(new ArrayList<>()))
-                .directors(new ArrayList<>())
-                .genres(new ArrayList<>())
-                .review(
-                    ReviewFromMovie.builder()
-                        .id(14L)
-                        .grade(Grade.of(1))
-                        .content("Some text 14")
-                        .movieId(14L)
-                        .creationDate(LocalDateTime.of(2015, 10, 26, 15, 54, 33))
-                        .updateDate(LocalDateTime.of(2015, 10, 27, 15, 54, 33))
-                        .build())
-                .metadata(
-                    MovieMetadata.builder()
-                        .imdbId("tt1414")
-                        .tmdbId(1414L)
-                        .movieId(14L)
-                        .budget(14000)
-                        .revenue(140000)
-                        .tagline("A tagline!")
-                        .overview("An overview!")
-                        .posterUrl("An URL 14")
-                        .runtime(141)
-                        .originalLanguage("jp")
-                        .build())
-                .viewingHistory(
-                    List.of(
-                        ViewingHistory.builder()
-                            .id(9L)
-                            .movieId(14L)
-                            .viewingDate(LocalDate.of(2020, 7, 1))
-                            .build(),
-                        ViewingHistory.builder()
-                            .id(10L)
-                            .movieId(14L)
-                            .viewingDate(LocalDate.of(2020, 8, 2))
-                            .build()))
-                .build());
+    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(8L, 14L);
   }
 
   @DisplayName("countAllByReleaseDateYear() - with movies")
@@ -599,9 +322,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
   void givenYearGrade_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearAndGrade() {
     List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2019), 9, null);
 
-    assertThat(movies).hasSize(2);
-    assertThat(movies.get(0).getId()).isEqualTo(1L);
-    assertThat(movies.get(1).getId()).isEqualTo(15L);
+    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(1L, 15L);
   }
 
   @DisplayName("findByDiaryFilters() - movies for the specified year, grade, genreId")
@@ -614,7 +335,6 @@ class PostgresMovieQueryRepositoryIntegrationTest {
   void givenYearGradeGenreId_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearGradeGenreId() {
     List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2019), 9, 3L);
 
-    assertThat(movies).hasSize(1);
-    assertThat(movies.get(0).getId()).isEqualTo(1L);
+    assertThat(movies).hasSize(1).extracting(Movie::getId).containsExactly(1L);
   }
 }

@@ -17,7 +17,7 @@ public class DeleteReviewById {
 
   public void deleteById(long id) {
     if (!reviewRepository.existsById(id)) {
-      throw new NoSuchReviewIdException(Long.toString(id));
+      throw NoSuchReviewIdException.with(Long.toString(id));
     }
 
     reviewRepository.deleteById(id);

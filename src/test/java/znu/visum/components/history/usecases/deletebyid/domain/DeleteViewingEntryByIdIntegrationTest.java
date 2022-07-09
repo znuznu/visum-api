@@ -21,12 +21,12 @@ import static znu.visum.Constants.POSTGRESQL_DOCKER_IMAGE_NAME;
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("flyway")
-class DeleteViewingHistoryByIdIntegrationTest {
+class DeleteViewingEntryByIdIntegrationTest {
   @Container
   private static final PostgreSQLContainer container =
       new PostgreSQLContainer(POSTGRESQL_DOCKER_IMAGE_NAME);
 
-  @Autowired private DeleteViewingHistoryById deleteViewingHistoryById;
+  @Autowired private DeleteViewingEntryById deleteViewingEntryById;
   @Autowired private MovieQueryRepository movieQueryRepository;
   @Autowired private ViewingHistoryRepository viewingHistoryRepository;
 
@@ -39,7 +39,7 @@ class DeleteViewingHistoryByIdIntegrationTest {
 
   @Test
   void givenAViewingHistoryIdThatDoesNotExist_itShouldThrowAnError() {
-    assertThatThrownBy(() -> deleteViewingHistoryById.process(1000L))
+    assertThatThrownBy(() -> deleteViewingEntryById.process(1000L))
         .isInstanceOf(NoSuchViewingHistoryException.class);
   }
 

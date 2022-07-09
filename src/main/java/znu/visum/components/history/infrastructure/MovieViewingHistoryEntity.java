@@ -1,19 +1,24 @@
 package znu.visum.components.history.infrastructure;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import znu.visum.components.history.domain.ViewingHistory;
+import org.hibernate.annotations.CreationTimestamp;
+import znu.visum.components.history.domain.ViewingEntry;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_viewing_history")
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
-@SuperBuilder
-public class MovieViewingHistoryEntity extends ViewingHistoryEntity {
+public class MovieViewingHistoryEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_viewing_history_id_seq")
   private Long id;
@@ -21,15 +26,25 @@ public class MovieViewingHistoryEntity extends ViewingHistoryEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   private MovieEntity movie;
 
-  public static MovieViewingHistoryEntity from(ViewingHistory viewingHistory) {
+  private LocalDate viewingDate;
+
+  @CreationTimestamp private LocalDateTime creationDate;
+
+  public static MovieViewingHistoryEntity from(ViewingEntry viewingEntry) {
     return MovieViewingHistoryEntity.builder()
-        .id(viewingHistory.getId())
-        .movie(MovieEntity.builder().id(viewingHistory.getMovieId()).build())
-        .viewingDate(viewingHistory.getViewingDate())
+        .id(viewingEntry.getId())
+        .movie(MovieEntity.builder().id(viewingEntry.getMovieId()).build())
+        .viewingDate(viewingEntry.getDate())
+        .creationDate(viewingEntry.getCreationDate())
         .build();
   }
 
-  public ViewingHistory toDomain() {
-    return new ViewingHistory(this.id, this.getViewingDate(), this.movie.getId());
+  public ViewingEntry toDomain() {
+    return ViewingEntry.builder()
+        .id(this.id)
+        .date(this.getViewingDate())
+        .movieId(this.movie.getId())
+        .creationDate(this.getCreationDate())
+        .build();
   }
 }

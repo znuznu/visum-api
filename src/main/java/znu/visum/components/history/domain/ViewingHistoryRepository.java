@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ViewingHistoryRepository {
-  Optional<ViewingHistory> findById(long id);
+  Optional<ViewingEntry> findById(long id);
 
   boolean existsById(long id);
 
   void deleteById(long id);
 
-  ViewingHistory save(ViewingHistory history);
+  ViewingEntry save(ViewingEntry entry);
 
-  List<ViewingHistory> findByMovieId(long id);
+  List<ViewingEntry> findByMovieId(long id);
 }
