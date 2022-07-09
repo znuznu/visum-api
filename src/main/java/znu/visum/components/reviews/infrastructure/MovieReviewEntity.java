@@ -36,18 +36,22 @@ public class MovieReviewEntity {
 
   private String content;
 
-  public static MovieReviewEntity from(ReviewFromMovie reviewFromMovie) {
+  public static MovieReviewEntity ofNullable(ReviewFromMovie review) {
+    if (review == null) {
+      return null;
+    }
+
     return MovieReviewEntity.builder()
-        .movieEntity(MovieEntity.builder().id(reviewFromMovie.getId()).build())
-        .id(reviewFromMovie.getId())
-        .creationDate(reviewFromMovie.getCreationDate())
-        .updateDate(reviewFromMovie.getUpdateDate())
-        .grade(reviewFromMovie.getGrade().getValue())
-        .content(reviewFromMovie.getContent())
+        .movieEntity(MovieEntity.builder().id(review.getId()).build())
+        .id(review.getId())
+        .creationDate(review.getCreationDate())
+        .updateDate(review.getUpdateDate())
+        .grade(review.getGrade().getValue())
+        .content(review.getContent())
         .build();
   }
 
-  public static MovieReviewEntity from(Review review) {
+  public static MovieReviewEntity ofNullable(Review review) {
     return MovieReviewEntity.builder()
         .id(review.getId())
         .grade(review.getGrade().getValue())

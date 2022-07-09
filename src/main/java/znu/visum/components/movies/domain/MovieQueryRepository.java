@@ -41,5 +41,5 @@ public interface MovieQueryRepository {
 
   List<Movie> findHighestRatedDuringYearOlderMovies(Year year);
 
-  List<Movie> findByDiaryFilters(Year year, Integer grade, Long genreId);
+  List<MovieDiaryFragment> findByDiaryFilters(DiaryFilters filters);
 }

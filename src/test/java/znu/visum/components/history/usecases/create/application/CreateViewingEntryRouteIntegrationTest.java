@@ -102,7 +102,7 @@ class CreateViewingEntryRouteIntegrationTest {
                 .content("{\"viewingDate\": \"2021-01-26\", \"movieId\": 1}"))
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.id").isNumber())
-        .andExpect(jsonPath("$.viewingDate").value("2021-01-26"))
+        .andExpect(jsonPath("$.date").value("2021-01-26"))
         .andExpect(jsonPath("$.movieId").value("1"));
   }
 }
