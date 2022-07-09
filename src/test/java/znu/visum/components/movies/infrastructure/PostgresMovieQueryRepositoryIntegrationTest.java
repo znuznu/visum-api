@@ -11,7 +11,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import znu.visum.components.movies.domain.DiaryFilters;
 import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.core.models.common.Pair;
 
@@ -294,7 +296,8 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_movie_with_viewing_history.sql",
       })
   void whenThereIsNoMovies_itShouldReturnNone() {
-    List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2014), null, null);
+    var filters = DiaryFilters.builder().year(Year.of(2014)).build();
+    List<MovieDiaryFragment> movies = this.movieQueryRepository.findByDiaryFilters(filters);
 
     assertThat(movies).isEmpty();
   }
@@ -307,7 +310,8 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_movies_viewing_year.sql",
       })
   void givenYear_whenThereIsMovies_itShouldReturnMoviesSeenDuringYear() {
-    List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2019), null, null);
+    var filters = DiaryFilters.builder().year(Year.of(2019)).build();
+    List<MovieDiaryFragment> movies = this.movieQueryRepository.findByDiaryFilters(filters);
 
     assertThat(movies).hasSize(3);
   }
@@ -320,9 +324,10 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_movies_viewing_year.sql",
       })
   void givenYearGrade_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearAndGrade() {
-    List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2019), 9, null);
+    var filters = DiaryFilters.builder().year(Year.of(2019)).grade(9).build();
+    List<MovieDiaryFragment> movies = this.movieQueryRepository.findByDiaryFilters(filters);
 
-    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(1L, 15L);
+    assertThat(movies).hasSize(2).extracting(MovieDiaryFragment::getId).containsExactly(1L, 15L);
   }
 
   @DisplayName("findByDiaryFilters() - movies for the specified year, grade, genreId")
@@ -333,8 +338,9 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_movies_viewing_year.sql",
       })
   void givenYearGradeGenreId_whenThereIsMovies_itShouldReturnMoviesSeenDuringYearGradeGenreId() {
-    List<Movie> movies = this.movieQueryRepository.findByDiaryFilters(Year.of(2019), 9, 3L);
+    var filters = DiaryFilters.builder().year(Year.of(2019)).grade(9).genreId(3L).build();
+    List<MovieDiaryFragment> movies = this.movieQueryRepository.findByDiaryFilters(filters);
 
-    assertThat(movies).hasSize(1).extracting(Movie::getId).containsExactly(1L);
+    assertThat(movies).hasSize(1).extracting(MovieDiaryFragment::getId).containsExactly(1L);
   }
 }

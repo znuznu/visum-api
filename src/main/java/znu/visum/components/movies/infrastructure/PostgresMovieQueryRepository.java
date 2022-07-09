@@ -6,7 +6,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
+import znu.visum.components.movies.domain.DiaryFilters;
 import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.core.models.common.Criteria;
 import znu.visum.core.models.common.JoinCriteria;
@@ -200,8 +202,12 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
   }
 
   @Override
-  public List<Movie> findByDiaryFilters(Year year, Integer grade, Long genreId) {
-    List<Criteria> filters = new ArrayList<>();
+  public List<MovieDiaryFragment> findByDiaryFilters(DiaryFilters filters) {
+    Year year = filters.getYear();
+    Integer grade = filters.getGrade();
+    Long genreId = filters.getGenreId();
+
+    List<Criteria> criteriaList = new ArrayList<>();
     List<JoinCriteria> joinFilters = new ArrayList<>();
 
     if (grade != null) {
@@ -215,14 +221,14 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
               "genreEntities", new Criteria(new Pair<>("id", genreId), Operator.EQUAL)));
     }
 
-    CriteriaFilters criteriaFilters = new CriteriaFilters(filters, joinFilters);
+    CriteriaFilters criteriaFilters = new CriteriaFilters(criteriaList, joinFilters);
 
     Specification<MovieEntity> filtersSpecification = new SearchSpecification<>(criteriaFilters);
 
     return this.dataJpaMovieRepository
         .findAll(Specification.where(movieHasBeenSeenDuring(year).and(filtersSpecification)))
         .stream()
-        .map(MovieEntity::toDomain)
+        .map(MovieEntity::toDiaryFragment)
         .collect(Collectors.toList());
   }
 }

@@ -7,10 +7,12 @@ import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
 import znu.visum.components.movies.domain.Cast;
 import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.components.person.actors.domain.MovieFromActor;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
 import znu.visum.components.person.directors.infrastructure.DirectorEntity;
+import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.MovieFromReview;
 import znu.visum.components.reviews.infrastructure.MovieReviewEntity;
 
@@ -92,7 +94,7 @@ public class MovieEntity {
             movie.getDirectors().stream().map(DirectorEntity::from).collect(Collectors.toSet()))
         .isFavorite(movie.isFavorite())
         .shouldWatch(movie.isToWatch())
-        .review(movie.getReview() == null ? null : MovieReviewEntity.from(movie.getReview()))
+        .review(MovieReviewEntity.ofNullable(movie.getReview()))
         .genreEntities(
             movie.getGenres().stream().map(GenreEntity::from).collect(Collectors.toSet()))
         .viewingHistory(
@@ -121,15 +123,6 @@ public class MovieEntity {
   }
 
   public Movie toDomain() {
-    var viewingHistory =
-        ViewingHistory.builder()
-            .movieId(this.id)
-            .entries(
-                this.viewingHistory.stream()
-                    .map(MovieViewingHistoryEntity::toDomain)
-                    .collect(Collectors.toList()))
-            .build();
-
     var directors =
         this.directorEntities.stream()
             .map(DirectorEntity::toDirectorFromMovieDomain)
@@ -154,12 +147,30 @@ public class MovieEntity {
         .cast(cast)
         .directors(directors)
         .genres(genres)
-        .viewingHistory(viewingHistory)
-        .review(this.review == null ? null : ReviewFromMovie.of(this.review.toDomain()))
+        .viewingHistory(extractViewingHistory())
         .isToWatch(this.shouldWatch)
         .isFavorite(this.isFavorite)
         .creationDate(this.creationDate)
+        .review(this.review == null ? null : ReviewFromMovie.of(this.review.toDomain()))
         .metadata(this.movieMetadataEntity == null ? null : this.movieMetadataEntity.toDomain())
+        .build();
+  }
+
+  public MovieDiaryFragment toDiaryFragment() {
+    var review =
+        this.review != null
+            ? new MovieDiaryFragment.Review(this.review.getId(), Grade.of(this.review.getGrade()))
+            : null;
+
+    return MovieDiaryFragment.builder()
+        .id(this.id)
+        .title(this.title)
+        .releaseDate(this.releaseDate)
+        .viewingHistory(extractViewingHistory())
+        .review(review)
+        .isFavorite(this.isFavorite)
+        .posterUrl(
+            this.movieMetadataEntity == null ? null : this.movieMetadataEntity.getPosterUrl())
         .build();
   }
 
@@ -219,5 +230,15 @@ public class MovieEntity {
     } else {
       return id.equals(other.id);
     }
+  }
+
+  private ViewingHistory extractViewingHistory() {
+    return ViewingHistory.builder()
+        .movieId(this.id)
+        .entries(
+            this.viewingHistory.stream()
+                .map(MovieViewingHistoryEntity::toDomain)
+                .collect(Collectors.toList()))
+        .build();
   }
 }

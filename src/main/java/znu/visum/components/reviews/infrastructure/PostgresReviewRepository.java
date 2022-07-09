@@ -63,7 +63,7 @@ public class PostgresReviewRepository implements ReviewRepository {
 
   @Override
   public Review save(Review review) {
-    return dataJpaMovieReviewRepository.save(MovieReviewEntity.from(review)).toDomain();
+    return dataJpaMovieReviewRepository.save(MovieReviewEntity.ofNullable(review)).toDomain();
   }
 
   @Override

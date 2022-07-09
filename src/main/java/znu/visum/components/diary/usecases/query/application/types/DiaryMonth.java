@@ -1,27 +1,27 @@
 package znu.visum.components.diary.usecases.query.application.types;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import znu.visum.core.models.common.Month;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Builder
 @Getter
 public class DiaryMonth {
   private Month month;
   private List<DiaryDay> days;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    DiaryMonth that = (DiaryMonth) o;
-    return java.util.Objects.equals(month, that.month) && java.util.Objects.equals(days, that.days);
-  }
-
-  @Override
-  public int hashCode() {
-    return java.util.Objects.hash(month, days);
+  public static DiaryMonth from(znu.visum.components.diary.domain.DiaryMonth diaryMonth) {
+    return DiaryMonth.builder()
+        .month(Month.from(diaryMonth.getMonth()))
+        .days(
+            diaryMonth.getDaysInDescendingOrder().stream()
+                .map(DiaryDay::from)
+                .collect(Collectors.toUnmodifiableList()))
+        .build();
   }
 }

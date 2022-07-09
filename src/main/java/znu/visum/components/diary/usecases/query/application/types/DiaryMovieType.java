@@ -3,7 +3,7 @@ package znu.visum.components.diary.usecases.query.application.types;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.diary.domain.DiaryMovie;
+import znu.visum.components.diary.domain.DiaryEntry;
 
 import java.time.LocalDate;
 
@@ -21,9 +21,9 @@ public class DiaryMovieType {
   private boolean isRewatch;
   private Long reviewId;
 
-  public static DiaryMovieType from(DiaryMovie movie) {
+  public static DiaryMovieType from(DiaryEntry movie) {
     return DiaryMovieType.builder()
-        .id(movie.getId())
+        .id(movie.getMovieId())
         .title(movie.getTitle())
         .posterUrl(movie.getPosterUrl())
         .releaseDate(movie.getReleaseDate())
@@ -32,26 +32,5 @@ public class DiaryMovieType {
         .isFavorite(movie.isFavorite())
         .isRewatch(movie.isRewatch())
         .build();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    DiaryMovieType that = (DiaryMovieType) o;
-    return java.util.Objects.equals(id, that.id)
-        && java.util.Objects.equals(title, that.title)
-        && java.util.Objects.equals(posterUrl, that.posterUrl)
-        && java.util.Objects.equals(releaseDate, that.releaseDate)
-        && java.util.Objects.equals(grade, that.grade)
-        && isFavorite == that.isFavorite
-        && isRewatch == that.isRewatch
-        && java.util.Objects.equals(reviewId, that.reviewId);
-  }
-
-  @Override
-  public int hashCode() {
-    return java.util.Objects.hash(
-        id, title, posterUrl, releaseDate, grade, isFavorite, isRewatch, reviewId);
   }
 }

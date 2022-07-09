@@ -4,13 +4,13 @@ import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import org.springframework.beans.factory.annotation.Autowired;
-import znu.visum.components.diary.domain.DiaryMovie;
+import znu.visum.components.diary.domain.Diary;
 import znu.visum.components.diary.usecases.query.application.types.DiaryFiltersInput;
 import znu.visum.components.diary.usecases.query.application.types.DiaryYear;
 import znu.visum.components.diary.usecases.query.domain.GetDiaryByYear;
+import znu.visum.components.movies.domain.DiaryFilters;
 
 import java.time.Year;
-import java.util.List;
 
 @DgsComponent
 public class DiaryQueryFetcher {
@@ -24,10 +24,13 @@ public class DiaryQueryFetcher {
   @DgsQuery
   public DiaryYear diary(@InputArgument DiaryFiltersInput filters) {
     Year year = Year.of(filters.getYear());
+    Integer grade = filters.getGrade();
+    Long genreId = filters.getGenreId();
 
-    List<DiaryMovie> diaryMovies =
-        this.getDiaryByYear.getDiaryMovies(year, filters.getGrade(), filters.getGenreId());
+    var diaryFilters = DiaryFilters.builder().year(year).grade(grade).genreId(genreId).build();
 
-    return DiaryYear.from(year, diaryMovies);
+    Diary diary = this.getDiaryByYear.getDiary(diaryFilters);
+
+    return DiaryYear.from(diary);
   }
 }

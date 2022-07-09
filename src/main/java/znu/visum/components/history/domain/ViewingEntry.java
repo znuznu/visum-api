@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString
 public class ViewingEntry {
 
   private Long id;

@@ -17,7 +17,7 @@ public class CreateViewingEntryResponse {
 
   @Schema(description = "A viewing date in ISO 8601 format (i.e. yyyy-MM-dd).")
   @JsonFormat(pattern = "yyyy-MM-dd")
-  private final LocalDate viewingDate;
+  private final LocalDate date;
 
   @Schema(description = "The identifier of the created entry.")
   private final long id;
@@ -27,7 +27,7 @@ public class CreateViewingEntryResponse {
 
   public static CreateViewingEntryResponse from(ViewingEntry viewingEntry) {
     return CreateViewingEntryResponse.builder()
-        .viewingDate(viewingEntry.getDate())
+        .date(viewingEntry.getDate())
         .id(viewingEntry.getId())
         .movieId(viewingEntry.getMovieId())
         .build();

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.13.0
+
+- Add `creation_date` to viewing history
+- Drastically improve viewing history and diary part
+
 ## 2.12.0
 
 - Add `cast_member` table

@@ -9,9 +9,12 @@ import java.util.Collection;
 @Getter
 @Builder
 @EqualsAndHashCode
-@ToString
 public class ViewingHistory {
 
   private long movieId;
   private Collection<ViewingEntry> entries = new ArrayList<>();
+
+  public boolean isEmpty() {
+    return this.entries.isEmpty();
+  }
 }

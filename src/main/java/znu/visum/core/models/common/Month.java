@@ -53,6 +53,37 @@ public enum Month {
     }
   }
 
+  public static java.time.Month toJava(Month month) {
+    switch (month) {
+      case JANUARY:
+        return java.time.Month.JANUARY;
+      case FEBRUARY:
+        return java.time.Month.FEBRUARY;
+      case MARCH:
+        return java.time.Month.MARCH;
+      case APRIL:
+        return java.time.Month.APRIL;
+      case MAY:
+        return java.time.Month.MAY;
+      case JUNE:
+        return java.time.Month.JUNE;
+      case JULY:
+        return java.time.Month.JULY;
+      case AUGUST:
+        return java.time.Month.AUGUST;
+      case SEPTEMBER:
+        return java.time.Month.SEPTEMBER;
+      case OCTOBER:
+        return java.time.Month.OCTOBER;
+      case NOVEMBER:
+        return java.time.Month.NOVEMBER;
+      case DECEMBER:
+        return java.time.Month.DECEMBER;
+      default:
+        throw new UnsupportedOperationException("A new month has been created by the Architect.");
+    }
+  }
+
   public String getRepresentation() {
     return this.representation;
   }
