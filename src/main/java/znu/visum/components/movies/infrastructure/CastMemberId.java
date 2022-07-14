@@ -45,16 +45,4 @@ public class CastMemberId implements Serializable {
   public int hashCode() {
     return Objects.hash(movieId, actorId, character);
   }
-
-  public void setMovieId(Long movieId) {
-    this.movieId = movieId;
-  }
-
-  public void setActorId(Long actorId) {
-    this.actorId = actorId;
-  }
-
-  public void setCharacter(String character) {
-    this.character = character;
-  }
 }

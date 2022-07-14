@@ -1,6 +1,9 @@
 package znu.visum.components.diary.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import znu.visum.components.reviews.domain.Grade;
 import znu.visum.core.assertions.VisumAssert;
 

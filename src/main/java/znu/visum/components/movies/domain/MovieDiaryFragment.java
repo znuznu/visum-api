@@ -15,7 +15,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** Data class that contains only necessary fields to reconstruct a Diary. */
 @AllArgsConstructor
 @Builder
 @Getter
@@ -61,7 +60,7 @@ public class MovieDiaryFragment {
   }
 
   private DiaryEntry toRewatch(LocalDate viewingDate) {
-    var review =
+    var entryReview =
         this.review != null
             ? new DiaryEntry.Review(this.review.getId(), this.review.getGrade())
             : null;
@@ -70,7 +69,7 @@ public class MovieDiaryFragment {
         .movieId(id)
         .title(title)
         .releaseDate(releaseDate)
-        .review(review)
+        .review(entryReview)
         .viewingDate(viewingDate)
         .isFavorite(isFavorite)
         .posterUrl(posterUrl)
@@ -79,7 +78,7 @@ public class MovieDiaryFragment {
   }
 
   private DiaryEntry toSeenFirstTime(LocalDate viewingDate) {
-    var review =
+    var entryReview =
         this.review != null
             ? new DiaryEntry.Review(this.review.getId(), this.review.getGrade())
             : null;
@@ -88,7 +87,7 @@ public class MovieDiaryFragment {
         .movieId(id)
         .title(title)
         .releaseDate(releaseDate)
-        .review(review)
+        .review(entryReview)
         .viewingDate(viewingDate)
         .isFavorite(isFavorite)
         .posterUrl(posterUrl)

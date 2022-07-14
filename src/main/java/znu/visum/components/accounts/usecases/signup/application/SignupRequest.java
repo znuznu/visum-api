@@ -17,7 +17,7 @@ public class SignupRequest {
   @NotBlank
   private final String password;
 
-  @Schema(description = "The account's registrationKey.")
+  @Schema(description = "The account's registration key.")
   @NotBlank
   private final String registrationKey;
 
