@@ -74,7 +74,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnsAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
       assertThatThrownBy(() -> connector.searchMovies("Something", 6))
@@ -82,7 +82,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+    void whenTmdbReturnsA200WithUnexpectedBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
@@ -97,7 +97,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnMovies_itShouldReturnMovies() {
+    void whenTmdbReturnsMovies_itShouldReturnMovies() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.searchMoviesResponse());
 
@@ -159,7 +159,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnsAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
@@ -167,7 +167,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
+    void whenTmdbReturnsA200WithUnexpectedBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
@@ -182,7 +182,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnMovies_itShouldReturnMovies() {
+    void whenTmdbReturnsMovies_itShouldReturnMovies() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
 
@@ -239,7 +239,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+    void whenTmdbReturnsAnErrorDifferentThan404_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
@@ -247,7 +247,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+    void whenTmdbReturnsA404Error_itShouldReturnEmpty() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
@@ -256,7 +256,7 @@ class TmdbHttpConnectorUnitTest {
 
     @Disabled("Should pass! see TODO in getMovieById() from the HTTP connector")
     @Test
-    void whenTmdbReturnA200ResponseWithAnUnexpectedResponseBody_itShouldThrow() {
+    void whenTmdbReturnsA200ResponseWithAnUnexpectedResponseBody_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(
           new MockResponse()
@@ -271,7 +271,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAMovie_itShouldReturnTheMovie() {
+    void whenTmdbReturnsAMovie_itShouldReturnTheMovie() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.movieResponse());
 
@@ -331,7 +331,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAnErrorDifferentThan404_itShouldThrow() {
+    void whenTmdbReturnsAnErrorDifferentThan404_itShouldThrow() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
@@ -340,7 +340,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnA404Error_itShouldReturnEmpty() {
+    void whenTmdbReturnsA404Error_itShouldReturnEmpty() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
 
@@ -412,7 +412,7 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    void whenTmdbReturnAnError_itShouldThrow() {
+    void whenTmdbReturnsAnError_itShouldThrow() {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThatThrownBy(() -> connector.getConfigurationRootPosterUrl())
@@ -421,7 +421,7 @@ class TmdbHttpConnectorUnitTest {
 
     @Test
     @DisplayName(
-        "when TMDB return the image base URL and poster sizes, it should return the merged URL (base + second to last)")
+        "when TMDB returns the image base URL and poster sizes, it should return the merged URL (base + second to last)")
     void whenTmdbReturnUrlAndPosterSizes_itShouldReturnMergedUrl() {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
 
@@ -431,8 +431,8 @@ class TmdbHttpConnectorUnitTest {
     }
 
     @Test
-    @DisplayName("when TMDb return the image base URL and empty poster sizes, it should throw")
-    void whenTmdbReturnUrlAndEmptyPosterSizes_itShouldThrow() {
+    @DisplayName("when TMDb returns the image base URL and empty poster sizes, it should throw")
+    void whenTmdbReturnsUrlAndEmptyPosterSizes_itShouldThrow() {
       tmdbApiMockServer.enqueue(
           new MockResponse()
               .setResponseCode(200)

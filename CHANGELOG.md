@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.13.1
+
+- Bump TestContainers from 1.16.2 to 1.17.3
+- Bump Springdoc from 1.6.6 to 1.6.9
+- Bump MockWebServer from 4.9.2 to 4.10.0
+- Bump OkHttp from 4.9.2 to 4.10.0
+- Bump Spring HATEOAS from 1.3.5 to 1.5.1
+- Bump Caffeine from 3.0.5 to 3.1.1
+- Bump DGS from 4.9.22 to 5.0.5
+
 ## 2.13.0
 
 - Add `creation_date` to viewing history
