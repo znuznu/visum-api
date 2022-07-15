@@ -16,7 +16,7 @@
     <description>The Visum API, a movie manager.</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <flyway.version>6.5.3</flyway.version>
         <mockito.version>4.0.0</mockito.version>

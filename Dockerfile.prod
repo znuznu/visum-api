@@ -1,5 +1,5 @@
 # Stage: Build
-FROM maven:3.6.3-openjdk-11-slim
+FROM maven:3.6.3-openjdk-17-slim
 WORKDIR /visum
 COPY pom.xml .
 
@@ -10,7 +10,7 @@ COPY src ./src
 RUN mvn package -DskipTests=true
 
 # Stage: Execute
-FROM openjdk:11.0.9-slim
+FROM openjdk:17.0.2-slim
 ENV VISUM=visum
 WORKDIR /$VISUM
 EXPOSE 8080
