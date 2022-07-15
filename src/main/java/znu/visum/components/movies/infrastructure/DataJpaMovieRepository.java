@@ -26,14 +26,16 @@ public interface DataJpaMovieRepository
 
   @Query(
       value =
-          "SELECT *\n"
-              + "FROM movie m\n"
-              + "INNER JOIN movie_review mr\n"
-              + "ON m.id = mr.movie_id\n"
-              + "INNER JOIN movie_metadata mm on m.id = mm.movie_id\n"
-              + "WHERE m.release_date >= :start AND m.release_date < :end\n"
-              + "ORDER BY grade DESC\n"
-              + "LIMIT :limit",
+              """
+              SELECT *
+              FROM movie m
+              INNER JOIN movie_review mr
+              ON m.id = mr.movie_id
+              INNER JOIN movie_metadata mm on m.id = mm.movie_id
+              WHERE m.release_date >= :start AND m.release_date < :end
+              ORDER BY grade DESC
+              LIMIT :limit
+              """,
       nativeQuery = true)
   List<MovieEntity> findHighestRatedMoviesReleasedBetween(
       @Param("start") LocalDate start, @Param("end") LocalDate end, @Param("limit") int limit);
@@ -44,38 +46,44 @@ public interface DataJpaMovieRepository
 
   @Query(
       value =
-          "SELECT mm.original_language, COUNT(*)\n"
-              + "FROM movie m\n"
-              + "         INNER JOIN movie_metadata mm on m.id = mm.movie_id\n"
-              + "WHERE m.release_date >= :start AND m.release_date < :end\n"
-              + "GROUP BY mm.original_language\n"
-              + "ORDER BY COUNT(*) DESC",
+              """
+              SELECT mm.original_language, COUNT(*)
+              FROM movie m
+                       INNER JOIN movie_metadata mm on m.id = mm.movie_id
+              WHERE m.release_date >= :start AND m.release_date < :end
+              GROUP BY mm.original_language
+              ORDER BY COUNT(*) DESC
+              """,
       nativeQuery = true)
   List<Tuple> getNumberOfMoviesPerOriginalLanguageBetween(
       @Param("start") LocalDate start, @Param("end") LocalDate end);
 
   @Query(
       value =
-          "SELECT g.type, COUNT(*)\n"
-              + "FROM movie m,\n"
-              + "     genre g,\n"
-              + "     movie_genre mg\n"
-              + "WHERE mg.movie_id = m.id\n"
-              + "  AND mg.genre_id = g.id\n"
-              + "AND m.release_date >= :start AND m.release_date < :end\n"
-              + "GROUP BY g.type\n"
-              + "ORDER BY COUNT(*) DESC",
+              """
+              SELECT g.type, COUNT(*)
+              FROM movie m,
+                   genre g,
+                   movie_genre mg
+              WHERE mg.movie_id = m.id
+                AND mg.genre_id = g.id
+              AND m.release_date >= :start AND m.release_date < :end
+              GROUP BY g.type
+              ORDER BY COUNT(*) DESC
+              """,
       nativeQuery = true)
   List<Tuple> getNumberOfMoviesPerGenreBetween(
       @Param("start") LocalDate start, @Param("end") LocalDate end);
 
   @Query(
       value =
-          "SELECT EXTRACT(YEAR FROM m.release_date), COUNT(*)\n"
-              + "FROM movie m\n"
-              + "WHERE m.release_date >= :start AND m.release_date < :end\n"
-              + "GROUP BY EXTRACT(YEAR FROM m.release_date)\n"
-              + "ORDER BY COUNT(*) DESC",
+              """
+              SELECT EXTRACT(YEAR FROM m.release_date), COUNT(*)
+              FROM movie m
+              WHERE m.release_date >= :start AND m.release_date < :end
+              GROUP BY EXTRACT(YEAR FROM m.release_date)
+              ORDER BY COUNT(*) DESC
+              """,
       nativeQuery = true)
   List<Tuple> getNumberOfMoviesPerYearBetween(
       @Param("start") LocalDate start, @Param("end") LocalDate end);
