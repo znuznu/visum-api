@@ -68,15 +68,64 @@ class GetMoviePageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":4,"
-                        + "\"content\":["
-                        + "{\"id\":30,\"title\":\"Fake movie with review 30\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":false, \"metadata\":{\"posterUrl\":\"An URL 30\"}},"
-                        + "{\"id\":20,\"title\":\"Fake movie with review 20\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":false, \"metadata\":{\"posterUrl\":\"An URL 20\"}},"
-                        + "{\"id\":33,\"title\":\"Fake movie with review 33\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":true, \"metadata\":{\"posterUrl\":\"An URL 33\"}},"
-                        + "{\"id\":10,\"title\":\"Fake movie with review 10\",\"releaseDate\":\"10/12/2001\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":true, \"metadata\":{\"posterUrl\":\"An URL 10\"}}],"
-                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
+                        """
+                        {
+                          "current": 0,
+                          "size": 20,
+                          "totalElements": 4,
+                          "content": [
+                            {
+                              "id": 30,
+                              "title": "Fake movie with review 30",
+                              "releaseDate": "10/12/2001",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": false,
+                              "isToWatch": false,
+                              "metadata": {
+                                "posterUrl": "An URL 30"
+                              }
+                            },
+                            {
+                              "id": 20,
+                              "title": "Fake movie with review 20",
+                              "releaseDate": "10/12/2001",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": true,
+                              "isToWatch": false,
+                              "metadata": {
+                                "posterUrl": "An URL 20"
+                              }
+                            },
+                            {
+                              "id": 33,
+                              "title": "Fake movie with review 33",
+                              "releaseDate": "10/12/2001",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": false,
+                              "isToWatch": true,
+                              "metadata": {
+                                "posterUrl": "An URL 33"
+                              }
+                            },
+                            {
+                              "id": 10,
+                              "title": "Fake movie with review 10",
+                              "releaseDate": "10/12/2001",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": true,
+                              "isToWatch": true,
+                              "metadata": {
+                                "posterUrl": "An URL 10"
+                              }
+                            }
+                          ],
+                          "totalPages": 1,
+                          "first": true,
+                          "last": true
+                        }
+                        """
+                )
+        );
   }
 
   @Test
@@ -95,14 +144,31 @@ class GetMoviePageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":1,"
-                        + "\"content\":["
-                        + "{\"id\":4,\"title\":\"Fake movie 4\",\"releaseDate\":\"04/04/2004\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":false,\"metadata\":{\"posterUrl\":\"fakeurl4\"}}"
-                        + "],"
-                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
-  }
+                        """
+                        {
+                          "current": 0,
+                          "size": 20,
+                          "totalElements": 1,
+                          "content": [
+                            {
+                              "id": 4,
+                              "title": "Fake movie 4",
+                              "releaseDate": "04/04/2004",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": true,
+                              "isToWatch": false,
+                              "metadata": {
+                                "posterUrl": "fakeurl4"
+                              }
+                            }
+                          ],
+                          "totalPages": 1,
+                          "first": true,
+                          "last": true
+                        }
+                        """
+                )
+        ); }
 
   @Test
   @WithMockUser
@@ -120,13 +186,41 @@ class GetMoviePageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":2,"
-                        + "\"content\":["
-                        + "{\"id\":4,\"title\":\"Fake movie 4\",\"releaseDate\":\"04/04/2004\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":true,\"isToWatch\":false,\"metadata\":{\"posterUrl\":\"fakeurl4\"}},"
-                        + "{\"id\":44,\"title\":\"Fake movie 44\",\"releaseDate\":\"04/16/2004\",\"creationDate\":\"10/26/2021 15:54:33\",\"isFavorite\":false,\"isToWatch\":true,\"metadata\":{\"posterUrl\":\"fakeurl44\"}}"
-                        + "],"
-                        + "\"totalPages\":1,\"first\":true,\"last\":true}"));
+                        """
+                        {
+                          "current": 0,
+                          "size": 20,
+                          "totalElements": 2,
+                          "content": [
+                            {
+                              "id": 4,
+                              "title": "Fake movie 4",
+                              "releaseDate": "04/04/2004",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": true,
+                              "isToWatch": false,
+                              "metadata": {
+                                "posterUrl": "fakeurl4"
+                              }
+                            },
+                            {
+                              "id": 44,
+                              "title": "Fake movie 44",
+                              "releaseDate": "04/16/2004",
+                              "creationDate": "10/26/2021 15:54:33",
+                              "isFavorite": false,
+                              "isToWatch": true,
+                              "metadata": {
+                                "posterUrl": "fakeurl44"
+                              }
+                            }
+                          ],
+                          "totalPages": 1,
+                          "first": true,
+                          "last": true
+                        }
+                        """
+                )
+        );
   }
 }
