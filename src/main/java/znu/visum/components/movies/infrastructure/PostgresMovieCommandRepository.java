@@ -81,7 +81,7 @@ public class PostgresMovieCommandRepository implements MovieCommandRepository {
                       .castMemberId(castMemberId)
                       .build();
                 })
-            .collect(Collectors.toUnmodifiableList());
+            .toList();
 
     Set<DirectorEntity> directors =
         movie.getCredits().getDirectors().stream()

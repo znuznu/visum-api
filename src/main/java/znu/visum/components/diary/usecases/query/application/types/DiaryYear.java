@@ -5,7 +5,6 @@ import znu.visum.components.diary.domain.Diary;
 import znu.visum.core.models.common.Month;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class DiaryYear {
@@ -38,7 +37,7 @@ public class DiaryYear {
     List<DiaryMonth> months =
         MONTHS.stream()
             .map(month -> DiaryMonth.from(diary.getMonths().get(Month.toJava(month))))
-            .collect(Collectors.toUnmodifiableList());
+            .toList();
 
     return new DiaryYear(yearValue, months);
   }
