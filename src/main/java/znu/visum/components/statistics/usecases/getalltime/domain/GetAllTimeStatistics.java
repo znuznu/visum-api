@@ -47,7 +47,7 @@ public class GetAllTimeStatistics {
         IntStream.range(1900, 2050)
             .filter(year -> year % 10 == 0)
             .mapToObj(decade -> this.statisticsService.getHighestRatedMoviesForDecade(decade, 5))
-            .filter(pair -> !pair.getValue().isEmpty())
+            .filter(pair -> !pair.value().isEmpty())
             .collect(Collectors.toList());
 
     return AllTimeStatistics.builder()

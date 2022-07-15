@@ -44,8 +44,8 @@ public class GetAllTimeStatisticsResponse {
             .map(
                 pair ->
                     new Pair<>(
-                        pair.getKey(),
-                        pair.getValue().stream()
+                        pair.key(),
+                        pair.value().stream()
                             .map(ResponseMovie::from)
                             .collect(Collectors.toList())))
             .collect(Collectors.toList()));
