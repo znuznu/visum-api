@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 public class DiaryMonth {
 
@@ -45,7 +44,7 @@ public class DiaryMonth {
   }
 
   public Collection<DiaryDay> getDaysInDescendingOrder() {
-    return days.stream().sorted(BY_DAY_DESC).collect(Collectors.toUnmodifiableList());
+    return days.stream().sorted(BY_DAY_DESC).toList();
   }
 
   public void addAll(DiaryEntry... entries) {

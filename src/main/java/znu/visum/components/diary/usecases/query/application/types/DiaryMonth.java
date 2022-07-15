@@ -6,7 +6,6 @@ import lombok.Getter;
 import znu.visum.core.models.common.Month;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Builder
@@ -18,10 +17,7 @@ public class DiaryMonth {
   public static DiaryMonth from(znu.visum.components.diary.domain.DiaryMonth diaryMonth) {
     return DiaryMonth.builder()
         .month(Month.from(diaryMonth.getMonth()))
-        .days(
-            diaryMonth.getDaysInDescendingOrder().stream()
-                .map(DiaryDay::from)
-                .collect(Collectors.toUnmodifiableList()))
+        .days(diaryMonth.getDaysInDescendingOrder().stream().map(DiaryDay::from).toList())
         .build();
   }
 }

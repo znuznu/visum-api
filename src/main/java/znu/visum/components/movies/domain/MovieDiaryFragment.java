@@ -42,7 +42,7 @@ public class MovieDiaryFragment {
         this.viewingHistory.getEntries().stream()
             .filter(entry -> entry.getDate() != null)
             .sorted(BY_DATES_DESC)
-            .collect(Collectors.toUnmodifiableList());
+            .toList();
 
     var lastDiaryEntry =
         this.toSeenFirstTime(datesSortedDesc.get(datesSortedDesc.size() - 1).getDate());

@@ -4,7 +4,6 @@ import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 public class TmdbPageResponseMapper {
 
@@ -17,7 +16,7 @@ public class TmdbPageResponseMapper {
         .content(
             Arrays.stream(searchResponse.getResults())
                 .map(resource -> mapper.apply(resource, rootUrl))
-                .collect(Collectors.toUnmodifiableList()))
+                .toList())
         .isFirst(searchResponse.getPage() == 1)
         .isLast(searchResponse.getPage() == searchResponse.getTotalPages())
         .size(searchResponse.getResults().length)
