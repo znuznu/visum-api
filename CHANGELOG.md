@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.14.0
+
+- Use Java 17
+- Change Java version in Docker files
+- Replace `.collect(Collectors.toUnmodifiableList())` by `.toList()`
+- Use textblocks for JSON and SQL
+- Replace some value objects by Record
+
 ## 2.13.1
 
 - Bump TestContainers from 1.16.2 to 1.17.3
