@@ -58,175 +58,181 @@ class GetAllTimeStatisticsRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{"
-                        + " \"totalRuntimeInHours\": 62,"
-                        + " \"averageRatePerYear\": ["
-                        + "  {"
-                        + "   \"key\": 2003,"
-                        + "   \"value\": 9.0"
-                        + "  },"
-                        + "  {"
-                        + "   \"key\": 2001,"
-                        + "   \"value\": 9.0"
-                        + "  },"
-                        + "  {"
-                        + "   \"key\": 2007,"
-                        + "   \"value\": 5.0"
-                        + "  },"
-                        + "  {"
-                        + "   \"key\": 2015,"
-                        + "   \"value\": 4.0"
-                        + "  },"
-                        + "  {"
-                        + "   \"key\": 2014,"
-                        + "   \"value\": 3.25"
-                        + "  },"
-                        + "  {"
-                        + "   \"key\": 2002,"
-                        + "   \"value\": 1.0"
-                        + "  }"
-                        + " ],"
-                        + " \"reviewCount\": 11,"
-                        + " \"movieCount\": {"
-                        + "  \"perYear\": ["
-                        + "   {"
-                        + "    \"key\": 2014,"
-                        + "    \"value\": 4"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": 2003,"
-                        + "    \"value\": 2"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": 2007,"
-                        + "    \"value\": 2"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": 2015,"
-                        + "    \"value\": 2"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": 2002,"
-                        + "    \"value\": 1"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": 2001,"
-                        + "    \"value\": 1"
-                        + "   }"
-                        + "  ],"
-                        + "  \"perGenre\": ["
-                        + "   {"
-                        + "    \"key\": \"Horror\","
-                        + "    \"value\": 5"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": \"Animation\","
-                        + "    \"value\": 3"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": \"Biography\","
-                        + "    \"value\": 1"
-                        + "   }"
-                        + "  ],"
-                        + "  \"perOriginalLanguage\": ["
-                        + "   {"
-                        + "    \"key\": \"en\","
-                        + "    \"value\": 4"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": \"uk\","
-                        + "    \"value\": 4"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": \"de\","
-                        + "    \"value\": 2"
-                        + "   },"
-                        + "   {"
-                        + "    \"key\": \"jp\","
-                        + "    \"value\": 2"
-                        + "   }"
-                        + "  ]"
-                        + " },"
-                        + " \"highestRatedMoviesPerDecade\": [{"
-                        + " \"key\": 2000,"
-                        + " \"value\": ["
-                        + "  {"
-                        + "   \"id\": 3,"
-                        + "   \"title\": \"Fake movie 3\","
-                        + "   \"releaseDate\": \"10/12/2003\","
-                        + "   \"grade\": 10,"
-                        + "   \"posterUrl\": \"An URL 3\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 1,"
-                        + "   \"title\": \"Fake movie 1\","
-                        + "   \"releaseDate\": \"10/12/2001\","
-                        + "   \"grade\": 9,"
-                        + "   \"posterUrl\": \"An URL 1\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 4,"
-                        + "   \"title\": \"Fake movie 4\","
-                        + "   \"releaseDate\": \"01/01/2003\","
-                        + "   \"grade\": 8,"
-                        + "   \"posterUrl\": \"An URL 4\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 8,"
-                        + "   \"title\": \"Fake movie 8\","
-                        + "   \"releaseDate\": \"10/12/2007\","
-                        + "   \"grade\": 6,"
-                        + "   \"posterUrl\": \"An URL 8\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 7,"
-                        + "   \"title\": \"Fake movie 7\","
-                        + "   \"releaseDate\": \"10/12/2007\","
-                        + "   \"grade\": 4,"
-                        + "   \"posterUrl\": \"An URL 7\""
-                        + "  }"
-                        + " ]"
-                        + "},"
-                        + "{"
-                        + " \"key\": 2010,"
-                        + " \"value\": ["
-                        + "  {"
-                        + "   \"id\": 16,"
-                        + "   \"title\": \"Fake movie 16\","
-                        + "   \"releaseDate\": \"01/01/2014\","
-                        + "   \"grade\": 6,"
-                        + "   \"posterUrl\": \"An URL 16\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 18,"
-                        + "   \"title\": \"Fake movie 18\","
-                        + "   \"releaseDate\": \"01/01/2015\","
-                        + "   \"grade\": 4,"
-                        + "   \"posterUrl\": \"An URL 18\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 15,"
-                        + "   \"title\": \"Fake movie 15\","
-                        + "   \"releaseDate\": \"10/12/2014\","
-                        + "   \"grade\": 3,"
-                        + "   \"posterUrl\": \"An URL 15\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 17,"
-                        + "   \"title\": \"Fake movie 17\","
-                        + "   \"releaseDate\": \"10/12/2014\","
-                        + "   \"grade\": 3,"
-                        + "   \"posterUrl\": \"An URL 17\""
-                        + "  },"
-                        + "  {"
-                        + "   \"id\": 14,"
-                        + "   \"title\": \"Fake movie 14\","
-                        + "   \"releaseDate\": \"10/12/2014\","
-                        + "   \"grade\": 1,"
-                        + "   \"posterUrl\": \"An URL 14\""
-                        + "  }"
-                        + " ]"
-                        + "}]"
-                        + "}"));
+                        """
+                        {
+                          "totalRuntimeInHours": 62,
+                          "averageRatePerYear": [
+                            {
+                              "key": 2003,
+                              "value": 9
+                            },
+                            {
+                              "key": 2001,
+                              "value": 9
+                            },
+                            {
+                              "key": 2007,
+                              "value": 5
+                            },
+                            {
+                              "key": 2015,
+                              "value": 4
+                            },
+                            {
+                              "key": 2014,
+                              "value": 3.25
+                            },
+                            {
+                              "key": 2002,
+                              "value": 1
+                            }
+                          ],
+                          "reviewCount": 11,
+                          "movieCount": {
+                            "perYear": [
+                              {
+                                "key": 2014,
+                                "value": 4
+                              },
+                              {
+                                "key": 2003,
+                                "value": 2
+                              },
+                              {
+                                "key": 2007,
+                                "value": 2
+                              },
+                              {
+                                "key": 2015,
+                                "value": 2
+                              },
+                              {
+                                "key": 2002,
+                                "value": 1
+                              },
+                              {
+                                "key": 2001,
+                                "value": 1
+                              }
+                            ],
+                            "perGenre": [
+                              {
+                                "key": "Horror",
+                                "value": 5
+                              },
+                              {
+                                "key": "Animation",
+                                "value": 3
+                              },
+                              {
+                                "key": "Biography",
+                                "value": 1
+                              }
+                            ],
+                            "perOriginalLanguage": [
+                              {
+                                "key": "en",
+                                "value": 4
+                              },
+                              {
+                                "key": "uk",
+                                "value": 4
+                              },
+                              {
+                                "key": "de",
+                                "value": 2
+                              },
+                              {
+                                "key": "jp",
+                                "value": 2
+                              }
+                            ]
+                          },
+                          "highestRatedMoviesPerDecade": [
+                            {
+                              "key": 2000,
+                              "value": [
+                                {
+                                  "id": 3,
+                                  "title": "Fake movie 3",
+                                  "releaseDate": "10/12/2003",
+                                  "grade": 10,
+                                  "posterUrl": "An URL 3"
+                                },
+                                {
+                                  "id": 1,
+                                  "title": "Fake movie 1",
+                                  "releaseDate": "10/12/2001",
+                                  "grade": 9,
+                                  "posterUrl": "An URL 1"
+                                },
+                                {
+                                  "id": 4,
+                                  "title": "Fake movie 4",
+                                  "releaseDate": "01/01/2003",
+                                  "grade": 8,
+                                  "posterUrl": "An URL 4"
+                                },
+                                {
+                                  "id": 8,
+                                  "title": "Fake movie 8",
+                                  "releaseDate": "10/12/2007",
+                                  "grade": 6,
+                                  "posterUrl": "An URL 8"
+                                },
+                                {
+                                  "id": 7,
+                                  "title": "Fake movie 7",
+                                  "releaseDate": "10/12/2007",
+                                  "grade": 4,
+                                  "posterUrl": "An URL 7"
+                                }
+                              ]
+                            },
+                            {
+                              "key": 2010,
+                              "value": [
+                                {
+                                  "id": 16,
+                                  "title": "Fake movie 16",
+                                  "releaseDate": "01/01/2014",
+                                  "grade": 6,
+                                  "posterUrl": "An URL 16"
+                                },
+                                {
+                                  "id": 18,
+                                  "title": "Fake movie 18",
+                                  "releaseDate": "01/01/2015",
+                                  "grade": 4,
+                                  "posterUrl": "An URL 18"
+                                },
+                                {
+                                  "id": 15,
+                                  "title": "Fake movie 15",
+                                  "releaseDate": "10/12/2014",
+                                  "grade": 3,
+                                  "posterUrl": "An URL 15"
+                                },
+                                {
+                                  "id": 17,
+                                  "title": "Fake movie 17",
+                                  "releaseDate": "10/12/2014",
+                                  "grade": 3,
+                                  "posterUrl": "An URL 17"
+                                },
+                                {
+                                  "id": 14,
+                                  "title": "Fake movie 14",
+                                  "releaseDate": "10/12/2014",
+                                  "grade": 1,
+                                  "posterUrl": "An URL 14"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                        """
+                )
+        );
   }
 }

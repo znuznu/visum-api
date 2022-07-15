@@ -439,46 +439,50 @@ class TmdbHttpConnectorUnitTest {
               .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
               .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
               .setBody(
-                  "{\n"
-                      + "  \"images\": {\n"
-                      + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
-                      + "    \"secure_base_url\": \"https://image.tmdb.org/t/p/\",\n"
-                      + "    \"backdrop_sizes\": [\n"
-                      + "      \"w300\",\n"
-                      + "      \"w780\",\n"
-                      + "      \"w1280\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"logo_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w92\",\n"
-                      + "      \"w154\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"w500\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"poster_sizes\": [],\n"
-                      + "    \"profile_sizes\": [\n"
-                      + "      \"w45\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"h632\",\n"
-                      + "      \"original\"\n"
-                      + "    ],\n"
-                      + "    \"still_sizes\": [\n"
-                      + "      \"w92\",\n"
-                      + "      \"w185\",\n"
-                      + "      \"w300\",\n"
-                      + "      \"original\"\n"
-                      + "    ]\n"
-                      + "  },\n"
-                      + "  \"change_keys\": [\n"
-                      + "    \"adult\",\n"
-                      + "    \"air_date\",\n"
-                      + "    \"also_known_as\",\n"
-                      + "    \"alternative_titles\""
-                      + "]\n"
-                      + "}"));
+                      """
+                      {
+                        "images": {
+                          "base_url": "http://image.tmdb.org/t/p/",
+                          "secure_base_url": "https://image.tmdb.org/t/p/",
+                          "backdrop_sizes": [
+                            "w300",
+                            "w780",
+                            "w1280",
+                            "original"
+                          ],
+                          "logo_sizes": [
+                            "w45",
+                            "w92",
+                            "w154",
+                            "w185",
+                            "w300",
+                            "w500",
+                            "original"
+                          ],
+                          "poster_sizes": [],
+                          "profile_sizes": [
+                            "w45",
+                            "w185",
+                            "h632",
+                            "original"
+                          ],
+                          "still_sizes": [
+                            "w92",
+                            "w185",
+                            "w300",
+                            "original"
+                          ]
+                        },
+                        "change_keys": [
+                          "adult",
+                          "air_date",
+                          "also_known_as",
+                          "alternative_titles"
+                        ]
+                      }
+                      """
+              )
+      );
 
       assertThatThrownBy(() -> connector.getConfigurationRootPosterUrl())
           .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class)

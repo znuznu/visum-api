@@ -65,20 +65,55 @@ class GetActorPageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":7,"
-                        + "\"content\":["
-                        + "{\"id\":1,\"name\": \"DiCaprio\", \"forename\":\"Leonardo\"},"
-                        + "{\"id\":2,\"name\": \"Kyle\", \"forename\":\"MacLachlan\"},"
-                        + "{\"id\":3,\"name\": \"Hardy\", \"forename\":\"Tom\"},"
-                        + "{\"id\":4,\"name\": \"De Niro\", \"forename\":\"Robert\"},"
-                        + "{\"id\":5,\"name\": \"Mitchell\", \"forename\":\"Radha\"},"
-                        + "{\"id\":6,\"name\": \"Bean\", \"forename\":\"Sean\"},"
-                        + "{\"id\":7,\"name\": \"Robbins\", \"forename\":\"Tim\"}],"
-                        + "\"totalPages\":1,"
-                        + "\"first\":true,"
-                        + "\"last\":true}"));
+                       """
+                       {
+                         "current": 0,
+                         "size": 20,
+                         "totalElements": 7,
+                         "content": [
+                           {
+                             "id": 1,
+                             "name": "DiCaprio",
+                             "forename": "Leonardo"
+                           },
+                           {
+                             "id": 2,
+                             "name": "Kyle",
+                             "forename": "MacLachlan"
+                           },
+                           {
+                             "id": 3,
+                             "name": "Hardy",
+                             "forename": "Tom"
+                           },
+                           {
+                             "id": 4,
+                             "name": "De Niro",
+                             "forename": "Robert"
+                           },
+                           {
+                             "id": 5,
+                             "name": "Mitchell",
+                             "forename": "Radha"
+                           },
+                           {
+                             "id": 6,
+                             "name": "Bean",
+                             "forename": "Sean"
+                           },
+                           {
+                             "id": 7,
+                             "name": "Robbins",
+                             "forename": "Tim"
+                           }
+                         ],
+                         "totalPages": 1,
+                         "first": true,
+                         "last": true
+                       }
+                       """
+                )
+        );
   }
 
   @Test
@@ -94,15 +129,25 @@ class GetActorPageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":1,"
-                        + "\"content\":["
-                        + "{\"id\":4,\"name\": \"De Niro\", \"forename\":\"Robert\"}"
-                        + "],"
-                        + "\"totalPages\":1,"
-                        + "\"first\":true,"
-                        + "\"last\":true}"));
+                        """
+                        {
+                          "current": 0,
+                          "size": 20,
+                          "totalElements": 1,
+                          "content": [
+                            {
+                              "id": 4,
+                              "name": "De Niro",
+                              "forename": "Robert"
+                            }
+                          ],
+                          "totalPages": 1,
+                          "first": true,
+                          "last": true
+                        }
+                        """
+                )
+        );
   }
 
   @Test
@@ -118,16 +163,34 @@ class GetActorPageRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{\"current\":0,"
-                        + "\"size\":20,"
-                        + "\"totalElements\":3,"
-                        + "\"content\":["
-                        + "{\"id\":2,\"name\": \"Kyle\", \"forename\":\"MacLachlan\"},"
-                        + "{\"id\":3,\"name\": \"Hardy\", \"forename\":\"Tom\"},"
-                        + "{\"id\":5,\"name\": \"Mitchell\", \"forename\":\"Radha\"}"
-                        + "],"
-                        + "\"totalPages\":1,"
-                        + "\"first\":true,"
-                        + "\"last\":true}"));
+                        """
+                        {
+                          "current": 0,
+                          "size": 20,
+                          "totalElements": 3,
+                          "content": [
+                            {
+                              "id": 2,
+                              "name": "Kyle",
+                              "forename": "MacLachlan"
+                            },
+                            {
+                              "id": 3,
+                              "name": "Hardy",
+                              "forename": "Tom"
+                            },
+                            {
+                              "id": 5,
+                              "name": "Mitchell",
+                              "forename": "Radha"
+                            }
+                          ],
+                          "totalPages": 1,
+                          "first": true,
+                          "last": true
+                        }
+                        """
+                )
+        );
   }
 }

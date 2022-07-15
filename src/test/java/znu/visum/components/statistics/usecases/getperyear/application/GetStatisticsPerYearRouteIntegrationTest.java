@@ -76,16 +76,20 @@ class GetStatisticsPerYearRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{"
-                        + " \"movieCount\": 0,"
-                        + " \"reviewCount\": 0,"
-                        + " \"totalRuntimeInHours\": 0,"
-                        + " \"highestRatedMovies\": {"
-                        + "  \"released\": [],"
-                        + "  \"older\": []"
-                        + " },"
-                        + " \"movieCountPerGenre\": []"
-                        + "}"));
+                        """
+                        {
+                          "movieCount": 0,
+                          "reviewCount": 0,
+                          "totalRuntimeInHours": 0,
+                          "highestRatedMovies": {
+                            "released": [],
+                            "older": []
+                          },
+                          "movieCountPerGenre": []
+                        }
+                        """
+                )
+        );
   }
 
   @Test
@@ -101,41 +105,51 @@ class GetStatisticsPerYearRouteIntegrationTest {
         .andExpect(
             content()
                 .json(
-                    "{"
-                        + " \"movieCount\": 2,"
-                        + " \"reviewCount\": 3,"
-                        + " \"totalRuntimeInHours\": 6,"
-                        + " \"highestRatedMovies\": {"
-                        + "  \"released\": ["
-                        + "   {"
-                        + "    \"id\": 18,"
-                        + "    \"title\": \"Fake movie 18\","
-                        + "    \"releaseDate\": \"01/01/2015\","
-                        + "    \"grade\": 4,"
-                        + "    \"posterUrl\": \"An URL 18\""
-                        + "   }"
-                        + "  ],"
-                        + "  \"older\": ["
-                        + "   {"
-                        + "    \"id\": 8,"
-                        + "    \"title\": \"Fake movie 8\","
-                        + "    \"releaseDate\": \"10/12/2007\","
-                        + "    \"grade\": 6,"
-                        + "    \"posterUrl\": \"An URL 8\""
-                        + "   },"
-                        + "   {"
-                        + "    \"id\": 14,"
-                        + "    \"title\": \"Fake movie 14\","
-                        + "    \"releaseDate\": \"10/12/2014\","
-                        + "    \"grade\": 1,"
-                        + "    \"posterUrl\": \"An URL 14\""
-                        + "   }"
-                        + "  ]"
-                        + " },"
-                        + " \"movieCountPerGenre\": ["
-                        + "  {\"key\":\"Horror\",\"value\":2},"
-                        + "  {\"key\":\"Animation\",\"value\":1}"
-                        + " ]"
-                        + "}"));
+                        """
+                        {
+                          "movieCount": 2,
+                          "reviewCount": 3,
+                          "totalRuntimeInHours": 6,
+                          "highestRatedMovies": {
+                            "released": [
+                              {
+                                "id": 18,
+                                "title": "Fake movie 18",
+                                "releaseDate": "01/01/2015",
+                                "grade": 4,
+                                "posterUrl": "An URL 18"
+                              }
+                            ],
+                            "older": [
+                              {
+                                "id": 8,
+                                "title": "Fake movie 8",
+                                "releaseDate": "10/12/2007",
+                                "grade": 6,
+                                "posterUrl": "An URL 8"
+                              },
+                              {
+                                "id": 14,
+                                "title": "Fake movie 14",
+                                "releaseDate": "10/12/2014",
+                                "grade": 1,
+                                "posterUrl": "An URL 14"
+                              }
+                            ]
+                          },
+                          "movieCountPerGenre": [
+                            {
+                              "key": "Horror",
+                              "value": 2
+                            },
+                            {
+                              "key": "Animation",
+                              "value": 1
+                            }
+                          ]
+                        }
+                        """
+                )
+        );
   }
 }
