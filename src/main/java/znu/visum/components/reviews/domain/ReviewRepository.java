@@ -19,5 +19,5 @@ public interface ReviewRepository {
 
   long count();
 
-  long countAllByUpdateDateYear(Year year);
+  long countUpdated(Year year);
 }

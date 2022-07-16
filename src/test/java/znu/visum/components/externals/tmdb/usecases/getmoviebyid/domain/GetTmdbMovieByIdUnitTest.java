@@ -36,7 +36,7 @@ class GetTmdbMovieByIdUnitTest {
   }
 
   @Test
-  @DisplayName("When the connector returnsan empty movie, it should throw")
+  @DisplayName("When the connector returns an empty movie, it should throw")
   void whenTheMovieIsEmpty_itShouldThrow() {
     Mockito.when(connector.getMovieById(42)).thenReturn(Optional.empty());
 

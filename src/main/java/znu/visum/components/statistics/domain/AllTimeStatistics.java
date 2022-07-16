@@ -14,8 +14,8 @@ import java.util.List;
 public class AllTimeStatistics {
 
   private int totalRuntimeInHours;
-  private List<Pair<Integer, Float>> averageRatePerYear;
+  private AverageRatingPerYear averageRatingPerYear;
   private long reviewCount;
   private MovieCount movieCount;
-  private List<Pair<Integer, List<Movie>>> highestRatedMoviesPerDecade;
+  private List<Pair<Decade, List<Movie>>> highestRatedMoviesPerDecade;
 }

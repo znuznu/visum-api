@@ -10,10 +10,9 @@ import znu.visum.components.movies.domain.DiaryFilters;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.MovieQueryRepository;
-import znu.visum.core.models.common.Criteria;
-import znu.visum.core.models.common.JoinCriteria;
-import znu.visum.core.models.common.Operator;
-import znu.visum.core.models.common.Pair;
+import znu.visum.components.statistics.domain.AverageRating;
+import znu.visum.components.statistics.domain.DateRange;
+import znu.visum.core.models.common.*;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
 import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
@@ -31,7 +30,6 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -44,7 +42,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
     this.dataJpaMovieRepository = dataJpaMovieRepository;
   }
 
-  private static Specification<MovieEntity> movieHasBeenSeenDuring(Year year) {
+  private static Specification<MovieEntity> movieSeenDuring(Year year) {
     return (root, query, criteriaBuilder) -> {
       Path<MovieViewingHistoryEntity> viewingHistoryPath = root.join("viewingHistory");
       Path<LocalDate> viewingDate = viewingHistoryPath.get("viewingDate");
@@ -98,13 +96,11 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
 
   @Override
   public List<Movie> findAll() {
-    return this.dataJpaMovieRepository.findAll().stream()
-        .map(MovieEntity::toDomain)
-        .collect(Collectors.toList());
+    return this.dataJpaMovieRepository.findAll().stream().map(MovieEntity::toDomain).toList();
   }
 
   @Override
-  public long countAllByReleaseDateYear(Year year) {
+  public long countByReleaseYear(Year year) {
     LocalDate startDate = LocalDate.ofYearDay(year.getValue(), 1);
     LocalDate endDate = LocalDate.of(year.getValue(), 12, 31);
 
@@ -112,31 +108,29 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
   }
 
   @Override
-  public List<Movie> findHighestRatedMoviesReleasedBetween(
-      LocalDate start, LocalDate end, int limit) {
+  public List<Movie> findHighestRatedMoviesReleasedBetween(DateRange dateRange, Limit limit) {
     return this.dataJpaMovieRepository
-        .findHighestRatedMoviesReleasedBetween(start, end, limit)
+        .findHighestRatedMoviesReleasedBetween(
+            dateRange.startDate(), dateRange.endDate(), limit.value())
         .stream()
         .map(MovieEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
-  public int getTotalRunningHoursBetween(LocalDate start, LocalDate end) {
-    Integer totalRunningHours = this.dataJpaMovieRepository.getTotalRunningHoursBetween(start, end);
+  public int getTotalRunningHoursBetween(DateRange dateRange) {
+    Integer totalRunningHours =
+        this.dataJpaMovieRepository.getTotalRunningHoursBetween(
+            dateRange.startDate(), dateRange.endDate());
 
-    if (totalRunningHours == null) {
-      return 0;
-    }
-
-    return totalRunningHours;
+    return totalRunningHours == null ? 0 : totalRunningHours;
   }
 
   @Override
-  public List<Pair<String, Integer>> getNumberOfMoviesPerOriginalLanguageBetween(
-      LocalDate start, LocalDate end) {
+  public List<Pair<String, Integer>> getMovieCountPerOriginalLanguageBetween(DateRange dateRange) {
     List<Tuple> tuples =
-        this.dataJpaMovieRepository.getNumberOfMoviesPerOriginalLanguageBetween(start, end);
+        this.dataJpaMovieRepository.getNumberOfMoviesPerOriginalLanguageBetween(
+            dateRange.startDate(), dateRange.endDate());
 
     return tuples.stream()
         .map(
@@ -144,47 +138,50 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
               BigInteger count = tuple.get(1, BigInteger.class);
               return new Pair<>(tuple.get(0, String.class), count.intValue());
             })
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
-  public List<Pair<String, Integer>> getNumberOfMoviesPerGenreBetween(
-      LocalDate start, LocalDate end) {
-    return this.dataJpaMovieRepository.getNumberOfMoviesPerGenreBetween(start, end).stream()
+  public List<Pair<String, Integer>> getMovieCountPerGenreBetween(DateRange dateRange) {
+    return this.dataJpaMovieRepository
+        .getNumberOfMoviesPerGenreBetween(dateRange.startDate(), dateRange.endDate())
+        .stream()
         .map(
             tuple -> {
               BigInteger count = tuple.get(1, BigInteger.class);
               return new Pair<>(tuple.get(0, String.class), count.intValue());
             })
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
-  public List<Pair<Integer, Integer>> getNumberOfMoviesPerYearBetween(
-      LocalDate start, LocalDate end) {
-    return this.dataJpaMovieRepository.getNumberOfMoviesPerYearBetween(start, end).stream()
+  public List<Pair<Year, Integer>> getMovieCountPerYearBetween(DateRange dateRange) {
+    return this.dataJpaMovieRepository
+        .getNumberOfMoviesPerYearBetween(dateRange.startDate(), dateRange.endDate())
+        .stream()
         .map(
             tuple -> {
               Double year = tuple.get(0, Double.class);
               BigInteger count = tuple.get(1, BigInteger.class);
 
-              return new Pair<>(year.intValue(), count.intValue());
+              return new Pair<>(Year.of(year.intValue()), count.intValue());
             })
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
-  public List<Pair<Integer, Float>> getRatedMoviesAveragePerYearBetween(
-      LocalDate start, LocalDate end) {
-    return this.dataJpaMovieRepository.getRatedMoviesAveragePerYearBetween(start, end).stream()
+  public List<Pair<Year, AverageRating>> getAverageMovieRatingPerYearBetween(DateRange dateRange) {
+    return this.dataJpaMovieRepository
+        .getRatedMoviesAveragePerYearBetween(dateRange.startDate(), dateRange.endDate())
+        .stream()
         .map(
             tuple -> {
               Integer year = tuple.get(0, Integer.class);
               Double averageGrade = tuple.get(1, Double.class);
 
-              return new Pair<>(year, averageGrade.floatValue());
+              return new Pair<>(Year.of(year), new AverageRating(averageGrade.floatValue()));
             })
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -198,7 +195,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
         .findHighestRatedDuringYearsOlderMovies(startDate, endDate)
         .stream()
         .map(MovieEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -226,9 +223,9 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
     Specification<MovieEntity> filtersSpecification = new SearchSpecification<>(criteriaFilters);
 
     return this.dataJpaMovieRepository
-        .findAll(Specification.where(movieHasBeenSeenDuring(year).and(filtersSpecification)))
+        .findAll(Specification.where(movieSeenDuring(year).and(filtersSpecification)))
         .stream()
         .map(MovieEntity::toDiaryFragment)
-        .collect(Collectors.toList());
+        .toList();
   }
 }

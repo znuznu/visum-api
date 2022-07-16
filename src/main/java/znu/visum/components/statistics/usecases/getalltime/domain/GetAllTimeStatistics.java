@@ -3,59 +3,94 @@ package znu.visum.components.statistics.usecases.getalltime.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import znu.visum.components.movies.domain.Movie;
-import znu.visum.components.statistics.domain.AllTimeStatistics;
-import znu.visum.components.statistics.domain.MovieCount;
-import znu.visum.components.statistics.domain.StatisticsService;
+import znu.visum.components.movies.domain.MovieQueryRepository;
+import znu.visum.components.reviews.domain.ReviewRepository;
+import znu.visum.components.statistics.domain.*;
+import znu.visum.core.models.common.Limit;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
 public class GetAllTimeStatistics {
 
-  private final StatisticsService statisticsService;
+  public static final int START_DECADE = 1900;
+  public static final int END_DECADE = 2050;
+  private static final DateRange ALL_TIME_RANGE =
+      new DateRange(LocalDate.ofYearDay(1900, 1), LocalDate.ofYearDay(2100, 1));
+
+  private final MovieQueryRepository movieQueryRepository;
+  private final ReviewRepository reviewRepository;
 
   @Autowired
-  public GetAllTimeStatistics(StatisticsService statisticsService) {
-    this.statisticsService = statisticsService;
+  public GetAllTimeStatistics(
+      MovieQueryRepository movieQueryRepository, ReviewRepository reviewRepository) {
+    this.movieQueryRepository = movieQueryRepository;
+    this.reviewRepository = reviewRepository;
   }
 
   public AllTimeStatistics process() {
-    LocalDate start = LocalDate.ofYearDay(1900, 1);
-    LocalDate end = LocalDate.ofYearDay(2100, 1);
-
-    int totalRuntimeInHours = this.statisticsService.getTotalRunningHoursBetween(start, end);
-
-    List<Pair<Integer, Float>> averageRatePerYear =
-        this.statisticsService.getRatedMoviesAveragePerYearBetween(start, end);
-
-    long reviewCount = this.statisticsService.getReviewCount();
-
-    List<Pair<Integer, Integer>> movieCountPerYear =
-        this.statisticsService.getNumberOfMoviesPerYearBetween(start, end);
-    List<Pair<String, Integer>> movieCountPerGenre =
-        this.statisticsService.getNumberOfMoviesPerGenreBetween(start, end);
-    List<Pair<String, Integer>> movieCountPerOriginalLanguage =
-        this.statisticsService.getNumberOfMoviesPerOriginalLanguageBetween(start, end);
-    MovieCount movieCount =
-        new MovieCount(movieCountPerYear, movieCountPerGenre, movieCountPerOriginalLanguage);
-
-    List<Pair<Integer, List<Movie>>> highestRatedMoviesPerDecade =
-        IntStream.range(1900, 2050)
-            .filter(year -> year % 10 == 0)
-            .mapToObj(decade -> this.statisticsService.getHighestRatedMoviesForDecade(decade, 5))
-            .filter(pair -> !pair.value().isEmpty())
-            .collect(Collectors.toList());
+    int totalRuntimeInHours = this.getAllTimeRuntimeHours();
+    long reviewCount = this.reviewRepository.count();
+    var averageRatePerYear = this.getAllTimeRatedMoviesAveragePerYear();
+    var movieCount = this.getAllTimeMovieCount();
+    var highestRatedMoviesPerDecade = this.getHighestRatedMoviesPerDecade();
 
     return AllTimeStatistics.builder()
         .reviewCount(reviewCount)
-        .averageRatePerYear(averageRatePerYear)
+        .averageRatingPerYear(averageRatePerYear)
         .highestRatedMoviesPerDecade(highestRatedMoviesPerDecade)
         .movieCount(movieCount)
         .totalRuntimeInHours(totalRuntimeInHours)
         .build();
+  }
+
+  private int getAllTimeRuntimeHours() {
+    return movieQueryRepository.getTotalRunningHoursBetween(ALL_TIME_RANGE);
+  }
+
+  private MovieCount getAllTimeMovieCount() {
+    var movieCountPerYear = this.getAllTimeMovieCountPerYear();
+    var movieCountPerGenre = this.getAllTimeMovieCountPerGenre();
+    var movieCountPerOriginalLanguage = this.getAllTimeMovieCountPerOriginalLanguage();
+
+    return new MovieCount(movieCountPerYear, movieCountPerGenre, movieCountPerOriginalLanguage);
+  }
+
+  private List<Pair<Year, Integer>> getAllTimeMovieCountPerYear() {
+    return movieQueryRepository.getMovieCountPerYearBetween(ALL_TIME_RANGE);
+  }
+
+  private List<Pair<String, Integer>> getAllTimeMovieCountPerGenre() {
+    return movieQueryRepository.getMovieCountPerGenreBetween(ALL_TIME_RANGE);
+  }
+
+  private List<Pair<String, Integer>> getAllTimeMovieCountPerOriginalLanguage() {
+    return movieQueryRepository.getMovieCountPerOriginalLanguageBetween(ALL_TIME_RANGE);
+  }
+
+  private AverageRatingPerYear getAllTimeRatedMoviesAveragePerYear() {
+    return new AverageRatingPerYear(
+        movieQueryRepository.getAverageMovieRatingPerYearBetween(ALL_TIME_RANGE));
+  }
+
+  private List<Pair<Decade, List<Movie>>> getHighestRatedMoviesPerDecade() {
+    return IntStream.rangeClosed(START_DECADE, END_DECADE)
+        .filter(year -> year % 10 == 0)
+        .mapToObj(Year::of)
+        .map(year -> this.getHighestRatedMoviesForDecade(new Decade(year), new Limit(5)))
+        .filter(pair -> !pair.value().isEmpty())
+        .toList();
+  }
+
+  private Pair<Decade, List<Movie>> getHighestRatedMoviesForDecade(Decade decade, Limit limit) {
+    var dateRange = new DateRange(decade.yearDay(), decade.next().yearDay());
+    List<Movie> movies =
+        movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, limit);
+
+    return new Pair<>(decade, movies);
   }
 }

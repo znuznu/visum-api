@@ -39,12 +39,11 @@ class PostgresReviewRepositoryIntegrationTest {
   @DisplayName("countAllByUpdateDateYear() - no reviews")
   @Test
   void itShouldReturnZero() {
-    long count = this.reviewRepository.countAllByUpdateDateYear(Year.of(2021));
+    long count = this.reviewRepository.countUpdated(Year.of(2021));
 
     assertThat(count).isZero();
   }
 
-  @DisplayName("countAllByUpdateDateYear() - with reviews")
   @Test
   @Sql(
       scripts = {
@@ -52,7 +51,7 @@ class PostgresReviewRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldReturnCountOfAllReviewsUpdatedIn2021() {
-    long count = this.reviewRepository.countAllByUpdateDateYear(Year.of(2021));
+    long count = this.reviewRepository.countUpdated(Year.of(2021));
 
     assertThat(count).isEqualTo(8);
   }

@@ -72,7 +72,7 @@ public class PostgresReviewRepository implements ReviewRepository {
   }
 
   @Override
-  public long countAllByUpdateDateYear(Year year) {
+  public long countUpdated(Year year) {
     LocalDateTime startDate =
         LocalDateTime.of(LocalDate.ofYearDay(year.getValue(), 1), LocalTime.MIN);
     LocalDateTime endDate = LocalDateTime.of(LocalDate.of(year.getValue(), 12, 31), LocalTime.MIN);

@@ -21,7 +21,7 @@ class GradeUnitTest {
 
   @Test
   void shouldCreateWithValueInRange() {
-    IntStream.range(1, 11)
+    IntStream.rangeClosed(1, 10)
         .forEach(value -> assertThatNoException().isThrownBy(() -> Grade.of(value)));
   }
 }

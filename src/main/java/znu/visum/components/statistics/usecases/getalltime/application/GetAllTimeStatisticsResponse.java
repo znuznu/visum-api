@@ -11,7 +11,6 @@ import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Getter
@@ -21,8 +20,8 @@ public class GetAllTimeStatisticsResponse {
   @Schema(description = "The sum of all movies runtime in hours.")
   private int totalRuntimeInHours;
 
-  @Schema(description = "The average grade given for all movies per year.")
-  private List<Pair<Integer, Float>> averageRatePerYear;
+  @Schema(description = "The average rating given for all movies per year.")
+  private List<Pair<Integer, Float>> averageRatingPerYear;
 
   @Schema(description = "The number of reviews.")
   private long reviewCount;
@@ -34,21 +33,30 @@ public class GetAllTimeStatisticsResponse {
           "A list of pair containing a decade and all the highest rated movies released during the decade, order by reviews grade.")
   private List<Pair<Integer, List<ResponseMovie>>> highestRatedMoviesPerDecade;
 
-  public static GetAllTimeStatisticsResponse from(AllTimeStatistics allTimeStatistics) {
-    return new GetAllTimeStatisticsResponse(
-        allTimeStatistics.getTotalRuntimeInHours(),
-        allTimeStatistics.getAverageRatePerYear(),
-        allTimeStatistics.getReviewCount(),
-        ResponseMovieCount.from(allTimeStatistics.getMovieCount()),
-        allTimeStatistics.getHighestRatedMoviesPerDecade().stream()
+  public static GetAllTimeStatisticsResponse from(AllTimeStatistics statistics) {
+    var filledRatePerYear =
+        statistics.getAverageRatingPerYear().getCompleteRatingsTimeline().stream()
             .map(
                 pair ->
                     new Pair<>(
-                        pair.key(),
-                        pair.value().stream()
-                            .map(ResponseMovie::from)
-                            .collect(Collectors.toList())))
-            .collect(Collectors.toList()));
+                        pair.key().getValue(), pair.value() != null ? pair.value().rating() : null))
+            .toList();
+
+    var highestRatedMoviesPerDecade =
+        statistics.getHighestRatedMoviesPerDecade().stream()
+            .map(
+                pair ->
+                    new Pair<>(
+                        pair.key().year().getValue(),
+                        pair.value().stream().map(ResponseMovie::from).toList()))
+            .toList();
+
+    return new GetAllTimeStatisticsResponse(
+        statistics.getTotalRuntimeInHours(),
+        filledRatePerYear,
+        statistics.getReviewCount(),
+        ResponseMovieCount.from(statistics.getMovieCount()),
+        highestRatedMoviesPerDecade);
   }
 
   @AllArgsConstructor
@@ -60,8 +68,13 @@ public class GetAllTimeStatisticsResponse {
     private List<Pair<String, Integer>> perOriginalLanguage;
 
     static ResponseMovieCount from(MovieCount movieCount) {
+      var perYear =
+          movieCount.perYear().stream()
+              .map(pair -> new Pair<>(pair.key().getValue(), pair.value()))
+              .toList();
+
       return new ResponseMovieCount(
-          movieCount.getPerYear(), movieCount.getPerGenre(), movieCount.getPerOriginalLanguage());
+          perYear, movieCount.perGenre(), movieCount.perOriginalLanguage());
     }
   }
 

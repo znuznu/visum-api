@@ -15,6 +15,9 @@ import znu.visum.components.movies.domain.DiaryFilters;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.MovieQueryRepository;
+import znu.visum.components.statistics.domain.AverageRating;
+import znu.visum.components.statistics.domain.DateRange;
+import znu.visum.core.models.common.Limit;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
@@ -45,9 +48,9 @@ class PostgresMovieQueryRepositoryIntegrationTest {
   @DisplayName("findHighestRatedMoviesReleasedBetween() - no movies")
   @Test
   void whenNoMoviesExists_itShouldReturnAnEmptyList() {
+    var dateRange = new DateRange(LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1));
     List<Movie> movies =
-        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
-            LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1), 5);
+        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(5));
     assertThat(movies).isEmpty();
   }
 
@@ -59,9 +62,9 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   void whenMoreMoviesThanTheLimitExists_itShouldReturnAListWithTheLengthOfTheLimit() {
+    var dateRange = new DateRange(LocalDate.of(2000, 1, 1), LocalDate.of(2004, 1, 1));
     List<Movie> movies =
-        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
-            LocalDate.of(2000, 1, 1), LocalDate.of(2004, 1, 1), 2);
+        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(2));
 
     assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactlyInAnyOrder(1L, 3L);
   }
@@ -74,9 +77,9 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   void whenLessMoviesThanTheLimitExists_itShouldReturnMoviesFound() {
+    var dateRange = new DateRange(LocalDate.of(2000, 1, 1), LocalDate.of(2003, 1, 1));
     List<Movie> movies =
-        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(
-            LocalDate.of(2000, 1, 1), LocalDate.of(2003, 1, 1), 10);
+        this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(10));
 
     assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(1L, 2L);
   }
@@ -89,9 +92,8 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   void itShouldReturnTheTotalRunningHours() {
-    int totalRunningHours =
-        this.movieQueryRepository.getTotalRunningHoursBetween(
-            LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
+    int totalRunningHours = this.movieQueryRepository.getTotalRunningHoursBetween(dateRange);
 
     assertThat(totalRunningHours).isEqualTo(18);
   }
@@ -103,14 +105,13 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
       })
   void whenThereIsNoMovies_itShouldReturnZero() {
-    int totalRunningHours =
-        this.movieQueryRepository.getTotalRunningHoursBetween(
-            LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2004, 1));
+    int totalRunningHours = this.movieQueryRepository.getTotalRunningHoursBetween(dateRange);
 
     assertThat(totalRunningHours).isZero();
   }
 
-  @DisplayName("getNumberOfMoviesPerOriginalLanguage()")
+  @DisplayName("getMovieCountPerOriginalLanguageBetween()")
   @Test
   @Sql(
       scripts = {
@@ -118,30 +119,30 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   void itShouldReturnTheMoviesCountPerOriginalLanguageOrderedByDescCount() {
+    var dateRange = new DateRange(LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
     List<Pair<String, Integer>> pairs =
-        this.movieQueryRepository.getNumberOfMoviesPerOriginalLanguageBetween(
-            LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
+        this.movieQueryRepository.getMovieCountPerOriginalLanguageBetween(dateRange);
 
     assertThat(pairs)
         .containsOnly(
             new Pair<>("en", 4), new Pair<>("de", 2), new Pair<>("jp", 2), new Pair<>("uk", 2));
   }
 
-  @DisplayName("getNumberOfMoviesPerOriginalLanguage() - empty result")
+  @DisplayName("getMovieCountPerOriginalLanguageBetween() - empty result")
   @Test
   @Sql(
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
   void whenThereIsNoMovies_itShouldReturnAnEmptyPerOriginalLanguageList() {
+    var dateRange = new DateRange(LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
     List<Pair<String, Integer>> pairs =
-        this.movieQueryRepository.getNumberOfMoviesPerOriginalLanguageBetween(
-            LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2015, 1));
+        this.movieQueryRepository.getMovieCountPerOriginalLanguageBetween(dateRange);
 
     assertThat(pairs).isEmpty();
   }
 
-  @DisplayName("getNumberOfMoviesPerYearBetween()")
+  @DisplayName("getMovieCountPerYearBetween()")
   @Test
   @Sql(
       scripts = {
@@ -149,28 +150,32 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql"
       })
   void itShouldReturnTheMoviesCountPerYearOrderedByDescCount() {
-    List<Pair<Integer, Integer>> pairs =
-        this.movieQueryRepository.getNumberOfMoviesPerYearBetween(
-            LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    List<Pair<Year, Integer>> pairs =
+        this.movieQueryRepository.getMovieCountPerYearBetween(dateRange);
 
-    assertThat(pairs).containsOnly(new Pair<>(2014, 4), new Pair<>(2007, 2), new Pair<>(2003, 2));
+    assertThat(pairs)
+        .containsOnly(
+            new Pair<>(Year.of(2014), 4),
+            new Pair<>(Year.of(2007), 2),
+            new Pair<>(Year.of(2003), 2));
   }
 
-  @DisplayName("getNumberOfMoviesPerYearBetween() - empty result")
+  @DisplayName("getMovieCountPerYearBetween() - empty result")
   @Test
   @Sql(
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
   void whenThereIsNoMovies_itShouldReturnAnEmptyPerYearList() {
-    List<Pair<Integer, Integer>> pairs =
-        this.movieQueryRepository.getNumberOfMoviesPerYearBetween(
-            LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    List<Pair<Year, Integer>> pairs =
+        this.movieQueryRepository.getMovieCountPerYearBetween(dateRange);
 
     assertThat(pairs).isEmpty();
   }
 
-  @DisplayName("getNumberOfMoviesPerGenreBetween()")
+  @DisplayName("getMovieCountPerGenreBetween()")
   @Test
   @Sql(
       scripts = {
@@ -179,16 +184,16 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movie_genres.sql"
       })
   void itShouldReturnTheMoviesCountPerGenreOrderedByDescCount() {
+    var dateRange = new DateRange(LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2020, 1));
     List<Pair<String, Integer>> pairs =
-        this.movieQueryRepository.getNumberOfMoviesPerGenreBetween(
-            LocalDate.ofYearDay(2000, 1), LocalDate.ofYearDay(2020, 1));
+        this.movieQueryRepository.getMovieCountPerGenreBetween(dateRange);
 
     assertThat(pairs)
         .containsOnly(
             new Pair<>("Horror", 5), new Pair<>("Animation", 3), new Pair<>("Biography", 1));
   }
 
-  @DisplayName("getRatedAverageMoviesPerYearBetween() - all movies with review")
+  @DisplayName("getAverageMovieRatingPerYearBetween() - all movies with review")
   @Test
   @Sql(
       scripts = {
@@ -196,15 +201,18 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldReturnTheAverageRatedMoviesOrderedByDescYear() {
-    List<Pair<Integer, Float>> pairs =
-        this.movieQueryRepository.getRatedMoviesAveragePerYearBetween(
-            LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2003, 1), LocalDate.ofYearDay(2015, 1));
+    List<Pair<Year, AverageRating>> pairs =
+        this.movieQueryRepository.getAverageMovieRatingPerYearBetween(dateRange);
 
     assertThat(pairs)
-        .containsOnly(new Pair<>(2003, 9.0f), new Pair<>(2007, 5.0f), new Pair<>(2014, 3.25f));
+        .containsOnly(
+            new Pair<>(Year.of(2003), new AverageRating(9.0f)),
+            new Pair<>(Year.of(2007), new AverageRating(5.0f)),
+            new Pair<>(Year.of(2014), new AverageRating(3.25f)));
   }
 
-  @DisplayName("getRatedAverageMoviesPerYearBetween() - multiple movies with one without review")
+  @DisplayName("getAverageMovieRatingPerYearBetween() - multiple movies with one without review")
   @Test
   @Sql(
       scripts = {
@@ -212,14 +220,14 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldAvoidTheMovieWithoutReviewAndReturnTheAverageRatedMoviesOrderedByDescYear() {
-    List<Pair<Integer, Float>> pairs =
-        this.movieQueryRepository.getRatedMoviesAveragePerYearBetween(
-            LocalDate.ofYearDay(2015, 1), LocalDate.ofYearDay(2016, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2015, 1), LocalDate.ofYearDay(2016, 1));
+    List<Pair<Year, AverageRating>> pairs =
+        this.movieQueryRepository.getAverageMovieRatingPerYearBetween(dateRange);
 
-    assertThat(pairs).containsOnly(new Pair<>(2015, 4.0f));
+    assertThat(pairs).containsOnly(new Pair<>(Year.of(2015), new AverageRating(4.0f)));
   }
 
-  @DisplayName("getRatedAverageMoviesPerYearBetween() - one movie with no review")
+  @DisplayName("getAverageMovieRatingPerYearBetween() - one movie with no review")
   @Test
   @Sql(
       scripts = {
@@ -227,23 +235,23 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldReturnAnEmptyList() {
-    List<Pair<Integer, Float>> pairs =
-        this.movieQueryRepository.getRatedMoviesAveragePerYearBetween(
-            LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
+    List<Pair<Year, AverageRating>> pairs =
+        this.movieQueryRepository.getAverageMovieRatingPerYearBetween(dateRange);
 
     assertThat(pairs).isEmpty();
   }
 
-  @DisplayName("getRatedAverageMoviesPerYearBetween() - empty result")
+  @DisplayName("getAverageMovieRatingPerYearBetween() - empty result")
   @Test
   @Sql(
       scripts = {
         "/sql/truncate_all_tables.sql",
       })
   void whenThereIsNoMovies_itShouldReturnAnEmptyAveragePerYearList() {
-    List<Pair<Integer, Float>> pairs =
-        this.movieQueryRepository.getRatedMoviesAveragePerYearBetween(
-            LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
+    var dateRange = new DateRange(LocalDate.ofYearDay(2015, 2), LocalDate.ofYearDay(2016, 1));
+    List<Pair<Year, AverageRating>> pairs =
+        this.movieQueryRepository.getAverageMovieRatingPerYearBetween(dateRange);
 
     assertThat(pairs).isEmpty();
   }
@@ -275,7 +283,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
     assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(8L, 14L);
   }
 
-  @DisplayName("countAllByReleaseDateYear() - with movies")
+  @DisplayName("countByReleaseYear() - with movies")
   @Test
   @Sql(
       scripts = {
@@ -283,7 +291,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldReturnCountOfAllMoviesFrom2014() {
-    long count = this.movieQueryRepository.countAllByReleaseDateYear(Year.of(2014));
+    long count = this.movieQueryRepository.countByReleaseYear(Year.of(2014));
 
     assertThat(count).isEqualTo(4);
   }
