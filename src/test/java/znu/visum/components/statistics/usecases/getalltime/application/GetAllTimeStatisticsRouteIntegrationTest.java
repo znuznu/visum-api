@@ -61,30 +61,66 @@ class GetAllTimeStatisticsRouteIntegrationTest {
                         """
                         {
                           "totalRuntimeInHours": 62,
-                          "averageRatePerYear": [
+                          "averageRatingPerYear": [
+                            {
+                              "key": 2001,
+                              "value": 9
+                            },
+                            {
+                              "key": 2002,
+                              "value": 1
+                            },
                             {
                               "key": 2003,
                               "value": 9
                             },
                             {
-                              "key": 2001,
-                              "value": 9
+                              "key": 2004,
+                              "value": null
+                            },
+                            {
+                              "key": 2005,
+                              "value": null
+                            },
+                            {
+                              "key": 2006,
+                              "value": null
                             },
                             {
                               "key": 2007,
                               "value": 5
                             },
                             {
-                              "key": 2015,
-                              "value": 4
+                              "key": 2008,
+                              "value": null
+                            },
+                            {
+                              "key": 2009,
+                              "value": null
+                            },
+                            {
+                              "key": 2010,
+                              "value": null
+                            },
+                            {
+                              "key": 2011,
+                              "value": null
+                            },
+                            {
+                              "key": 2012,
+                              "value": null
+                            },
+                            {
+                              "key": 2013,
+                              "value": null
                             },
                             {
                               "key": 2014,
                               "value": 3.25
                             },
                             {
-                              "key": 2002,
-                              "value": 1
+                              "key": 2015,
+                              "value": 4
                             }
                           ],
                           "reviewCount": 11,
@@ -107,11 +143,11 @@ class GetAllTimeStatisticsRouteIntegrationTest {
                                 "value": 2
                               },
                               {
-                                "key": 2002,
+                                "key": 2001,
                                 "value": 1
                               },
                               {
-                                "key": 2001,
+                                "key": 2002,
                                 "value": 1
                               }
                             ],
@@ -231,7 +267,7 @@ class GetAllTimeStatisticsRouteIntegrationTest {
                             }
                           ]
                         }
-                        """
+                        """, true
                 )
         );
   }

@@ -5,7 +5,7 @@ This repo contains the API of _Visum_, based on __Spring Boot 2__ and __PostgreS
 ## Requirements
 * [Docker](https://www.docker.com/)
 * [Docker-compose](https://docs.docker.com/compose/)
-* [Java](https://openjdk.java.net/) >= 11 *
+* [Java](https://openjdk.java.net/) >= 17 *
 * [Maven](https://maven.apache.org/install.html) >= 3.6.0 *
 * A [TMDb API token](https://www.themoviedb.org/documentation/api)
 * [Python](https://www.python.org/) >= 3 with [Faker](https://faker.readthedocs.io/en/master/) installed **
