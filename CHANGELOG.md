@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.15.0
+
+- Improve the statistics part
+
 ## 2.14.0
 
 - Use Java 17
