@@ -113,18 +113,12 @@ public class ExceptionHandlerController {
       return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    switch (status) {
-      case BAD_REQUEST:
-        return HttpStatus.BAD_REQUEST;
-      case UNAUTHORIZED:
-        return HttpStatus.UNAUTHORIZED;
-      case FORBIDDEN:
-        return HttpStatus.FORBIDDEN;
-      case NOT_FOUND:
-        return HttpStatus.NOT_FOUND;
-      case INTERNAL_SERVER_ERROR:
-      default:
-        return HttpStatus.INTERNAL_SERVER_ERROR;
-    }
+    return switch (status) {
+      case BAD_REQUEST -> HttpStatus.BAD_REQUEST;
+      case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
+      case FORBIDDEN -> HttpStatus.FORBIDDEN;
+      case NOT_FOUND -> HttpStatus.NOT_FOUND;
+      case INTERNAL_SERVER_ERROR -> HttpStatus.INTERNAL_SERVER_ERROR;
+    };
   }
 }

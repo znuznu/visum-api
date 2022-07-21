@@ -23,65 +23,37 @@ public enum Month {
   }
 
   public static Month from(java.time.Month month) {
-    switch (month) {
-      case JANUARY:
-        return Month.JANUARY;
-      case FEBRUARY:
-        return Month.FEBRUARY;
-      case MARCH:
-        return Month.MARCH;
-      case APRIL:
-        return Month.APRIL;
-      case MAY:
-        return Month.MAY;
-      case JUNE:
-        return Month.JUNE;
-      case JULY:
-        return Month.JULY;
-      case AUGUST:
-        return Month.AUGUST;
-      case SEPTEMBER:
-        return Month.SEPTEMBER;
-      case OCTOBER:
-        return Month.OCTOBER;
-      case NOVEMBER:
-        return Month.NOVEMBER;
-      case DECEMBER:
-        return Month.DECEMBER;
-      default:
-        throw new UnsupportedOperationException("A new month has been created by the Architect.");
-    }
+    return switch (month) {
+      case JANUARY -> Month.JANUARY;
+      case FEBRUARY -> Month.FEBRUARY;
+      case MARCH -> Month.MARCH;
+      case APRIL -> Month.APRIL;
+      case MAY -> Month.MAY;
+      case JUNE -> Month.JUNE;
+      case JULY -> Month.JULY;
+      case AUGUST -> Month.AUGUST;
+      case SEPTEMBER -> Month.SEPTEMBER;
+      case OCTOBER -> Month.OCTOBER;
+      case NOVEMBER -> Month.NOVEMBER;
+      case DECEMBER -> Month.DECEMBER;
+    };
   }
 
   public static java.time.Month toJava(Month month) {
-    switch (month) {
-      case JANUARY:
-        return java.time.Month.JANUARY;
-      case FEBRUARY:
-        return java.time.Month.FEBRUARY;
-      case MARCH:
-        return java.time.Month.MARCH;
-      case APRIL:
-        return java.time.Month.APRIL;
-      case MAY:
-        return java.time.Month.MAY;
-      case JUNE:
-        return java.time.Month.JUNE;
-      case JULY:
-        return java.time.Month.JULY;
-      case AUGUST:
-        return java.time.Month.AUGUST;
-      case SEPTEMBER:
-        return java.time.Month.SEPTEMBER;
-      case OCTOBER:
-        return java.time.Month.OCTOBER;
-      case NOVEMBER:
-        return java.time.Month.NOVEMBER;
-      case DECEMBER:
-        return java.time.Month.DECEMBER;
-      default:
-        throw new UnsupportedOperationException("A new month has been created by the Architect.");
-    }
+    return switch (month) {
+      case JANUARY -> java.time.Month.JANUARY;
+      case FEBRUARY -> java.time.Month.FEBRUARY;
+      case MARCH -> java.time.Month.MARCH;
+      case APRIL -> java.time.Month.APRIL;
+      case MAY -> java.time.Month.MAY;
+      case JUNE -> java.time.Month.JUNE;
+      case JULY -> java.time.Month.JULY;
+      case AUGUST -> java.time.Month.AUGUST;
+      case SEPTEMBER -> java.time.Month.SEPTEMBER;
+      case OCTOBER -> java.time.Month.OCTOBER;
+      case NOVEMBER -> java.time.Month.NOVEMBER;
+      case DECEMBER -> java.time.Month.DECEMBER;
+    };
   }
 
   public String getRepresentation() {

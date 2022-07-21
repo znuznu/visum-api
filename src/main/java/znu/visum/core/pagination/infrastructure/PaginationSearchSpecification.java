@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 
 /** Should only convert an expression to a SearchSpecification */
 public class PaginationSearchSpecification<T> implements Specification<T> {
+
   private final String attribute;
   private final VisumOperator operator;
   private final Object value;
@@ -87,31 +88,20 @@ public class PaginationSearchSpecification<T> implements Specification<T> {
 
     var searchValue = this.value.toString();
 
-    switch (operator) {
-      case LT:
-        return cb.lessThan(path, searchValue);
-      case LTE:
-        return cb.lessThanOrEqualTo(path, searchValue);
-      case GT:
-        return cb.greaterThan(path, searchValue);
-      case GTE:
-        return cb.greaterThanOrEqualTo(path, searchValue);
-      case EQ:
-        return cb.equal(path, searchValue);
-      case EQB:
-        return cb.equal(path, Boolean.parseBoolean(searchValue));
-      case LIKE:
-        return cb.like(cb.lower(path), "%" + searchValue.toLowerCase() + "%");
-      case SW:
-        return cb.like(cb.lower(path), searchValue.toLowerCase() + "%");
-      case EW:
-        return cb.like(cb.lower(path), "%" + searchValue.toLowerCase());
-      case IN:
-        return cb.in(path).value(searchValue);
-      default:
-        throw new UnsupportedOperationException(
-            String.format("Unsupported operator found '%s'", operator));
-    }
+    return switch (operator) {
+      case LT -> cb.lessThan(path, searchValue);
+      case LTE -> cb.lessThanOrEqualTo(path, searchValue);
+      case GT -> cb.greaterThan(path, searchValue);
+      case GTE -> cb.greaterThanOrEqualTo(path, searchValue);
+      case EQ -> cb.equal(path, searchValue);
+      case EQB -> cb.equal(path, Boolean.parseBoolean(searchValue));
+      case LIKE -> cb.like(cb.lower(path), "%" + searchValue.toLowerCase() + "%");
+      case SW -> cb.like(cb.lower(path), searchValue.toLowerCase() + "%");
+      case EW -> cb.like(cb.lower(path), "%" + searchValue.toLowerCase());
+      case IN -> cb.in(path).value(searchValue);
+      default -> throw new UnsupportedOperationException(
+              String.format("Unsupported operator found '%s'", operator));
+    };
   }
 
   private Path<String> resolvePath(Root<T> root, String attribute) {
