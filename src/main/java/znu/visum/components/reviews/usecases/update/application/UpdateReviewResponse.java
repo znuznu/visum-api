@@ -26,7 +26,7 @@ public class UpdateReviewResponse {
   private final long movieId;
 
   @Schema(description = "The creation date of the review updated.")
-  @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   private final LocalDateTime creationDate;
 
   public static UpdateReviewResponse from(Review review) {
@@ -38,7 +38,7 @@ public class UpdateReviewResponse {
         review.getCreationDate());
   }
 
-  @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   public LocalDateTime getCreationDate() {
     return creationDate;
   }

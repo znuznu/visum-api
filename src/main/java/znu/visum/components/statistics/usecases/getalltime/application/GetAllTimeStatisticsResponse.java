@@ -85,7 +85,7 @@ public class GetAllTimeStatisticsResponse {
     private long id;
     private String title;
 
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate releaseDate;
 
     private int grade;

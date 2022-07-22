@@ -82,7 +82,7 @@ class UpdateReviewRouteIntegrationTest {
         .andExpect(jsonPath("$.content").value("Something."))
         .andExpect(jsonPath("$.grade").value(10))
         .andExpect(jsonPath("$.movieId").value(1))
-        .andExpect(jsonPath("$.creationDate").value("10/26/2021 15:54:33"));
+        .andExpect(jsonPath("$.creationDate").value("2021/10/26 15:54:33"));
   }
 
   @Nested

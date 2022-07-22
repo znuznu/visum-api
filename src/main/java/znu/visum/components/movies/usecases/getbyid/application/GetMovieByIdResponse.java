@@ -27,7 +27,7 @@ public class GetMovieByIdResponse {
   private final String title;
 
   @Schema(description = "The release date of the movie.")
-  @JsonFormat(pattern = "MM/dd/yyyy")
+  @JsonFormat(pattern = "yyyy/MM/dd")
   private final LocalDate releaseDate;
 
   @Schema(description = "The actors of the movie.")
@@ -48,7 +48,7 @@ public class GetMovieByIdResponse {
   @Schema(description = "True if the movie is to watch in the future.")
   private final boolean isToWatch;
 
-  @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   private final LocalDateTime creationDate;
 
   @Schema(description = "The viewing entries of the movie created.")
@@ -91,10 +91,10 @@ public class GetMovieByIdResponse {
     private final Long id;
     private final String content;
 
-    @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private final LocalDateTime updateDate;
 
-    @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private final LocalDateTime creationDate;
 
     private final int grade;

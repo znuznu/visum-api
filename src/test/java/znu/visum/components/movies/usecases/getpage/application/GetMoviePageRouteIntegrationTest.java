@@ -77,8 +77,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 30,
                               "title": "Fake movie with review 30",
-                              "releaseDate": "10/12/2001",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2001/10/12",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": false,
                               "metadata": {
@@ -88,8 +88,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 20,
                               "title": "Fake movie with review 20",
-                              "releaseDate": "10/12/2001",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2001/10/12",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
                               "metadata": {
@@ -99,8 +99,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 33,
                               "title": "Fake movie with review 33",
-                              "releaseDate": "10/12/2001",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2001/10/12",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": true,
                               "metadata": {
@@ -110,8 +110,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 10,
                               "title": "Fake movie with review 10",
-                              "releaseDate": "10/12/2001",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2001/10/12",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": true,
                               "metadata": {
@@ -153,8 +153,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 4,
                               "title": "Fake movie 4",
-                              "releaseDate": "04/04/2004",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2004/04/04",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
                               "metadata": {
@@ -195,8 +195,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 4,
                               "title": "Fake movie 4",
-                              "releaseDate": "04/04/2004",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2004/04/04",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
                               "metadata": {
@@ -206,8 +206,8 @@ class GetMoviePageRouteIntegrationTest {
                             {
                               "id": 44,
                               "title": "Fake movie 44",
-                              "releaseDate": "04/16/2004",
-                              "creationDate": "10/26/2021 15:54:33",
+                              "releaseDate": "2004/04/16",
+                              "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": true,
                               "metadata": {

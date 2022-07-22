@@ -115,7 +115,7 @@ class GetStatisticsPerYearRouteIntegrationTest {
                               {
                                 "id": 18,
                                 "title": "Fake movie 18",
-                                "releaseDate": "01/01/2015",
+                                "releaseDate": "2015/01/01",
                                 "grade": 4,
                                 "posterUrl": "An URL 18"
                               }
@@ -124,14 +124,14 @@ class GetStatisticsPerYearRouteIntegrationTest {
                               {
                                 "id": 8,
                                 "title": "Fake movie 8",
-                                "releaseDate": "10/12/2007",
+                                "releaseDate": "2007/10/12",
                                 "grade": 6,
                                 "posterUrl": "An URL 8"
                               },
                               {
                                 "id": 14,
                                 "title": "Fake movie 14",
-                                "releaseDate": "10/12/2014",
+                                "releaseDate": "2014/10/12",
                                 "grade": 1,
                                 "posterUrl": "An URL 14"
                               }
