@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.16.0
+
+- Use Java 17 switch
+- Reformat date as `yyyy/MM/dd`
+
 ## 2.15.0
 
 - Improve the statistics part
