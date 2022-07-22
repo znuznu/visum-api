@@ -79,13 +79,13 @@ class GetPageReviewRouteIntegrationTest {
                               "movie": {
                                 "id": 30,
                                 "title": "Fake movie with review 30",
-                                "releaseDate": "10/12/2001",
+                                "releaseDate": "2001/10/12",
                                 "metadata": {
                                   "posterUrl": "An URL 30"
                                 }
                               },
-                              "creationDate": "10/26/2021 15:54:33",
-                              "updateDate": "10/26/2021 15:54:33"
+                              "creationDate": "2021/10/26 15:54:33",
+                              "updateDate": "2021/10/26 15:54:33"
                             },
                             {
                               "id": 2,
@@ -94,13 +94,13 @@ class GetPageReviewRouteIntegrationTest {
                               "movie": {
                                 "id": 20,
                                 "title": "Fake movie with review 20",
-                                "releaseDate": "10/12/2001",
+                                "releaseDate": "2001/10/12",
                                 "metadata": {
                                   "posterUrl": "An URL 20"
                                 }
                               },
-                              "creationDate": "10/26/2021 15:54:33",
-                              "updateDate": "10/27/2021 15:54:33"
+                              "creationDate": "2021/10/26 15:54:33",
+                              "updateDate": "2021/10/27 15:54:33"
                             },
                             {
                               "id": 3,
@@ -109,13 +109,13 @@ class GetPageReviewRouteIntegrationTest {
                               "movie": {
                                 "id": 33,
                                 "title": "Fake movie with review 33",
-                                "releaseDate": "10/12/2001",
+                                "releaseDate": "2001/10/12",
                                 "metadata": {
                                   "posterUrl": "An URL 33"
                                 }
                               },
-                              "creationDate": "10/26/2021 15:54:33",
-                              "updateDate": "10/28/2021 15:54:33"
+                              "creationDate": "2021/10/26 15:54:33",
+                              "updateDate": "2021/10/28 15:54:33"
                             },
                             {
                               "id": 4,
@@ -124,13 +124,13 @@ class GetPageReviewRouteIntegrationTest {
                               "movie": {
                                 "id": 10,
                                 "title": "Fake movie with review 10",
-                                "releaseDate": "10/12/2001",
+                                "releaseDate": "2001/10/12",
                                 "metadata": {
                                   "posterUrl": "An URL 10"
                                 }
                               },
-                              "creationDate": "10/26/2021 15:54:33",
-                              "updateDate": "10/29/2021 15:54:33"
+                              "creationDate": "2021/10/26 15:54:33",
+                              "updateDate": "2021/10/29 15:54:33"
                             }
                           ],
                           "totalPages": 1,
@@ -171,13 +171,13 @@ class GetPageReviewRouteIntegrationTest {
                               "movie": {
                                 "id": 30,
                                 "title": "Fake movie with review 30",
-                                "releaseDate": "10/12/2001",
+                                "releaseDate": "2001/10/12",
                                 "metadata": {
                                   "posterUrl": "An URL 30"
                                 }
                               },
-                              "creationDate": "10/26/2021 15:54:33",
-                              "updateDate": "10/26/2021 15:54:33"
+                              "creationDate": "2021/10/26 15:54:33",
+                              "updateDate": "2021/10/26 15:54:33"
                             }
                           ],
                           "totalPages": 1,
@@ -217,13 +217,13 @@ class GetPageReviewRouteIntegrationTest {
                              "movie": {
                                "id": 20,
                                "title": "Fake movie with review 20",
-                               "releaseDate": "10/12/2001",
+                               "releaseDate": "2001/10/12",
                                "metadata": {
                                  "posterUrl": "An URL 20"
                                }
                              },
-                             "creationDate": "10/26/2021 15:54:33",
-                             "updateDate": "10/27/2021 15:54:33"
+                             "creationDate": "2021/10/26 15:54:33",
+                             "updateDate": "2021/10/27 15:54:33"
                            },
                            {
                              "id": 1,
@@ -232,13 +232,13 @@ class GetPageReviewRouteIntegrationTest {
                              "movie": {
                                "id": 30,
                                "title": "Fake movie with review 30",
-                               "releaseDate": "10/12/2001",
+                               "releaseDate": "2001/10/12",
                                "metadata": {
                                  "posterUrl": "An URL 30"
                                }
                              },
-                             "creationDate": "10/26/2021 15:54:33",
-                             "updateDate": "10/26/2021 15:54:33"
+                             "creationDate": "2021/10/26 15:54:33",
+                             "updateDate": "2021/10/26 15:54:33"
                            },
                            {
                              "id": 3,
@@ -247,13 +247,13 @@ class GetPageReviewRouteIntegrationTest {
                              "movie": {
                                "id": 33,
                                "title": "Fake movie with review 33",
-                               "releaseDate": "10/12/2001",
+                               "releaseDate": "2001/10/12",
                                "metadata": {
                                  "posterUrl": "An URL 33"
                                }
                              },
-                             "creationDate": "10/26/2021 15:54:33",
-                             "updateDate": "10/28/2021 15:54:33"
+                             "creationDate": "2021/10/26 15:54:33",
+                             "updateDate": "2021/10/28 15:54:33"
                            },
                            {
                              "id": 4,
@@ -262,13 +262,13 @@ class GetPageReviewRouteIntegrationTest {
                              "movie": {
                                "id": 10,
                                "title": "Fake movie with review 10",
-                               "releaseDate": "10/12/2001",
+                               "releaseDate": "2001/10/12",
                                "metadata": {
                                  "posterUrl": "An URL 10"
                                }
                              },
-                             "creationDate": "10/26/2021 15:54:33",
-                             "updateDate": "10/29/2021 15:54:33"
+                             "creationDate": "2021/10/26 15:54:33",
+                             "updateDate": "2021/10/29 15:54:33"
                            }
                          ],
                          "totalPages": 1,

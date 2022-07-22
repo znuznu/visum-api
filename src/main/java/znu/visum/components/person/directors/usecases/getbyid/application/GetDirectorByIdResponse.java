@@ -54,7 +54,7 @@ public class GetDirectorByIdResponse {
     private final Long id;
     private final String title;
 
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private final LocalDate releaseDate;
 
     private final boolean isFavorite;

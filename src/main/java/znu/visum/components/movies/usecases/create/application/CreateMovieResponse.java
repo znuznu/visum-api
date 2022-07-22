@@ -26,7 +26,7 @@ public class CreateMovieResponse {
   private final String title;
 
   @Schema(description = "The release date of the movie created.")
-  @JsonFormat(pattern = "MM/dd/yyyy")
+  @JsonFormat(pattern = "yyyy/MM/dd")
   private final LocalDate releaseDate;
 
   @Schema(description = "True if the movie created is a favorite one.")
@@ -150,10 +150,10 @@ public class CreateMovieResponse {
     private final long id;
     private final String content;
 
-    @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private final LocalDateTime updateDate;
 
-    @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private final LocalDateTime creationDate;
 
     private final int grade;

@@ -21,7 +21,7 @@ public class GetUpcomingTmdbMoviesResponse {
   private final String title;
 
   @Schema(description = "The release date of the movie.")
-  @JsonFormat(pattern = "MM/dd/yyyy")
+  @JsonFormat(pattern = "yyyy/MM/dd")
   private final LocalDate releaseDate;
 
   @Schema(description = "The TMDb poster's URL of the movie.")

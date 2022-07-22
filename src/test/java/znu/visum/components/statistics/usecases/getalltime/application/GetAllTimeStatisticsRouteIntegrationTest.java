@@ -191,35 +191,35 @@ class GetAllTimeStatisticsRouteIntegrationTest {
                                 {
                                   "id": 3,
                                   "title": "Fake movie 3",
-                                  "releaseDate": "10/12/2003",
+                                  "releaseDate": "2003/10/12",
                                   "grade": 10,
                                   "posterUrl": "An URL 3"
                                 },
                                 {
                                   "id": 1,
                                   "title": "Fake movie 1",
-                                  "releaseDate": "10/12/2001",
+                                  "releaseDate": "2001/10/12",
                                   "grade": 9,
                                   "posterUrl": "An URL 1"
                                 },
                                 {
                                   "id": 4,
                                   "title": "Fake movie 4",
-                                  "releaseDate": "01/01/2003",
+                                  "releaseDate": "2003/01/01",
                                   "grade": 8,
                                   "posterUrl": "An URL 4"
                                 },
                                 {
                                   "id": 8,
                                   "title": "Fake movie 8",
-                                  "releaseDate": "10/12/2007",
+                                  "releaseDate": "2007/10/12",
                                   "grade": 6,
                                   "posterUrl": "An URL 8"
                                 },
                                 {
                                   "id": 7,
                                   "title": "Fake movie 7",
-                                  "releaseDate": "10/12/2007",
+                                  "releaseDate": "2007/10/12",
                                   "grade": 4,
                                   "posterUrl": "An URL 7"
                                 }
@@ -231,35 +231,35 @@ class GetAllTimeStatisticsRouteIntegrationTest {
                                 {
                                   "id": 16,
                                   "title": "Fake movie 16",
-                                  "releaseDate": "01/01/2014",
+                                  "releaseDate": "2014/01/01",
                                   "grade": 6,
                                   "posterUrl": "An URL 16"
                                 },
                                 {
                                   "id": 18,
                                   "title": "Fake movie 18",
-                                  "releaseDate": "01/01/2015",
+                                  "releaseDate": "2015/01/01",
                                   "grade": 4,
                                   "posterUrl": "An URL 18"
                                 },
                                 {
                                   "id": 15,
                                   "title": "Fake movie 15",
-                                  "releaseDate": "10/12/2014",
+                                  "releaseDate": "2014/10/12",
                                   "grade": 3,
                                   "posterUrl": "An URL 15"
                                 },
                                 {
                                   "id": 17,
                                   "title": "Fake movie 17",
-                                  "releaseDate": "10/12/2014",
+                                  "releaseDate": "2014/10/12",
                                   "grade": 3,
                                   "posterUrl": "An URL 17"
                                 },
                                 {
                                   "id": 14,
                                   "title": "Fake movie 14",
-                                  "releaseDate": "10/12/2014",
+                                  "releaseDate": "2014/10/12",
                                   "grade": 1,
                                   "posterUrl": "An URL 14"
                                 }

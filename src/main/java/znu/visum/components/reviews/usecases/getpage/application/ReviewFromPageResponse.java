@@ -29,11 +29,11 @@ public class ReviewFromPageResponse {
   private final ResponseMovie movie;
 
   @Schema(description = "The creation date of the review.")
-  @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   private final LocalDateTime creationDate;
 
   @Schema(description = "The last update date of the review.")
-  @JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   private final LocalDateTime updateDate;
 
   public static ReviewFromPageResponse from(Review review) {
@@ -53,7 +53,7 @@ public class ReviewFromPageResponse {
     private final long id;
     private final String title;
 
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private final LocalDate releaseDate;
 
     private final ResponseMovieMetadata metadata;
