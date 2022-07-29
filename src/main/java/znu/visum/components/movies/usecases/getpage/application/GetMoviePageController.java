@@ -16,22 +16,22 @@ import znu.visum.core.pagination.application.GetPageResponse;
 @RestController
 @RequestMapping(value = "/api/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 @ExposesResourceFor(GetPageResponse.class)
-public class GetPageMovieController {
+public class GetMoviePageController {
   private final GetMoviePage getMoviePage;
 
   @Autowired
-  public GetPageMovieController(GetMoviePage getMoviePage) {
+  public GetMoviePageController(GetMoviePage getMoviePage) {
     this.getMoviePage = getMoviePage;
   }
 
   @Operation(summary = "Get a page of movies.")
   @GetMapping
-  public GetPageResponse<MovieFromPageResponse> getPage(
+  public GetPageResponse<PageMovieResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,
       @RequestParam(required = false, defaultValue = "20") int limit,
       @RequestParam(required = false, defaultValue = "title=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getMoviePage.process(limit, offset, sort, search), MovieFromPageResponse::from);
+        getMoviePage.process(limit, offset, sort, search), PageMovieResponse::from);
   }
 }

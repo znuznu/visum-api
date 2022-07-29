@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.movies.domain.Movie;
-import znu.visum.components.movies.domain.MovieMetadata;
+import znu.visum.components.movies.domain.PageMovie;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Schema(description = "Represents a movie in a page.")
-public class MovieFromPageResponse {
+public class PageMovieResponse {
   @Schema(description = "The movie identifier.")
   private final Long id;
 
@@ -36,17 +34,18 @@ public class MovieFromPageResponse {
   @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
   private final LocalDateTime creationDate;
 
-  private final ResponseMovieMetadata metadata;
+  @Schema(description = "The movie's poster URL.")
+  private String posterUrl;
 
-  public static MovieFromPageResponse from(Movie movie) {
-    return new MovieFromPageResponse(
+  public static PageMovieResponse from(PageMovie movie) {
+    return new PageMovieResponse(
         movie.getId(),
         movie.getTitle(),
         movie.getReleaseDate(),
         movie.isFavorite(),
         movie.isToWatch(),
         movie.getCreationDate(),
-        ResponseMovieMetadata.from(movie.getMetadata()));
+        movie.getPosterUrl());
   }
 
   @JsonProperty(value = "isFavorite")
@@ -57,17 +56,5 @@ public class MovieFromPageResponse {
   @JsonProperty(value = "isToWatch")
   public boolean isToWatch() {
     return isToWatch;
-  }
-
-  @AllArgsConstructor
-  @Builder
-  @Getter
-  public static class ResponseMovieMetadata {
-    @Schema(description = "The movie's poster URL.")
-    private String posterUrl;
-
-    public static ResponseMovieMetadata from(MovieMetadata movieMetadata) {
-      return ResponseMovieMetadata.builder().posterUrl(movieMetadata.getPosterUrl()).build();
-    }
   }
 }

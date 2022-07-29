@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /** Converts Spring Page to our domain. */
 public class SpringPageMapper {
@@ -16,7 +15,7 @@ public class SpringPageMapper {
         .current(page.getNumber())
         .totalPages(page.getTotalPages())
         .totalElements(page.getTotalElements())
-        .content(page.getContent().stream().map(mapper).collect(Collectors.toList()))
+        .content(page.getContent().stream().map(mapper).toList())
         .isFirst(page.isFirst())
         .isLast(page.isLast())
         .size(page.getSize())

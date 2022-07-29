@@ -5,10 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
-import znu.visum.components.movies.domain.Cast;
-import znu.visum.components.movies.domain.Movie;
-import znu.visum.components.movies.domain.MovieDiaryFragment;
-import znu.visum.components.movies.domain.ReviewFromMovie;
+import znu.visum.components.movies.domain.*;
 import znu.visum.components.person.actors.domain.MovieFromActor;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
 import znu.visum.components.person.directors.infrastructure.DirectorEntity;
@@ -51,7 +48,7 @@ public class MovieEntity {
       inverseJoinColumns = @JoinColumn(name = "director_id"))
   private Set<DirectorEntity> directorEntities;
 
-  @OneToOne(mappedBy = "movieEntity", cascade = CascadeType.REMOVE)
+  @OneToOne(mappedBy = "movieEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private MovieReviewEntity review;
 
   @ManyToMany(cascade = {CascadeType.PERSIST})
@@ -153,6 +150,21 @@ public class MovieEntity {
         .creationDate(this.creationDate)
         .review(this.review == null ? null : ReviewFromMovie.of(this.review.toDomain()))
         .metadata(this.movieMetadataEntity == null ? null : this.movieMetadataEntity.toDomain())
+        .build();
+  }
+
+  public PageMovie toDomainPage() {
+    var posterUrl =
+        this.movieMetadataEntity == null ? null : this.movieMetadataEntity.getPosterUrl();
+
+    return PageMovie.builder()
+        .id(this.id)
+        .title(this.title)
+        .releaseDate(this.releaseDate)
+        .isToWatch(this.shouldWatch)
+        .isFavorite(this.isFavorite)
+        .creationDate(this.creationDate)
+        .posterUrl(posterUrl)
         .build();
   }
 

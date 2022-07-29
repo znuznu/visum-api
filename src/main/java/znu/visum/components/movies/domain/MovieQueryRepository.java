@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface MovieQueryRepository {
   // Spring Sort is not supposed to be here but who cares
-  VisumPage<Movie> findPage(int limit, int offset, Sort sort, String search);
+  VisumPage<PageMovie> findPage(int limit, int offset, Sort sort, String search);
 
   Optional<Movie> findById(long id);
 

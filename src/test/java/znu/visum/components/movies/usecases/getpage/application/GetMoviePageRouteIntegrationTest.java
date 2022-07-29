@@ -81,9 +81,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": false,
-                              "metadata": {
-                                "posterUrl": "An URL 30"
-                              }
+                              "posterUrl": "An URL 30"
                             },
                             {
                               "id": 20,
@@ -92,9 +90,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
-                              "metadata": {
-                                "posterUrl": "An URL 20"
-                              }
+                              "posterUrl": "An URL 20"
                             },
                             {
                               "id": 33,
@@ -103,9 +99,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": true,
-                              "metadata": {
-                                "posterUrl": "An URL 33"
-                              }
+                              "posterUrl": "An URL 33"
                             },
                             {
                               "id": 10,
@@ -114,9 +108,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": true,
-                              "metadata": {
-                                "posterUrl": "An URL 10"
-                              }
+                              "posterUrl": "An URL 10"
                             }
                           ],
                           "totalPages": 1,
@@ -157,9 +149,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
-                              "metadata": {
-                                "posterUrl": "fakeurl4"
-                              }
+                              "posterUrl": "fakeurl4"
                             }
                           ],
                           "totalPages": 1,
@@ -199,9 +189,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": true,
                               "isToWatch": false,
-                              "metadata": {
-                                "posterUrl": "fakeurl4"
-                              }
+                              "posterUrl": "fakeurl4"
                             },
                             {
                               "id": 44,
@@ -210,9 +198,7 @@ class GetMoviePageRouteIntegrationTest {
                               "creationDate": "2021/10/26 15:54:33",
                               "isFavorite": false,
                               "isToWatch": true,
-                              "metadata": {
-                                "posterUrl": "fakeurl44"
-                              }
+                              "posterUrl": "fakeurl44"
                             }
                           ],
                           "totalPages": 1,
