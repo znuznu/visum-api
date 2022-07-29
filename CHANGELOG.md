@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.17.0
+
+- Add PageXXX models
+
 ## 2.16.0
 
 - Use Java 17 switch
