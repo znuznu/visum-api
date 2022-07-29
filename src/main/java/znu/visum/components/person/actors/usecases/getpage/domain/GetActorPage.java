@@ -17,7 +17,7 @@ public class GetActorPage {
     this.actorRepository = actorRepository;
   }
 
-  public VisumPage<Actor> process(int limit, int offset, Sort sort, String search) {
+  public VisumPage<PageActor> process(int limit, int offset, Sort sort, String search) {
     return actorRepository.findPage(limit, offset, sort, search);
   }
 }

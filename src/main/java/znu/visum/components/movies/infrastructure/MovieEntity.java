@@ -6,6 +6,7 @@ import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
 import znu.visum.components.movies.domain.*;
+import znu.visum.components.movies.usecases.getpage.domain.PageMovie;
 import znu.visum.components.person.actors.domain.MovieFromActor;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
 import znu.visum.components.person.directors.infrastructure.DirectorEntity;
@@ -153,7 +154,7 @@ public class MovieEntity {
         .build();
   }
 
-  public PageMovie toDomainPage() {
+  public PageMovie toPageMovie() {
     var posterUrl =
         this.movieMetadataEntity == null ? null : this.movieMetadataEntity.getPosterUrl();
 

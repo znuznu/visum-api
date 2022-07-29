@@ -8,6 +8,7 @@ import znu.visum.components.externals.domain.ExternalCastMember;
 import znu.visum.components.movies.infrastructure.CastMemberEntity;
 import znu.visum.components.person.actors.domain.Actor;
 import znu.visum.components.person.actors.domain.MovieFromActor;
+import znu.visum.components.person.actors.usecases.getpage.domain.PageActor;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.components.person.infrastructure.PeopleEntity;
 
@@ -64,6 +65,15 @@ public class ActorEntity extends PeopleEntity {
                 .build())
         .name(member.getIdentity().getName())
         .forename(member.getIdentity().getForename())
+        .build();
+  }
+
+  public PageActor toPageActor() {
+    return PageActor.builder()
+        .id(this.id)
+        .identity(Identity.builder().forename(this.getForename()).name(this.getName()).build())
+        .posterUrl(this.getMetadataEntity().getPosterUrl())
+        .tmdbId(this.getMetadataEntity().getTmdbId())
         .build();
   }
 

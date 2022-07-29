@@ -7,6 +7,7 @@ import znu.visum.components.externals.domain.ExternalDirector;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 import znu.visum.components.person.directors.domain.Director;
+import znu.visum.components.person.directors.usecases.getpage.domain.PageDirector;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.components.person.infrastructure.PeopleEntity;
 
@@ -78,6 +79,15 @@ public class DirectorEntity extends PeopleEntity {
                 .build())
         .id(null)
         .movieEntities(null)
+        .build();
+  }
+
+  public PageDirector toPageDirector() {
+    return PageDirector.builder()
+        .id(this.id)
+        .identity(Identity.builder().forename(this.getForename()).name(this.getName()).build())
+        .posterUrl(this.metadataEntity.getPosterUrl())
+        .tmdbId(this.metadataEntity.getTmdbId())
         .build();
   }
 
