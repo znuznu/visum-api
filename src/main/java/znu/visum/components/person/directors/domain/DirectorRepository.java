@@ -2,12 +2,13 @@ package znu.visum.components.person.directors.domain;
 
 import org.springframework.data.domain.Sort;
 import znu.visum.components.movies.domain.DirectorFromMovie;
+import znu.visum.components.person.directors.usecases.getpage.domain.PageDirector;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
 
 public interface DirectorRepository {
-  VisumPage<Director> findPage(int limit, int offset, Sort sort, String search);
+  VisumPage<PageDirector> findPage(int limit, int offset, Sort sort, String search);
 
   Optional<Director> findById(long id);
 

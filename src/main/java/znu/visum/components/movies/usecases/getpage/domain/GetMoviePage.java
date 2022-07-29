@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import znu.visum.components.movies.domain.MovieQueryRepository;
-import znu.visum.components.movies.domain.PageMovie;
 import znu.visum.core.pagination.domain.VisumPage;
 
 @Service

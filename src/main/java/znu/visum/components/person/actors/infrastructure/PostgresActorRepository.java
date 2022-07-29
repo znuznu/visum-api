@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.person.actors.domain.Actor;
 import znu.visum.components.person.actors.domain.ActorRepository;
+import znu.visum.components.person.actors.usecases.getpage.domain.PageActor;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
 import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
@@ -25,7 +26,7 @@ public class PostgresActorRepository implements ActorRepository {
   }
 
   @Override
-  public VisumPage<Actor> findPage(int limit, int offset, Sort sort, String search) {
+  public VisumPage<PageActor> findPage(int limit, int offset, Sort sort, String search) {
     Specification<ActorEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<ActorEntity> pageSearch =
@@ -37,7 +38,7 @@ public class PostgresActorRepository implements ActorRepository {
             .build();
 
     return SpringPageMapper.toVisumPage(
-        dataJpaActorRepository.findPage(pageSearch), ActorEntity::toDomain);
+        dataJpaActorRepository.findPage(pageSearch), ActorEntity::toPageActor);
   }
 
   @Override

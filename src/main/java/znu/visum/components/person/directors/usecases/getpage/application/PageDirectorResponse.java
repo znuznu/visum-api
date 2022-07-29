@@ -4,13 +4,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.person.directors.domain.Director;
+import znu.visum.components.person.directors.usecases.getpage.domain.PageDirector;
 
 @AllArgsConstructor
 @Builder
 @Getter
 @Schema(description = "Represents a page of directors.")
-public class DirectorFromPageResponse {
+public class PageDirectorResponse {
 
   @Schema(description = "The director identifier.")
   private final long id;
@@ -27,13 +27,13 @@ public class DirectorFromPageResponse {
   @Schema(description = "The director's poster URL.")
   private String posterUrl;
 
-  public static DirectorFromPageResponse from(Director director) {
-    return DirectorFromPageResponse.builder()
+  public static PageDirectorResponse from(PageDirector director) {
+    return PageDirectorResponse.builder()
         .id(director.getId())
         .name(director.getIdentity().getName())
         .forename(director.getIdentity().getForename())
-        .posterUrl(director.getMetadata().getPosterUrl())
-        .tmdbId(director.getMetadata().getTmdbId())
+        .posterUrl(director.getPosterUrl())
+        .tmdbId(director.getTmdbId())
         .build();
   }
 }

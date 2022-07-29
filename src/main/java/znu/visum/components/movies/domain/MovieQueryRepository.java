@@ -1,6 +1,7 @@
 package znu.visum.components.movies.domain;
 
 import org.springframework.data.domain.Sort;
+import znu.visum.components.movies.usecases.getpage.domain.PageMovie;
 import znu.visum.components.statistics.domain.AverageRating;
 import znu.visum.components.statistics.domain.DateRange;
 import znu.visum.core.models.common.Limit;

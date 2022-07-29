@@ -27,12 +27,12 @@ public class GetDirectorPageController {
 
   @Operation(summary = "Get a page of directors.")
   @GetMapping
-  public GetPageResponse<DirectorFromPageResponse> getPage(
+  public GetPageResponse<PageDirectorResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,
       @RequestParam(required = false, defaultValue = "20") int limit,
       @RequestParam(required = false, defaultValue = "forename=%%,name=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getDirectorPage.process(limit, offset, sort, search), DirectorFromPageResponse::from);
+        getDirectorPage.process(limit, offset, sort, search), PageDirectorResponse::from);
   }
 }

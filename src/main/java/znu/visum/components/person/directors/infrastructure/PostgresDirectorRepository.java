@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.person.directors.domain.Director;
 import znu.visum.components.person.directors.domain.DirectorRepository;
+import znu.visum.components.person.directors.usecases.getpage.domain.PageDirector;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
 import znu.visum.core.pagination.infrastructure.PaginationSearchSpecification;
@@ -26,7 +27,7 @@ public class PostgresDirectorRepository implements DirectorRepository {
   }
 
   @Override
-  public VisumPage<Director> findPage(int limit, int offset, Sort sort, String search) {
+  public VisumPage<PageDirector> findPage(int limit, int offset, Sort sort, String search) {
     Specification<DirectorEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<DirectorEntity> pageSearch =
@@ -38,7 +39,7 @@ public class PostgresDirectorRepository implements DirectorRepository {
             .build();
 
     return SpringPageMapper.toVisumPage(
-        dataJpaDirectorRepository.findPage(pageSearch), DirectorEntity::toDomain);
+        dataJpaDirectorRepository.findPage(pageSearch), DirectorEntity::toPageDirector);
   }
 
   @Override

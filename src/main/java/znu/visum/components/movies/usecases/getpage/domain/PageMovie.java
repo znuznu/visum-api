@@ -1,4 +1,4 @@
-package znu.visum.components.movies.domain;
+package znu.visum.components.movies.usecases.getpage.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

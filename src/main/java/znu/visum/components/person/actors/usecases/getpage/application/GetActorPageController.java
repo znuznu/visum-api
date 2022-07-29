@@ -27,12 +27,12 @@ public class GetActorPageController {
 
   @Operation(summary = "Get a page of actors.")
   @GetMapping
-  public GetPageResponse<ActorFromPageResponse> getPage(
+  public GetPageResponse<PageActorResponse> getPage(
       @RequestParam(required = false, defaultValue = "0") int offset,
       @RequestParam(required = false, defaultValue = "20") int limit,
       @RequestParam(required = false, defaultValue = "forename=%%,name=%%") String search,
       @SortDefault Sort sort) {
     return GetPageResponse.from(
-        getActorPage.process(limit, offset, sort, search), ActorFromPageResponse::from);
+        getActorPage.process(limit, offset, sort, search), PageActorResponse::from);
   }
 }
