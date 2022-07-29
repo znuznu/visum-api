@@ -4,6 +4,7 @@ import org.springframework.data.domain.Sort;
 import znu.visum.components.movies.usecases.getpage.domain.PageMovie;
 import znu.visum.components.statistics.domain.AverageRating;
 import znu.visum.components.statistics.domain.DateRange;
+import znu.visum.components.statistics.domain.StatisticsMovie;
 import znu.visum.core.models.common.Limit;
 import znu.visum.core.models.common.Pair;
 import znu.visum.core.pagination.domain.VisumPage;
@@ -28,7 +29,7 @@ public interface MovieQueryRepository {
 
   long countByReleaseYear(Year year);
 
-  List<Movie> findHighestRatedMoviesReleasedBetween(DateRange range, Limit limit);
+  List<StatisticsMovie> findHighestRatedMoviesReleasedBetween(DateRange range, Limit limit);
 
   int getTotalRunningHoursBetween(DateRange range);
 
@@ -40,7 +41,7 @@ public interface MovieQueryRepository {
 
   List<Pair<Year, AverageRating>> getAverageMovieRatingPerYearBetween(DateRange range);
 
-  List<Movie> findHighestRatedDuringYearOlderMovies(Year year);
+  List<StatisticsMovie> findHighestRatedDuringYearOlderMovies(Year year);
 
   List<MovieDiaryFragment> findByDiaryFilters(DiaryFilters filters);
 }

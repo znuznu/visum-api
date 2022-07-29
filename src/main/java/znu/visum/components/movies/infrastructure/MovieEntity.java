@@ -5,7 +5,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.history.domain.ViewingHistory;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
-import znu.visum.components.movies.domain.*;
+import znu.visum.components.movies.domain.Cast;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieDiaryFragment;
+import znu.visum.components.movies.domain.ReviewFromMovie;
 import znu.visum.components.movies.usecases.getpage.domain.PageMovie;
 import znu.visum.components.person.actors.domain.MovieFromActor;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
@@ -13,6 +16,7 @@ import znu.visum.components.person.directors.infrastructure.DirectorEntity;
 import znu.visum.components.reviews.domain.Grade;
 import znu.visum.components.reviews.domain.MovieFromReview;
 import znu.visum.components.reviews.infrastructure.MovieReviewEntity;
+import znu.visum.components.statistics.domain.StatisticsMovie;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -208,6 +212,16 @@ public class MovieEntity {
   public MovieFromDirector toMovieFromDirector() {
     return new MovieFromDirector(
         this.id, this.title, this.releaseDate, this.isFavorite, this.shouldWatch);
+  }
+
+  public StatisticsMovie toStatisticsMovie() {
+    return StatisticsMovie.builder()
+        .id(this.id)
+        .title(this.title)
+        .releaseDate(this.releaseDate)
+        .posterUrl(this.movieMetadataEntity.getPosterUrl())
+        .grade(Grade.of(this.review.getGrade()))
+        .build();
   }
 
   public void setMovieMetadata(MovieMetadataEntity metadata) {
