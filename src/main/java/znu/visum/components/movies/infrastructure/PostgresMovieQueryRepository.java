@@ -6,10 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
-import znu.visum.components.movies.domain.DiaryFilters;
-import znu.visum.components.movies.domain.Movie;
-import znu.visum.components.movies.domain.MovieDiaryFragment;
-import znu.visum.components.movies.domain.MovieQueryRepository;
+import znu.visum.components.movies.domain.*;
 import znu.visum.components.statistics.domain.AverageRating;
 import znu.visum.components.statistics.domain.DateRange;
 import znu.visum.core.models.common.*;
@@ -57,7 +54,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
   }
 
   @Override
-  public VisumPage<Movie> findPage(int limit, int offset, Sort sort, String search) {
+  public VisumPage<PageMovie> findPage(int limit, int offset, Sort sort, String search) {
     Specification<MovieEntity> searchSpecification = PaginationSearchSpecification.parse(search);
 
     PageSearch<MovieEntity> pageSearch =
@@ -69,7 +66,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
             .build();
 
     return SpringPageMapper.toVisumPage(
-        dataJpaMovieRepository.findPage(pageSearch), MovieEntity::toDomain);
+        dataJpaMovieRepository.findPage(pageSearch), MovieEntity::toDomainPage);
   }
 
   @Override
