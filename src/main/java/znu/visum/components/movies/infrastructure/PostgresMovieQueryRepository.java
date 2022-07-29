@@ -6,10 +6,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import znu.visum.components.history.infrastructure.MovieViewingHistoryEntity;
-import znu.visum.components.movies.domain.*;
+import znu.visum.components.movies.domain.DiaryFilters;
+import znu.visum.components.movies.domain.Movie;
+import znu.visum.components.movies.domain.MovieDiaryFragment;
+import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.movies.usecases.getpage.domain.PageMovie;
 import znu.visum.components.statistics.domain.AverageRating;
 import znu.visum.components.statistics.domain.DateRange;
+import znu.visum.components.statistics.domain.StatisticsMovie;
 import znu.visum.core.models.common.*;
 import znu.visum.core.pagination.domain.VisumPage;
 import znu.visum.core.pagination.infrastructure.PageSearch;
@@ -106,12 +110,13 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
   }
 
   @Override
-  public List<Movie> findHighestRatedMoviesReleasedBetween(DateRange dateRange, Limit limit) {
+  public List<StatisticsMovie> findHighestRatedMoviesReleasedBetween(
+      DateRange dateRange, Limit limit) {
     return this.dataJpaMovieRepository
         .findHighestRatedMoviesReleasedBetween(
             dateRange.startDate(), dateRange.endDate(), limit.value())
         .stream()
-        .map(MovieEntity::toDomain)
+        .map(MovieEntity::toStatisticsMovie)
         .toList();
   }
 
@@ -183,7 +188,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
   }
 
   @Override
-  public List<Movie> findHighestRatedDuringYearOlderMovies(Year year) {
+  public List<StatisticsMovie> findHighestRatedDuringYearOlderMovies(Year year) {
     LocalDateTime startDate =
         LocalDateTime.of(LocalDate.ofYearDay(year.getValue(), 1), LocalTime.MIN);
     LocalDateTime endDate =
@@ -192,7 +197,7 @@ public class PostgresMovieQueryRepository implements MovieQueryRepository {
     return this.dataJpaMovieRepository
         .findHighestRatedDuringYearsOlderMovies(startDate, endDate)
         .stream()
-        .map(MovieEntity::toDomain)
+        .map(MovieEntity::toStatisticsMovie)
         .toList();
   }
 

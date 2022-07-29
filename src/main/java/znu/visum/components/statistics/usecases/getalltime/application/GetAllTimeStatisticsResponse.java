@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.statistics.domain.AllTimeStatistics;
 import znu.visum.components.statistics.domain.MovieCount;
+import znu.visum.components.statistics.domain.StatisticsMovie;
 import znu.visum.core.models.common.Pair;
 
 import java.time.LocalDate;
@@ -91,13 +91,13 @@ public class GetAllTimeStatisticsResponse {
     private int grade;
     private String posterUrl;
 
-    static ResponseMovie from(Movie movie) {
+    static ResponseMovie from(StatisticsMovie movie) {
       return new ResponseMovie(
           movie.getId(),
           movie.getTitle(),
           movie.getReleaseDate(),
-          movie.getReview().getGrade().getValue(),
-          movie.getMetadata().getPosterUrl());
+          movie.getGrade().getValue(),
+          movie.getPosterUrl());
     }
   }
 }

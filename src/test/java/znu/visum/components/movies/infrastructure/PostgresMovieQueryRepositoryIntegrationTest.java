@@ -12,11 +12,11 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import znu.visum.components.movies.domain.DiaryFilters;
-import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieDiaryFragment;
 import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.statistics.domain.AverageRating;
 import znu.visum.components.statistics.domain.DateRange;
+import znu.visum.components.statistics.domain.StatisticsMovie;
 import znu.visum.core.models.common.Limit;
 import znu.visum.core.models.common.Pair;
 
@@ -49,7 +49,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
   @Test
   void whenNoMoviesExists_itShouldReturnAnEmptyList() {
     var dateRange = new DateRange(LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1));
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(5));
     assertThat(movies).isEmpty();
   }
@@ -63,10 +63,13 @@ class PostgresMovieQueryRepositoryIntegrationTest {
       })
   void whenMoreMoviesThanTheLimitExists_itShouldReturnAListWithTheLengthOfTheLimit() {
     var dateRange = new DateRange(LocalDate.of(2000, 1, 1), LocalDate.of(2004, 1, 1));
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(2));
 
-    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactlyInAnyOrder(1L, 3L);
+    assertThat(movies)
+        .hasSize(2)
+        .extracting(StatisticsMovie::getId)
+        .containsExactlyInAnyOrder(1L, 3L);
   }
 
   @DisplayName("findHighestRatedMoviesReleasedBetween() - limit higher than the number of movies")
@@ -78,10 +81,10 @@ class PostgresMovieQueryRepositoryIntegrationTest {
       })
   void whenLessMoviesThanTheLimitExists_itShouldReturnMoviesFound() {
     var dateRange = new DateRange(LocalDate.of(2000, 1, 1), LocalDate.of(2003, 1, 1));
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         this.movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, new Limit(10));
 
-    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(1L, 2L);
+    assertThat(movies).hasSize(2).extracting(StatisticsMovie::getId).containsExactly(1L, 2L);
   }
 
   @DisplayName("getTotalRunningHoursBetween()")
@@ -263,7 +266,7 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/truncate_all_tables.sql",
       })
   void whenThereIsNoMovies_itShouldReturnAnEmptyHighestRatedDuringYearsOlderMoviesList() {
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         this.movieQueryRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
 
     assertThat(movies).isEmpty();
@@ -277,10 +280,10 @@ class PostgresMovieQueryRepositoryIntegrationTest {
         "/sql/insert_multiple_movies_with_review_viewing_history_metadata.sql",
       })
   void itShouldReturnHighestRatedDuringYearOlderMovies() {
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         this.movieQueryRepository.findHighestRatedDuringYearOlderMovies(Year.of(2015));
 
-    assertThat(movies).hasSize(2).extracting(Movie::getId).containsExactly(8L, 14L);
+    assertThat(movies).hasSize(2).extracting(StatisticsMovie::getId).containsExactly(8L, 14L);
   }
 
   @DisplayName("countByReleaseYear() - with movies")

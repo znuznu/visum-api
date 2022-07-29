@@ -2,7 +2,6 @@ package znu.visum.components.statistics.usecases.getalltime.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieQueryRepository;
 import znu.visum.components.reviews.domain.ReviewRepository;
 import znu.visum.components.statistics.domain.*;
@@ -77,7 +76,7 @@ public class GetAllTimeStatistics {
         movieQueryRepository.getAverageMovieRatingPerYearBetween(ALL_TIME_RANGE));
   }
 
-  private List<Pair<Decade, List<Movie>>> getHighestRatedMoviesPerDecade() {
+  private List<Pair<Decade, List<StatisticsMovie>>> getHighestRatedMoviesPerDecade() {
     return IntStream.rangeClosed(START_DECADE, END_DECADE)
         .filter(year -> year % 10 == 0)
         .mapToObj(Year::of)
@@ -86,9 +85,10 @@ public class GetAllTimeStatistics {
         .toList();
   }
 
-  private Pair<Decade, List<Movie>> getHighestRatedMoviesForDecade(Decade decade, Limit limit) {
+  private Pair<Decade, List<StatisticsMovie>> getHighestRatedMoviesForDecade(
+      Decade decade, Limit limit) {
     var dateRange = new DateRange(decade.yearDay(), decade.next().yearDay());
-    List<Movie> movies =
+    List<StatisticsMovie> movies =
         movieQueryRepository.findHighestRatedMoviesReleasedBetween(dateRange, limit);
 
     return new Pair<>(decade, movies);

@@ -3,7 +3,6 @@ package znu.visum.components.person.actors.usecases.getpage.application;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import znu.visum.components.person.actors.domain.Actor;
 import znu.visum.components.person.actors.usecases.getpage.domain.PageActor;
 
 @AllArgsConstructor
