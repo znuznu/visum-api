@@ -7,11 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  flyway:
+    enabled: false
   batch:
     jdbc:
       initialize-schema: always
     job:
       enabled: false
-
-  flyway:
-    enabled: false

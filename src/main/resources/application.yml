@@ -5,6 +5,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  flyway:
+    url: ${PG_DB_URL:jdbc:postgresql://localhost:5432/visum-db}
+    user: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    locations: classpath:db/migration
+    connect-retries: 60
+    baseline-on-migrate: true
+    # 1.0 excluded by default
+    baseline-version: ${FLYWAY_BASELINE_VERSION:1.0}
   batch:
     jdbc:
       initialize-schema: never
@@ -18,3 +27,5 @@ visum:
   registration-key: ${REGISTRATION_KEY}
   jwt-secret-key: ${JWT_SECRET_KEY}
   update-movie-metadata-job-cron: "0 30 0 * * FRI"
+  flyway:
+    repair-on-migrate: ${FLYWAY_REPAIR_ON_MIGRATE}

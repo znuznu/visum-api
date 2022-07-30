@@ -5,23 +5,9 @@ services:
     restart: always
     image: postgres:12.4
     volumes:
-      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
       - visum-db:/var/lib/postgresql/data
     env_file:
       - .env
-    networks:
-      - visum-network
-
-  flyway:
-    container_name: visum-db-flyway
-    image: flyway/flyway:6.5.3-alpine
-    command: -connectRetries=60 baseline migrate info
-    volumes:
-      - ./src/main/resources/db/migration:/flyway/sql
-    env_file:
-      .env
-    depends_on:
-      - visum-db
     networks:
       - visum-network
 

@@ -24,7 +24,7 @@ Run the desired `run-` scripts of the `scripts` folder, directly from this folde
 | `./scripts/run-db.sh`       | Run the PostgreSQL container                                                         |
 | `./scripts/recreate.sh`     | Recreate Spring Boot + PostgreSQL containers                                         |
 | `./scripts/run-all-soft.sh` | Start Spring Boot + PostgreSQL containers                                            |
-| `./scripts/reset.sh`        | Remove **ALL** Docker entities related to _Visum_ (containers, volumes, networks...) |
+| `./scripts/delete-all.sh`   | Remove **ALL** Docker entities related to _Visum_ (containers, volumes, networks...) |
 | `./scripts/fake_data.py`    | Generate an SQL script file with fake data                                           |
 | `./scripts/wait-for-it.sh`  | Don't touch or use it directly :)                                                    |
  
