@@ -56,8 +56,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
-          source: "docker-compose.yml,docker-compose.prod.yml,src/main/resources/*"
-          target: "visum-api/"
+          source: "docker-compose.yml,docker-compose.prod.yml"
+          target: "visum-v2/"
       - name: Run commands on server
         uses: appleboy/ssh-action@master
         with:
@@ -67,5 +67,5 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd visum-api/
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build visum-api
+            cd visum-v2/
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
