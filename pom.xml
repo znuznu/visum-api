@@ -18,7 +18,7 @@
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.17.3</testcontainers.version>
-        <flyway.version>6.5.3</flyway.version>
+        <flyway.version>8.5.13</flyway.version>
         <mockito.version>4.0.0</mockito.version>
         <jwt.version>3.18.2</jwt.version>
         <springdoc.version>1.6.9</springdoc.version>
@@ -166,7 +166,6 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>${flyway.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
