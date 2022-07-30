@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.17.1
+
+- Flyway embedded in Spring Boot
+
 ## 2.17.0
 
 - Add PageXXX models
