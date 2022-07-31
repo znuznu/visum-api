@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.infrastructure.validators;
+package znu.visum.components.externals.tmdb.infrastructure.validators.configuration;
 
 import znu.visum.components.externals.domain.ExternalApi;
 import znu.visum.components.externals.tmdb.infrastructure.models.TmdbGetConfigurationResponse;

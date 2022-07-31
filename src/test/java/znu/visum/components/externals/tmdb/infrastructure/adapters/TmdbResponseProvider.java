@@ -124,6 +124,67 @@ public class TmdbResponseProvider {
         );
   }
 
+  public static MockResponse nowPlayingResponse() {
+      return new MockResponse()
+              .setResponseCode(200)
+              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+              .setBody(
+                      """
+                       {
+                        "dates": {
+                         "maximum": "2022-05-02",
+                         "minimum": "2022-04-15"
+                        },
+                        "page": 1,
+                        "results": [
+                         {
+                          "adult": false,
+                          "backdrop_path": "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+                          "genre_ids": [
+                           28,
+                           878,
+                           35,
+                           10751
+                          ],
+                          "id": 675353,
+                          "original_language": "en",
+                          "original_title": "Sonic the Hedgehog 2",
+                          "overview": "After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+                          "popularity": 6587.056,
+                          "poster_path": "/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg",
+                          "release_date": "2022-03-30",
+                          "title": "Sonic the Hedgehog 2",
+                          "video": false,
+                          "vote_average": 7.7,
+                          "vote_count": 197
+                         },
+                         {
+                          "adult": false,
+                          "backdrop_path": "/yzH5zvuEzzsHLZnn0jwYoPf0CMT.jpg",
+                          "genre_ids": [
+                           53,
+                           28
+                          ],
+                          "id": 760926,
+                          "original_language": "en",
+                          "original_title": "Gold",
+                          "overview": "In the not-too-distant future, two drifters traveling through the desert stumble across the biggest gold nugget ever found and the dream of immense wealth and greed takes hold. They hatch a plan to excavate their bounty, with one man leaving to secure the necessary tools while the other remains with the gold. The man who remains must endure harsh desert elements, ravenous wild dogs, and mysterious intruders, while battling the sinking suspicion that he has been abandoned to his fate.",
+                          "popularity": 1228.945,
+                          "poster_path": "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg",
+                          "release_date": "2022-01-13",
+                          "title": "Gold",
+                          "video": false,
+                          "vote_average": 6.6,
+                          "vote_count": 168
+                         }],
+                        "total_pages": 17,
+                        "total_results": 321
+                       }
+                       """
+              );
+    }
+
   public static MockResponse searchMoviesResponse() {
     return new MockResponse()
         .setResponseCode(200)

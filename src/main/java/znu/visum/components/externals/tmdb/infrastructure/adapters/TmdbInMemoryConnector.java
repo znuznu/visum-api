@@ -2,10 +2,7 @@ package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
-import znu.visum.components.externals.domain.ExternalMovie;
-import znu.visum.components.externals.domain.ExternalMovieCredits;
-import znu.visum.components.externals.domain.ExternalMovieFromSearch;
-import znu.visum.components.externals.domain.ExternalUpcomingMovie;
+import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
@@ -45,6 +42,11 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   @Override
   public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber, String region) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VisumPage<ExternalNowPlayingMovie> getNowPlayingMovies(int pageNumber, String region) {
+    return null;
   }
 
   @Override

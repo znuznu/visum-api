@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.infrastructure.validators;
+package znu.visum.components.externals.tmdb.infrastructure.validators.moviebyid;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

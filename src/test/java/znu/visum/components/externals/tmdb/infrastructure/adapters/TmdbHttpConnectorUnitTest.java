@@ -131,7 +131,7 @@ class TmdbHttpConnectorUnitTest {
   }
 
   @Nested
-  class GetUpcomingMovies {
+  class GetUpcomingTmdbMovies {
 
     @Test
     void shouldSendExpectedHeadersAndParams() throws InterruptedException {
@@ -223,6 +223,102 @@ class TmdbHttpConnectorUnitTest {
                   "Gold",
                   LocalDate.of(2022, 1, 13),
                   ROOT_POSTER_URL + "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg"));
+    }
+  }
+
+  @Nested
+  class GetNowPlayingTmdbMovies {
+
+    @Test
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.nowPlayingResponse());
+
+      connector.getNowPlayingMovies(1,"FR");
+
+      tmdbApiMockServer.takeRequest();
+      RecordedRequest request = tmdbApiMockServer.takeRequest();
+      assertThat(request.getPath())
+              .isEqualTo(
+                      "/movie/now_playing?api_key=tmdb-api-key&language=en-US&page=1&region=FR");
+      assertThat(request.getMethod()).isEqualTo("GET");
+    }
+
+    @Test
+    void shouldSendExpectedDefaultHeadersAndUrl() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.nowPlayingResponse());
+
+      // null region
+      connector.getNowPlayingMovies(1,null);
+
+      tmdbApiMockServer.takeRequest();
+      RecordedRequest request = tmdbApiMockServer.takeRequest();
+      assertThat(request.getPath())
+              .isEqualTo(
+                      "/movie/now_playing?api_key=tmdb-api-key&language=en-US&page=1&region=US");
+      assertThat(request.getMethod()).isEqualTo("GET");
+    }
+
+    @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.getMovieById(6L))
+              .isInstanceOf(TmdbApiException.class)
+              .hasMessageContaining("/configuration");
+    }
+
+    @Test
+    void whenTmdbReturnsAnError_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
+
+      assertThatThrownBy(() -> connector.getNowPlayingMovies(6,"US")).isInstanceOf(TmdbApiException.class);
+    }
+
+    @Test
+    void whenTmdbReturnsA200WithUnexpectedBody_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(
+              new MockResponse()
+                      .setResponseCode(200)
+                      .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+                      .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+                      .setBody("{\"something\": \"unexpected\"}"));
+
+      assertThatThrownBy(() -> connector.getNowPlayingMovies(6,"US"))
+              .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class)
+              .hasMessageStartingWith("Invalid response from TMDB API:");
+    }
+
+    @Test
+    void whenTmdbReturnsMovies_itShouldReturnMovies() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.nowPlayingResponse());
+
+      VisumPage<ExternalNowPlayingMovie> response = connector.getNowPlayingMovies(1,"US");
+
+      assertThat(response.getCurrent()).isOne();
+      assertThat(response.getTotalPages()).isEqualTo(17);
+      assertThat(response.getTotalElements()).isEqualTo(321);
+      assertThat(response.isLast()).isFalse();
+      assertThat(response.isFirst()).isTrue();
+      assertThat(response.getSize()).isEqualTo(2);
+      assertThat(response.getContent())
+              .usingRecursiveFieldByFieldElementComparator()
+              .contains(
+                      new ExternalNowPlayingMovie(
+                              675353,
+                              "Sonic the Hedgehog 2",
+                              LocalDate.of(2022, 03, 30),
+                              ROOT_POSTER_URL + "/1j6JtMRAhdO3RaXRtiWdPL5D3SW.jpg"),
+                      new ExternalNowPlayingMovie(
+                              760926,
+                              "Gold",
+                              LocalDate.of(2022, 1, 13),
+                              ROOT_POSTER_URL + "/ejXBuNLvK4kZ7YcqeKqUWnCxdJq.jpg"));
     }
   }
 

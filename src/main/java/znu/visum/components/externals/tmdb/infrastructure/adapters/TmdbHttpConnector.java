@@ -1,8 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,16 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import znu.visum.components.externals.domain.ExternalMovie;
-import znu.visum.components.externals.domain.ExternalMovieCredits;
-import znu.visum.components.externals.domain.ExternalMovieFromSearch;
-import znu.visum.components.externals.domain.ExternalUpcomingMovie;
+import znu.visum.components.externals.domain.*;
 import znu.visum.components.externals.tmdb.domain.TmdbConnector;
 import znu.visum.components.externals.tmdb.infrastructure.models.*;
-import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetConfigurationResponseBodyValidationHandler;
-import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetMovieByIdResponseBodyValidationHandler;
-import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbGetUpcomingMoviesResponseBodyValidationHandler;
-import znu.visum.components.externals.tmdb.infrastructure.validators.TmdbSearchMoviesResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.configuration.TmdbGetConfigurationResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.moviebyid.TmdbGetMovieByIdResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.nowplaying.TmdbNowPlayingMoviesResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.searchmovies.TmdbSearchMoviesResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.upcomingmovies.TmdbGetUpcomingMoviesResponseBodyValidationHandler;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
@@ -124,6 +120,42 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return TmdbPageResponseMapper.toVisumPage(
           response, TmdbUpcomingMovie::toDomainWithRootUrl, rootUrl);
+    } catch (WebClientResponseException clientResponseException) {
+      throw ExternalApiErrorHandler.from(clientResponseException);
+    }
+  }
+
+  @Override
+  public VisumPage<ExternalNowPlayingMovie> getNowPlayingMovies(int pageNumber, String region) {
+    log.info("Call to TMDb /movie/now_playing");
+
+    String rootUrl = getConfigurationRootPosterUrl();
+
+    try {
+      TmdbNowPlayingMoviesResponse response =
+          this.webClient
+              .get()
+              .uri(
+                  tmdbApiBaseUrl,
+                  uriBuilder ->
+                      uriBuilder
+                          .path("/movie/now_playing")
+                          .queryParam("api_key", tmdbApiKey)
+                          .queryParam("language", LANGUAGE)
+                          .queryParam("page", pageNumber)
+                          .queryParam("region", region == null ? DEFAULT_REGION : region)
+                          .build())
+              .header("Accept", CONTENT_TYPE)
+              .retrieve()
+              .bodyToMono(TmdbNowPlayingMoviesResponse.class)
+              .flatMap(
+                  body ->
+                      new TmdbNowPlayingMoviesResponseBodyValidationHandler()
+                          .validate(Mono.just(body)))
+              .block();
+
+      return TmdbPageResponseMapper.toVisumPage(
+          response, TmdbNowPlayingMovie::toDomainWithRootUrl, rootUrl);
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiErrorHandler.from(clientResponseException);
     }

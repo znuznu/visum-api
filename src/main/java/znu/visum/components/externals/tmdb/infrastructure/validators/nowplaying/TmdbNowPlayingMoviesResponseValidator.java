@@ -1,11 +1,11 @@
-package znu.visum.components.externals.tmdb.infrastructure.validators;
+package znu.visum.components.externals.tmdb.infrastructure.validators.nowplaying;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import znu.visum.components.externals.tmdb.infrastructure.models.TmdbNowPlayingMoviesResponse;
 import znu.visum.components.externals.tmdb.infrastructure.models.TmdbPageResponse;
-import znu.visum.components.externals.tmdb.infrastructure.models.TmdbSearchMoviesResponse;
 
-public class TmdbSearchMoviesResponseValidator implements Validator {
+public class TmdbNowPlayingMoviesResponseValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> clazz) {
@@ -14,7 +14,7 @@ public class TmdbSearchMoviesResponseValidator implements Validator {
 
   @Override
   public void validate(Object target, Errors errors) {
-    TmdbSearchMoviesResponse response = (TmdbSearchMoviesResponse) target;
+    TmdbNowPlayingMoviesResponse response = (TmdbNowPlayingMoviesResponse) target;
 
     if (response.getPage() < 1) {
       errors.rejectValue("page", "inferior.to.one");
