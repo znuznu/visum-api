@@ -62,11 +62,6 @@ public class PostgresActorRepository implements ActorRepository {
   }
 
   @Override
-  public Actor saveAndFlush(Actor actor) {
-    return dataJpaActorRepository.saveAndFlush(ActorEntity.from(actor)).toDomain();
-  }
-
-  @Override
   public void deleteById(long id) {
     dataJpaActorRepository.deleteById(id);
   }

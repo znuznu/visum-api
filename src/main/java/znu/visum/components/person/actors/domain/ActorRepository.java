@@ -17,7 +17,5 @@ public interface ActorRepository {
 
   Actor save(Actor actor);
 
-  Actor saveAndFlush(Actor actor);
-
   void deleteById(long id);
 }
