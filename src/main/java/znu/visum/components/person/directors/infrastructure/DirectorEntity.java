@@ -7,11 +7,13 @@ import znu.visum.components.externals.domain.ExternalDirector;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 import znu.visum.components.person.directors.domain.Director;
+import znu.visum.components.person.directors.domain.MovieFromDirector;
 import znu.visum.components.person.directors.usecases.getpage.domain.PageDirector;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.components.person.infrastructure.PeopleEntity;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -98,6 +100,7 @@ public class DirectorEntity extends PeopleEntity {
         .movies(
             this.movieEntities.stream()
                 .map(MovieEntity::toMovieFromDirector)
+                .sorted(Comparator.comparing(MovieFromDirector::getReleaseDate))
                 .collect(Collectors.toList()))
         .metadata(this.metadataEntity.toDomain())
         .build();
