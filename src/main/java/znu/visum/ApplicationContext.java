@@ -22,13 +22,17 @@ public class ApplicationContext {
   @Bean
   @ConditionalOnProperty(name = "visum.flyway.repair-on-migrate", havingValue = "false")
   public FlywayMigrationStrategy standardStrategy() {
-    return Flyway::migrate;
+    return flyway -> {
+      flyway.baseline();
+      flyway.migrate();
+    };
   }
 
   @Bean
   @ConditionalOnProperty(name = "visum.flyway.repair-on-migrate", havingValue = "true")
   public FlywayMigrationStrategy repairStrategy() {
     return flyway -> {
+      flyway.baseline();
       flyway.repair();
       flyway.migrate();
     };
