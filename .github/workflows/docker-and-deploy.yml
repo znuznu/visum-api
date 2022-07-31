@@ -68,4 +68,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd visum-v2/
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
