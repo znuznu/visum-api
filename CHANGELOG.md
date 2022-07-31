@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.17.2
+
+- Sort the movies by release date on the GET /actors/:id endpoint
+- Sort the movies by release date on the GET /directors/:id endpoint
+
 ## 2.17.1
 
 - Flyway embedded in Spring Boot
