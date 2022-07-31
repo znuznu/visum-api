@@ -14,6 +14,7 @@ import znu.visum.components.person.infrastructure.PeopleEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -78,17 +79,21 @@ public class ActorEntity extends PeopleEntity {
   }
 
   public Actor toDomain() {
-    List<MovieFromActor> movies =
-        this.members != null
-            ? this.members.stream().map(member -> member.getMovie().toMovieFromActor()).toList()
-            : new ArrayList<>();
-
     return Actor.builder()
         .id(this.id)
         .identity(Identity.builder().forename(this.getForename()).name(this.getName()).build())
-        .movies(movies)
+        .movies(this.getMovies())
         .metadata(this.metadataEntity.toDomain())
         .build();
+  }
+
+  private List<MovieFromActor> getMovies() {
+    return this.members != null
+        ? this.members.stream()
+            .map(member -> member.getMovie().toMovieFromActor())
+            .sorted(Comparator.comparing(MovieFromActor::getReleaseDate))
+            .toList()
+        : new ArrayList<>();
   }
 
   @Override
