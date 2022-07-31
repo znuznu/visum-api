@@ -35,10 +35,10 @@ class GetUpcomingTmdbMoviesUnitTest {
   @Test
   @DisplayName("when the connector throws on the search method, it should bubble up the exception")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
-    Mockito.when(connector.getUpcomingMovies(1))
+    Mockito.when(connector.getUpcomingMovies(1, "US"))
         .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
 
-    assertThatThrownBy(() -> getUpcomingTmdbMovies.process(1))
+    assertThatThrownBy(() -> getUpcomingTmdbMovies.process(1, "US"))
         .isInstanceOf(TmdbApiException.class)
         .hasMessage("Message: Some message. Status code: 500");
   }
@@ -46,7 +46,7 @@ class GetUpcomingTmdbMoviesUnitTest {
   @Test
   @DisplayName("When the connector returnsmovies, it should return movies mapped")
   void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
-    Mockito.when(connector.getUpcomingMovies(1))
+    Mockito.when(connector.getUpcomingMovies(1, "US"))
         .thenReturn(
             VisumPage.<ExternalUpcomingMovie>builder()
                 .isFirst(true)
@@ -71,7 +71,7 @@ class GetUpcomingTmdbMoviesUnitTest {
                             .build()))
                 .build());
 
-    assertThat(getUpcomingTmdbMovies.process(1))
+    assertThat(getUpcomingTmdbMovies.process(1, "US"))
         .usingRecursiveComparison()
         .isEqualTo(
             VisumPage.<ExternalUpcomingMovie>builder()
@@ -101,7 +101,7 @@ class GetUpcomingTmdbMoviesUnitTest {
   @Test
   @DisplayName("given an invalid page number (< 0), it should throw")
   void whenTheConnectorThrowsOnSearchMovie_itShouldBubbleUpAndThrow() {
-    assertThatThrownBy(() -> getUpcomingTmdbMovies.process(0))
+    assertThatThrownBy(() -> getUpcomingTmdbMovies.process(0, "US"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("TMDb page number should be >= 1.");
   }

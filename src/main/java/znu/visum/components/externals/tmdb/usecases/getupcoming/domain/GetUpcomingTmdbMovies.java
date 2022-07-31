@@ -17,11 +17,11 @@ public class GetUpcomingTmdbMovies {
     this.connector = connector;
   }
 
-  public VisumPage<ExternalUpcomingMovie> process(int pageNumber) {
+  public VisumPage<ExternalUpcomingMovie> process(int pageNumber, String region) {
     if (pageNumber < 1) {
       throw new IllegalArgumentException("TMDb page number should be >= 1.");
     }
 
-    return this.connector.getUpcomingMovies(pageNumber);
+    return this.connector.getUpcomingMovies(pageNumber, region);
   }
 }

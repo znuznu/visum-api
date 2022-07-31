@@ -43,7 +43,7 @@ public class TmdbInMemoryConnector implements TmdbConnector {
   }
 
   @Override
-  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber) {
+  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber, String region) {
     throw new UnsupportedOperationException();
   }
 

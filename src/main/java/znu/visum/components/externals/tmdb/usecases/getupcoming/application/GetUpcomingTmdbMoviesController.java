@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import znu.visum.components.externals.tmdb.usecases.getupcoming.domain.GetUpcomingTmdbMovies;
@@ -29,8 +30,8 @@ public class GetUpcomingTmdbMoviesController {
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public GetPageResponse<GetUpcomingTmdbMoviesResponse> getUpcomingMovies(
-      @RequestParam @Min(1) Integer pageNumber) {
+      @RequestParam @Min(1) Integer pageNumber, @RequestParam @Nullable String region) {
     return GetPageResponse.from(
-        getUpcomingTmdbMovies.process(pageNumber), GetUpcomingTmdbMoviesResponse::from);
+        getUpcomingTmdbMovies.process(pageNumber, region), GetUpcomingTmdbMoviesResponse::from);
   }
 }

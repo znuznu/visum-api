@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TmdbConnector {
   VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber);
 
-  VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber);
+  VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber, String region);
 
   Optional<ExternalMovie> getMovieById(long movieId);
 

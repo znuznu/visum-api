@@ -18,7 +18,6 @@ public class ApplicationContext {
     return new BCryptPasswordEncoder();
   }
 
-
   @Bean
   @ConditionalOnProperty(name = "visum.flyway.repair-on-migrate", havingValue = "false")
   public FlywayMigrationStrategy standardStrategy() {

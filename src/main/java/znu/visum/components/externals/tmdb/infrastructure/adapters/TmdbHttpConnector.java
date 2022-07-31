@@ -1,5 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,17 @@ import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class TmdbHttpConnector implements TmdbConnector {
 
   private static final String CONTENT_TYPE = "application/json; charset=utf-8";
   private static final String LANGUAGE = "en-US";
 
-  private final WebClient webClient;
+  /** Default region to use for the upcoming endpoint (ISO 3166-1 format) */
+  private static final String DEFAULT_REGION = "US";
 
-  private final Logger logger = LoggerFactory.getLogger(TmdbHttpConnector.class);
+  private final WebClient webClient;
 
   private final String tmdbApiKey;
 
@@ -54,7 +57,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber) {
-    logger.info("Call to TMDb /search/movie?query={}&page={}", search, pageNumber);
+    log.info("Call to TMDb /search/movie?query={}&page={}", search, pageNumber);
 
     String rootUrl = this.getConfigurationRootPosterUrl();
 
@@ -90,8 +93,8 @@ public class TmdbHttpConnector implements TmdbConnector {
   }
 
   @Override
-  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber) {
-    logger.info("Call to TMDb /movie/upcoming");
+  public VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber, String region) {
+    log.info("Call to TMDb /movie/upcoming");
 
     String rootUrl = getConfigurationRootPosterUrl();
 
@@ -108,6 +111,7 @@ public class TmdbHttpConnector implements TmdbConnector {
                           .queryParam("language", LANGUAGE)
                           .queryParam("include_adult", "false")
                           .queryParam("page", pageNumber)
+                          .queryParam("region", region == null ? DEFAULT_REGION : region)
                           .build())
               .header("Accept", CONTENT_TYPE)
               .retrieve()
@@ -127,7 +131,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovie> getMovieById(long movieId) {
-    logger.info("Call to TMDb /movie/{}", movieId);
+    log.info("Call to TMDb /movie/{}", movieId);
 
     String rootUrl = getConfigurationRootPosterUrl();
 
@@ -163,7 +167,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
   @Override
   public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
-    logger.info("Call to TMDb /movie/{}/credits", movieId);
+    log.info("Call to TMDb /movie/{}/credits", movieId);
 
     String rootUrl = getConfigurationRootPosterUrl();
 
@@ -195,7 +199,7 @@ public class TmdbHttpConnector implements TmdbConnector {
   @Override
   @Cacheable("tmdbBasePosterUrl")
   public String getConfigurationRootPosterUrl() {
-    logger.info("Call to TMDb /configuration");
+    log.info("Call to TMDb /configuration");
 
     try {
       TmdbGetConfigurationResponse response =

@@ -49,7 +49,7 @@ class TmdbHttpConnectorUnitTest {
   class SearchMovies {
 
     @Test
-    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.searchMoviesResponse());
 
@@ -134,17 +134,33 @@ class TmdbHttpConnectorUnitTest {
   class GetUpcomingMovies {
 
     @Test
-    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
 
-      connector.getUpcomingMovies(1);
+      connector.getUpcomingMovies(1,"FR");
 
       tmdbApiMockServer.takeRequest();
       RecordedRequest request = tmdbApiMockServer.takeRequest();
       assertThat(request.getPath())
           .isEqualTo(
-              "/movie/upcoming?api_key=tmdb-api-key&language=en-US&include_adult=false&page=1");
+              "/movie/upcoming?api_key=tmdb-api-key&language=en-US&include_adult=false&page=1&region=FR");
+      assertThat(request.getMethod()).isEqualTo("GET");
+    }
+
+    @Test
+    void shouldSendExpectedDefaultHeadersAndUrl() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
+
+      // null region
+      connector.getUpcomingMovies(1,null);
+
+      tmdbApiMockServer.takeRequest();
+      RecordedRequest request = tmdbApiMockServer.takeRequest();
+      assertThat(request.getPath())
+              .isEqualTo(
+                      "/movie/upcoming?api_key=tmdb-api-key&language=en-US&include_adult=false&page=1&region=US");
       assertThat(request.getMethod()).isEqualTo("GET");
     }
 
@@ -163,7 +179,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
-      assertThatThrownBy(() -> connector.getUpcomingMovies(6)).isInstanceOf(TmdbApiException.class);
+      assertThatThrownBy(() -> connector.getUpcomingMovies(6,"US")).isInstanceOf(TmdbApiException.class);
     }
 
     @Test
@@ -176,7 +192,7 @@ class TmdbHttpConnectorUnitTest {
               .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
               .setBody("{\"something\": \"unexpected\"}"));
 
-      assertThatThrownBy(() -> connector.getUpcomingMovies(6))
+      assertThatThrownBy(() -> connector.getUpcomingMovies(6,"US"))
           .isInstanceOf(ExternalApiUnexpectedResponseBodyException.class)
           .hasMessageStartingWith("Invalid response from TMDB API:");
     }
@@ -186,7 +202,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(TmdbResponseProvider.upcomingMoviesResponse());
 
-      VisumPage<ExternalUpcomingMovie> response = connector.getUpcomingMovies(1);
+      VisumPage<ExternalUpcomingMovie> response = connector.getUpcomingMovies(1,"US");
 
       assertThat(response.getCurrent()).isOne();
       assertThat(response.getTotalPages()).isEqualTo(17);
@@ -214,7 +230,7 @@ class TmdbHttpConnectorUnitTest {
   class GetMovieById {
 
     @Test
-    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
@@ -305,7 +321,7 @@ class TmdbHttpConnectorUnitTest {
   class GetCreditsByMovieId {
 
     @Test
-    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       // 404 is a valid error response
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
@@ -400,7 +416,7 @@ class TmdbHttpConnectorUnitTest {
   class GetConfigurationBasePosterUrl {
 
     @Test
-    void itShouldSendExpectedHeadersAndUrl() throws InterruptedException {
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
 
       connector.getConfigurationRootPosterUrl();
