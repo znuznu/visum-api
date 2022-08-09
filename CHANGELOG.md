@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.18.0
+
+- Remove error field from HTTP exceptions
+- Add JwtService
+- Add `/tmdb/movie/now_playing`
+- Bump Auth0 Java package to 4.0.0
+
 ## 2.17.2
 
 - Sort the movies by release date on the GET /actors/:id endpoint
