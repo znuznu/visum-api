@@ -12,7 +12,6 @@ public class HttpException {
   HttpStatus status;
   String code;
   String message;
-  String error;
   String path;
 
   public ResponseEntity<HttpException> toResponseEntity() {
