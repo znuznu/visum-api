@@ -7,13 +7,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @ComponentScan
 @EnableScheduling
 public class ApplicationContext {
   @Bean
-  public BCryptPasswordEncoder encoder() {
+  public PasswordEncoder encoder() {
     return new BCryptPasswordEncoder();
   }
 

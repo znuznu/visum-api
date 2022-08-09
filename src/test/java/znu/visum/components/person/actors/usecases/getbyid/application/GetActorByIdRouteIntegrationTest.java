@@ -42,9 +42,9 @@ class GetActorByIdRouteIntegrationTest {
   }
 
   @Test
-  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
     mvc.perform(get(URL_TEMPLATE, '1').contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test

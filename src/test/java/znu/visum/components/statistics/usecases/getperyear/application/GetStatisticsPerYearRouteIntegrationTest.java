@@ -39,9 +39,9 @@ class GetStatisticsPerYearRouteIntegrationTest {
   }
 
   @Test
-  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
     mvc.perform(get("/api/statistics/years/2014").contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test

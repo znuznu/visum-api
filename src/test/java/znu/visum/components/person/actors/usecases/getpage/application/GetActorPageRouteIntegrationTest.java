@@ -43,7 +43,7 @@ class GetActorPageRouteIntegrationTest {
   }
 
   @Test
-  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
     mvc.perform(
             get(
                     URL_TEMPLATE + "?sort=type&search=type={type}&limit={limit}&offset={offset}",
@@ -51,7 +51,7 @@ class GetActorPageRouteIntegrationTest {
                     20,
                     0)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test

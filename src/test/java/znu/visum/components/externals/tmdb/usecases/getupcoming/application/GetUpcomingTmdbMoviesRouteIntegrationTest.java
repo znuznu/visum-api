@@ -28,11 +28,11 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
   private TmdbConnector connector;
 
   @Test
-  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
     mvc.perform(
             get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", 1)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   // TODO find a way to use InMemoryConnector inside the service
