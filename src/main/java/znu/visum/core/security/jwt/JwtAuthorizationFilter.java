@@ -1,11 +1,12 @@
 package znu.visum.core.security.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import znu.visum.core.security.jwt.domain.JwtService;
+import znu.visum.core.security.jwt.domain.JwtVerifyQuery;
+import znu.visum.core.security.jwt.domain.MissingTokenHeaderException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,11 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+  private final JwtService jwtService;
+
   private final String jwtSecretKey;
 
-  public JWTAuthorizationFilter(String jwtSecretKey, AuthenticationManager authManager) {
+  public JwtAuthorizationFilter(
+      String jwtSecretKey, AuthenticationManager authManager, JwtService jwtService) {
     super(authManager);
+    this.jwtService = jwtService;
     this.jwtSecretKey = jwtSecretKey;
   }
 
@@ -27,36 +33,28 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
       HttpServletRequest req, HttpServletResponse res, FilterChain chain)
       throws IOException, ServletException {
     String header = req.getHeader("Authorization");
-
-    if (header == null || !header.startsWith("Bearer ")) {
+    if (header == null || !header.startsWith(JwtService.HEADER_PREFIX)) {
       chain.doFilter(req, res);
       return;
     }
 
     UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-
     SecurityContextHolder.getContext().setAuthentication(authentication);
+
     chain.doFilter(req, res);
   }
 
   private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-    String token = request.getHeader("Authorization");
-
-    if (token == null) {
-      // TODO throw proper exception
-      throw new RuntimeException("Invalid header.");
+    String authorizationHeader = request.getHeader("Authorization");
+    if (authorizationHeader == null) {
+      throw new MissingTokenHeaderException();
     }
 
-    String user =
-        JWT.require(Algorithm.HMAC512(this.jwtSecretKey.getBytes()))
-            .build()
-            .verify(token.replace("Bearer ", ""))
-            .getSubject();
+    String token = authorizationHeader.replace(JwtService.HEADER_PREFIX, "");
 
-    if (user == null) {
-      throw new RuntimeException("Invalid token.");
-    }
+    var query = new JwtVerifyQuery(this.jwtSecretKey, token);
+    String subject = this.jwtService.verifyAndGetSubject(query);
 
-    return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+    return new UsernamePasswordAuthenticationToken(subject, null, new ArrayList<>());
   }
 }

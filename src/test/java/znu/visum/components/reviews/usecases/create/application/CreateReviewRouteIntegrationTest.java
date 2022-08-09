@@ -49,12 +49,12 @@ class CreateReviewRouteIntegrationTest {
   }
 
   @Test
-  void whenTheUserIsNotAuthenticated_itShouldReturnA403Response() throws Exception {
+  void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
     mvc.perform(
             post(URL_TEMPLATE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new CreateReviewRequest(10, "Nice movie.", 1L))))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test

@@ -20,7 +20,7 @@
         <testcontainers.version>1.17.3</testcontainers.version>
         <flyway.version>8.5.13</flyway.version>
         <mockito.version>4.0.0</mockito.version>
-        <jwt.version>3.18.2</jwt.version>
+        <jwt.version>4.0.0</jwt.version>
         <springdoc.version>1.6.9</springdoc.version>
         <mockwebserver.version>4.10.0</mockwebserver.version>
         <okhttp.version>4.10.0</okhttp.version>
