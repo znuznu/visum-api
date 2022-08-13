@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.accounts.domain.Account;
 import znu.visum.components.accounts.domain.AccountRepository;
+import znu.visum.components.accounts.domain.TransientAccount;
 
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class PostgresAccountRepository implements AccountRepository {
   }
 
   @Override
-  public Account save(Account account) {
+  public Account save(TransientAccount account) {
     return dataJpaAccountRepository.save(AccountEntity.from(account)).toDomain();
   }
 

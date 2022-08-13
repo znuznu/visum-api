@@ -1,23 +1,20 @@
 package znu.visum.components.accounts.usecases.signup.domain;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import znu.visum.components.accounts.domain.AccountRepository;
-import znu.visum.components.accounts.domain.AccountToRegister;
-import znu.visum.components.accounts.domain.InvalidRegistrationKeyException;
-import znu.visum.components.accounts.domain.MaximumAccountReachedException;
+import znu.visum.components.accounts.domain.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 class SignupUnitTest {
+
   @Mock private AccountRepository accountRepository;
 
   @Mock private PasswordEncoder passwordEncoder;
@@ -29,43 +26,40 @@ class SignupUnitTest {
     this.signup = new Signup("right-key", accountRepository, passwordEncoder);
   }
 
-  @Nested
-  class Register {
+  @Test
+  void shouldNotCreateWithoutValidRegistrationKey() {
+    RegisterAccountCommand registerAccountCommand =
+        new RegisterAccountCommand("th3g3ntl3man", "password", "wrong-key");
 
-    @Test
-    @DisplayName("When the registration key is invalid, it should throw")
-    void itShouldThrowRegistrationKeyRelatedError() {
-      AccountToRegister accountToRegister =
-          new AccountToRegister("th3g3ntl3man", "password", "wrong-key");
+    assertThatThrownBy(() -> signup.process(registerAccountCommand))
+        .isInstanceOf(InvalidRegistrationKeyException.class)
+        .hasMessage("Invalid registration key.");
+  }
 
-      assertThatThrownBy(() -> signup.process(accountToRegister))
-          .isInstanceOf(InvalidRegistrationKeyException.class)
-          .hasMessage("Invalid registration key.");
-    }
+  @Test
+  void shouldNotCreateIfAnAccountAlreadyExists() {
+    Mockito.when(accountRepository.count()).thenReturn(1L);
 
-    @Test
-    @DisplayName("When there is already one account, it should throw")
-    void whenThereIsAnAccount_itShouldThrow() {
-      Mockito.when(accountRepository.count()).thenReturn(1L);
+    RegisterAccountCommand registerAccountCommand =
+        new RegisterAccountCommand("th3g3ntl3man", "password", "right-key");
 
-      AccountToRegister accountToRegister =
-          new AccountToRegister("th3g3ntl3man", "password", "right-key");
+    assertThatThrownBy(() -> signup.process(registerAccountCommand))
+        .isInstanceOf(MaximumAccountReachedException.class)
+        .hasMessage("Number of maximum account reached.");
+  }
 
-      assertThatThrownBy(() -> signup.process(accountToRegister))
-          .isInstanceOf(MaximumAccountReachedException.class)
-          .hasMessage("Number of maximum account reached.");
-    }
+  @Test
+  void shouldCreateIfNoAccountExists() {
+    Mockito.when(accountRepository.count()).thenReturn(0L);
+    Mockito.when(passwordEncoder.encode("password")).thenReturn("super_hash");
+    Mockito.when(accountRepository.save(new TransientAccount("th3g3ntl3man", "super_hash")))
+        .thenReturn(new Account(1L, "th3g3ntl3man", "super_hash"));
 
-    @Test
-    @DisplayName(
-        "When the account is valid and the maximum number of account is not reached, it should not throw")
-    void whenThereIsAnAccount_itShouldNotThrow() {
-      Mockito.when(accountRepository.count()).thenReturn(0L);
+    RegisterAccountCommand command =
+        new RegisterAccountCommand("th3g3ntl3man", "password", "right-key");
 
-      AccountToRegister accountToRegister =
-          new AccountToRegister("th3g3ntl3man", "password", "right-key");
+    var account = signup.process(command);
 
-      signup.process(accountToRegister);
-    }
+    assertThat(account).isEqualTo(new Account(1L, "th3g3ntl3man", "super_hash"));
   }
 }

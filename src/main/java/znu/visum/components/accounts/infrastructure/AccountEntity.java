@@ -3,6 +3,7 @@ package znu.visum.components.accounts.infrastructure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import znu.visum.components.accounts.domain.Account;
+import znu.visum.components.accounts.domain.TransientAccount;
 
 import javax.persistence.*;
 
@@ -25,8 +26,8 @@ public class AccountEntity {
     this.password = password;
   }
 
-  public static AccountEntity from(Account account) {
-    return new AccountEntity(account.getUsername(), account.getPassword());
+  public static AccountEntity from(TransientAccount account) {
+    return new AccountEntity(account.username(), account.password());
   }
 
   public Account toDomain() {

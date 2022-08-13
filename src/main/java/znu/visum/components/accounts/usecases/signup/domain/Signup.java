@@ -14,7 +14,6 @@ import znu.visum.components.accounts.domain.*;
 import java.util.ArrayList;
 
 @Service
-@Slf4j
 public class Signup implements UserDetailsService {
 
   private final AccountRepository accountRepository;
@@ -31,11 +30,11 @@ public class Signup implements UserDetailsService {
     this.registrationKey = registrationKey;
   }
 
-  public void process(AccountToRegister accountToRegister) {
-    this.validateRegistrationKey(accountToRegister, registrationKey);
+  public Account process(RegisterAccountCommand command) {
+    this.validateRegistrationKey(command, registrationKey);
     this.validateMaximumAccounts();
-    this.create(
-        new Account(null, accountToRegister.getUsername(), accountToRegister.getPassword()));
+
+    return this.create(command);
   }
 
   public UserDetails loadUserByUsername(String username) {
@@ -44,19 +43,19 @@ public class Signup implements UserDetailsService {
             .findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException(username));
 
-    return new User(account.getUsername(), account.getPassword(), new ArrayList<>());
+    return new User(account.username(), account.password(), new ArrayList<>());
   }
 
-  private Account create(Account accountEntity) {
-    accountEntity.setPassword(passwordEncoder.encode(accountEntity.getPassword()));
+  private Account create(RegisterAccountCommand command) {
+    var encodedPassword = passwordEncoder.encode(command.password());
+    var account = new TransientAccount(command.username(), encodedPassword);
 
-    return this.accountRepository.save(accountEntity);
+    return this.accountRepository.save(account);
   }
 
   private void validateMaximumAccounts() {
     // TODO should probably be a config property
     if (this.count() != 0) {
-      log.error("Trying to add a new account.");
       throw new MaximumAccountReachedException();
     }
   }
@@ -66,8 +65,8 @@ public class Signup implements UserDetailsService {
   }
 
   private void validateRegistrationKey(
-      AccountToRegister accountToRegister, String registrationKey) {
-    if (!accountToRegister.getRegistrationKey().equals(registrationKey)) {
+      RegisterAccountCommand registerAccountCommand, String registrationKey) {
+    if (!registerAccountCommand.registrationKey().equals(registrationKey)) {
       throw new InvalidRegistrationKeyException();
     }
   }

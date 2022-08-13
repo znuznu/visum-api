@@ -22,7 +22,7 @@ public class SignupController {
   @Operation(summary = "Create an account.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public void signUp(@Valid @RequestBody final SignupRequest signupRequest) {
-    this.signup.process(signupRequest.toDomain());
+  public SignupResponse signUp(@Valid @RequestBody final SignupRequest signupRequest) {
+    return SignupResponse.of(this.signup.process(signupRequest.toDomain()));
   }
 }
