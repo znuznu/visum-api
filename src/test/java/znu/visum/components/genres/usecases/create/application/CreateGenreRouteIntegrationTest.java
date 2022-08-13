@@ -67,7 +67,7 @@ class CreateGenreRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new CreateGenreRequest("Drama"))))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.message").value("The given GENRE already exists."))
+        .andExpect(jsonPath("$.message").value("The given genre already exists."))
         .andExpect(jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
         .andExpect(jsonPath("$.path").value(URL_TEMPLATE));
   }

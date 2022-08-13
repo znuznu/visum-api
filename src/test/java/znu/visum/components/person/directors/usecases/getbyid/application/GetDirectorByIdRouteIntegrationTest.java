@@ -63,7 +63,7 @@ class GetDirectorByIdRouteIntegrationTest {
       throws Exception {
     mvc.perform(get(URL_TEMPLATE, "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No DIRECTOR with id 200 found."))
+        .andExpect(jsonPath("$.message").value("No director with id 200 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/directors/200"));
   }

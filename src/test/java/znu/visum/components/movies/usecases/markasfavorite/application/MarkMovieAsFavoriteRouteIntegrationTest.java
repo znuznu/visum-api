@@ -62,7 +62,7 @@ class MarkMovieAsFavoriteRouteIntegrationTest {
   void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(put(URL_TEMPLATE, "1000").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No MOVIE with id 1000 found."))
+        .andExpect(jsonPath("$.message").value("No movie with id 1000 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/movies/1000/favorite"));
   }

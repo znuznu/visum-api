@@ -82,7 +82,7 @@ class CreateViewingEntryRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"viewingDate\": \"2021-01-26\", \"movieId\": 123456}"))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No MOVIE with id 123456 found."))
+        .andExpect(jsonPath("$.message").value("No movie with id 123456 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value(URL_TEMPLATE));
   }

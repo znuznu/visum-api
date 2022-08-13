@@ -1,12 +1,12 @@
 package znu.visum.components.person.actors.domain;
 
-import znu.visum.core.exceptions.domain.DomainModel;
+import znu.visum.core.exceptions.domain.Domain;
 import znu.visum.core.exceptions.domain.NoSuchModelException;
 
 public class NoSuchActorIdException extends NoSuchModelException {
 
   private NoSuchActorIdException(String id) {
-    super(id, DomainModel.ACTOR);
+    super(id, Domain.ACTOR);
   }
 
   public static NoSuchActorIdException withId(String id) {

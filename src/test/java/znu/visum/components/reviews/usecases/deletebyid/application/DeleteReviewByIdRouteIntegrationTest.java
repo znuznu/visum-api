@@ -62,7 +62,7 @@ class DeleteReviewByIdRouteIntegrationTest {
   void givenANumericalId_whenNoReviewWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(delete(URL_TEMPLATE, 1000).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No REVIEW with id 1000 found."))
+        .andExpect(jsonPath("$.message").value("No review with id 1000 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/reviews/1000/movies"));
   }
