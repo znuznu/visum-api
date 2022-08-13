@@ -60,7 +60,7 @@ class UpdateReviewRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new UpdateReviewRequest(6, "Nice movie."))))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No REVIEW with id 269 found."))
+        .andExpect(jsonPath("$.message").value("No review with id 269 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/reviews/269/movies"));
   }

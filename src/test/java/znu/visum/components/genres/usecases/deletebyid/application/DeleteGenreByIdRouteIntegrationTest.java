@@ -62,7 +62,7 @@ class DeleteGenreByIdRouteIntegrationTest {
   void givenANumericalId_whenNoGenreWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(delete(URL_TEMPLATE, '1').contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No GENRE with id 1 found."))
+        .andExpect(jsonPath("$.message").value("No genre with id 1 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/genres/1"));
   }

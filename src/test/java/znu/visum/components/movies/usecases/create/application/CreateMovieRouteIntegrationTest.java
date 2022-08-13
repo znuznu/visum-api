@@ -80,7 +80,7 @@ class CreateMovieRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"tmdbId\":111, \"isFavorite\":true, \"isToWatch\":false}"))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.message").value("The given MOVIE already exists."))
+        .andExpect(jsonPath("$.message").value("The given movie already exists."))
         .andExpect(jsonPath("$.code").value("DATA_ALREADY_EXISTS"))
         .andExpect(jsonPath("$.path").value(URL_TEMPLATE));
   }

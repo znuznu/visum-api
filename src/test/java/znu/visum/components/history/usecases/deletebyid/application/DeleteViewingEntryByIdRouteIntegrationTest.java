@@ -63,7 +63,7 @@ class DeleteViewingEntryByIdRouteIntegrationTest {
       throws Exception {
     mvc.perform(delete(URL_TEMPLATE, "1000").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No VIEWING_HISTORY with id 1000 found."))
+        .andExpect(jsonPath("$.message").value("No viewing history with id 1000 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/history/1000/movies"));
   }

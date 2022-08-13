@@ -66,7 +66,7 @@ class CreateReviewRouteIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestMapper.toJsonString(new CreateReviewRequest(10, "Something.", 1L))))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No MOVIE with id 1 found."))
+        .andExpect(jsonPath("$.message").value("No movie with id 1 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value(URL_TEMPLATE));
   }

@@ -52,7 +52,7 @@ class GetMovieByIdRouteIntegrationTest {
   void givenANumericalId_whenNoMovieWithTheIdExists_itShouldReturnA404Response() throws Exception {
     mvc.perform(get(URL_TEMPLATE, "200").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("No MOVIE with id 200 found."))
+        .andExpect(jsonPath("$.message").value("No movie with id 200 found."))
         .andExpect(jsonPath("$.code").value("RESOURCE_NOT_FOUND"))
         .andExpect(jsonPath("$.path").value("/api/movies/200"));
   }

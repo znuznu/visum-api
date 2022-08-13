@@ -42,7 +42,7 @@ class GetTmdbMovieByIdUnitTest {
 
     assertThatThrownBy(() -> getTmdbMovieById.process(42))
         .isInstanceOf(NoSuchExternalMovieIdException.class)
-        .hasMessage("No EXTERNAL_MOVIE with id 42 found.");
+        .hasMessage("No external movie with id 42 found.");
   }
 
   @Test
