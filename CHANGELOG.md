@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.19.0
+
+- Add a response body to POST /accounts
+- Rename `DomainModel` to `Domain`
+
 ## 2.18.0
 
 - Remove error field from HTTP exceptions
