@@ -1,11 +1,11 @@
-package znu.visum.components.externals.tmdb.domain;
+package znu.visum.components.externals.domain;
 
-import znu.visum.components.externals.domain.*;
+import znu.visum.components.externals.domain.models.*;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
 
-public interface TmdbConnector {
+public interface ExternalConnector {
   VisumPage<ExternalMovieFromSearch> searchMovies(String search, int pageNumber);
 
   VisumPage<ExternalUpcomingMovie> getUpcomingMovies(int pageNumber, String region);

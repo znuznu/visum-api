@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import znu.visum.components.externals.domain.*;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.exceptions.ExternalApiExceptionHandler;
+import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.validators.configuration.TmdbGetConfigurationResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.moviebyid.TmdbGetMovieByIdResponseBodyValidationHandler;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-public class TmdbHttpConnector implements TmdbConnector {
+public class TmdbExternalConnector implements ExternalConnector {
 
   private static final String CONTENT_TYPE = "application/json; charset=utf-8";
   private static final String LANGUAGE = "en-US";
@@ -39,7 +40,7 @@ public class TmdbHttpConnector implements TmdbConnector {
   private final String tmdbApiBaseUrl;
 
   @Autowired
-  public TmdbHttpConnector(
+  public TmdbExternalConnector(
       WebClient.Builder webClientBuilder,
       @Value("${visum.tmdb-api-key}") String tmdbApiKey,
       @Value("${visum.tmdb-api-base-url}") String tmdbApiBaseUrl) {
@@ -84,7 +85,7 @@ public class TmdbHttpConnector implements TmdbConnector {
           response, TmdbMovieFromSearch::toDomainWithRootUrl, rootUrl);
 
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 
@@ -121,7 +122,7 @@ public class TmdbHttpConnector implements TmdbConnector {
       return TmdbPageResponseMapper.toVisumPage(
           response, TmdbUpcomingMovie::toDomainWithRootUrl, rootUrl);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 
@@ -157,7 +158,7 @@ public class TmdbHttpConnector implements TmdbConnector {
       return TmdbPageResponseMapper.toVisumPage(
           response, TmdbNowPlayingMovie::toDomainWithRootUrl, rootUrl);
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 
@@ -193,7 +194,7 @@ public class TmdbHttpConnector implements TmdbConnector {
           .blockOptional()
           .map(response -> response.toDomainWithRootUrl(rootUrl));
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 
@@ -224,7 +225,7 @@ public class TmdbHttpConnector implements TmdbConnector {
           .blockOptional()
           .map(creditsResponse -> creditsResponse.toDomainWithRootUrl(rootUrl));
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 
@@ -259,7 +260,7 @@ public class TmdbHttpConnector implements TmdbConnector {
 
       return secureBaseUrl + secondToLastPosterSize;
     } catch (WebClientResponseException clientResponseException) {
-      throw ExternalApiErrorHandler.from(clientResponseException);
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }
   }
 }

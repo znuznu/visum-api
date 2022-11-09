@@ -3,7 +3,7 @@ package znu.visum.components.movies.usecases.create.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.models.ExternalMovie;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieById;
 import znu.visum.components.movies.domain.Movie;
 import znu.visum.components.movies.domain.MovieAlreadyExistsException;

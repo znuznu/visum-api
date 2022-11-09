@@ -3,7 +3,7 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import znu.visum.components.externals.domain.ExternalCastMember;
+import znu.visum.components.externals.domain.models.ExternalCastMember;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 

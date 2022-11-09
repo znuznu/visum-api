@@ -1,7 +1,7 @@
 package znu.visum.components.movies.infrastructure;
 
 import lombok.*;
-import znu.visum.components.externals.domain.ExternalMovieMetadata;
+import znu.visum.components.externals.domain.models.ExternalMovieMetadata;
 import znu.visum.components.movies.domain.MovieMetadata;
 
 import javax.persistence.*;

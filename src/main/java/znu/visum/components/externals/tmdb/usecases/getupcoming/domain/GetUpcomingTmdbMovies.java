@@ -3,17 +3,17 @@ package znu.visum.components.externals.tmdb.usecases.getupcoming.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import znu.visum.components.externals.domain.ExternalUpcomingMovie;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.models.ExternalUpcomingMovie;
 import znu.visum.core.pagination.domain.VisumPage;
 
 @Service
 public class GetUpcomingTmdbMovies {
 
-  private final TmdbConnector connector;
+  private final ExternalConnector connector;
 
   @Autowired
-  public GetUpcomingTmdbMovies(@Qualifier("tmdbHttpConnector") TmdbConnector connector) {
+  public GetUpcomingTmdbMovies(@Qualifier("tmdbExternalConnector") ExternalConnector connector) {
     this.connector = connector;
   }
 

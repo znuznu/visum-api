@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import znu.visum.components.externals.domain.ExternalCast;
-import znu.visum.components.externals.domain.ExternalMovieCredits;
+import znu.visum.components.externals.domain.models.ExternalCast;
+import znu.visum.components.externals.domain.models.ExternalMovieCredits;
 
 import java.util.List;
 import java.util.stream.Collectors;

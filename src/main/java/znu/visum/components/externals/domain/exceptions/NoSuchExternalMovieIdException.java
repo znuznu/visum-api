@@ -1,4 +1,4 @@
-package znu.visum.components.externals.domain;
+package znu.visum.components.externals.domain.exceptions;
 
 import znu.visum.core.exceptions.domain.Domain;
 import znu.visum.core.exceptions.domain.NoSuchModelException;

@@ -1,4 +1,4 @@
-package znu.visum.components.externals.domain;
+package znu.visum.components.externals.domain.models;
 
 import lombok.Getter;
 import znu.visum.components.movies.domain.Role;

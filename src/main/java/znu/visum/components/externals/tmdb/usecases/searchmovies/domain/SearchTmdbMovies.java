@@ -3,17 +3,17 @@ package znu.visum.components.externals.tmdb.usecases.searchmovies.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import znu.visum.components.externals.domain.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 import znu.visum.core.pagination.domain.VisumPage;
 
 @Service
 public class SearchTmdbMovies {
 
-  private final TmdbConnector connector;
+  private final ExternalConnector connector;
 
   @Autowired
-  public SearchTmdbMovies(@Qualifier("tmdbHttpConnector") TmdbConnector connector) {
+  public SearchTmdbMovies(@Qualifier("tmdbExternalConnector") ExternalConnector connector) {
     this.connector = connector;
   }
 

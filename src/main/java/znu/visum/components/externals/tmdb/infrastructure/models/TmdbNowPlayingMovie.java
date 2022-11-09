@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import znu.visum.components.externals.domain.ExternalNowPlayingMovie;
+import znu.visum.components.externals.domain.models.ExternalNowPlayingMovie;
 
 import java.time.LocalDate;
 

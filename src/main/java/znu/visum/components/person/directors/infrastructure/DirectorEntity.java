@@ -3,7 +3,7 @@ package znu.visum.components.person.directors.infrastructure;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import znu.visum.components.externals.domain.ExternalDirector;
+import znu.visum.components.externals.domain.models.ExternalDirector;
 import znu.visum.components.movies.domain.DirectorFromMovie;
 import znu.visum.components.movies.infrastructure.MovieEntity;
 import znu.visum.components.person.directors.domain.Director;

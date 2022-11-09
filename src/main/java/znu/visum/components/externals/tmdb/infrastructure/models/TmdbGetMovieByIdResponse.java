@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import znu.visum.components.externals.domain.ExternalMovie;
-import znu.visum.components.externals.domain.ExternalMovieMetadata;
+import znu.visum.components.externals.domain.models.ExternalMovie;
+import znu.visum.components.externals.domain.models.ExternalMovieMetadata;
 
 import java.time.LocalDate;
 import java.util.Arrays;

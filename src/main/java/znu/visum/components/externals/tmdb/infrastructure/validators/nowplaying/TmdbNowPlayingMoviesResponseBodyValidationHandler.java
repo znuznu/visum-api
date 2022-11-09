@@ -1,6 +1,6 @@
 package znu.visum.components.externals.tmdb.infrastructure.validators.nowplaying;
 
-import znu.visum.components.externals.domain.ExternalApi;
+import znu.visum.components.externals.domain.models.ExternalApi;
 import znu.visum.components.externals.tmdb.infrastructure.models.TmdbNowPlayingMoviesResponse;
 import znu.visum.core.validators.infrastructure.AbstractExternalResponseBodyValidationHandler;
 

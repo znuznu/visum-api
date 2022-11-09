@@ -3,9 +3,9 @@ package znu.visum.components.externals.tmdb.infrastructure.adapters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import znu.visum.components.externals.domain.ExternalApi;
-import znu.visum.components.externals.domain.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
+import znu.visum.components.externals.domain.exceptions.ExternalException;
+import znu.visum.components.externals.domain.models.ExternalApi;
+import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
@@ -23,22 +23,22 @@ class TmdbInMemoryConnectorUnitTest {
   @Nested
   class SearchMovies {
 
-    private TmdbInMemoryConnector connector;
+    private ExternalInMemoryConnector connector;
 
     @BeforeEach
     void initialize() {
-      this.connector = new TmdbInMemoryConnector();
+      this.connector = new ExternalInMemoryConnector();
     }
 
     @Test
     void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
           TmdbInMemoryExceptions.builder()
-              .searchMovies(TmdbApiException.withMessageAndStatusCode("Unprocessable Entity", 422))
+              .searchMovies(ExternalException.withMessageAndStatusCode("Unprocessable Entity", 422))
               .build());
 
       assertThatThrownBy(() -> connector.searchMovies("Something", 6))
-          .isInstanceOf(TmdbApiException.class);
+          .isInstanceOf(ExternalException.class);
     }
 
     @Test
