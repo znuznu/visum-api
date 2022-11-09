@@ -7,9 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.externals.domain.ExternalNowPlayingMovie;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.exceptions.ExternalException;
+import znu.visum.components.externals.domain.models.ExternalNowPlayingMovie;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ class GetNowPlayingTmdbMoviesUnitTest {
 
   private GetNowPlayingTmdbMovies getNowPlayingTmdbMovies;
 
-  @Mock private TmdbConnector connector;
+  @Mock private ExternalConnector connector;
 
   @BeforeEach
   void setup() {
@@ -36,10 +36,10 @@ class GetNowPlayingTmdbMoviesUnitTest {
   @DisplayName("when the connector throws on the search method, it should bubble up the exception")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getNowPlayingMovies(1, "US"))
-        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
+        .thenThrow(ExternalException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> getNowPlayingTmdbMovies.process(1, "US"))
-        .isInstanceOf(TmdbApiException.class)
+        .isInstanceOf(ExternalException.class)
         .hasMessage("Message: Some message. Status code: 500");
   }
 

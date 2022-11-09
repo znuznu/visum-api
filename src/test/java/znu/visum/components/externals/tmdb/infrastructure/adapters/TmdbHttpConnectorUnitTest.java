@@ -6,9 +6,9 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import znu.visum.components.externals.domain.*;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.exceptions.ExternalException;
+import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
@@ -26,7 +26,7 @@ class TmdbHttpConnectorUnitTest {
 
   private static MockWebServer tmdbApiMockServer;
 
-  private TmdbConnector connector;
+  private ExternalConnector connector;
 
   @BeforeEach
   void setUp() throws IOException {
@@ -42,7 +42,7 @@ class TmdbHttpConnectorUnitTest {
   @BeforeEach
   void initialize() {
     String baseUrl = String.format("http://localhost:%s", tmdbApiMockServer.getPort());
-    this.connector = new TmdbHttpConnector(WebClient.builder(), "tmdb-api-key", baseUrl);
+    this.connector = new TmdbExternalConnector(WebClient.builder(), "tmdb-api-key", baseUrl);
   }
 
   @Nested
@@ -69,7 +69,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
 
       assertThatThrownBy(() -> connector.searchMovies("Something", 6))
-          .isInstanceOf(TmdbApiException.class)
+          .isInstanceOf(ExternalException.class)
           .hasMessageContaining("/configuration");
     }
 
@@ -78,7 +78,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
       assertThatThrownBy(() -> connector.searchMovies("Something", 6))
-          .isInstanceOf(TmdbApiException.class);
+          .isInstanceOf(ExternalException.class);
     }
 
     @Test
@@ -170,7 +170,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
 
       assertThatThrownBy(() -> connector.getMovieById(6L))
-          .isInstanceOf(TmdbApiException.class)
+          .isInstanceOf(ExternalException.class)
           .hasMessageContaining("/configuration");
     }
 
@@ -179,7 +179,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
-      assertThatThrownBy(() -> connector.getUpcomingMovies(6,"US")).isInstanceOf(TmdbApiException.class);
+      assertThatThrownBy(() -> connector.getUpcomingMovies(6,"US")).isInstanceOf(ExternalException.class);
     }
 
     @Test
@@ -266,7 +266,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
 
       assertThatThrownBy(() -> connector.getMovieById(6L))
-              .isInstanceOf(TmdbApiException.class)
+              .isInstanceOf(ExternalException.class)
               .hasMessageContaining("/configuration");
     }
 
@@ -275,7 +275,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(422));
 
-      assertThatThrownBy(() -> connector.getNowPlayingMovies(6,"US")).isInstanceOf(TmdbApiException.class);
+      assertThatThrownBy(() -> connector.getNowPlayingMovies(6,"US")).isInstanceOf(ExternalException.class);
     }
 
     @Test
@@ -346,7 +346,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
 
       assertThatThrownBy(() -> connector.getMovieById(6L))
-          .isInstanceOf(TmdbApiException.class)
+          .isInstanceOf(ExternalException.class)
           .hasMessageContaining("/configuration");
     }
 
@@ -355,7 +355,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
-      assertThatThrownBy(() -> connector.getMovieById(6)).isInstanceOf(TmdbApiException.class);
+      assertThatThrownBy(() -> connector.getMovieById(6)).isInstanceOf(ExternalException.class);
     }
 
     @Test
@@ -438,7 +438,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
 
       assertThatThrownBy(() -> connector.getCreditsByMovieId(6L))
-          .isInstanceOf(TmdbApiException.class)
+          .isInstanceOf(ExternalException.class)
           .hasMessageContaining("/configuration");
     }
 
@@ -448,7 +448,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThatThrownBy(() -> connector.getCreditsByMovieId(6L))
-          .isInstanceOf(TmdbApiException.class);
+          .isInstanceOf(ExternalException.class);
     }
 
     @Test
@@ -528,7 +528,7 @@ class TmdbHttpConnectorUnitTest {
       tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
 
       assertThatThrownBy(() -> connector.getConfigurationRootPosterUrl())
-          .isInstanceOf(TmdbApiException.class);
+          .isInstanceOf(ExternalException.class);
     }
 
     @Test

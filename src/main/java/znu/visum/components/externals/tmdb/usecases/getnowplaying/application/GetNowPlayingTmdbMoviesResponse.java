@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import znu.visum.components.externals.domain.ExternalNowPlayingMovie;
+import znu.visum.components.externals.domain.models.ExternalNowPlayingMovie;
 
 import java.time.LocalDate;
 

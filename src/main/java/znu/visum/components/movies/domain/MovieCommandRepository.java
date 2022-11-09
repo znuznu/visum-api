@@ -1,6 +1,6 @@
 package znu.visum.components.movies.domain;
 
-import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.models.ExternalMovie;
 
 public interface MovieCommandRepository {
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import znu.visum.components.externals.domain.ExternalCastMember;
+import znu.visum.components.externals.domain.models.ExternalCastMember;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 

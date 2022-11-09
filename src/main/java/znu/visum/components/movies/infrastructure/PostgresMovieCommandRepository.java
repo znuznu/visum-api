@@ -2,9 +2,9 @@ package znu.visum.components.movies.infrastructure;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import znu.visum.components.externals.domain.ExternalCastMember;
-import znu.visum.components.externals.domain.ExternalDirector;
-import znu.visum.components.externals.domain.ExternalMovie;
+import znu.visum.components.externals.domain.models.ExternalCastMember;
+import znu.visum.components.externals.domain.models.ExternalDirector;
+import znu.visum.components.externals.domain.models.ExternalMovie;
 import znu.visum.components.genres.infrastructure.DataJpaGenreRepository;
 import znu.visum.components.genres.infrastructure.GenreEntity;
 import znu.visum.components.movies.domain.Movie;

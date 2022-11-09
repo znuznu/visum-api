@@ -1,4 +1,4 @@
-package znu.visum.components.externals.domain;
+package znu.visum.components.externals.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Getter
-public class ExternalUpcomingMovie {
+public class ExternalNowPlayingMovie {
 
   private int id;
   private String title;

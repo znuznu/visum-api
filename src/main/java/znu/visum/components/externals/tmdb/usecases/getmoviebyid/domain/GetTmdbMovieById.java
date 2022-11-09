@@ -3,18 +3,18 @@ package znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import znu.visum.components.externals.domain.ExternalMovie;
-import znu.visum.components.externals.domain.ExternalMovieCredits;
-import znu.visum.components.externals.domain.NoSuchExternalMovieIdException;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.exceptions.NoSuchExternalMovieIdException;
+import znu.visum.components.externals.domain.models.ExternalMovie;
+import znu.visum.components.externals.domain.models.ExternalMovieCredits;
 import znu.visum.core.exceptions.domain.ExternalInconsistencyException;
 
 @Service
 public class GetTmdbMovieById {
-  private final TmdbConnector connector;
+  private final ExternalConnector connector;
 
   @Autowired
-  public GetTmdbMovieById(@Qualifier("tmdbHttpConnector") TmdbConnector connector) {
+  public GetTmdbMovieById(@Qualifier("tmdbExternalConnector") ExternalConnector connector) {
     this.connector = connector;
   }
 

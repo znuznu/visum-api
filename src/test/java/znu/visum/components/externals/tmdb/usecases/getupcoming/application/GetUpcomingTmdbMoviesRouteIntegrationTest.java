@@ -11,7 +11,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,9 +23,9 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
-  @Qualifier("tmdbInMemoryConnector")
+  @Qualifier("externalInMemoryConnector")
   @Autowired
-  private TmdbConnector connector;
+  private ExternalConnector connector;
 
   @Test
   void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {

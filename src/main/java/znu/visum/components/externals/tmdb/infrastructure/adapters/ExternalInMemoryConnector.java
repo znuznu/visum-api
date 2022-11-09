@@ -2,8 +2,8 @@ package znu.visum.components.externals.tmdb.infrastructure.adapters;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
-import znu.visum.components.externals.domain.*;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
 import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
 import znu.visum.core.pagination.domain.VisumPage;
@@ -13,7 +13,7 @@ import java.util.Optional;
 /** Adapter used in Route integration tests in order to avoid calling external APIs. */
 @Repository
 @NoArgsConstructor
-public class TmdbInMemoryConnector implements TmdbConnector {
+public class ExternalInMemoryConnector implements ExternalConnector {
   private TmdbInMemoryResponses responses;
   private TmdbInMemoryExceptions errors;
 

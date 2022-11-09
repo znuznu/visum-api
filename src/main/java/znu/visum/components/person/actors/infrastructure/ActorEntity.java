@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import znu.visum.components.externals.domain.ExternalCastMember;
+import znu.visum.components.externals.domain.models.ExternalCastMember;
 import znu.visum.components.movies.infrastructure.CastMemberEntity;
 import znu.visum.components.person.actors.domain.Actor;
 import znu.visum.components.person.actors.domain.MovieFromActor;

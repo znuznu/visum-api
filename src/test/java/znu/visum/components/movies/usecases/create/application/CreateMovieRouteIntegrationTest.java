@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import znu.visum.components.externals.domain.*;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnector;
+import znu.visum.components.externals.domain.models.*;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbExternalConnector;
 import znu.visum.components.externals.tmdb.usecases.getmoviebyid.domain.GetTmdbMovieById;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
@@ -47,7 +47,7 @@ class CreateMovieRouteIntegrationTest {
   private static final PostgreSQLContainer container =
       new PostgreSQLContainer(POSTGRESQL_DOCKER_IMAGE_NAME);
 
-  @MockBean TmdbHttpConnector connector;
+  @MockBean TmdbExternalConnector connector;
   @MockBean GetTmdbMovieById getTmdbMovieById;
   @Autowired private MockMvc mvc;
 

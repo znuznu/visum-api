@@ -1,4 +1,4 @@
-package znu.visum.components.externals.domain;
+package znu.visum.components.externals.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

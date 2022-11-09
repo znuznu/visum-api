@@ -2,7 +2,7 @@ package znu.visum.components.externals.tmdb.infrastructure.models;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import znu.visum.components.externals.domain.ExternalMovieFromSearch;
+import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.time.LocalDate;

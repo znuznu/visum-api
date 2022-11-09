@@ -7,9 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import znu.visum.components.externals.domain.*;
-import znu.visum.components.externals.tmdb.domain.TmdbApiException;
-import znu.visum.components.externals.tmdb.domain.TmdbConnector;
+import znu.visum.components.externals.domain.ExternalConnector;
+import znu.visum.components.externals.domain.exceptions.ExternalException;
+import znu.visum.components.externals.domain.exceptions.NoSuchExternalMovieIdException;
+import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.core.exceptions.domain.ExternalInconsistencyException;
@@ -28,7 +29,7 @@ class GetTmdbMovieByIdUnitTest {
 
   private GetTmdbMovieById getTmdbMovieById;
 
-  @Mock private TmdbConnector connector;
+  @Mock private ExternalConnector connector;
 
   @BeforeEach
   void setup() {
@@ -49,10 +50,10 @@ class GetTmdbMovieByIdUnitTest {
   @DisplayName("When the connector throws, it should bubble up the exception")
   void whenTheConnectorThrowsOnGetMovie_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getMovieById(42))
-        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
+        .thenThrow(ExternalException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> getTmdbMovieById.process(42))
-        .isInstanceOf(TmdbApiException.class)
+        .isInstanceOf(ExternalException.class)
         .hasMessage("Message: Some message. Status code: 500");
   }
 
@@ -62,10 +63,10 @@ class GetTmdbMovieByIdUnitTest {
   void whenTheConnectorThrowsOnCredits_itShouldBubbleUpAndThrow() {
     Mockito.when(connector.getMovieById(42)).thenReturn(externalMovie());
     Mockito.when(connector.getCreditsByMovieId(42))
-        .thenThrow(TmdbApiException.withMessageAndStatusCode("Some message.", 500));
+        .thenThrow(ExternalException.withMessageAndStatusCode("Some message.", 500));
 
     assertThatThrownBy(() -> getTmdbMovieById.process(42))
-        .isInstanceOf(TmdbApiException.class)
+        .isInstanceOf(ExternalException.class)
         .hasMessage("Message: Some message. Status code: 500");
   }
 
