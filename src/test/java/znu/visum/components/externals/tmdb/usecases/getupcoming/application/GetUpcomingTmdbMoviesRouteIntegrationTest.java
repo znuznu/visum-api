@@ -23,7 +23,7 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
-  @Qualifier("externalInMemoryConnector")
+  @Qualifier("mockExternalConnector")
   @Autowired
   private ExternalConnector connector;
 
@@ -35,7 +35,7 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
         .andExpect(status().isUnauthorized());
   }
 
-  // TODO find a way to use InMemoryConnector inside the service
+  // TODO find a way to use MockExternalConnector inside the service
 
   @Nested
   class InvalidRequest {
