@@ -211,7 +211,7 @@ public class MovieEntity {
 
   public MovieFromDirector toMovieFromDirector() {
     return new MovieFromDirector(
-        this.id, this.title, this.releaseDate, this.isFavorite, this.shouldWatch);
+        this.id, this.movieMetadataEntity.getTmdbId(), this.title, this.releaseDate, this.isFavorite, this.shouldWatch);
   }
 
   public StatisticsMovie toStatisticsMovie() {

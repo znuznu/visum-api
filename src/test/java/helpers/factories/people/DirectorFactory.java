@@ -28,6 +28,7 @@ public class DirectorFactory extends PeopleFactory {
               Arrays.asList(
                   MovieFromDirector.builder()
                       .id(1L)
+                      .tmdbId(1L)
                       .title("Movie 1")
                       .releaseDate(LocalDate.of(2021, 10, 10))
                       .isFavorite(false)
@@ -35,6 +36,7 @@ public class DirectorFactory extends PeopleFactory {
                       .build(),
                   MovieFromDirector.builder()
                       .id(2L)
+                      .tmdbId(12L)
                       .title("Movie 2")
                       .releaseDate(LocalDate.of(2021, 11, 11))
                       .isFavorite(true)
@@ -42,6 +44,7 @@ public class DirectorFactory extends PeopleFactory {
                       .build(),
                   MovieFromDirector.builder()
                       .id(3L)
+                      .tmdbId(123L)
                       .title("Movie 3")
                       .releaseDate(LocalDate.of(2021, 12, 12))
                       .isFavorite(false)

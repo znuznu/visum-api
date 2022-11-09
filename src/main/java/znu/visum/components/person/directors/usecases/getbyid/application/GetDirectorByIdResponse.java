@@ -52,6 +52,7 @@ public class GetDirectorByIdResponse {
   public static class ResponseMovie {
 
     private final Long id;
+    private final long tmdbId;
     private final String title;
 
     @JsonFormat(pattern = "yyyy/MM/dd")
@@ -63,6 +64,7 @@ public class GetDirectorByIdResponse {
     static ResponseMovie from(MovieFromDirector movieFromDirector) {
       return new ResponseMovie(
           movieFromDirector.getId(),
+          movieFromDirector.getTmdbId(),
           movieFromDirector.getTitle(),
           movieFromDirector.getReleaseDate(),
           movieFromDirector.isFavorite(),
