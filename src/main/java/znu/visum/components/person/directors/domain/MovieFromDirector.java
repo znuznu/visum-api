@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class MovieFromDirector {
 
   private Long id;
+  private Long tmdbId;
   private String title;
   private LocalDate releaseDate;
   private boolean isFavorite;

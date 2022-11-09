@@ -43,11 +43,11 @@ class GetDirectorByIdControllerUnitTest {
     var expectedResponseMovies =
         Arrays.asList(
             new GetDirectorByIdResponse.ResponseMovie(
-                1L, "Movie 1", LocalDate.of(2021, 10, 10), false, true),
+                1L, 1L, "Movie 1", LocalDate.of(2021, 10, 10), false, true),
             new GetDirectorByIdResponse.ResponseMovie(
-                2L, "Movie 2", LocalDate.of(2021, 11, 11), true, true),
+                2L, 12L, "Movie 2", LocalDate.of(2021, 11, 11), true, true),
             new GetDirectorByIdResponse.ResponseMovie(
-                3L, "Movie 3", LocalDate.of(2021, 12, 12), false, false));
+                3L, 123L, "Movie 3", LocalDate.of(2021, 12, 12), false, false));
 
     var expectedResponse =
         GetDirectorByIdResponse.builder()
