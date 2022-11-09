@@ -1,27 +1,29 @@
-package znu.visum.components.externals.tmdb.infrastructure.adapters;
+package znu.visum.components.externals.tmdb.infrastructure.adapters.mock;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 import znu.visum.components.externals.domain.ExternalConnector;
 import znu.visum.components.externals.domain.models.*;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalExceptions;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalResponses;
 import znu.visum.core.pagination.domain.VisumPage;
 
 import java.util.Optional;
 
-/** Adapter used in Route integration tests in order to avoid calling external APIs. */
+/**
+ * WIP - Adapter used in Route integration tests in order to avoid calling external APIs.
+ * */
 @Repository
 @NoArgsConstructor
-public class ExternalInMemoryConnector implements ExternalConnector {
-  private TmdbInMemoryResponses responses;
-  private TmdbInMemoryExceptions errors;
+public class MockExternalConnector implements ExternalConnector {
+  private MockExternalResponses responses;
+  private MockExternalExceptions errors;
 
-  public void setResponses(TmdbInMemoryResponses responses) {
+  public void setResponses(MockExternalResponses responses) {
     this.responses = responses;
   }
 
-  public void setExceptions(TmdbInMemoryExceptions errors) {
+  public void setExceptions(MockExternalExceptions errors) {
     this.errors = errors;
   }
 
@@ -36,7 +38,7 @@ public class ExternalInMemoryConnector implements ExternalConnector {
     }
 
     throw new UnsupportedOperationException(
-        "No Responses or Errors set for TmdbInMemoryConnector. Method: searchMovies.");
+        "No Responses or Errors set for MockExternalConnector. Method: searchMovies.");
   }
 
   @Override

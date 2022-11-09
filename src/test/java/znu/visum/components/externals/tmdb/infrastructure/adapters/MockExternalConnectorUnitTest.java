@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import znu.visum.components.externals.domain.exceptions.ExternalException;
 import znu.visum.components.externals.domain.models.ExternalApi;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryExceptions;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.models.TmdbInMemoryResponses;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalConnector;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalExceptions;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalResponses;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
 import znu.visum.core.pagination.domain.VisumPage;
 
@@ -16,24 +17,24 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbHttpConnectorUnitTest.ROOT_POSTER_URL;
+import static znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbExternalConnectorUnitTest.ROOT_POSTER_URL;
 
-class TmdbInMemoryConnectorUnitTest {
+class MockExternalConnectorUnitTest {
 
   @Nested
   class SearchMovies {
 
-    private ExternalInMemoryConnector connector;
+    private MockExternalConnector connector;
 
     @BeforeEach
     void initialize() {
-      this.connector = new ExternalInMemoryConnector();
+      this.connector = new MockExternalConnector();
     }
 
     @Test
     void whenTmdbReturnAnError_itShouldThrow() {
       this.connector.setExceptions(
-          TmdbInMemoryExceptions.builder()
+          MockExternalExceptions.builder()
               .searchMovies(ExternalException.withMessageAndStatusCode("Unprocessable Entity", 422))
               .build());
 
@@ -44,7 +45,7 @@ class TmdbInMemoryConnectorUnitTest {
     @Test
     void whenTmdbReturnA200WithUnexpectedBody_itShouldThrow() {
       this.connector.setExceptions(
-          TmdbInMemoryExceptions.builder()
+          MockExternalExceptions.builder()
               .searchMovies(
                   ExternalApiUnexpectedResponseBodyException.withMessageForApi(
                       "Exception message", ExternalApi.TMDB))
@@ -75,7 +76,7 @@ class TmdbInMemoryConnectorUnitTest {
                   ROOT_POSTER_URL + "/3AnlxZ5CZnhKKzjgFyY6EHxmOyl.jpg"));
 
       this.connector.setResponses(
-          TmdbInMemoryResponses.builder()
+          MockExternalResponses.builder()
               .searchMovies(
                   VisumPage.<ExternalMovieFromSearch>builder()
                       .totalPages(38)

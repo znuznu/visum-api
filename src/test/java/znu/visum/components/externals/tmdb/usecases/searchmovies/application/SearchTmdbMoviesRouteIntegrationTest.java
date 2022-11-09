@@ -23,7 +23,7 @@ class SearchTmdbMoviesRouteIntegrationTest {
 
   @Autowired private MockMvc mvc;
 
-  @Qualifier("externalInMemoryConnector")
+  @Qualifier("mockExternalConnector")
   @Autowired
   private ExternalConnector connector;
 
@@ -38,7 +38,7 @@ class SearchTmdbMoviesRouteIntegrationTest {
         .andExpect(status().isUnauthorized());
   }
 
-  // TODO find a way to use InMemoryConnector inside the service
+  // TODO find a way to use MockExternalConnector inside the service
 
   @Nested
   class InvalidRequest {
@@ -89,7 +89,7 @@ class SearchTmdbMoviesRouteIntegrationTest {
   //  @WithMockUser
   //  void givenAValidRequest_whenAnErrorIsReceivedFromTmdb_itShouldReturnA500Response()
   //      throws Exception {
-  //    var coco = (TmdbInMemoryConnector) this.connector;
+  //    var coco = (TmdbMockExternalConnector) this.connector;
   //    coco.setExceptions(
   //        new TmdbInMemoryExceptions.Builder()
   //            .searchMovies(
@@ -111,7 +111,7 @@ class SearchTmdbMoviesRouteIntegrationTest {
   //  void
   // givenAValidRequest_whenAnUnexpectedBodyIsReceivedFromTmdb_itShouldReturnA500Response()
   //      throws Exception {
-  //    var coco = (TmdbInMemoryConnector) this.connector;
+  //    var coco = (TmdbMockExternalConnector) this.connector;
   //    coco.setExceptions(
   //        new TmdbInMemoryExceptions.Builder()
   //            .searchMovies(

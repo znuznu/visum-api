@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class TmdbHttpConnectorUnitTest {
+class TmdbExternalConnectorUnitTest {
 
   static final String ROOT_POSTER_URL = "https://image.tmdb.org/t/p/w780";
 
