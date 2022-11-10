@@ -60,9 +60,4 @@ public class MockExternalConnector implements ExternalConnector {
   public Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId) {
     throw new UnsupportedOperationException();
   }
-
-  @Override
-  public String getConfigurationRootPosterUrl() {
-    throw new UnsupportedOperationException();
-  }
 }
