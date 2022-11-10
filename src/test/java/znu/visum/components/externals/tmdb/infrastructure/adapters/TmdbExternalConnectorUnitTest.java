@@ -26,7 +26,7 @@ class TmdbExternalConnectorUnitTest {
 
   private static MockWebServer tmdbApiMockServer;
 
-  private ExternalConnector connector;
+  private TmdbExternalConnector connector;
 
   @BeforeEach
   void setUp() throws IOException {

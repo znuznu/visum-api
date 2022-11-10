@@ -15,6 +15,4 @@ public interface ExternalConnector {
   Optional<ExternalMovie> getMovieById(long movieId);
 
   Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId);
-
-  String getConfigurationRootPosterUrl();
 }

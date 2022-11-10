@@ -229,7 +229,6 @@ public class TmdbExternalConnector implements ExternalConnector {
     }
   }
 
-  @Override
   @Cacheable("tmdbBasePosterUrl")
   public String getConfigurationRootPosterUrl() {
     log.info("Call to TMDb /configuration");
