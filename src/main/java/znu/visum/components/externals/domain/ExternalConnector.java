@@ -3,6 +3,7 @@ package znu.visum.components.externals.domain;
 import znu.visum.components.externals.domain.models.*;
 import znu.visum.core.pagination.domain.VisumPage;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ExternalConnector {
@@ -15,4 +16,7 @@ public interface ExternalConnector {
   Optional<ExternalMovie> getMovieById(long movieId);
 
   Optional<ExternalMovieCredits> getCreditsByMovieId(long movieId);
+
+  /** Returns an empty if the director does not exist */
+  Optional<List<ExternalDirectorMovie>> getMoviesByDirectorId(long directorId);
 }

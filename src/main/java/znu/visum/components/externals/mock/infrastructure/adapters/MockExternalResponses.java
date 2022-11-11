@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.infrastructure.adapters.mock;
+package znu.visum.components.externals.mock.infrastructure.adapters;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

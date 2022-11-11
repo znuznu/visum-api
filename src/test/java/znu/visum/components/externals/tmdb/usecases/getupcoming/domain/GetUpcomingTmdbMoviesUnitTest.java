@@ -44,7 +44,7 @@ class GetUpcomingTmdbMoviesUnitTest {
   }
 
   @Test
-  @DisplayName("When the connector returnsmovies, it should return movies mapped")
+  @DisplayName("When the connector returns movies, it should return movies mapped")
   void whenTheConnectorReturnMoviesAndBasePosterUrl_itShouldReturnPageWithCompleteUrl() {
     Mockito.when(connector.getUpcomingMovies(1, "US"))
         .thenReturn(

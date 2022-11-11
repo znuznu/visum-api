@@ -38,7 +38,7 @@ class SearchTmdbMoviesRouteIntegrationTest {
         .andExpect(status().isUnauthorized());
   }
 
-  // TODO find a way to use MockExternalConnector inside the service
+  // TODO use the MockExternalConnector
 
   @Nested
   class InvalidRequest {

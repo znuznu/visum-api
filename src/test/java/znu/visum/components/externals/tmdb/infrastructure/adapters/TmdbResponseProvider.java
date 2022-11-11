@@ -415,6 +415,158 @@ public class TmdbResponseProvider {
         );
   }
 
+  public static MockResponse directorMovieCreditsResponse() {
+      return new MockResponse()
+              .setResponseCode(200)
+              .setHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
+              .setHeader("Content-type", MediaType.APPLICATION_JSON_VALUE)
+              .setBody(
+                      """
+                      {
+                          "cast": [
+                                {
+                                    "adult": false,
+                                    "backdrop_path": null,
+                                    "genre_ids": [
+                                        27,
+                                        99,
+                                        28
+                                    ],
+                                    "id": 376042,
+                                    "original_language": "es",
+                                    "original_title": "Katanas, yakuzas y cintas de video",
+                                    "overview": "",
+                                    "popularity": 0.961,
+                                    "poster_path": "/hSKXKTR3chJgUBP8fiUVUnur7pW.jpg",
+                                    "release_date": "2004-11-11",
+                                    "title": "Katanas, yakuzas y cintas de video",
+                                    "video": false,
+                                    "vote_average": 0.0,
+                                    "vote_count": 0,
+                                    "character": "(archive footage)",
+                                    "credit_id": "568b936ac3a36860e902e134",
+                                    "order": 0
+                                },
+                                {
+                                    "adult": false,
+                                    "backdrop_path": "/w2asPC7prjaMnCwt7yK8JvLp3uS.jpg",
+                                    "genre_ids": [
+                                        99
+                                    ],
+                                    "id": 427185,
+                                    "original_language": "ko",
+                                    "original_title": "올드 데이즈",
+                                    "overview": "Old Days is a documentary about Park Chan-wook's original masterpiece, Oldboy. It was created for Plain Archive's Blu-ray release and first screened at the Jeonju International Film Festival.",
+                                    "popularity": 1.358,
+                                    "poster_path": "/eviGVU7GGZlP4hGVkKAOe75Bemq.jpg",
+                                    "release_date": "2016-04-29",
+                                    "title": "Old Days",
+                                    "video": false,
+                                    "vote_average": 6.6,
+                                    "vote_count": 5,
+                                    "character": "Self",
+                                    "credit_id": "58343bc59251416bc6003bb0",
+                                    "order": 0
+                                }
+                          ],
+                          "crew": [
+                                {
+                                    "adult": false,
+                                    "backdrop_path": "/uiXmFezM5Xg1RWEIRxX8gjIUiWW.jpg",
+                                    "genre_ids": [
+                                        10752,
+                                        18,
+                                        53,
+                                        28
+                                    ],
+                                    "id": 2440,
+                                    "original_language": "ko",
+                                    "original_title": "공동경비구역 JSA",
+                                    "overview": "Two North Korean soldiers are killed in the border area between North and South Korea, prompting an investigation by a neutral body. The sergeant is the shooter, but the lead investigator, a Swiss-Korean woman, receives differing accounts from the two sides.",
+                                    "popularity": 17.83,
+                                    "poster_path": "/etoPOj0bXzfw0LBNslCxqO7MHuv.jpg",
+                                    "release_date": "2000-09-09",
+                                    "title": "Joint Security Area",
+                                    "video": false,
+                                    "vote_average": 7.835,
+                                    "vote_count": 501,
+                                    "credit_id": "52fe4357c3a36847f804d057",
+                                    "department": "Directing",
+                                    "job": "Director"
+                                },
+                                {
+                                    "adult": false,
+                                    "backdrop_path": "/wP1nu98mgiSOyuPmMWdZ8109S9j.jpg",
+                                    "genre_ids": [
+                                        18,
+                                        53
+                                    ],
+                                    "id": 4550,
+                                    "original_language": "ko",
+                                    "original_title": "친절한 금자씨",
+                                    "overview": "After being wrongfully convicted, a woman is imprisoned for 13 years and forced to give up her daughter. While in prison she gains the respect of her cellmates and plots her revenge on the man responsible. Once released, she begins her elaborate plan of retribution, but discovers a horrifying truth.",
+                                    "popularity": 16.175,
+                                    "poster_path": "/pxgjBSwsa2IBSJoVrsLT6qxOO6N.jpg",
+                                    "release_date": "2005-07-29",
+                                    "title": "Sympathy for Lady Vengeance",
+                                    "video": false,
+                                    "vote_average": 7.548,
+                                    "vote_count": 1295,
+                                    "credit_id": "52fe43cbc3a36847f8070265",
+                                    "department": "Directing",
+                                    "job": "Director"
+                                },
+                                {
+                                    "adult": false,
+                                    "backdrop_path": "/6WMeEmwXWKwrWBd6uDXjtWPigzM.jpg",
+                                    "genre_ids": [
+                                        28,
+                                        18,
+                                        53
+                                    ],
+                                    "id": 4689,
+                                    "original_language": "ko",
+                                    "original_title": "복수는 나의 것",
+                                    "overview": "A deaf man and his girlfriend resort to desperate measures in order to fund a kidney transplant for his sister. Things go horribly wrong, and the situation spirals rapidly into a cycle of violence and revenge.",
+                                    "popularity": 12.212,
+                                    "poster_path": "/qtB1B1KcmggRfuhZELQ08aIGBV1.jpg",
+                                    "release_date": "2002-03-29",
+                                    "title": "Sympathy for Mr. Vengeance",
+                                    "video": false,
+                                    "vote_average": 7.472,
+                                    "vote_count": 1119,
+                                    "credit_id": "52fe43d3c3a36847f80729a5",
+                                    "department": "Directing",
+                                    "job": "Director"
+                                },
+                                {
+                                    "adult": false,
+                                    "backdrop_path": "/883WnrlBcwNaskVnfKDj3c9Xehc.jpg",
+                                    "genre_ids": [
+                                        18
+                                    ],
+                                    "id": 79392,
+                                    "original_language": "ko",
+                                    "original_title": "파란만장",
+                                    "overview": "A man casually sets up for a fishing trip at the water's edge. Evening comes and a tug on his line presents him with the body of a woman.",
+                                    "popularity": 1.942,
+                                    "poster_path": "/8ToDjbLFpuskHfGukOBfxTFj1xX.jpg",
+                                    "release_date": "2011-01-27",
+                                    "title": "Night Fishing",
+                                    "video": false,
+                                    "vote_average": 5.6,
+                                    "vote_count": 32,
+                                    "credit_id": "52fe49d0c3a368484e1415c1",
+                                    "department": "Writing",
+                                    "job": "Writer"
+                                }
+                          ],
+                          "id": 6
+                      }
+                      """
+              );
+  }
+
   public static MockResponse movieResponse() {
     return new MockResponse()
         .setResponseCode(200)
