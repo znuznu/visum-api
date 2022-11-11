@@ -15,12 +15,14 @@ import znu.visum.components.externals.domain.exceptions.ExternalApiExceptionHand
 import znu.visum.components.externals.domain.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.models.*;
 import znu.visum.components.externals.tmdb.infrastructure.validators.configuration.TmdbGetConfigurationResponseBodyValidationHandler;
+import znu.visum.components.externals.tmdb.infrastructure.validators.getpersonmoviecredits.TmdbGetPersonMovieCreditsResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.moviebyid.TmdbGetMovieByIdResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.nowplaying.TmdbNowPlayingMoviesResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.searchmovies.TmdbSearchMoviesResponseBodyValidationHandler;
 import znu.visum.components.externals.tmdb.infrastructure.validators.upcomingmovies.TmdbGetUpcomingMoviesResponseBodyValidationHandler;
 import znu.visum.core.pagination.domain.VisumPage;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -223,7 +225,42 @@ public class TmdbExternalConnector implements ExternalConnector {
               exception ->
                   exception.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(exception))
           .blockOptional()
-          .map(creditsResponse -> creditsResponse.toDomainWithRootUrl(rootUrl));
+          .map(response -> response.toDomainWithRootUrl(rootUrl));
+    } catch (WebClientResponseException clientResponseException) {
+      throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
+    }
+  }
+
+  @Override
+  public Optional<List<ExternalDirectorMovie>> getMoviesByDirectorId(long directorId) {
+    log.info("Call to TMDb /person/{}/movie_credits", directorId);
+
+    String rootUrl = getConfigurationRootPosterUrl();
+
+    try {
+      return this.webClient
+          .get()
+          .uri(
+              tmdbApiBaseUrl,
+              uriBuilder ->
+                  uriBuilder
+                      .path(String.format("/person/%d/movie_credits", directorId))
+                      .queryParam("api_key", tmdbApiKey)
+                      .queryParam("language", LANGUAGE)
+                      .build())
+          .header("Accept", CONTENT_TYPE)
+          .retrieve()
+          .bodyToMono(TmdbGetPersonMovieCreditsResponse.class)
+          .onErrorResume(
+              WebClientResponseException.class,
+              exception ->
+                  exception.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(exception))
+          .flatMap(
+              response ->
+                  new TmdbGetPersonMovieCreditsResponseBodyValidationHandler()
+                      .validate(Mono.just(response)))
+          .map(response -> response.toDomainWithRootUrl(rootUrl))
+          .blockOptional();
     } catch (WebClientResponseException clientResponseException) {
       throw ExternalApiExceptionHandler.from(ExternalApi.TMDB, clientResponseException);
     }

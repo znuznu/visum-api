@@ -7,7 +7,8 @@ public enum Domain {
   REVIEW("review"),
   MOVIE("movie"),
   VIEWING_HISTORY("viewing history"),
-  EXTERNAL_MOVIE("external movie");
+  EXTERNAL_MOVIE("external movie"),
+  EXTERNAL_DIRECTOR("external director");
 
   private final String representation;
 

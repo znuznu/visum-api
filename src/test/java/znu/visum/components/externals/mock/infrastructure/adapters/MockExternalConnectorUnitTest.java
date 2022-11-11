@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.infrastructure.adapters;
+package znu.visum.components.externals.mock.infrastructure.adapters;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import znu.visum.components.externals.domain.exceptions.ExternalException;
 import znu.visum.components.externals.domain.models.ExternalApi;
 import znu.visum.components.externals.domain.models.ExternalMovieFromSearch;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalConnector;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalExceptions;
-import znu.visum.components.externals.tmdb.infrastructure.adapters.mock.MockExternalResponses;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
 import znu.visum.core.pagination.domain.VisumPage;
 
@@ -17,7 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbExternalConnectorUnitTest.ROOT_POSTER_URL;
+import static znu.visum.components.externals.mock.infrastructure.adapters.TmdbExternalConnectorUnitTest.ROOT_POSTER_URL;
 
 class MockExternalConnectorUnitTest {
 

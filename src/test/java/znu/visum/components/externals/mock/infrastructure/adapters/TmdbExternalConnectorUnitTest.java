@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.infrastructure.adapters;
+package znu.visum.components.externals.mock.infrastructure.adapters;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -6,9 +6,10 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import znu.visum.components.externals.domain.ExternalConnector;
 import znu.visum.components.externals.domain.exceptions.ExternalException;
 import znu.visum.components.externals.domain.models.*;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbExternalConnector;
+import znu.visum.components.externals.tmdb.infrastructure.adapters.TmdbResponseProvider;
 import znu.visum.components.movies.domain.Role;
 import znu.visum.components.person.domain.Identity;
 import znu.visum.core.exceptions.domain.ExternalApiUnexpectedResponseBodyException;
@@ -16,6 +17,7 @@ import znu.visum.core.pagination.domain.VisumPage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -505,6 +507,82 @@ class TmdbExternalConnectorUnitTest {
                   1000,
                   Identity.builder().forename("James").name("").build(),
                   ROOT_POSTER_URL + "/poster1000.jpg"));
+    }
+  }
+
+  @Nested
+  class GetMoviesByDirectorId {
+
+    @Test
+    void shouldSendExpectedHeadersAndParams() throws InterruptedException {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.directorMovieCreditsResponse());
+
+      connector.getMoviesByDirectorId(6L);
+
+      tmdbApiMockServer.takeRequest();
+      RecordedRequest request = tmdbApiMockServer.takeRequest();
+      assertThat(request.getPath())
+              .isEqualTo("/person/6/movie_credits?api_key=tmdb-api-key&language=en-US");
+      assertThat(request.getHeader("Content-Type")).isEqualTo("application/json");
+      assertThat(request.getMethod()).isEqualTo("GET");
+    }
+
+    @Test
+    @DisplayName("When the connector could not retrieve root poster URL, it should throw")
+    void whenTheRootUrlCouldNotBeRetrieved_itShouldThrow() {
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(500));
+
+      assertThatThrownBy(() -> connector.getMoviesByDirectorId(6L))
+              .isInstanceOf(ExternalException.class)
+              .hasMessageContaining("/configuration");
+    }
+
+    @Test
+    void whenTmdbReturnsAnErrorDifferentThan404_itShouldThrow() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(406));
+
+      assertThatThrownBy(() -> connector.getMoviesByDirectorId(6L))
+              .isInstanceOf(ExternalException.class);
+    }
+
+    @Test
+    void whenTmdbReturnsA404Error_itShouldReturnEmpty() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(new MockResponse().setResponseCode(404));
+
+      assertThat(connector.getMoviesByDirectorId(6L)).isEmpty();
+    }
+
+    @Test
+    void whenTmdbReturnMovieCredits_itShouldReturnMovies() {
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.configurationResponse());
+      tmdbApiMockServer.enqueue(TmdbResponseProvider.directorMovieCreditsResponse());
+
+      List<ExternalDirectorMovie> movies = connector.getMoviesByDirectorId(6L).get();
+
+      assertThat(movies)
+              .usingRecursiveFieldByFieldElementComparator()
+              .containsExactlyInAnyOrder(
+                      ExternalDirectorMovie.builder()
+                              .id(2440)
+                              .title("Joint Security Area")
+                              .posterUrl(ROOT_POSTER_URL + "/etoPOj0bXzfw0LBNslCxqO7MHuv.jpg")
+                              .releaseDate(LocalDate.of(2000, 9, 9))
+                              .build(),
+                      ExternalDirectorMovie.builder()
+                              .id(4550)
+                              .title("Sympathy for Lady Vengeance")
+                              .posterUrl(ROOT_POSTER_URL + "/pxgjBSwsa2IBSJoVrsLT6qxOO6N.jpg")
+                              .releaseDate(LocalDate.of(2005, 7, 29))
+                              .build(),
+                      ExternalDirectorMovie.builder()
+                              .id(4689)
+                              .title("Sympathy for Mr. Vengeance")
+                              .posterUrl(ROOT_POSTER_URL + "/qtB1B1KcmggRfuhZELQ08aIGBV1.jpg")
+                              .releaseDate(LocalDate.of(2002, 3, 29))
+                              .build());
     }
   }
 

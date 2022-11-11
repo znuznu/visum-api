@@ -1,4 +1,4 @@
-package znu.visum.components.externals.tmdb.usecases.getupcoming.application;
+package znu.visum.components.externals.tmdb.usecases.getmoviesbydirectorid.application;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("h2")
-class GetUpcomingTmdbMoviesRouteIntegrationTest {
+class GetTmdbMoviesByDirectorIdRouteIntegrationTest {
+
+  private static final String BASE_URL = "/api/tmdb/directors";
 
   @Autowired private MockMvc mvc;
 
@@ -29,9 +31,7 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
   @Test
   void whenTheUserIsNotAuthenticated_itShouldReturnA401Response() throws Exception {
-    mvc.perform(
-            get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", 1)
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+    mvc.perform(get(BASE_URL + "/{id}/movies", 1).contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isUnauthorized());
   }
 
@@ -42,26 +42,34 @@ class GetUpcomingTmdbMoviesRouteIntegrationTest {
 
     @Test
     @WithMockUser
-    void givenANonNumericalPageNumber_itShouldReturnA400Response() throws Exception {
-      mvc.perform(
-              get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", "x")
-                  .contentType(MediaType.APPLICATION_JSON_VALUE))
+    void givenANonNumericalId_itShouldReturnA400Response() throws Exception {
+      mvc.perform(get(BASE_URL + "/{id}/movies", "x").contentType(MediaType.APPLICATION_JSON_VALUE))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/tmdb/movies/upcoming"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(BASE_URL + "/x/movies"));
     }
 
     @Test
     @WithMockUser
-    void givenAPageNumberInferiorToOne_itShouldReturnA400Response() throws Exception {
+    void givenANegativeId_itShouldReturnA400Response() throws Exception {
+      mvc.perform(get(BASE_URL + "/{id}/movies", -1).contentType(MediaType.APPLICATION_JSON_VALUE))
+          .andExpect(status().isBadRequest())
+          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(BASE_URL + "/-1/movies"));
+    }
+
+    @Test
+    @WithMockUser
+    void givenANonBoolean_itShouldReturnA400Response() throws Exception {
       mvc.perform(
-              get("/api/tmdb/movies/upcoming?pageNumber={pageNumber}", -1)
+              get(BASE_URL + "/{id}/movies?notSavedOnly={}", 42, "foo")
                   .contentType(MediaType.APPLICATION_JSON_VALUE))
           .andExpect(status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid argument."))
           .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("INVALID_ARGUMENT"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/tmdb/movies/upcoming"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(BASE_URL + "/42/movies"));
     }
   }
 }
