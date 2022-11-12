@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.20.0
+
+- Add GET /tmdb/directors/:id/movies
+
 ## 2.19.0
 
 - Add a response body to POST /accounts
