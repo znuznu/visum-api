@@ -41,6 +41,12 @@ class GetTmdbMoviesByDirectorIdUnitTest {
     return Optional.of(
         List.of(
             ExternalDirectorMovie.builder()
+                .id(4)
+                .title("Title four")
+                .releaseDate(null)
+                .posterUrl(BASE_POSTER_URL + "/poster4")
+                .build(),
+            ExternalDirectorMovie.builder()
                 .id(1)
                 .title("Title one")
                 .releaseDate(LocalDate.of(2020, 1, 1))
@@ -51,6 +57,12 @@ class GetTmdbMoviesByDirectorIdUnitTest {
                 .title("Title two")
                 .releaseDate(LocalDate.of(2013, 1, 1))
                 .posterUrl(BASE_POSTER_URL + "/poster2")
+                .build(),
+            ExternalDirectorMovie.builder()
+                .id(3)
+                .title("Title three")
+                .releaseDate(LocalDate.of(2015, 5, 12))
+                .posterUrl(BASE_POSTER_URL + "/poster3")
                 .build()));
   }
 
@@ -105,10 +117,22 @@ class GetTmdbMoviesByDirectorIdUnitTest {
                     .posterUrl(BASE_POSTER_URL + "/poster1")
                     .build(),
                 ExternalDirectorMovie.builder()
+                    .id(3)
+                    .title("Title three")
+                    .releaseDate(LocalDate.of(2015, 5, 12))
+                    .posterUrl(BASE_POSTER_URL + "/poster3")
+                    .build(),
+                ExternalDirectorMovie.builder()
                     .id(2)
                     .title("Title two")
                     .releaseDate(LocalDate.of(2013, 1, 1))
                     .posterUrl(BASE_POSTER_URL + "/poster2")
+                    .build(),
+                ExternalDirectorMovie.builder()
+                    .id(4)
+                    .title("Title four")
+                    .releaseDate(null)
+                    .posterUrl(BASE_POSTER_URL + "/poster4")
                     .build()));
   }
 
@@ -130,10 +154,22 @@ class GetTmdbMoviesByDirectorIdUnitTest {
                     .posterUrl(BASE_POSTER_URL + "/poster1")
                     .build(),
                 ExternalDirectorMovie.builder()
+                    .id(3)
+                    .title("Title three")
+                    .releaseDate(LocalDate.of(2015, 5, 12))
+                    .posterUrl(BASE_POSTER_URL + "/poster3")
+                    .build(),
+                ExternalDirectorMovie.builder()
                     .id(2)
                     .title("Title two")
                     .releaseDate(LocalDate.of(2013, 1, 1))
                     .posterUrl(BASE_POSTER_URL + "/poster2")
+                    .build(),
+                ExternalDirectorMovie.builder()
+                    .id(4)
+                    .title("Title four")
+                    .releaseDate(null)
+                    .posterUrl(BASE_POSTER_URL + "/poster4")
                     .build()));
   }
 
@@ -153,6 +189,18 @@ class GetTmdbMoviesByDirectorIdUnitTest {
                     .title("Title one")
                     .releaseDate(LocalDate.of(2020, 1, 1))
                     .posterUrl(BASE_POSTER_URL + "/poster1")
+                    .build(),
+                ExternalDirectorMovie.builder()
+                    .id(3)
+                    .title("Title three")
+                    .releaseDate(LocalDate.of(2015, 5, 12))
+                    .posterUrl(BASE_POSTER_URL + "/poster3")
+                    .build(),
+                ExternalDirectorMovie.builder()
+                    .id(4)
+                    .title("Title four")
+                    .releaseDate(null)
+                    .posterUrl(BASE_POSTER_URL + "/poster4")
                     .build()));
   }
 }
