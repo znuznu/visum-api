@@ -9,10 +9,28 @@ import znu.visum.components.externals.domain.models.ExternalDirectorMovie;
 import znu.visum.components.person.directors.domain.DirectorRepository;
 import znu.visum.components.person.directors.domain.MovieFromDirector;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class GetTmdbMoviesByDirectorId {
+
+  private static final Comparator<ExternalDirectorMovie> BY_RELEASE_DATE_DESC =
+      (m1, m2) -> {
+        if (m1.getReleaseDate() == null && m2.getReleaseDate() != null) {
+          return 1;
+        }
+
+        if (m1.getReleaseDate() != null && m2.getReleaseDate() == null) {
+          return -1;
+        }
+
+        if (m1.getReleaseDate() == null && m2.getReleaseDate() == null) {
+          return 0;
+        }
+
+        return m2.getReleaseDate().compareTo(m1.getReleaseDate());
+      };
 
   private final ExternalConnector connector;
 
@@ -30,7 +48,10 @@ public class GetTmdbMoviesByDirectorId {
     var movies =
         connector
             .getMoviesByDirectorId(query.directorId())
-            .orElseThrow(() -> NoSuchExternalDirectorIdException.withId(query.directorId()));
+            .orElseThrow(() -> NoSuchExternalDirectorIdException.withId(query.directorId()))
+            .stream()
+            .sorted(BY_RELEASE_DATE_DESC)
+            .toList();
 
     if (!query.notSavedOnly()) {
       return movies;
